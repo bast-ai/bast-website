@@ -1,0 +1,102 @@
+image: atlassian/default-image:3
+
+definitions:
+  services:
+    docker:
+      memory: 3072
+  scripts:
+    - script: &install-tools |
+        apt-get update && apt-get install -y jq curl unzip python3-pip
+        curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+        apt-get install -y nodejs
+        corepack enable && corepack prepare pnpm@8.15.0 --activate
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip -q awscliv2.zip
+        ./aws/install
+        DUPLO_VERSION=$(curl -s https://api.github.com/repos/duplocloud/duplo-jit/releases/latest | jq -r '.tag_name')
+        VERSION_NUM=$(echo "$DUPLO_VERSION" | sed 's/v//')
+        curl -L -o duplo-jit.zip "https://github.com/duplocloud/duplo-jit/releases/download/${DUPLO_VERSION}/duplo-jit_${VERSION_NUM}_linux_amd64.zip"
+        unzip -o duplo-jit.zip
+        chmod +x duplo-jit
+        mv duplo-jit /usr/local/bin/duplo-jit
+        rm -f duplo-jit.zip CHANGELOG.md LICENSE README.md duplo-aws-credential-process
+        pip3 install duplocloud-client
+
+    - script: &get-aws-credentials |
+        CREDS=$(duplo-jit aws --admin --host "${DUPLO_HOST}" --token "${DUPLO_TOKEN}")
+        export AWS_ACCESS_KEY_ID=$(echo "$CREDS" | jq -r '.AccessKeyId')
+        export AWS_SECRET_ACCESS_KEY=$(echo "$CREDS" | jq -r '.SecretAccessKey')
+        export AWS_SESSION_TOKEN=$(echo "$CREDS" | jq -r '.SessionToken')
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "${ECR_REGISTRY}"
+
+  steps:
+    - step: &verify
+        name: Verify static site
+        script:
+          - corepack enable && corepack prepare pnpm@8.15.0 --activate
+          - pnpm install --frozen-lockfile
+          - pnpm verify
+        artifacts:
+          - dist/**
+
+    - step: &build-deploy
+        name: Build and deploy website
+        size: 2x
+        services:
+          - docker
+        caches:
+          - docker
+        script:
+          - *install-tools
+          - *get-aws-credentials
+          - export SHORT_SHA=$(git rev-parse --short HEAD)
+          - |
+            if [ "${BITBUCKET_BRANCH}" = "dev" ]; then
+              export SERVICE_NAME="dev-bast-website"
+              export TENANT="dev-shared"
+              export SITE_ENV="dev"
+              export SITE_URL="https://dev-bast-website.aws.bast.ai"
+              export ROBOTS_META="noindex, nofollow"
+              export ROBOTS_HEADER="noindex, nofollow"
+            elif [ "${BITBUCKET_BRANCH}" = "main" ]; then
+              export SERVICE_NAME="prod-bast-website"
+              export TENANT="prod-shared"
+              export SITE_ENV="production"
+              export SITE_URL="https://www.bast.ai"
+              export ROBOTS_META="index, follow"
+              export ROBOTS_HEADER="index, follow"
+            else
+              echo "Unsupported branch ${BITBUCKET_BRANCH}; skipping deploy."
+              exit 0
+            fi
+          - export IMAGE="${ECR_REGISTRY}/bast-website:${SITE_ENV}-${SHORT_SHA}"
+          - |
+            docker build \
+              --platform linux/amd64 \
+              --build-arg GA_MEASUREMENT_ID="${GA_MEASUREMENT_ID:-}" \
+              --build-arg SITE_ENV="${SITE_ENV}" \
+              --build-arg SITE_URL="${SITE_URL}" \
+              --build-arg ROBOTS_META="${ROBOTS_META}" \
+              --build-arg ROBOTS_HEADER="${ROBOTS_HEADER}" \
+              -t "${IMAGE}" \
+              .
+          - docker push "${IMAGE}"
+          - duploctl service update_image "${SERVICE_NAME}" "${IMAGE}" --tenant "${TENANT}"
+
+pipelines:
+  pull-requests:
+    "**":
+      - step: *verify
+
+  branches:
+    dev:
+      - step: *verify
+      - step: *build-deploy
+    main:
+      - step: *verify
+      - step: *build-deploy
+
+  custom:
+    deploy-current-branch:
+      - step: *verify
+      - step: *build-deploy

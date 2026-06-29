@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bast - AI that shows its work</title>
+<meta name="description" content="Bast builds explainable AI infrastructure for institutions that need answers grounded in approved knowledge, ontology, and source evidence.">
+<meta name="robots" content="__ROBOTS_META__">
+<link rel="icon" href="assets/bast-logo.svg" type="image/svg+xml">
+<link rel="canonical" href="__SITE_URL__/">
+<meta property="og:title" content="Bast - AI that shows its work">
+<meta property="og:description" content="AI grounded in an ontology, not a guess. Every answer traces back to a source you can check.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__SITE_URL__/">
+<link rel="stylesheet" href="assets/styles.css">
+<script>
+  window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
+  window.BAST_SITE_ENV = "__SITE_ENV__";
+</script>
+<script src="assets/analytics-consent.js" defer></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="#how">How it works</a>
+    <a href="#demos">Demos</a>
+    <a href="#proof">Proof</a>
+    <a href="investors.html">Investors</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Explainable AI infrastructure</p>
+      <ul class="questions" aria-label="Questions Bast answers">
+        <li>Where is AI that doesn't hallucinate?</li>
+        <li>Where is AI I can build myself?</li>
+        <li>Where is AI that shows its work?</li>
+        <li>Where is AI that earns its keep?</li>
+      </ul>
+      <h1 id="hero-title"><span>Here.</span> It's called Bast.</h1>
+      <p class="lede">Bast grounds AI in your approved knowledge, ontology, and source material, so every answer can be traced, checked, or refused.</p>
+      <div class="hero-actions">
+        <button class="button button-primary" type="button" data-scroll-target="#demos">See it show its work</button>
+        <a class="button button-secondary" href="mailto:hello@bast.ai?subject=Build%20with%20Bast">Build with us</a>
+      </div>
+    </div>
+
+    <aside class="case-panel" aria-label="Selected Bast outcomes">
+      <p class="panel-label">Selected outcomes</p>
+
+      <a class="featured-outcome" href="https://dvc.org/blog/bast-ai-use-case-using-dvc-as-a-data-registry-for-explainable-offline-ready-ai/" target="_blank" rel="noopener">
+        <div class="featured-outcome-top">
+          <span class="case-badge">Lead feature on DVC's blog</span>
+          <span>DVC case study</span>
+        </div>
+        <h2>Explainable, offline-ready medical AI - with the evidence chain intact.</h2>
+        <p>How Bast uses a data registry as the system of record for an unstructured AI pipeline, making every answer traceable through context, source page, document version, and pipeline outputs.</p>
+        <div class="featured-outcome-proof">
+          <span>Full provenance</span>
+          <span>Reproducible answers</span>
+          <span>Offline operation</span>
+        </div>
+      </a>
+
+      <article class="metric-outcome">
+        <div>
+          <strong>$1.2M</strong>
+          <span>saved in the first semester</span>
+        </div>
+        <div>
+          <p class="panel-label">Maryville University</p>
+          <h2>Personalized support improved nursing-student retention.</h2>
+          <p>Social learning companions helped students stay engaged while giving the university a scalable, explainable path to support.</p>
+        </div>
+      </article>
+    </aside>
+  </section>
+
+  <section id="how" class="section section-plain" aria-labelledby="how-title">
+    <p class="section-kicker">The shift</p>
+    <h2 id="how-title">Do not ask the model to be honest. Limit what it can say.</h2>
+    <p>Bast sits between institutional knowledge and AI output. Before anything reaches a user, the system checks scope, retrieves only eligible knowledge, scores relevance, routes to the right answering behavior, and refuses when the support is missing.</p>
+  </section>
+
+  <section class="section interaction" aria-labelledby="work-title">
+    <div class="section-heading">
+      <p class="section-kicker">Proof before output</p>
+      <h2 id="work-title">The answer is only the visible part.</h2>
+    </div>
+
+    <div class="mode-tabs" role="tablist" aria-label="Bast proof modes">
+      <button id="tab-answer" role="tab" type="button" aria-selected="true" aria-controls="panel-answer" data-mode="answer">Answer</button>
+      <button id="tab-refuse" role="tab" type="button" aria-selected="false" aria-controls="panel-refuse" data-mode="refuse">Refuse</button>
+      <button id="tab-trace" role="tab" type="button" aria-selected="false" aria-controls="panel-trace" data-mode="trace">Trace</button>
+    </div>
+
+    <div class="mode-panels">
+      <article id="panel-answer" role="tabpanel" aria-labelledby="tab-answer" data-panel="answer">
+        <p class="panel-label">Supported question</p>
+        <h3>Answers come from approved knowledge.</h3>
+        <p>The model sees only the narrow context that passed the scope and relevance checks. The response is written for the person asking, but anchored in the institution's own source material.</p>
+      </article>
+      <article id="panel-refuse" role="tabpanel" aria-labelledby="tab-refuse" data-panel="refuse" hidden>
+        <p class="panel-label">Unsupported question</p>
+        <h3>A clean no is better than a confident guess.</h3>
+        <p>If the request is out of scope or the knowledge base cannot support an answer, Bast refuses before the model improvises.</p>
+      </article>
+      <article id="panel-trace" role="tabpanel" aria-labelledby="tab-trace" data-panel="trace" hidden>
+        <p class="panel-label">Institutional trace</p>
+        <h3>The route is inspectable.</h3>
+        <p>Teams can see the classification, source set, relevance score, injected context, and answer path behind a turn. The user gets clarity. The institution gets accountability.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="demos" class="section demos" aria-labelledby="demos-title">
+    <div class="section-heading">
+      <p class="section-kicker">Watch the control layer work</p>
+      <h2 id="demos-title">Seeing the refusal is as important as seeing the answer.</h2>
+      <p>These demos show Bast from the admin console, knowledge manager, and end-user experience: approved knowledge becomes the boundary, the gate checks support, and unsupported questions stop before a guess can ship.</p>
+    </div>
+
+    <div class="demo-layout">
+      <div class="demo-player" aria-live="polite" data-demo-player>
+        <div class="demo-player-empty">
+          <span class="play-mark" aria-hidden="true"></span>
+          <p class="panel-label">No third-party video loaded yet</p>
+          <h3>Choose a demo to load YouTube.</h3>
+          <p>The player uses YouTube's privacy-enhanced embed and loads only after you choose a video.</p>
+        </div>
+      </div>
+
+      <div class="demo-list" aria-label="Bast video demos">
+        <article class="demo-card">
+          <p class="panel-label">Product walkthrough</p>
+          <h3>Bast Admin Dashboard and User Experience</h3>
+          <p>Organization admin, knowledge manager, and end user: the full journey from source knowledge to a working CAT.</p>
+          <div class="demo-actions">
+            <button class="button button-primary" type="button" aria-label="Load Bast Admin Dashboard and User Experience demo" data-video-id="nS74QjwSHQA" data-video-title="Bast Admin Dashboard and User Experience">Load demo</button>
+            <a href="https://www.youtube.com/watch?v=nS74QjwSHQA">Watch on YouTube</a>
+          </div>
+        </article>
+
+        <article class="demo-card">
+          <p class="panel-label">Chat and console</p>
+          <h3>Bast Demo Chat and Admin Console</h3>
+          <p>A compact look at the chat surface and the administrative controls behind it.</p>
+          <div class="demo-actions">
+            <button class="button button-secondary" type="button" aria-label="Load Bast Demo Chat and Admin Console demo" data-video-id="Q-j02Y1AHEw" data-video-title="Bast Demo Chat and Admin Console">Load demo</button>
+            <a href="https://www.youtube.com/watch?v=Q-j02Y1AHEw">Watch on YouTube</a>
+          </div>
+        </article>
+
+        <article class="demo-card">
+          <p class="panel-label">Healthcare ontology</p>
+          <h3>Ontologies for personalized patient care</h3>
+          <p>The same patient knowledge can produce different experiences for patients, caregivers, and providers.</p>
+          <div class="demo-actions">
+            <button class="button button-secondary" type="button" aria-label="Load ontologies for personalized patient care demo" data-video-id="Sa-uNxoRjos" data-video-title="Ontologies for personalized patient care">Load demo</button>
+            <a href="https://www.youtube.com/watch?v=Sa-uNxoRjos">Watch on YouTube</a>
+          </div>
+        </article>
+
+        <a class="channel-link" href="https://www.youtube.com/@Bast_CAT22">Visit the Bast AI YouTube channel</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof" class="section proof-grid" aria-labelledby="proof-title">
+    <div class="section-heading">
+      <p class="section-kicker">Built for places where answers matter</p>
+      <h2 id="proof-title">Healthcare, education, and operational teams use Bast when "the model said so" is not enough.</h2>
+    </div>
+    <div class="proof-list">
+      <article>
+        <span>Grounded</span>
+        <h3>Every factual answer can point back.</h3>
+        <p>Source material, ontology, and routing behavior stay connected to the response.</p>
+      </article>
+      <article>
+        <span>Deployable</span>
+        <h3>Hosted, private cloud, or on prem.</h3>
+        <p>The trust layer can meet the operating constraints of the institution.</p>
+      </article>
+      <article>
+        <span>Efficient</span>
+        <h3>Less context, better control.</h3>
+        <p>Relevant knowledge is selected before generation, reducing token load and noise.</p>
+      </article>
+      <article>
+        <span>Auditable</span>
+        <h3>Refusals are part of the system.</h3>
+        <p>Bast records what happened when an answer was blocked, missing, or out of scope.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section contact" aria-labelledby="contact-title">
+    <p class="section-kicker">Build with us</p>
+    <h2 id="contact-title">Bring us the knowledge your AI has to stand behind.</h2>
+    <p>We will help you turn it into a system that can answer, refuse, and show its work.</p>
+    <a class="button button-primary" href="mailto:hello@bast.ai?subject=Build%20with%20Bast">Start a conversation</a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span>Bast AI</span>
+  <span>Explainable by construction.</span>
+  <a href="privacy.html">Privacy, cookies, and accessibility</a>
+</footer>
+</body>
+</html>
