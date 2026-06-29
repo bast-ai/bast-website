@@ -91,10 +91,8 @@ pipelines:
   branches:
     dev:
       - step: *verify
-      - step: *build-deploy
     main:
       - step: *verify
-      - step: *build-deploy
 
   custom:
     deploy-current-branch:
