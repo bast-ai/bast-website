@@ -121,16 +121,17 @@
         z-index: 1000;
         max-width: 760px;
         margin: 0 auto;
-        background: #ffffff;
-        border: 1px solid #d9dee6;
-        border-radius: 8px;
-        box-shadow: 0 18px 42px rgba(12, 21, 32, 0.18);
-        padding: 1rem;
-        color: #111111;
+        background: #dde3e9;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 8px 8px 20px rgba(22, 27, 29, 0.18), -8px -8px 20px rgba(250, 251, 255, 0.9);
+        padding: 1.15rem 1.25rem;
+        color: #0d2935;
+        font-family: "Estedad", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       }
       .bast-consent p {
         margin: 0 0 0.85rem;
-        color: #3a3f45;
+        color: rgba(13, 41, 53, 0.72);
         font-size: 0.9rem;
         line-height: 1.5;
       }
@@ -146,33 +147,33 @@
         align-items: center;
         justify-content: center;
         min-height: 42px;
-        border-radius: 6px;
+        border-radius: 10px;
+        border: none;
         font: inherit;
         font-size: 0.84rem;
-        font-weight: 700;
+        font-weight: 600;
         text-decoration: none;
-        padding: 0.58rem 0.95rem;
+        padding: 0.58rem 1.05rem;
       }
       .bast-consent button {
         cursor: pointer;
       }
       .bast-consent-accept {
-        border: 1px solid #111111;
-        background: #111111;
+        background: linear-gradient(120deg, #0090cc 0%, #3c54a1 100%);
         color: #ffffff;
+        box-shadow: 4px 4px 9px rgba(22, 27, 29, 0.3), -4px -4px 9px rgba(252, 253, 255, 1);
       }
       .bast-consent-reject {
-        border: 1px solid #d9dee6;
-        background: #ffffff;
-        color: #111111;
+        background: #dde3e9;
+        color: #075985;
+        box-shadow: 4px 4px 8px rgba(22, 27, 29, 0.2), -4px -4px 8px rgba(250, 251, 255, 1);
       }
       .bast-consent a {
-        color: #3a3f45;
-        border: 1px solid transparent;
+        color: rgba(13, 41, 53, 0.72);
       }
       .bast-consent button:focus-visible,
       .bast-consent a:focus-visible {
-        outline: 3px solid rgba(26, 150, 198, 0.35);
+        outline: 3px solid rgba(0, 144, 204, 0.45);
         outline-offset: 2px;
       }
     `;
