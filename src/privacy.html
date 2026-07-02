@@ -21,7 +21,11 @@
     <img src="assets/bast-logo.svg" alt="Bast">
   </a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="/">Home</a>
+    <a href="/#how">How it works</a>
+    <a href="/#offerings">Offerings</a>
+    <a href="/#demos">Demos</a>
+    <a href="investors.html">Investors</a>
+    <a class="nav-cta" href="/#contact">Contact</a>
   </nav>
 </header>
 
@@ -46,8 +50,8 @@
   <h2>Video demos</h2>
   <p>Video demos are hosted by YouTube. The site does not load a YouTube player when the page first opens. A YouTube embed is loaded only after a visitor chooses "Load demo" or follows a YouTube link.</p>
 
-  <h2>Contact</h2>
-  <p>The site uses simple email links for contact. Choosing an email link opens the visitor's own email app. Visitors decide whether to send that message.</p>
+  <h2>Contact and downloads</h2>
+  <p>The site offers a contact form, gated PDF downloads, and email links. The contact form opens the visitor's own email app with the message pre-filled, so the visitor decides whether to send it. Gated downloads deliver the requested PDF to the visitor's device; if analytics are allowed, only the fact that a download or inquiry happened is recorded &mdash; never the email address entered. If a server-side submission endpoint is later configured to collect these details, this notice will be updated first.</p>
 
   <h2>Accessibility</h2>
   <p>The site is designed to be readable, keyboard navigable, and usable across screen sizes. It uses semantic HTML, visible focus states, descriptive links, and high-contrast body text. The working target is alignment with WCAG principles of perceivable, operable, understandable, and robust content.</p>
@@ -59,9 +63,37 @@
 </main>
 
 <footer class="site-footer">
-  <span>Bast AI</span>
-  <span>Explainable by construction.</span>
-  <a href="/">Home</a>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="/#how">How it works</a>
+        <a href="/#offerings">Offerings</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#demos">Demos</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/#proof">Why Bast</a>
+        <a href="investors.html">Investors</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Connect</p>
+        <a href="mailto:hello@bast.ai">hello@bast.ai</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="privacy.html">Privacy &amp; cookies</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
 </footer>
 </body>
 </html>

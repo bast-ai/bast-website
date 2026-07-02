@@ -31,7 +31,7 @@
     <a href="#offerings">Offerings</a>
     <a href="#demos">Demos</a>
     <a href="investors.html">Investors</a>
-    <a href="privacy.html">Privacy</a>
+    <a class="nav-cta" href="#contact">Contact</a>
   </nav>
 </header>
 
@@ -48,71 +48,56 @@
       <p class="lede">Bast grounds AI in your approved knowledge, ontology, and source material, so every answer can be traced, checked, or refused.</p>
       <div class="hero-actions">
         <button class="button button-primary" type="button" data-scroll-target="#demos">See it show its work</button>
-        <a class="button button-secondary" href="mailto:hello@bast.ai?subject=Build%20with%20Bast">Build with us</a>
+        <a class="button button-secondary" href="#contact">Build with us</a>
       </div>
     </div>
+  </section>
 
-    <aside class="case-panel" aria-label="Selected Bast outcomes">
-      <p class="panel-label">Selected outcomes</p>
+  <section class="outcomes" aria-labelledby="outcomes-title">
+    <p class="section-kicker" id="outcomes-title">Selected outcomes</p>
+    <div class="outcomes-grid">
+      <article class="outcome-card">
+        <p class="card-kicker">DVC case study</p>
+        <p class="outcome-stat"><span class="case-badge">Lead feature on DVC's blog</span></p>
+        <h3>Explainable, offline-ready medical AI.</h3>
+        <p>Every answer traceable through context, source page, document version, and pipeline outputs.</p>
+        <a class="card-link" href="https://dvc.org/blog/bast-ai-use-case-using-dvc-as-a-data-registry-for-explainable-offline-ready-ai/" target="_blank" rel="noopener">Read the DVC feature &rarr;</a>
+      </article>
 
-      <a class="featured-outcome" href="https://dvc.org/blog/bast-ai-use-case-using-dvc-as-a-data-registry-for-explainable-offline-ready-ai/" target="_blank" rel="noopener">
-        <div class="featured-outcome-top">
-          <span class="case-badge">Lead feature on DVC's blog</span>
-          <span>DVC case study</span>
-        </div>
-        <h2>Explainable, offline-ready medical AI - with the evidence chain intact.</h2>
-        <p>How Bast uses a data registry as the system of record for an unstructured AI pipeline, making every answer traceable through context, source page, document version, and pipeline outputs.</p>
-        <div class="featured-outcome-proof">
-          <span>Full provenance</span>
-          <span>Reproducible answers</span>
-          <span>Offline operation</span>
-        </div>
-      </a>
-
-      <article class="metric-outcome">
-        <div>
-          <strong>$1.2M</strong>
-          <span>saved in the first semester</span>
-        </div>
-        <div>
-          <p class="panel-label">Maryville University</p>
-          <h2>Personalized support improved nursing-student retention.</h2>
-          <p>Social learning companions helped students stay engaged while giving the university a scalable, explainable path to support.</p>
-          <div class="outcome-download">
-            <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-maryville">Get the case study (PDF) &rarr;</button>
-            <form id="gate-maryville" class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" hidden novalidate>
-              <div class="gate-row">
-                <input type="email" name="email" aria-label="Work email for the Maryville case study" placeholder="you@organization.com" autocomplete="email" required>
-                <button class="button button-primary" type="submit">Get the PDF</button>
-              </div>
-              <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
-            </form>
-          </div>
+      <article class="outcome-card">
+        <p class="card-kicker">Maryville University</p>
+        <p class="outcome-stat"><strong>$1.2M</strong> <span>saved in the first semester</span></p>
+        <h3>Personalized support improved nursing-student retention.</h3>
+        <p>Social learning companions kept students engaged with a scalable, explainable path to support.</p>
+        <div class="outcome-download">
+          <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-maryville">Get the case study (PDF) &rarr;</button>
+          <form id="gate-maryville" class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" hidden novalidate>
+            <div class="gate-row">
+              <input type="email" name="email" aria-label="Work email for the Maryville case study" placeholder="you@organization.com" autocomplete="email" required>
+              <button class="button button-primary" type="submit">Get the PDF</button>
+            </div>
+            <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
+          </form>
         </div>
       </article>
 
-      <article class="metric-outcome">
-        <div>
-          <strong>70&ndash;85%</strong>
-          <span>fewer tokens per query vs. standard RAG</span>
-        </div>
-        <div>
-          <p class="panel-label">Compute control</p>
-          <h2>Fewer tokens, because you control what the model sees.</h2>
-          <p>Bast decides exactly what reaches the LLM, so you cut cost and make the system deterministic &mdash; you own the inputs to any GenAI model. Run generative AI against a deterministic knowledge base, then deliver each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
-          <div class="outcome-download">
-            <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-compute">Get the technical 2-pager (PDF) &rarr;</button>
-            <form id="gate-compute" class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" hidden novalidate>
-              <div class="gate-row">
-                <input type="email" name="email" aria-label="Work email for the technical 2-pager" placeholder="you@organization.com" autocomplete="email" required>
-                <button class="button button-primary" type="submit">Get the PDF</button>
-              </div>
-              <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
-            </form>
-          </div>
+      <article class="outcome-card">
+        <p class="card-kicker">Compute control</p>
+        <p class="outcome-stat"><strong>70&ndash;85%</strong> <span>fewer tokens vs. standard RAG</span></p>
+        <h3>Fewer tokens, because you control what the model sees.</h3>
+        <p>Bast decides exactly what reaches the LLM, so the system is deterministic and you own the inputs to any GenAI model &mdash; then deliver each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
+        <div class="outcome-download">
+          <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-compute">Get the technical 2-pager (PDF) &rarr;</button>
+          <form id="gate-compute" class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" hidden novalidate>
+            <div class="gate-row">
+              <input type="email" name="email" aria-label="Work email for the technical 2-pager" placeholder="you@organization.com" autocomplete="email" required>
+              <button class="button button-primary" type="submit">Get the PDF</button>
+            </div>
+            <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
+          </form>
         </div>
       </article>
-    </aside>
+    </div>
   </section>
 
   <section id="how" class="section section-plain" aria-labelledby="how-title">
@@ -349,9 +334,37 @@
 </main>
 
 <footer class="site-footer">
-  <span>Bast AI</span>
-  <span>Explainable by construction.</span>
-  <a href="privacy.html">Privacy, cookies, and accessibility</a>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="/#how">How it works</a>
+        <a href="/#offerings">Offerings</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#demos">Demos</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/#proof">Why Bast</a>
+        <a href="investors.html">Investors</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Connect</p>
+        <a href="mailto:hello@bast.ai">hello@bast.ai</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="privacy.html">Privacy &amp; cookies</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
 </footer>
 </body>
 </html>

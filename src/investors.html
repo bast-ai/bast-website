@@ -28,10 +28,11 @@
     <img src="assets/bast-logo.svg" alt="Bast">
   </a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="/">Home</a>
+    <a href="/#how">How it works</a>
+    <a href="/#offerings">Offerings</a>
     <a href="/#demos">Demos</a>
-    <a href="/#proof">Proof</a>
-    <a href="privacy.html">Privacy</a>
+    <a href="investors.html" aria-current="page">Investors</a>
+    <a class="nav-cta" href="/#contact">Contact</a>
   </nav>
 </header>
 
@@ -51,25 +52,6 @@
     <a class="deck-preview" href="assets/bast-ai-healthcare-teaser.pdf" aria-label="Open the Bast AI healthcare teaser PDF">
       <img src="assets/bast-ai-healthcare-teaser-cover.png" alt="Cover slide for the Bast AI healthcare investor teaser">
     </a>
-  </section>
-
-  <section class="section investor-summary" aria-labelledby="investor-summary-title">
-    <p class="section-kicker">Proof before output</p>
-    <h2 id="investor-summary-title">The market already knows how to generate answers. The hard part now is defending them.</h2>
-    <div class="investor-points">
-      <article>
-        <span>Control</span>
-        <p>Institution-approved knowledge becomes the boundary for what AI can answer.</p>
-      </article>
-      <article>
-        <span>Refuse</span>
-        <p>If support is missing, Bast refuses instead of improvising.</p>
-      </article>
-      <article>
-        <span>Trace</span>
-        <p>If it answers, Bast shows the source, route, and observed trace behind it.</p>
-      </article>
-    </div>
   </section>
 
   <section class="section investor-proof" aria-labelledby="investor-proof-title">
@@ -108,9 +90,37 @@
 </main>
 
 <footer class="site-footer">
-  <span>Bast AI</span>
-  <span>Proof before output.</span>
-  <a href="privacy.html">Privacy, cookies, and accessibility</a>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="/#how">How it works</a>
+        <a href="/#offerings">Offerings</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#demos">Demos</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/#proof">Why Bast</a>
+        <a href="investors.html">Investors</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Connect</p>
+        <a href="mailto:hello@bast.ai">hello@bast.ai</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="privacy.html">Privacy &amp; cookies</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
 </footer>
 </body>
 </html>

@@ -233,11 +233,11 @@ p {
 .hero {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 6rem);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr);
-  gap: min(6vw, 64px);
-  align-items: start;
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hero-copy {
+  max-width: 46rem;
 }
 
 .questions {
@@ -291,9 +291,9 @@ p {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 4.8vw, 3.5rem);
+  font-size: clamp(2.6rem, 5.6vw, 4.25rem);
   font-weight: 200;
-  line-height: 1.04;
+  line-height: 1.02;
   margin-bottom: 0.32em;
 }
 
@@ -809,21 +809,86 @@ h1 span {
 .site-footer {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: 2.2rem 0 3rem;
+  padding: clamp(3rem, 5vw, 4rem) 0 3rem;
   border-top: 1px solid var(--line-subtle);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--quieter);
-  font-size: 0.88rem;
+  color: var(--quiet);
 }
 
-.site-footer a {
+.footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
+  gap: 2.5rem;
+}
+
+.footer-brand .brand {
+  width: 118px;
+}
+
+.footer-brand p {
+  margin: 1.1rem 0 0;
+  max-width: 26rem;
+  color: var(--quieter);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.footer-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.footer-col {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.footer-head {
+  margin: 0 0 0.3rem;
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.footer-nav a {
+  color: var(--quiet);
+  font-size: 0.92rem;
   text-decoration: none;
 }
 
-.site-footer a:hover {
+.footer-nav a:hover {
+  color: var(--accent-text);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-subtle);
+  color: var(--quieter);
+  font-size: 0.85rem;
+}
+
+.footer-link-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--quiet);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-link-btn:hover {
   color: var(--accent-text);
 }
 
@@ -1020,6 +1085,84 @@ h1 span {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.nav-cta {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* ---- Selected outcomes (3-up row under the hero) ---- */
+.outcomes {
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
+  padding: 0 0 clamp(3.5rem, 7vw, 5.5rem);
+}
+
+.outcomes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 1.4rem;
+  align-items: stretch;
+}
+
+.outcome-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--neu-raise);
+  padding: 1.6rem;
+}
+
+.outcome-card .card-kicker {
+  margin: 0;
+}
+
+.outcome-stat {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0.1rem;
+  min-height: 2.2rem;
+}
+
+.outcome-stat strong {
+  font-size: 2rem;
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.outcome-stat span {
+  color: var(--quieter);
+  font-size: 0.85rem;
+}
+
+.outcome-card h3 {
+  font-size: 1.28rem;
+  font-weight: 500;
+  line-height: 1.14;
+  margin: 0.45rem 0 0.55rem;
+}
+
+.outcome-card > p:not(.card-kicker):not(.outcome-stat) {
+  color: var(--quiet);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.outcome-card .card-link,
+.outcome-card .outcome-download {
+  margin-top: auto;
+  padding-top: 1.1rem;
 }
 
 /* ---- Card grids (offerings, technologies, case studies) ---- */
@@ -1336,6 +1479,15 @@ h1 span {
     grid-template-columns: 1fr;
     gap: 14px;
   }
+
+  .outcomes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1382,6 +1534,11 @@ h1 span {
 
   .contact-form {
     grid-template-columns: 1fr;
+  }
+
+  .footer-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
   }
 
   .button {
