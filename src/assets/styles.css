@@ -237,7 +237,7 @@ p {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr);
   gap: min(6vw, 64px);
-  align-items: center;
+  align-items: start;
 }
 
 .questions {
@@ -465,15 +465,40 @@ h1 span {
 
 .metric-outcome strong {
   display: block;
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   font-weight: 200;
   letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: 0.4rem;
+  white-space: nowrap;
   background: var(--grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Gated download that hangs off a Selected outcome */
+.outcome-download {
+  margin-top: 1rem;
+}
+
+.download-trigger {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.download-trigger:hover {
+  color: var(--accent-hover);
+}
+
+.outcome-download .gate-form {
+  margin-top: 0.85rem;
 }
 
 .metric-outcome span {

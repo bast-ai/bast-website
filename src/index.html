@@ -29,7 +29,6 @@
   <nav class="site-nav" aria-label="Primary">
     <a href="#how">How it works</a>
     <a href="#offerings">Offerings</a>
-    <a href="#case-studies">Case studies</a>
     <a href="#demos">Demos</a>
     <a href="investors.html">Investors</a>
     <a href="privacy.html">Privacy</a>
@@ -79,6 +78,38 @@
           <p class="panel-label">Maryville University</p>
           <h2>Personalized support improved nursing-student retention.</h2>
           <p>Social learning companions helped students stay engaged while giving the university a scalable, explainable path to support.</p>
+          <div class="outcome-download">
+            <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-maryville">Get the case study (PDF) &rarr;</button>
+            <form id="gate-maryville" class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" hidden novalidate>
+              <div class="gate-row">
+                <input type="email" name="email" aria-label="Work email for the Maryville case study" placeholder="you@organization.com" autocomplete="email" required>
+                <button class="button button-primary" type="submit">Get the PDF</button>
+              </div>
+              <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
+            </form>
+          </div>
+        </div>
+      </article>
+
+      <article class="metric-outcome">
+        <div>
+          <strong>70&ndash;85%</strong>
+          <span>fewer tokens per query vs. standard RAG</span>
+        </div>
+        <div>
+          <p class="panel-label">Compute control</p>
+          <h2>Fewer tokens, because you control what the model sees.</h2>
+          <p>Bast decides exactly what reaches the LLM, so you cut cost and make the system deterministic &mdash; you own the inputs to any GenAI model. Run generative AI against a deterministic knowledge base, then deliver each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
+          <div class="outcome-download">
+            <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-compute">Get the technical 2-pager (PDF) &rarr;</button>
+            <form id="gate-compute" class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" hidden novalidate>
+              <div class="gate-row">
+                <input type="email" name="email" aria-label="Work email for the technical 2-pager" placeholder="you@organization.com" autocomplete="email" required>
+                <button class="button button-primary" type="submit">Get the PDF</button>
+              </div>
+              <p class="gate-note" data-gate-status aria-live="polite">Give to get &mdash; your download starts right away.</p>
+            </form>
+          </div>
         </div>
       </article>
     </aside>
@@ -272,57 +303,6 @@
     </div>
   </section>
 
-  <section id="case-studies" class="section case-studies" aria-labelledby="cases-title">
-    <div class="section-heading">
-      <p class="section-kicker">Proof in the world</p>
-      <h2 id="cases-title">Live, paid, and pulled through healthcare and education.</h2>
-      <p>Where "the model said so" was never going to be enough.</p>
-    </div>
-
-    <p class="case-sector">Healthcare</p>
-    <div class="card-grid card-grid-3">
-      <article class="card">
-        <p class="card-kicker">Craig</p>
-        <h3>Explainable AI across patient, family, and provider.</h3>
-        <p>One base of approved knowledge, three tailored experiences &mdash; each answer traceable to its source.</p>
-      </article>
-      <article class="card">
-        <p class="card-kicker">Simwerx</p>
-        <h3>An offline medic co-pilot with visual protocol proof.</h3>
-        <p>Guidance that works without a connection and shows the protocol behind each step.</p>
-      </article>
-      <article class="card">
-        <p class="card-kicker">Northwestern Medicine</p>
-        <h3>Ontology-driven lookup for instruments and assays.</h3>
-        <p>A controlled vocabulary turns a sprawling catalog into answers teams can trust.</p>
-      </article>
-    </div>
-    <a class="featured-outcome" href="https://dvc.org/blog/bast-ai-use-case-using-dvc-as-a-data-registry-for-explainable-offline-ready-ai/" target="_blank" rel="noopener">
-      <div class="featured-outcome-top">
-        <span class="case-badge">Lead feature on DVC's blog</span>
-        <span>DVC case study</span>
-      </div>
-      <h2>Explainable, offline-ready medical AI &mdash; with the evidence chain intact.</h2>
-      <p>How Bast uses a data registry as the system of record for an unstructured AI pipeline, making every answer traceable through context, source page, document version, and pipeline outputs.</p>
-    </a>
-
-    <p class="case-sector">Education</p>
-    <div class="card-grid card-grid-2">
-      <article class="card">
-        <p class="card-kicker">Metropolitan University</p>
-        <h3>An AI student advisor, piloted.</h3>
-        <p>Personalized guidance grounded in the university's own policies and programs.</p>
-      </article>
-      <article class="card">
-        <p class="card-kicker">Maryville University</p>
-        <h3>Social learning companions that kept nursing students enrolled.</h3>
-        <p>Explainable, scalable support students actually engaged with.</p>
-        <p class="metric-line"><strong>$1.2M</strong> saved in the first semester &middot; <strong>12%</strong> lower nursing attrition</p>
-        <a class="card-link" href="#resources">Get the full case study (PDF) &rarr;</a>
-      </article>
-    </div>
-  </section>
-
   <section id="ownership" class="section ownership section-plain" aria-labelledby="own-title">
     <div class="section-heading">
       <p class="section-kicker">Your control</p>
@@ -335,40 +315,6 @@
       <li><strong>Governed.</strong> Scope and eligibility are enforced before generation, not after.</li>
       <li><strong>Deployable your way.</strong> Hosted, private cloud, or fully on prem.</li>
     </ul>
-  </section>
-
-  <section id="resources" class="section resources section-plain" aria-labelledby="resources-title">
-    <div class="section-heading">
-      <p class="section-kicker">Take it with you</p>
-      <h2 id="resources-title">The proof, in your inbox.</h2>
-      <p>Two reads that show the work behind the claims. Tell us where to send them &mdash; give to get.</p>
-    </div>
-    <div class="card-grid card-grid-2">
-      <article class="card resource-card">
-        <p class="card-kicker">Technical 2-pager</p>
-        <h3>Hallucination prevention &amp; compute reduction.</h3>
-        <p>How grounded guardrails stop hallucination, and why Bast uses <strong>70&ndash;85% fewer tokens per query</strong> than a standard RAG architecture.</p>
-        <form class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" novalidate>
-          <div class="gate-row">
-            <input type="email" name="email" aria-label="Work email for the technical 2-pager" placeholder="you@organization.com" autocomplete="email" required>
-            <button class="button button-primary" type="submit">Get the PDF</button>
-          </div>
-          <p class="gate-note" data-gate-status aria-live="polite">Add your work email and the download starts right away.</p>
-        </form>
-      </article>
-      <article class="card resource-card">
-        <p class="card-kicker">Case study</p>
-        <h3>Maryville University, in full.</h3>
-        <p>Social learning companions that saved <strong>$1.2M</strong> in the first semester and cut nursing attrition <strong>12%</strong> &mdash; the whole story.</p>
-        <form class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" novalidate>
-          <div class="gate-row">
-            <input type="email" name="email" aria-label="Work email for the Maryville case study" placeholder="you@organization.com" autocomplete="email" required>
-            <button class="button button-primary" type="submit">Get the PDF</button>
-          </div>
-          <p class="gate-note" data-gate-status aria-live="polite">Add your work email and the download starts right away.</p>
-        </form>
-      </article>
-    </div>
   </section>
 
   <section id="contact" class="section contact" aria-labelledby="contact-title">

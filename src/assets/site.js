@@ -144,6 +144,20 @@
   function handleGateForms() {
     const endpoint = (window.BAST_LEAD_ENDPOINT || "").trim();
 
+    document.querySelectorAll(".download-trigger[aria-controls]").forEach(function(trigger) {
+      const target = document.getElementById(trigger.getAttribute("aria-controls"));
+      if (!target) return;
+      trigger.addEventListener("click", function() {
+        const open = target.hidden;
+        target.hidden = !open;
+        trigger.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) {
+          const input = target.querySelector('input[type="email"]');
+          if (input) input.focus();
+        }
+      });
+    });
+
     document.querySelectorAll("[data-gate-form]").forEach(function(form) {
       const status = form.querySelector("[data-gate-status]");
       const input = form.querySelector('input[type="email"]');
