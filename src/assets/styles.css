@@ -72,6 +72,30 @@
 
   --font-display: "Estedad", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
+  /* Type scale — one role per size, aligned to the @bast/shared-styles ramp.
+     Fit form to function:
+       display/h2 -> thin (200), the elegant high-impact voice
+       h3         -> light (300), large statements
+       title      -> medium (500), functional card/component headings
+       eyebrow    -> semibold (600), 19px slate, orients the reader
+       label      -> semibold (600), 12px accent, tags things
+       body*      -> regular (400) */
+  --fs-display: clamp(2.6rem, 5.6vw, 4.25rem);
+  --fs-h2: clamp(2rem, 4.2vw, 3rem);
+  --fs-h3: clamp(1.6rem, 2.7vw, 2.05rem);
+  --fs-title: 1.1875rem;   /* 19px — card & component headings */
+  --fs-eyebrow: 1.1875rem; /* 19px — section eyebrows / kickers */
+  --fs-label: 0.75rem;     /* 12px — micro-labels, tags, footer heads */
+  --fs-body-lg: clamp(1.0625rem, 1.5vw, 1.1875rem); /* lede / intros */
+  --fs-body: 1rem;         /* 16px — body, lists, nav, controls */
+  --fs-body-sm: 0.9375rem; /* 15px — card copy, secondary links */
+  --fs-caption: 0.8125rem; /* 13px — helper notes */
+
+  --fw-thin: 200;
+  --fw-light: 300;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
   /* Neumorphic soft-UI shadows tuned for the #dde3e9 paper */
   --neu-raise:
     8px 8px 20px rgba(22, 27, 29, 0.14),
@@ -150,8 +174,8 @@ button:focus-visible {
 .section-kicker {
   margin: 0;
   color: var(--quiet);
-  font-size: clamp(1.05rem, 1.7vw, 1.2rem);
-  font-weight: 600;
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -160,8 +184,8 @@ button:focus-visible {
 .panel-label {
   margin: 0;
   color: var(--accent-text);
-  font-size: 0.76rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -216,8 +240,8 @@ p {
   flex-wrap: wrap;
   gap: 22px;
   color: var(--quiet);
-  font-size: 0.94rem;
-  font-weight: 500;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
 }
 
 .site-nav a {
@@ -249,8 +273,8 @@ p {
 .questions li {
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.9vw, 2.05rem);
-  font-weight: 200;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-thin);
   letter-spacing: -0.025em;
   line-height: 1.14;
   margin: 0.06em 0;
@@ -291,8 +315,8 @@ p {
 }
 
 h1 {
-  font-size: clamp(2.6rem, 5.6vw, 4.25rem);
-  font-weight: 200;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-thin);
   line-height: 1.02;
   margin-bottom: 0.32em;
 }
@@ -312,7 +336,7 @@ h1 span {
 .lede {
   max-width: 36rem;
   color: var(--quiet);
-  font-size: clamp(1.05rem, 1.6vw, 1.18rem);
+  font-size: var(--fs-body-lg);
   line-height: 1.5;
 }
 
@@ -333,8 +357,8 @@ h1 span {
   border: none;
   cursor: pointer;
   font: inherit;
-  font-size: 0.96rem;
-  font-weight: 600;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
   letter-spacing: -0.01em;
   text-decoration: none;
   padding: 0.75rem 1.35rem;
@@ -417,8 +441,8 @@ h1 span {
   border-radius: 999px;
   background: var(--grad);
   color: #fff;
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.06em;
   padding: 0.34rem 0.72rem;
   text-transform: uppercase;
@@ -488,8 +512,8 @@ h1 span {
   background: none;
   cursor: pointer;
   font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
   color: var(--accent-text);
 }
 
@@ -522,8 +546,8 @@ h1 span {
 
 .section h2 {
   max-width: 20ch;
-  font-size: clamp(2.15rem, 4.6vw, 3.4rem);
-  font-weight: 200;
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-thin);
   line-height: 1.05;
   margin: 0.5rem 0 1rem;
 }
@@ -533,7 +557,7 @@ h1 span {
 .contact p {
   max-width: 680px;
   color: var(--quiet);
-  font-size: clamp(1.05rem, 1.7vw, 1.2rem);
+  font-size: var(--fs-body-lg);
 }
 
 .section-heading {
@@ -596,15 +620,15 @@ h1 span {
 }
 
 .mode-panels h3 {
-  font-size: clamp(1.7rem, 3vw, 2.3rem);
-  font-weight: 300;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
   line-height: 1.08;
   margin: 0.6rem 0 1rem;
 }
 
 .mode-panels p:last-child {
   color: var(--quiet);
-  font-size: 1.08rem;
+  font-size: var(--fs-body-lg);
   margin-bottom: 0;
 }
 
@@ -667,8 +691,8 @@ h1 span {
 
 .demo-player-empty h3 {
   max-width: 12ch;
-  font-size: clamp(1.75rem, 3vw, 2.4rem);
-  font-weight: 300;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
   line-height: 1.02;
   margin: 0;
 }
@@ -713,15 +737,15 @@ h1 span {
 }
 
 .demo-card h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
   line-height: 1.16;
   margin: 0.5rem 0 0.5rem;
 }
 
 .demo-card p:not(.panel-label) {
   color: var(--quiet);
-  font-size: 0.95rem;
+  font-size: var(--fs-body-sm);
   margin-bottom: 0;
 }
 
@@ -736,14 +760,14 @@ h1 span {
 .demo-actions .button {
   min-height: 40px;
   padding: 0.55rem 1rem;
-  font-size: 0.9rem;
+  font-size: var(--fs-body-sm);
 }
 
 .demo-actions a,
 .channel-link {
   color: var(--accent-text);
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
   text-decoration: none;
 }
 
@@ -780,22 +804,22 @@ h1 span {
 
 .proof-list span {
   color: var(--accent-text);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .proof-list h3 {
-  font-size: 1.16rem;
-  font-weight: 500;
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
   line-height: 1.16;
   margin: 0.7rem 0;
 }
 
 .proof-list p {
   color: var(--quiet);
-  font-size: 0.95rem;
+  font-size: var(--fs-body-sm);
   margin-bottom: 0;
 }
 
@@ -828,7 +852,7 @@ h1 span {
   margin: 1.1rem 0 0;
   max-width: 26rem;
   color: var(--quieter);
-  font-size: 0.92rem;
+  font-size: var(--fs-body-sm);
   line-height: 1.5;
 }
 
@@ -847,15 +871,15 @@ h1 span {
 .footer-head {
   margin: 0 0 0.3rem;
   color: var(--ink);
-  font-size: 0.76rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .footer-nav a {
   color: var(--quiet);
-  font-size: 0.92rem;
+  font-size: var(--fs-body-sm);
   text-decoration: none;
 }
 
@@ -873,7 +897,7 @@ h1 span {
   padding-top: 1.5rem;
   border-top: 1px solid var(--line-subtle);
   color: var(--quieter);
-  font-size: 0.85rem;
+  font-size: var(--fs-caption);
 }
 
 .footer-link-btn {
@@ -882,7 +906,7 @@ h1 span {
   background: none;
   cursor: pointer;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: var(--fs-caption);
   color: var(--quiet);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -902,15 +926,15 @@ h1 span {
 .privacy-page h1,
 .not-found h1 {
   max-width: 14ch;
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  font-weight: 200;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-thin);
 }
 
 .privacy-page h2 {
   border-top: 1px solid var(--line-subtle);
   color: var(--accent-text);
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.12em;
   margin: 2rem 0 0.75rem;
   padding-top: 1rem;
@@ -920,7 +944,7 @@ h1 span {
 .privacy-page p,
 .privacy-page li {
   color: var(--quiet);
-  font-size: 1rem;
+  font-size: var(--fs-body);
 }
 
 .privacy-page li + li {
@@ -930,8 +954,8 @@ h1 span {
 .back-link {
   color: var(--quiet);
   display: inline-flex;
-  font-size: 0.92rem;
-  font-weight: 500;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
   margin-bottom: 1.5rem;
   text-decoration: none;
 }
@@ -958,14 +982,14 @@ h1 span {
 
 .investor-hero h1 {
   max-width: 12ch;
-  font-size: clamp(3rem, 7vw, 5rem);
-  font-weight: 200;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-thin);
 }
 
 .investor-note {
   max-width: 38rem;
   color: var(--quieter);
-  font-size: 0.96rem;
+  font-size: var(--fs-body-sm);
   margin-top: 1rem;
 }
 
@@ -1012,8 +1036,8 @@ h1 span {
 .investor-points span {
   color: var(--accent-text);
   display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.1em;
   margin-bottom: 0.65rem;
   text-transform: uppercase;
@@ -1053,7 +1077,7 @@ h1 span {
 
 .not-found p:not(.eyebrow) {
   color: var(--quiet);
-  font-size: 1.12rem;
+  font-size: var(--fs-body-lg);
 }
 
 /* ---- Rotator animation ---- */
@@ -1143,19 +1167,19 @@ h1 span {
 
 .outcome-stat span {
   color: var(--quieter);
-  font-size: 0.85rem;
+  font-size: var(--fs-body-sm);
 }
 
 .outcome-card h3 {
-  font-size: 1.28rem;
-  font-weight: 500;
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
   line-height: 1.14;
   margin: 0.45rem 0 0.55rem;
 }
 
 .outcome-card > p:not(.card-kicker):not(.outcome-stat) {
   color: var(--quiet);
-  font-size: 0.95rem;
+  font-size: var(--fs-body-sm);
   margin: 0;
 }
 
@@ -1194,22 +1218,22 @@ h1 span {
 .card-kicker {
   margin: 0;
   color: var(--accent-text);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .card h3 {
-  font-size: 1.16rem;
-  font-weight: 500;
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
   line-height: 1.16;
   margin: 0.7rem 0 0.5rem;
 }
 
 .card p {
   color: var(--quiet);
-  font-size: 0.95rem;
+  font-size: var(--fs-body-sm);
   margin: 0;
 }
 
@@ -1250,7 +1274,7 @@ h1 span {
   position: relative;
   padding-left: 1.6rem;
   color: var(--quiet);
-  font-size: 1.02rem;
+  font-size: var(--fs-body-lg);
   line-height: 1.5;
 }
 
@@ -1290,8 +1314,8 @@ h1 span {
 
 .contact-form label {
   color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
 }
 
 .contact-form .optional {
@@ -1337,7 +1361,7 @@ h1 span {
 .form-note {
   margin: 0;
   color: var(--quiet);
-  font-size: 0.92rem;
+  font-size: var(--fs-body-sm);
 }
 
 .form-note.is-error {
@@ -1353,8 +1377,8 @@ h1 span {
   display: inline-flex;
   margin-top: 0.9rem;
   color: var(--accent-text);
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
   text-decoration: none;
 }
 
@@ -1400,7 +1424,7 @@ h1 span {
 .gate-note {
   margin: 0.65rem 0 0;
   color: var(--quieter);
-  font-size: 0.85rem;
+  font-size: var(--fs-caption);
 }
 
 .gate-note.is-error {
@@ -1502,7 +1526,7 @@ h1 span {
 
   .site-nav {
     gap: 14px;
-    font-size: 0.9rem;
+    font-size: var(--fs-body-sm);
   }
 
   .featured-outcome-proof {
