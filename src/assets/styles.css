@@ -997,6 +997,189 @@ h1 span {
   }
 }
 
+/* ---- Card grids (offerings, technologies, case studies) ---- */
+.card-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 2.2rem;
+}
+
+.card-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card {
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--neu-raise-sm);
+  padding: 1.4rem;
+}
+
+.card-kicker {
+  margin: 0;
+  color: var(--accent-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  font-size: 1.16rem;
+  font-weight: 500;
+  line-height: 1.16;
+  margin: 0.7rem 0 0.5rem;
+}
+
+.card p {
+  color: var(--quiet);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.card .metric-line {
+  color: var(--ink);
+  margin-top: 0.85rem;
+}
+
+.card .metric-line strong {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.case-sector {
+  margin: 2.6rem 0 0;
+  color: var(--quiet);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.case-studies .featured-outcome {
+  margin-top: 16px;
+}
+
+/* ---- Data ownership ---- */
+.ownership-list {
+  list-style: none;
+  margin: 2.2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 44px;
+}
+
+.ownership-list li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--quiet);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.ownership-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 3px;
+  background: var(--grad);
+}
+
+.ownership-list strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- Contact form ---- */
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 2.2rem;
+  max-width: 720px;
+}
+
+.contact-form .field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.contact-form .field-full {
+  grid-column: 1 / -1;
+}
+
+.contact-form label {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.contact-form .optional {
+  color: var(--quieter);
+  font-weight: 400;
+}
+
+.contact-form input,
+.contact-form textarea {
+  font: inherit;
+  color: var(--ink);
+  width: 100%;
+  background: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--neu-inset);
+  padding: 0.75rem 0.9rem;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 3px solid rgba(0, 144, 204, 0.45);
+  outline-offset: 2px;
+}
+
+.contact-form input[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"] {
+  box-shadow: var(--neu-inset), inset 0 0 0 2px #ed3b30;
+}
+
+.form-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-note {
+  margin: 0;
+  color: var(--quiet);
+  font-size: 0.92rem;
+}
+
+.form-note.is-error {
+  color: #991b1b;
+}
+
+.form-note.is-success {
+  color: #065f46;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 860px) {
   .site-header {
@@ -1055,6 +1238,16 @@ h1 span {
   .proof-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .card-grid-3,
+  .card-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ownership-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1090,6 +1283,16 @@ h1 span {
   }
 
   .proof-list {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid-2,
+  .card-grid-3,
+  .card-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form {
     grid-template-columns: 1fr;
   }
 

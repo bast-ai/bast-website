@@ -54,7 +54,86 @@
     }
   }
 
+  function setFormStatus(el, message, kind) {
+    if (!el) return;
+    el.textContent = message;
+    el.classList.remove("is-error", "is-success");
+    if (kind) el.classList.add("is-" + kind);
+  }
+
+  function composeMailto(data) {
+    const subject = "Build with Bast - " + (data.organization || data.name || "inquiry");
+    const body =
+      "Name: " + data.name + "\n" +
+      "Email: " + data.email + "\n" +
+      "Organization: " + (data.organization || "-") + "\n\n" +
+      data.message;
+    window.location.href =
+      "mailto:hello@bast.ai?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
+  function handleContactForm() {
+    const form = document.querySelector("[data-contact-form]");
+    if (!form) return;
+
+    const status = form.querySelector("[data-form-status]");
+    const endpoint = (window.BAST_CONTACT_ENDPOINT || "").trim();
+    const field = (name) => form.elements.namedItem(name);
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let firstInvalid = null;
+      form.querySelectorAll("input, textarea").forEach((control) => {
+        const invalid = !control.checkValidity();
+        control.setAttribute("aria-invalid", invalid ? "true" : "false");
+        if (invalid && !firstInvalid) firstInvalid = control;
+      });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        setFormStatus(status, "Please complete the highlighted fields.", "error");
+        return;
+      }
+
+      const data = {
+        name: field("name").value.trim(),
+        email: field("email").value.trim(),
+        organization: field("organization").value.trim(),
+        message: field("message").value.trim()
+      };
+
+      if (typeof window.bastTrack === "function") {
+        window.bastTrack("generate_lead", { method: "contact_form", page_path: window.location.pathname });
+        window.bastTrack("form_submit", { form_id: "contact", page_path: window.location.pathname });
+      }
+
+      if (!endpoint) {
+        setFormStatus(status, "Opening your email app to finish sending…", null);
+        composeMailto(data);
+        return;
+      }
+
+      setFormStatus(status, "Sending…", null);
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then((response) => {
+        if (!response.ok) throw new Error("Request failed");
+        form.reset();
+        setFormStatus(status, "Thanks — we'll be in touch shortly.", "success");
+      }).catch(() => {
+        setFormStatus(status, "Opening your email app to send instead…", null);
+        composeMailto(data);
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
+    handleContactForm();
+
     document.querySelectorAll("[data-mode]").forEach((tab) => {
       tab.addEventListener("click", function() {
         setMode(tab.getAttribute("data-mode"));
