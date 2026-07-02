@@ -1372,6 +1372,27 @@ h1 span {
   color: #065f46;
 }
 
+/* ---- Follow / subscribe row ---- */
+.follow {
+  max-width: 720px;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.follow-note {
+  margin: 0.5rem 0 0;
+  color: var(--quiet);
+  font-size: var(--fs-body-sm);
+}
+
+.follow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1.1rem;
+}
+
 /* ---- Card link + gated downloads ---- */
 .card-link {
   display: inline-flex;
