@@ -59,8 +59,15 @@ Home sections: Hero (3 value-prop lines) · "The shift" · Proof modes (Answer/R
 2. **Contact: form or mailto?** New site is mailto-only ("no form, no gate" on
    investors). A form is net-new UI + a privacy/consent decision (form data).
 3. **Claims to source** before shipping (CLAUDE.md: claims traceable to
-   evidence): 70% compute reduction, 8-week deployment, Maryville 12% / $1.2M.
-   Need a citation or internal doc for each.
+   evidence):
+   - Compute reduction — RESOLVED. Worded as "70–85% fewer tokens per query
+     vs. a standard RAG architecture" (not "70% better than GPT-4"), sourced to
+     the gated 2-pager `assets/bast-compute-reduction-2pager.pdf`.
+   - "8-week deployment" — DROPPED per Beth (never added to the new site).
+   - Maryville 12% / $1.2M — sourced to the gated case-study PDF
+     `assets/bast-maryville-case-study.pdf`.
+   Both PDFs are gated behind an email ("give to get"); real lead capture needs
+   `window.BAST_LEAD_ENDPOINT` wired (ties to Duplo / #2).
 4. **Partner logos** — do we have permission + assets (SVand/or PNG) for
    Maryville, Simwerx, Craig, Northwestern, Metropolitan?
 5. **Positioning line** — live leads with "Safe AI"; new site leads with

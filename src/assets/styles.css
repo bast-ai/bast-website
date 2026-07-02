@@ -1180,6 +1180,69 @@ h1 span {
   color: #065f46;
 }
 
+/* ---- Card link + gated downloads ---- */
+.card-link {
+  display: inline-flex;
+  margin-top: 0.9rem;
+  color: var(--accent-text);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  color: var(--accent-hover);
+}
+
+.gate-form {
+  margin-top: 1.2rem;
+}
+
+.gate-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gate-row input {
+  flex: 1 1 200px;
+  min-width: 0;
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--neu-inset);
+  padding: 0.7rem 0.85rem;
+}
+
+.gate-row input:focus-visible {
+  outline: 3px solid rgba(0, 144, 204, 0.45);
+  outline-offset: 2px;
+}
+
+.gate-row input[aria-invalid="true"] {
+  box-shadow: var(--neu-inset), inset 0 0 0 2px #ed3b30;
+}
+
+.gate-row .button {
+  flex: 0 0 auto;
+}
+
+.gate-note {
+  margin: 0.65rem 0 0;
+  color: var(--quieter);
+  font-size: 0.85rem;
+}
+
+.gate-note.is-error {
+  color: #991b1b;
+}
+
+.gate-note.is-success {
+  color: #065f46;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 860px) {
   .site-header {

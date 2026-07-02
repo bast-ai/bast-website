@@ -131,8 +131,66 @@
     });
   }
 
+  function triggerDownload(fileUrl, fileName) {
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = fileName || "";
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  function handleGateForms() {
+    const endpoint = (window.BAST_LEAD_ENDPOINT || "").trim();
+
+    document.querySelectorAll("[data-gate-form]").forEach(function(form) {
+      const status = form.querySelector("[data-gate-status]");
+      const input = form.querySelector('input[type="email"]');
+      const fileUrl = form.getAttribute("data-file");
+      const resource = form.getAttribute("data-resource") || fileUrl;
+      const fileName = (fileUrl || "").split("/").pop();
+
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const valid = input.checkValidity();
+        input.setAttribute("aria-invalid", valid ? "false" : "true");
+        if (!valid) {
+          input.focus();
+          setFormStatus(status, "Please enter a valid work email.", "error");
+          return;
+        }
+
+        const email = input.value.trim();
+
+        // Note: email (PII) is only sent to the lead endpoint, never to GA.
+        if (typeof window.bastTrack === "function") {
+          window.bastTrack("generate_lead", { method: "gated_download", resource: resource, page_path: window.location.pathname });
+          window.bastTrack("file_download", { file_name: fileName, resource: resource, file_extension: "pdf", page_path: window.location.pathname });
+        }
+
+        const deliver = endpoint
+          ? fetch(endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: email, resource: resource })
+            }).catch(function() {})
+          : Promise.resolve();
+
+        deliver.then(function() {
+          triggerDownload(fileUrl, fileName);
+          form.reset();
+          input.setAttribute("aria-invalid", "false");
+          setFormStatus(status, "Thanks — your download is starting.", "success");
+        });
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     handleContactForm();
+    handleGateForms();
 
     document.querySelectorAll("[data-mode]").forEach((tab) => {
       tab.addEventListener("click", function() {
