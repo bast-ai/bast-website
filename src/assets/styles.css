@@ -257,33 +257,36 @@ p {
 .hero {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: clamp(2rem, 4vw, 3.25rem) 0 clamp(2rem, 4vw, 3.25rem);
+  padding: clamp(2rem, 5vh, 4rem) 0;
   min-height: calc(100dvh - 96px);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
 }
 
-.hero-copy {
-  max-width: none;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.hero-lead {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .questions {
+  grid-column: 2;
+  grid-row: 1;
   list-style: none;
-  margin: 2.5rem 0 1.4rem;
+  margin: 0;
   padding: 0;
+  text-align: right;
 }
 
 .questions li {
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: var(--fs-display);
+  font-size: var(--fs-h2);
   font-weight: var(--fw-thin);
-  letter-spacing: -0.025em;
-  line-height: 1.07;
-  margin: 0.1em 0;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0.4em 0;
 }
 
 .hero-rotator {
@@ -328,8 +331,9 @@ h1 {
 }
 
 .hero h1 {
-  white-space: nowrap;
-  margin-top: 4rem;
+  font-size: clamp(3rem, 6.5vw, 5rem);
+  line-height: 1.0;
+  margin: 0 0 1.4rem;
 }
 
 h1 span {
@@ -338,6 +342,16 @@ h1 span {
   background-clip: text;
   color: transparent;
   margin-right: 0.14em;
+}
+
+.questions li strong,
+.hero h1 strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hero h1 span {
+  font-weight: 600;
 }
 
 .lede {
@@ -351,9 +365,7 @@ h1 span {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: auto;
-  margin-bottom: clamp(4rem, 9vh, 7rem);
-  padding-top: 2.5rem;
+  margin-top: 2rem;
 }
 
 /* ---- Buttons ---- */
@@ -448,7 +460,7 @@ h1 span {
   align-items: center;
   min-height: 28px;
   border-radius: 999px;
-  background: var(--grad);
+  background: linear-gradient(120deg, #0090cc 0%, #2b6cb0 100%);
   color: #fff;
   font-size: var(--fs-label);
   font-weight: var(--fw-semibold);
@@ -1164,7 +1176,7 @@ h1 span {
 
 .outcome-stat strong {
   font-size: 2rem;
-  font-weight: 200;
+  font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1;
   white-space: nowrap;
@@ -1480,6 +1492,18 @@ h1 span {
   .hero {
     grid-template-columns: 1fr;
     padding-top: 3rem;
+    min-height: 0;
+  }
+
+  .hero .questions {
+    grid-column: 1;
+    grid-row: auto;
+    text-align: left;
+  }
+
+  .hero-lead {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .hero h1 {

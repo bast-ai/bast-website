@@ -23,7 +23,7 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Bast home">
+  <a class="brand" href="index.html" aria-label="Bast home">
     <img src="assets/bast-logo.svg" alt="Bast">
   </a>
   <nav class="site-nav" aria-label="Primary">
@@ -37,14 +37,14 @@
 
 <main id="main">
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <ul class="questions" aria-label="Questions Bast answers">
-        <li>Where is AI that doesn't hallucinate?</li>
-        <li>Where is AI that I can build myself?</li>
-        <li>Where is AI that shows its work?</li>
-      </ul>
-      <h1 id="hero-title"><span>Here.</span> It's called Bast.</h1>
-      <p class="lede">Bast grounds AI in your approved knowledge, ontology, and source material, so every answer can be traced, checked, or refused.</p>
+    <ul class="questions" aria-label="Questions Bast answers">
+      <li>Where is AI that <strong>doesn't hallucinate?</strong></li>
+      <li>Where is AI that I can <strong>build myself?</strong></li>
+      <li>Where is AI that <strong>shows its work?</strong></li>
+    </ul>
+    <div class="hero-lead">
+      <h1 id="hero-title"><span>Here.</span> It's called <strong>Bast.</strong></h1>
+      <p class="lede">Every answer can be traced, checked, or refused, because Bast grounds AI in <strong>your</strong> approved knowledge and source material.</p>
       <div class="hero-actions">
         <button class="button button-primary" type="button" data-scroll-target="#demos">See it show its work</button>
         <a class="button button-secondary" href="#contact">Build with us</a>
@@ -59,7 +59,7 @@
         <p class="card-kicker">DVC case study</p>
         <p class="outcome-stat"><span class="case-badge">Lead feature on DVC's blog</span></p>
         <h3>Explainable, offline-ready medical AI.</h3>
-        <p>Every answer traceable through context, source page, document version, and pipeline outputs.</p>
+        <p>Every answer traces back to its context, source page, version, and pipeline.</p>
         <a class="card-link" href="https://dvc.org/blog/bast-ai-use-case-using-dvc-as-a-data-registry-for-explainable-offline-ready-ai/" target="_blank" rel="noopener">Read the DVC feature &rarr;</a>
       </article>
 
@@ -67,7 +67,7 @@
         <p class="card-kicker">Maryville University</p>
         <p class="outcome-stat"><strong>$1.2M</strong> <span>saved in the first semester</span></p>
         <h3>Personalized support improved nursing-student retention.</h3>
-        <p>Social learning companions kept students engaged with a scalable, explainable path to support.</p>
+        <p>Social learning companions kept students engaged &mdash; a scalable, explainable path to support.</p>
         <div class="outcome-download">
           <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-maryville">Get the case study (PDF) &rarr;</button>
           <form id="gate-maryville" class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" hidden novalidate>
@@ -84,7 +84,7 @@
         <p class="card-kicker">Compute control</p>
         <p class="outcome-stat"><strong>70&ndash;85%</strong> <span>fewer tokens vs. standard RAG</span></p>
         <h3>Fewer tokens, because you control what the model sees.</h3>
-        <p>Bast decides exactly what reaches the LLM, so the system is deterministic and you own the inputs to any GenAI model &mdash; then deliver each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
+        <p>Bast controls exactly what reaches the model, so it's deterministic and you own every input &mdash; then delivers each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
         <div class="outcome-download">
           <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-compute">Get the technical 2-pager (PDF) &rarr;</button>
           <form id="gate-compute" class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" hidden novalidate>
@@ -101,8 +101,8 @@
 
   <section id="how" class="section section-plain" aria-labelledby="how-title">
     <p class="section-kicker">The shift</p>
-    <h2 id="how-title">Do not ask the model to be honest. Limit what it can say.</h2>
-    <p>Bast sits between institutional knowledge and AI output. Before anything reaches a user, the system checks scope, retrieves only eligible knowledge, scores relevance, routes to the right answering behavior, and refuses when the support is missing.</p>
+    <h2 id="how-title">Don't ask the model to be honest. Limit what it can say.</h2>
+    <p>Bast sits between your knowledge and the model's output. Before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply.</p>
   </section>
 
   <section class="section interaction" aria-labelledby="work-title">
@@ -121,17 +121,17 @@
       <article id="panel-answer" role="tabpanel" aria-labelledby="tab-answer" data-panel="answer">
         <p class="panel-label">Supported question</p>
         <h3>Answers come from approved knowledge.</h3>
-        <p>The model sees only the narrow context that passed the scope and relevance checks. The response is written for the person asking, but anchored in the institution's own source material.</p>
+        <p>The model sees only what passed the checks. Answers are written for the person asking, grounded in your own sources.</p>
       </article>
       <article id="panel-refuse" role="tabpanel" aria-labelledby="tab-refuse" data-panel="refuse" hidden>
         <p class="panel-label">Unsupported question</p>
         <h3>A clean no is better than a confident guess.</h3>
-        <p>If the request is out of scope or the knowledge base cannot support an answer, Bast refuses before the model improvises.</p>
+        <p>If nothing supports an answer, Bast refuses before the model guesses.</p>
       </article>
       <article id="panel-trace" role="tabpanel" aria-labelledby="tab-trace" data-panel="trace" hidden>
         <p class="panel-label">Institutional trace</p>
         <h3>The route is inspectable.</h3>
-        <p>Teams can see the classification, source set, relevance score, injected context, and answer path behind a turn. The user gets clarity. The institution gets accountability.</p>
+        <p>See the sources, scores, and path behind every answer. Users get clarity; you get accountability.</p>
       </article>
     </div>
   </section>
@@ -140,28 +140,28 @@
     <div class="section-heading">
       <p class="section-kicker">What you deploy</p>
       <h2 id="offerings-title">Four layers, one governed system of record for AI.</h2>
-      <p>Bast is modular infrastructure. Run the whole stack or only the layers you need &mdash; hosted, private cloud, or on prem.</p>
+      <p>Modular infrastructure. Run the whole stack or just the layers you need &mdash; hosted, private cloud, or on premises.</p>
     </div>
     <div class="card-grid card-grid-4">
       <article class="card">
         <p class="card-kicker">AI infrastructure</p>
-        <h3>Microservices you host or run on prem.</h3>
-        <p>A Kubernetes microservices architecture that meets your operating and compliance constraints.</p>
+        <h3>Microservices you host or run on premises.</h3>
+        <p>Kubernetes microservices that fit your operating and compliance needs.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Data management</p>
         <h3>Fully versioned, ontology-aware storage.</h3>
-        <p>A data pipeline with persistent, versioned storage and ontological natural-language understanding.</p>
+        <p>Versioned storage and ontology-aware language understanding, built in.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Orchestration</p>
         <h3>Analysis, chat, search, continuous learning.</h3>
-        <p>Route work to the right behavior, personalize responsibly, and keep improving from approved knowledge.</p>
+        <p>Route each request to the right behavior and keep improving from approved knowledge.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Application</p>
         <h3>Flexible end-user experiences.</h3>
-        <p>Integrations and interfaces that put governed answers in front of the people who need them.</p>
+        <p>Interfaces that put governed answers in front of the people who need them.</p>
       </article>
     </div>
   </section>
@@ -175,32 +175,32 @@
       <article class="card">
         <p class="card-kicker">Data pipeline</p>
         <h3>Raw data becomes structured knowledge.</h3>
-        <p>Ingest and transform source material into a knowledge base the system can reason over.</p>
+        <p>Turn raw source material into a knowledge base the system can reason over.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Natural-language understanding</p>
         <h3>Grounded meaning, controlled vocabulary.</h3>
-        <p>Language is interpreted against the institution's own terms, not a generic guess.</p>
+        <p>Language is read against your own terms, not a generic guess.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Knowledge graphs</p>
         <h3>Traceable, context-aware relationships.</h3>
-        <p>Answers follow explicit relationships, so the route to a response stays inspectable.</p>
+        <p>Answers follow explicit relationships, so the route stays inspectable.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Model Context Protocol</p>
         <h3>Standardized context, cleanly injected.</h3>
-        <p>Built on MCP so the right context reaches the model without exposing everything else.</p>
+        <p>Built on MCP, so the right context reaches the model and nothing else does.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Hybrid intelligence</p>
         <h3>Neural and symbolic reasoning together.</h3>
-        <p>Combine model fluency with symbolic control for answers that hold up.</p>
+        <p>Model fluency plus symbolic control, for answers that hold up.</p>
       </article>
       <article class="card">
         <p class="card-kicker">Explainable UI layer</p>
         <h3>Human-readable outputs, every time.</h3>
-        <p>Generate responses people can read, check, and act on with confidence.</p>
+        <p>Responses people can read, check, and act on with confidence.</p>
       </article>
     </div>
   </section>
@@ -209,7 +209,7 @@
     <div class="section-heading">
       <p class="section-kicker">Watch the control layer work</p>
       <h2 id="demos-title">Seeing the refusal is as important as seeing the answer.</h2>
-      <p>These demos show Bast from the admin console, knowledge manager, and end-user experience: approved knowledge becomes the boundary, the gate checks support, and unsupported questions stop before a guess can ship.</p>
+      <p>See Bast from the admin console, knowledge manager, and end-user view: approved knowledge sets the boundary, and unsupported questions stop before a guess can ship.</p>
     </div>
 
     <div class="demo-layout">
@@ -226,7 +226,7 @@
         <article class="demo-card">
           <p class="panel-label">Product walkthrough</p>
           <h3>Bast Admin Dashboard and User Experience</h3>
-          <p>Organization admin, knowledge manager, and end user: the full journey from source knowledge to a working CAT.</p>
+          <p>Admin, knowledge manager, and end user: the full path from source knowledge to a working CAT.</p>
           <div class="demo-actions">
             <button class="button button-primary" type="button" aria-label="Load Bast Admin Dashboard and User Experience demo" data-video-id="nS74QjwSHQA" data-video-title="Bast Admin Dashboard and User Experience">Load demo</button>
             <a href="https://www.youtube.com/watch?v=nS74QjwSHQA">Watch on YouTube</a>
@@ -246,7 +246,7 @@
         <article class="demo-card">
           <p class="panel-label">Healthcare ontology</p>
           <h3>Ontologies for personalized patient care</h3>
-          <p>The same patient knowledge can produce different experiences for patients, caregivers, and providers.</p>
+          <p>The same patient knowledge, shaped for patients, caregivers, and providers.</p>
           <div class="demo-actions">
             <button class="button button-secondary" type="button" aria-label="Load ontologies for personalized patient care demo" data-video-id="Sa-uNxoRjos" data-video-title="Ontologies for personalized patient care">Load demo</button>
             <a href="https://www.youtube.com/watch?v=Sa-uNxoRjos">Watch on YouTube</a>
@@ -261,28 +261,28 @@
   <section id="proof" class="section proof-grid" aria-labelledby="proof-title">
     <div class="section-heading">
       <p class="section-kicker">Built for places where answers matter</p>
-      <h2 id="proof-title">Healthcare, education, and operational teams use Bast when "the model said so" is not enough.</h2>
+      <h2 id="proof-title">Healthcare, education, and ops teams use Bast when "the model said so" isn't enough.</h2>
     </div>
     <div class="proof-list">
       <article>
         <span>Grounded</span>
         <h3>Every factual answer can point back.</h3>
-        <p>Source material, ontology, and routing behavior stay connected to the response.</p>
+        <p>Source, ontology, and routing stay tied to the response.</p>
       </article>
       <article>
         <span>Deployable</span>
-        <h3>Hosted, private cloud, or on prem.</h3>
-        <p>The trust layer can meet the operating constraints of the institution.</p>
+        <h3>Hosted, private cloud, or on premises.</h3>
+        <p>The trust layer meets your operating constraints.</p>
       </article>
       <article>
         <span>Efficient</span>
         <h3>Less context, better control.</h3>
-        <p>Relevant knowledge is selected before generation, reducing token load and noise.</p>
+        <p>Relevant knowledge is picked before generation, cutting tokens and noise.</p>
       </article>
       <article>
         <span>Auditable</span>
         <h3>Refusals are part of the system.</h3>
-        <p>Bast records what happened when an answer was blocked, missing, or out of scope.</p>
+        <p>Bast records every blocked, missing, or out-of-scope answer.</p>
       </article>
     </div>
   </section>
@@ -293,11 +293,11 @@
       <h2 id="own-title">Your data, your decisions, your control.</h2>
     </div>
     <ul class="ownership-list">
-      <li><strong>Your IP stays yours.</strong> Institutional knowledge is never repurposed to train someone else's model.</li>
+      <li><strong>Your IP stays yours.</strong> Your knowledge never trains someone else's model.</li>
       <li><strong>Auditable.</strong> Every answer can be reconstructed from its source, version, and route.</li>
       <li><strong>Traceable.</strong> Provenance follows the response, from context to source page.</li>
       <li><strong>Governed.</strong> Scope and eligibility are enforced before generation, not after.</li>
-      <li><strong>Deployable your way.</strong> Hosted, private cloud, or fully on prem.</li>
+      <li><strong>Deployable your way.</strong> Hosted, private cloud, or fully on premises.</li>
     </ul>
   </section>
 
@@ -305,7 +305,7 @@
     <div class="section-heading">
       <p class="section-kicker">Build with us</p>
       <h2 id="contact-title">Bring us the knowledge your AI has to stand behind.</h2>
-      <p>Tell us what your AI needs to answer for. We'll help you turn it into a system that can answer, refuse, and show its work.</p>
+      <p>Tell us what your AI has to answer for. We'll help you build a system that answers, refuses, and shows its work.</p>
     </div>
     <form class="contact-form" aria-labelledby="contact-title" novalidate data-contact-form>
       <div class="field">
@@ -326,7 +326,7 @@
       </div>
       <div class="field-full form-footer">
         <button class="button button-primary" type="submit">Start a conversation</button>
-        <p class="form-note" data-form-status aria-live="polite">We reply from a real person &mdash; no autoresponder.</p>
+        <p class="form-note" data-form-status aria-live="polite">A real person will reply &mdash; no autoresponder.</p>
       </div>
     </form>
 
@@ -345,22 +345,22 @@
 <footer class="site-footer">
   <div class="footer-top">
     <div class="footer-brand">
-      <a class="brand" href="/" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
+      <a class="brand" href="index.html" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
       <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
     </div>
     <nav class="footer-nav" aria-label="Footer">
       <div class="footer-col">
         <p class="footer-head">Product</p>
-        <a href="/#how">How it works</a>
-        <a href="/#offerings">Offerings</a>
-        <a href="/#technology">Technology</a>
-        <a href="/#demos">Demos</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#offerings">Offerings</a>
+        <a href="index.html#technology">Technology</a>
+        <a href="index.html#demos">Demos</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Company</p>
-        <a href="/#proof">Why Bast</a>
+        <a href="index.html#proof">Why Bast</a>
         <a href="investors.html">Investors</a>
-        <a href="/#contact">Contact</a>
+        <a href="index.html#contact">Contact</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Connect</p>
