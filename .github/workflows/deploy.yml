@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+# Builds the static site with production settings and publishes dist/ to
+# GitHub Pages. Custom domain (www.bast.ai) is pinned by src/CNAME, which the
+# build copies into dist/.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege token: read the repo, write Pages, mint the OIDC token
+# actions/deploy-pages needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two Pages deploys at once; let an in-flight run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # pnpm verify = build + check. Production env: real GA id, indexable.
+      # GA_MEASUREMENT_ID comes from a repo variable; check.mjs fails the build
+      # if it is the Beth Rudden site id.
+      - run: pnpm verify
+        env:
+          SITE_ENV: production
+          SITE_URL: https://www.bast.ai
+          ROBOTS_META: "index, follow"
+          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

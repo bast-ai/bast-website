@@ -39,5 +39,7 @@ analytics admin credentials.
 
 ## Deployment
 
-The intended deploy path is Bitbucket Pipelines -> ECR -> DuploCloud service.
-The nginx container serves the static `dist/` output on port 8080.
+The deploy path is GitHub Actions -> GitHub Pages, serving the static `dist/`
+output. `www.bast.ai` points at Pages via GoDaddy DNS; `src/CNAME` pins the
+domain. No containers, nginx, ECR, or DuploCloud. See
+`docs/decisions/2026-07-06-github-pages-hosting.md`.

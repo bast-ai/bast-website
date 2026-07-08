@@ -3,14 +3,13 @@
 Source for the public Bast AI website.
 
 This repo is intentionally small: static HTML, CSS, and JavaScript; a tiny
-Node build script; an nginx runtime image; and Bitbucket Pipelines deployment
-to DuploCloud.
+Node build script; and a GitHub Actions workflow that publishes to GitHub Pages.
 
 ## Structure
 
-- `src/` - source HTML, CSS, JavaScript, and assets
+- `src/` - source HTML, CSS, JavaScript, and assets (`src/CNAME` pins the domain)
 - `scripts/` - local build and repository checks
-- `nginx/` - production nginx template for the Duplo container
+- `.github/workflows/` - GitHub Actions build + Pages deploy
 - `docs/content-claims.md` - evidence and owner notes for public claims
 - `docs/decisions/` - lightweight decision records
 
@@ -40,12 +39,10 @@ If no measurement ID is provided, the consent banner and GA4 loader stay off.
 
 ## Deployment Shape
 
-- Bitbucket is the source of truth.
-- Bitbucket Pipelines builds the static site into an nginx image.
-- The image is pushed to ECR.
-- DuploCloud updates the website service image.
-- `dev` deploys a noindex preview.
-- `main` deploys the production site.
+- GitHub is the source of truth.
+- `.github/workflows/deploy.yml` builds the static site with `pnpm verify`.
+- On push to `main` (or manual run) it publishes `dist/` to GitHub Pages.
+- `www.bast.ai` points at Pages via GoDaddy DNS; `src/CNAME` pins the domain.
 
-The Duplo service names and tenant names in `bitbucket-pipelines.yml` are
-starter defaults and should be confirmed when the services are created.
+Set the `GA_MEASUREMENT_ID` repository variable before the production deploy.
+See `docs/deployment-runbook.md` for the full cutover sequence.
