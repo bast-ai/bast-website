@@ -73,6 +73,14 @@
       "&body=" + encodeURIComponent(body);
   }
 
+  function composeGateMailto(resource) {
+    const subject = "PDF request: " + resource;
+    const body = "I want the " + resource + " please.";
+    window.location.href =
+      "mailto:hello@bast.ai?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
   function handleContactForm() {
     const form = document.querySelector("[data-contact-form]");
     if (!form) return;
@@ -178,26 +186,30 @@
 
         const email = input.value.trim();
 
-        // Note: email (PII) is only sent to the lead endpoint, never to GA.
+        // Note: email (PII) only goes to the lead endpoint or the visitor's own
+        // email app (mailto), never to GA.
         if (typeof window.bastTrack === "function") {
           window.bastTrack("generate_lead", { method: "gated_download", resource: resource, page_path: window.location.pathname });
           window.bastTrack("file_download", { file_name: fileName, resource: resource, file_extension: "pdf", page_path: window.location.pathname });
         }
 
-        const deliver = endpoint
-          ? fetch(endpoint, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: email, resource: resource })
-            }).catch(function() {})
-          : Promise.resolve();
+        form.reset();
+        input.setAttribute("aria-invalid", "false");
 
-        deliver.then(function() {
+        if (endpoint) {
+          // Future CRM path: post the lead and deliver the PDF right away.
+          fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, resource: resource })
+          }).catch(function() {});
           triggerDownload(fileUrl, fileName);
-          form.reset();
-          input.setAttribute("aria-invalid", "false");
           setFormStatus(status, "Thanks — your download is starting.", "success");
-        });
+        } else {
+          // No CRM yet: the visitor emails us and we send the study back.
+          setFormStatus(status, "Opening your email app so we can email you the study.", "success");
+          composeGateMailto(resource);
+        }
       });
     });
   }

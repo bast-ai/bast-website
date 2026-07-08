@@ -257,27 +257,33 @@ p {
 .hero {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(2rem, 4vw, 3.25rem) 0 clamp(2rem, 4vw, 3.25rem);
+  min-height: calc(100dvh - 96px);
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-copy {
-  max-width: 46rem;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .questions {
   list-style: none;
-  margin: 0.85rem 0 1.4rem;
+  margin: 2.5rem 0 1.4rem;
   padding: 0;
 }
 
 .questions li {
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
+  font-size: var(--fs-display);
   font-weight: var(--fw-thin);
   letter-spacing: -0.025em;
-  line-height: 1.14;
-  margin: 0.06em 0;
+  line-height: 1.07;
+  margin: 0.1em 0;
 }
 
 .hero-rotator {
@@ -323,6 +329,7 @@ h1 {
 
 .hero h1 {
   white-space: nowrap;
+  margin-top: 4rem;
 }
 
 h1 span {
@@ -344,7 +351,9 @@ h1 span {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 1.7rem;
+  margin-top: auto;
+  margin-bottom: clamp(4rem, 9vh, 7rem);
+  padding-top: 2.5rem;
 }
 
 /* ---- Buttons ---- */
