@@ -38,15 +38,15 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # pnpm verify = build + check. Production env: real GA id, indexable.
-      # GA_MEASUREMENT_ID comes from a repo variable; check.mjs fails the build
-      # if it is the Beth Rudden site id.
+      # pnpm verify = build + check. Production env: Bast GA id, indexable.
+      # GA_MEASUREMENT_ID can come from a repo variable; otherwise this uses
+      # the current Bast GA4 stream. check.mjs rejects the Beth Rudden site id.
       - run: pnpm verify
         env:
           SITE_ENV: production
           SITE_URL: https://www.bast.ai
           ROBOTS_META: "index, follow"
-          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
+          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID || 'G-0D3N068YJH' }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

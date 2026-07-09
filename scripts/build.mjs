@@ -5,7 +5,8 @@ const root = process.cwd();
 const srcDir = path.join(root, "src");
 const distDir = path.join(root, "dist");
 
-const gaMeasurementId = process.env.GA_MEASUREMENT_ID || "";
+const defaultGaMeasurementId = "G-0D3N068YJH";
+const gaMeasurementId = process.env.GA_MEASUREMENT_ID ?? defaultGaMeasurementId;
 const siteEnv = process.env.SITE_ENV || "local";
 const siteUrl = process.env.SITE_URL || "https://www.bast.ai";
 const robotsMeta = process.env.ROBOTS_META || (siteEnv === "production" ? "index, follow" : "noindex, nofollow");

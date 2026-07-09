@@ -29,13 +29,18 @@ Analytics are opt-in. GA4 does not load unless a visitor chooses "Allow
 analytics." Use a dedicated Bast GA4 web stream measurement ID, not the
 Beth Rudden site ID.
 
-For production builds, pass:
+The build defaults to Bast's current GA4 stream:
 
-```bash
-GA_MEASUREMENT_ID=G-XXXXXXXXXX pnpm build
+```text
+G-0D3N068YJH
 ```
 
-If no measurement ID is provided, the consent banner and GA4 loader stay off.
+To change it without editing code, set the GitHub Actions repository variable
+`GA_MEASUREMENT_ID`. For a local test or one-off override, pass:
+
+```bash
+GA_MEASUREMENT_ID=G-0D3N068YJH pnpm build
+```
 
 ## Deployment Shape
 
