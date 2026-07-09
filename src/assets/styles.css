@@ -1395,6 +1395,29 @@ h1 span {
   color: #065f46;
 }
 
+/* ---- Text-a-human primary CTA + form lead-in ---- */
+.text-cta {
+  margin: 1.6rem 0 2.4rem;
+}
+
+.text-cta .button-primary {
+  min-height: 52px;
+  font-size: var(--fs-body-lg);
+}
+
+.text-cta .form-note {
+  max-width: 42rem;
+  margin-top: 0.95rem;
+}
+
+.form-lead {
+  margin: 0 0 0.9rem;
+}
+
+.form-lead + .contact-form {
+  margin-top: 0;
+}
+
 /* ---- Follow / subscribe row ---- */
 .follow {
   max-width: 720px;

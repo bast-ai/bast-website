@@ -104,7 +104,6 @@
         botcheck: "",
         name: field("name").value.trim(),
         email: field("email").value.trim(),
-        organization: field("organization").value.trim(),
         message: field("message").value.trim()
       };
 
