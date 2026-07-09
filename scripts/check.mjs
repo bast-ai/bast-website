@@ -46,8 +46,61 @@ async function collectFiles(dir) {
   return files;
 }
 
+function assertIncludes(contents, needle, label) {
+  if (!contents.includes(needle)) {
+    throw new Error(`Missing ${label}`);
+  }
+}
+
+function assertExcludes(contents, needle, label) {
+  if (contents.includes(needle)) {
+    throw new Error(`Unexpected ${label}`);
+  }
+}
+
 for (const file of requiredFiles) {
   await exists(file);
+}
+
+const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
+const requiredHomepageSnippets = [
+  {
+    label: "international display phone number",
+    needle: "Text <strong>+1 303-717-6099</strong>",
+  },
+  {
+    label: "E.164 SMS link",
+    needle: "sms:+13037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
+  },
+  {
+    label: "Lucid Therapeutics demo video",
+    needle: 'data-video-id="SjxGRh3G1JI"',
+  },
+  {
+    label: "health and medicine demo video",
+    needle: 'data-video-id="b2l16nkB0f8"',
+  },
+  {
+    label: "ontology demo video",
+    needle: 'data-video-id="Sa-uNxoRjos"',
+  },
+];
+const replacedHomepageSnippets = [
+  {
+    label: "old admin dashboard demo video",
+    needle: 'data-video-id="nS74QjwSHQA"',
+  },
+  {
+    label: "old chat and admin console demo video",
+    needle: 'data-video-id="Q-j02Y1AHEw"',
+  },
+];
+
+for (const { needle, label } of requiredHomepageSnippets) {
+  assertIncludes(indexHtml, needle, label);
+}
+for (const { needle, label } of replacedHomepageSnippets) {
+  assertExcludes(indexHtml, needle, label);
 }
 
 const files = await collectFiles(distDir);
