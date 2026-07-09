@@ -3,7 +3,7 @@
 Read the current file state before touching anything.
 
 This is the public Bast website repo. It should stay boring, portable, and
-easy to reason about.
+easy to understand.
 
 ## Operating Lens
 
