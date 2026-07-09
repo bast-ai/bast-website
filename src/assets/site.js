@@ -73,14 +73,6 @@
       "&body=" + encodeURIComponent(body);
   }
 
-  function composeGateMailto(resource) {
-    const subject = "PDF request: " + resource;
-    const body = "I want the " + resource + " please.";
-    window.location.href =
-      "mailto:hello@bast.ai?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-  }
-
   function handleContactForm() {
     const form = document.querySelector("[data-contact-form]");
     if (!form) return;
@@ -106,6 +98,10 @@
       }
 
       const data = {
+        access_key: window.BAST_CONTACT_ACCESS_KEY || "",
+        subject: "bast.ai contact: " + field("name").value.trim(),
+        from_name: "Bast AI website",
+        botcheck: "",
         name: field("name").value.trim(),
         email: field("email").value.trim(),
         organization: field("organization").value.trim(),
@@ -139,76 +135,19 @@
     });
   }
 
-  function triggerDownload(fileUrl, fileName) {
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = fileName || "";
-    link.rel = "noopener";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }
+  function handlePdfDownloads() {
+    document.querySelectorAll("[data-pdf-download]").forEach(function(link) {
+      link.addEventListener("click", function() {
+        const fileName = (link.getAttribute("href") || "").split("/").pop();
+        const resource = link.getAttribute("data-resource") || fileName;
 
-  function handleGateForms() {
-    const endpoint = (window.BAST_LEAD_ENDPOINT || "").trim();
-
-    document.querySelectorAll(".download-trigger[aria-controls]").forEach(function(trigger) {
-      const target = document.getElementById(trigger.getAttribute("aria-controls"));
-      if (!target) return;
-      trigger.addEventListener("click", function() {
-        const open = target.hidden;
-        target.hidden = !open;
-        trigger.setAttribute("aria-expanded", open ? "true" : "false");
-        if (open) {
-          const input = target.querySelector('input[type="email"]');
-          if (input) input.focus();
-        }
-      });
-    });
-
-    document.querySelectorAll("[data-gate-form]").forEach(function(form) {
-      const status = form.querySelector("[data-gate-status]");
-      const input = form.querySelector('input[type="email"]');
-      const fileUrl = form.getAttribute("data-file");
-      const resource = form.getAttribute("data-resource") || fileUrl;
-      const fileName = (fileUrl || "").split("/").pop();
-
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        const valid = input.checkValidity();
-        input.setAttribute("aria-invalid", valid ? "false" : "true");
-        if (!valid) {
-          input.focus();
-          setFormStatus(status, "Please enter a valid work email.", "error");
-          return;
-        }
-
-        const email = input.value.trim();
-
-        // Note: email (PII) only goes to the lead endpoint or the visitor's own
-        // email app (mailto), never to GA.
         if (typeof window.bastTrack === "function") {
-          window.bastTrack("generate_lead", { method: "gated_download", resource: resource, page_path: window.location.pathname });
-          window.bastTrack("file_download", { file_name: fileName, resource: resource, file_extension: "pdf", page_path: window.location.pathname });
-        }
-
-        form.reset();
-        input.setAttribute("aria-invalid", "false");
-
-        if (endpoint) {
-          // Future CRM path: post the lead and deliver the PDF right away.
-          fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email, resource: resource })
-          }).catch(function() {});
-          triggerDownload(fileUrl, fileName);
-          setFormStatus(status, "Thanks — your download is starting.", "success");
-        } else {
-          // No CRM yet: the visitor emails us and we send the study back.
-          setFormStatus(status, "Opening your email app so we can email you the study.", "success");
-          composeGateMailto(resource);
+          window.bastTrack("file_download", {
+            file_name: fileName,
+            resource: resource,
+            file_extension: "pdf",
+            page_path: window.location.pathname
+          });
         }
       });
     });
@@ -216,7 +155,7 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     handleContactForm();
-    handleGateForms();
+    handlePdfDownloads();
 
     document.querySelectorAll("[data-mode]").forEach((tab) => {
       tab.addEventListener("click", function() {

@@ -528,6 +528,7 @@ h1 span {
 }
 
 .download-trigger {
+  display: inline-block;
   padding: 0;
   border: none;
   background: none;
@@ -536,6 +537,7 @@ h1 span {
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-semibold);
   color: var(--accent-text);
+  text-decoration: none;
 }
 
 .download-trigger:hover {

@@ -16,6 +16,8 @@
 <script>
   window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
   window.BAST_SITE_ENV = "__SITE_ENV__";
+  window.BAST_CONTACT_ENDPOINT = "https://api.web3forms.com/submit";
+  window.BAST_CONTACT_ACCESS_KEY = "659b6a4e-5529-4924-8010-33076aed72c7";
 </script>
 <script src="assets/analytics-consent.js" defer></script>
 <script src="assets/site.js" defer></script>
@@ -69,14 +71,8 @@
         <h3>Personalized support improved nursing-student retention.</h3>
         <p>Social learning companions kept students engaged &mdash; a scalable, explainable path to support.</p>
         <div class="outcome-download">
-          <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-maryville">Get the case study (PDF) &rarr;</button>
-          <form id="gate-maryville" class="gate-form" data-gate-form data-resource="Maryville case study" data-file="assets/bast-maryville-case-study.pdf" hidden novalidate>
-            <div class="gate-row">
-              <input type="email" name="email" aria-label="Work email for the Maryville case study" placeholder="you@organization.com" autocomplete="email" required>
-              <button class="button button-primary" type="submit">Get the PDF</button>
-            </div>
-            <p class="gate-note" data-gate-status aria-live="polite"></p>
-          </form>
+          <a class="download-trigger" href="assets/bast-maryville-case-study.pdf" download
+             data-pdf-download data-resource="Maryville case study">Get the case study (PDF) &rarr;</a>
         </div>
       </article>
 
@@ -86,14 +82,8 @@
         <h3>Fewer tokens, because you control what the model sees.</h3>
         <p>Bast controls exactly what reaches the model, so it's deterministic and you own every input &mdash; then delivers each answer the way people need it: 8th-grade English, Vietnamese, or an analogy.</p>
         <div class="outcome-download">
-          <button class="download-trigger" type="button" aria-expanded="false" aria-controls="gate-compute">Get the technical 2-pager (PDF) &rarr;</button>
-          <form id="gate-compute" class="gate-form" data-gate-form data-resource="Compute reduction 2-pager" data-file="assets/bast-compute-reduction-2pager.pdf" hidden novalidate>
-            <div class="gate-row">
-              <input type="email" name="email" aria-label="Work email for the technical 2-pager" placeholder="you@organization.com" autocomplete="email" required>
-              <button class="button button-primary" type="submit">Get the PDF</button>
-            </div>
-            <p class="gate-note" data-gate-status aria-live="polite"></p>
-          </form>
+          <a class="download-trigger" href="assets/bast-compute-reduction-2pager.pdf" download
+             data-pdf-download data-resource="Compute reduction 2-pager">Get the technical 2-pager (PDF) &rarr;</a>
         </div>
       </article>
     </div>
@@ -327,6 +317,8 @@
       <div class="field-full form-footer">
         <button class="button button-primary" type="submit">Start a conversation</button>
         <p class="form-note" data-form-status aria-live="polite">A real person will reply &mdash; no autoresponder.</p>
+        <p class="form-note">Prefer email? Write to Beth directly:
+          <a href="mailto:beth@bast.ai">beth@bast.ai</a>.</p>
       </div>
     </form>
 
