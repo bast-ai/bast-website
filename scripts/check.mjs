@@ -69,8 +69,8 @@ const requiredHomepageSnippets = [
     needle: "Text <strong>+1 303-717-6099</strong>",
   },
   {
-    label: "E.164 SMS link",
-    needle: "sms:+13037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
+    label: "mobile SMS link",
+    needle: "sms:3037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
   },
   {
     label: "Lucid Therapeutics demo video",
