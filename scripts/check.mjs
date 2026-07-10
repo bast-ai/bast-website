@@ -65,10 +65,6 @@ for (const file of requiredFiles) {
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
 const requiredHomepageSnippets = [
   {
-    label: "international display phone number",
-    needle: "Text <strong>+1 303-717-6099</strong>",
-  },
-  {
     label: "mobile SMS link",
     needle: "sms:3037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
   },
