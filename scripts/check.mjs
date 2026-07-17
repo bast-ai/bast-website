@@ -6,6 +6,7 @@ const distDir = path.join(root, "dist");
 const requiredFiles = [
   "index.html",
   "investors.html",
+  "principles.html",
   "404.html",
   "privacy.html",
   "robots.txt",
@@ -79,6 +80,10 @@ const requiredHomepageSnippets = [
   {
     label: "ontology demo video",
     needle: 'data-video-id="Sa-uNxoRjos"',
+  },
+  {
+    label: "operating principles page link",
+    needle: 'href="principles.html"',
   },
 ];
 const replacedHomepageSnippets = [
