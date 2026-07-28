@@ -14,6 +14,12 @@
 <meta property="og:url" content="__SITE_URL__/">
 <link rel="stylesheet" href="assets/styles.css">
 <script>
+  if (window.location.pathname.endsWith("/index.html")) {
+    const canonicalPath = window.location.pathname.slice(0, -"index.html".length);
+    window.location.replace(canonicalPath + window.location.search + window.location.hash);
+  }
+</script>
+<script>
   window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
   window.BAST_SITE_ENV = "__SITE_ENV__";
   window.BAST_CONTACT_ENDPOINT = "https://api.web3forms.com/submit";
@@ -25,7 +31,7 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <a class="brand" href="index.html" aria-label="Bast home">
+  <a class="brand" href="./" aria-label="Bast home">
     <img src="assets/bast-logo.svg" alt="Bast">
   </a>
   <nav class="site-nav" aria-label="Primary">
@@ -361,23 +367,23 @@
 <footer class="site-footer">
   <div class="footer-top">
     <div class="footer-brand">
-      <a class="brand" href="index.html" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
+      <a class="brand" href="./" aria-label="Bast home"><img src="assets/bast-logo.svg" alt="Bast"></a>
       <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
     </div>
     <nav class="footer-nav" aria-label="Footer">
       <div class="footer-col">
         <p class="footer-head">Product</p>
-        <a href="index.html#how">How it works</a>
-        <a href="index.html#offerings">Offerings</a>
-        <a href="index.html#technology">Technology</a>
-        <a href="index.html#demos">Demos</a>
+        <a href="./#how">How it works</a>
+        <a href="./#offerings">Offerings</a>
+        <a href="./#technology">Technology</a>
+        <a href="./#demos">Demos</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Company</p>
-        <a href="index.html#proof">Why Bast</a>
+        <a href="./#proof">Why Bast</a>
         <a href="principles.html">Operating Principles</a>
         <a href="investors.html">Investors</a>
-        <a href="index.html#contact">Contact</a>
+        <a href="./#contact">Contact</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Connect</p>
