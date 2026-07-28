@@ -89,16 +89,13 @@
         window.bastTrack("file_download", {
           ...eventBase,
           file_name: url.pathname.split("/").pop() || "download.pdf",
-          file_extension: "pdf"
+          file_extension: "pdf",
+          resource: link.getAttribute("data-resource") || undefined
         });
       }
 
       if (url.protocol === "mailto:") {
         window.bastTrack("mailto_click", eventBase);
-        window.bastTrack("generate_lead", {
-          ...eventBase,
-          method: "email_click"
-        });
       }
 
       if (url.hostname && url.hostname !== window.location.hostname) {

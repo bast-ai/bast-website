@@ -108,11 +108,19 @@
       };
 
       if (typeof window.bastTrack === "function") {
-        window.bastTrack("generate_lead", { method: "contact_form", page_path: window.location.pathname });
-        window.bastTrack("form_submit", { form_id: "contact", page_path: window.location.pathname });
+        window.bastTrack("form_submit_attempt", {
+          form_id: "contact",
+          page_path: window.location.pathname
+        });
       }
 
       if (!endpoint) {
+        if (typeof window.bastTrack === "function") {
+          window.bastTrack("lead_email_open", {
+            form_id: "contact",
+            page_path: window.location.pathname
+          });
+        }
         setFormStatus(status, "Opening your email app to finish sending…", null);
         composeMailto(data);
         return;
@@ -125,36 +133,32 @@
         body: JSON.stringify(data)
       }).then((response) => {
         if (!response.ok) throw new Error("Request failed");
+        if (typeof window.bastTrack === "function") {
+          const leadParams = {
+            method: "contact_form",
+            form_id: "contact",
+            page_path: window.location.pathname
+          };
+          window.bastTrack("generate_lead", leadParams);
+          window.bastTrack("lead_submit_success", leadParams);
+        }
         form.reset();
         setFormStatus(status, "Thanks — we'll be in touch shortly.", "success");
       }).catch(() => {
+        if (typeof window.bastTrack === "function") {
+          window.bastTrack("lead_email_fallback", {
+            form_id: "contact",
+            page_path: window.location.pathname
+          });
+        }
         setFormStatus(status, "Opening your email app to send instead…", null);
         composeMailto(data);
       });
     });
   }
 
-  function handlePdfDownloads() {
-    document.querySelectorAll("[data-pdf-download]").forEach(function(link) {
-      link.addEventListener("click", function() {
-        const fileName = (link.getAttribute("href") || "").split("/").pop();
-        const resource = link.getAttribute("data-resource") || fileName;
-
-        if (typeof window.bastTrack === "function") {
-          window.bastTrack("file_download", {
-            file_name: fileName,
-            resource: resource,
-            file_extension: "pdf",
-            page_path: window.location.pathname
-          });
-        }
-      });
-    });
-  }
-
   document.addEventListener("DOMContentLoaded", function() {
     handleContactForm();
-    handlePdfDownloads();
 
     document.querySelectorAll("[data-mode]").forEach((tab) => {
       tab.addEventListener("click", function() {

@@ -64,6 +64,8 @@ for (const file of requiredFiles) {
 }
 
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
+const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
+const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const requiredHomepageSnippets = [
   {
     label: "mobile SMS link",
@@ -104,6 +106,13 @@ for (const { needle, label } of replacedHomepageSnippets) {
   assertExcludes(indexHtml, needle, label);
 }
 
+assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
+assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
+assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
+assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
+assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
+assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
+
 const files = await collectFiles(distDir);
 for (const file of files) {
   const { size } = await stat(file);
@@ -116,6 +125,9 @@ for (const file of files) {
   }
 
   const contents = await readFile(file, "utf8");
+  if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
+    throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
+  }
   for (const needle of forbidden) {
     if (contents.includes(needle)) {
       throw new Error(`Forbidden token "${needle}" found in ${path.relative(root, file)}`);
