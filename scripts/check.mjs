@@ -64,6 +64,7 @@ for (const file of requiredFiles) {
 }
 
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
+const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const requiredHomepageSnippets = [
@@ -112,6 +113,31 @@ assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirm
 assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
 assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
+
+const requiredPrinciplesSnippets = [
+  "Nature runs on sunlight.",
+  "Nature uses only the energy it needs.",
+  "Nature fits form to function.",
+  "Nature recycles everything.",
+  "Nature rewards cooperation.",
+  "Nature banks on diversity.",
+  "Nature demands local expertise.",
+  "Nature curbs excesses from within.",
+  "Nature taps the power of limits.",
+  "A group of butterflies is called a kaleidoscope.",
+  "The intrinsic structure-containing universe is very small",
+  "Five relevant examples, intact with context",
+  "neuro-symbolic graphs",
+  "Knowledge emerges in use.",
+  "Nora Bateson",
+  "Dave Snowden",
+  "François Chollet",
+  "Janine M. Benyus",
+];
+for (const snippet of requiredPrinciplesSnippets) {
+  assertIncludes(principlesHtml, snippet, `principles copy: ${snippet}`);
+}
+assertExcludes(principlesHtml, "Priority stack", "old principles priority stack");
 
 const files = await collectFiles(distDir);
 for (const file of files) {
