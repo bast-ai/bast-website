@@ -17,6 +17,9 @@ const requiredFiles = [
   "assets/bast-logo.svg",
   "assets/bast-ai-healthcare-teaser.pdf",
   "assets/bast-ai-healthcare-teaser-cover.png",
+  ".nojekyll",
+  ".well-known/apple-app-site-association",
+  "careteam/invite/index.html",
 ];
 
 const forbidden = [
@@ -66,6 +69,10 @@ for (const file of requiredFiles) {
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
+const appleAssociation = await readFile(
+  path.join(distDir, ".well-known/apple-app-site-association"), "utf8");
+const careteamInvite = await readFile(
+  path.join(distDir, "careteam/invite/index.html"), "utf8");
 const requiredHomepageSnippets = [
   {
     label: "mobile SMS link",
@@ -112,6 +119,11 @@ assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirm
 assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
 assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
+assertIncludes(appleAssociation, "N9WW75Q3VS.ai.bast.careloop", "BastCare App ID association");
+assertIncludes(appleAssociation, '"/careteam/invite"', "CareTeam invitation path");
+assertIncludes(careteamInvite, "does not receive or store the private invitation token", "token-blind fallback disclosure");
+assertExcludes(careteamInvite, "analytics-consent", "analytics on private invitation fallback");
+assertExcludes(careteamInvite, "location.hash", "invitation token parsing in website fallback");
 
 const files = await collectFiles(distDir);
 for (const file of files) {
