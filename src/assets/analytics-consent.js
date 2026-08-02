@@ -192,7 +192,7 @@
       <div class="bast-consent-actions">
         <button class="bast-consent-reject" type="button">Necessary only</button>
         <button class="bast-consent-accept" type="button">Allow analytics</button>
-        <a href="privacy.html">Privacy, cookies, and accessibility</a>
+        <a href="/privacy.html">Privacy, cookies, and accessibility</a>
       </div>
     `;
 

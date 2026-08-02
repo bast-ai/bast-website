@@ -20,6 +20,12 @@ const requiredFiles = [
   ".nojekyll",
   ".well-known/apple-app-site-association",
   "careteam/invite/index.html",
+  "bastcare/index.html",
+  "bastcare/privacy/index.html",
+  "bastcare/support/index.html",
+  "bastcare/terms/index.html",
+  "bastcare/delete-account/index.html",
+  "bastcare/architecture/index.html",
 ];
 
 const forbidden = [
@@ -74,6 +80,19 @@ const appleAssociation = await readFile(
   path.join(distDir, ".well-known/apple-app-site-association"), "utf8");
 const careteamInvite = await readFile(
   path.join(distDir, "careteam/invite/index.html"), "utf8");
+const bastcareHome = await readFile(
+  path.join(distDir, "bastcare/index.html"), "utf8");
+const bastcarePrivacy = await readFile(
+  path.join(distDir, "bastcare/privacy/index.html"), "utf8");
+const bastcareSupport = await readFile(
+  path.join(distDir, "bastcare/support/index.html"), "utf8");
+const bastcareTerms = await readFile(
+  path.join(distDir, "bastcare/terms/index.html"), "utf8");
+const bastcareDeleteAccount = await readFile(
+  path.join(distDir, "bastcare/delete-account/index.html"), "utf8");
+const bastcareArchitecture = await readFile(
+  path.join(distDir, "bastcare/architecture/index.html"), "utf8");
+const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
 const requiredHomepageSnippets = [
   {
     label: "mobile SMS link",
@@ -126,6 +145,47 @@ assertIncludes(careteamInvite, "does not receive or store the private invitation
 assertExcludes(careteamInvite, "analytics-consent", "analytics on private invitation fallback");
 assertExcludes(careteamInvite, "location.hash", "invitation token parsing in website fallback");
 
+const bastcarePages = [
+  [bastcareHome, "home"],
+  [bastcarePrivacy, "privacy"],
+  [bastcareSupport, "support"],
+  [bastcareTerms, "terms"],
+  [bastcareDeleteAccount, "delete account"],
+  [bastcareArchitecture, "architecture"],
+];
+for (const [contents, label] of bastcarePages) {
+  assertIncludes(contents, "BastCare", `BastCare name on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/"', `BastCare home link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/privacy/"', `privacy link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/support/"', `support link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/terms/"', `terms link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/delete-account/"', `deletion link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
+  assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
+  assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+}
+
+const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to create the summary, but Bast does not save or log transcript text.";
+assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
+assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
+assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
+assertIncludes(bastcareSupport, "hello@bast.ai", "monitored support contact");
+assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
+assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
+assertIncludes(bastcareTerms, "BastCare 1.0 is offered free of charge", "free-first terms");
+assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
+assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
+assertIncludes(bastcareDeleteAccount, "Full account deletion is not yet available", "honest deletion status");
+assertExcludes(bastcareDeleteAccount, "account deletion is live", "unsupported live deletion claim");
+assertIncludes(bastcareArchitecture, "More than 25 users triggers", "staging review threshold");
+assertIncludes(bastcareArchitecture, "it is not a user cap", "no user admission cap");
+assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
+assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
+assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
+for (const route of ["privacy", "support", "terms", "delete-account", "architecture"]) {
+  assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
+}
+
 const requiredPrinciplesSnippets = [
   "Nature runs on sunlight.",
   "Nature uses only the energy it needs.",
@@ -165,6 +225,25 @@ for (const file of files) {
   const contents = await readFile(file, "utf8");
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
+  }
+  if (path.extname(file) === ".html") {
+    for (const match of contents.matchAll(/href=["']([^"']+)["']/g)) {
+      const href = match[1];
+      if (/^(?:https?:|mailto:|tel:|sms:|#|javascript:)/i.test(href)) continue;
+
+      const cleanPath = href.split(/[?#]/, 1)[0];
+      if (!cleanPath) continue;
+
+      const target = cleanPath.startsWith("/")
+        ? path.join(distDir, cleanPath)
+        : path.resolve(path.dirname(file), cleanPath);
+      const resolvedTarget = cleanPath.endsWith("/") ? path.join(target, "index.html") : target;
+      try {
+        await access(resolvedTarget);
+      } catch {
+        throw new Error(`Broken internal link "${href}" in ${path.relative(root, file)}`);
+      }
+    }
   }
   for (const needle of forbidden) {
     if (contents.includes(needle)) {
