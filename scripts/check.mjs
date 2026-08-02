@@ -175,12 +175,23 @@ assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
 assertIncludes(bastcareTerms, "BastCare 1.0 is offered free of charge", "free-first terms");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
-assertIncludes(bastcareDeleteAccount, "Full account deletion is not yet available", "honest deletion status");
-assertExcludes(bastcareDeleteAccount, "account deletion is live", "unsupported live deletion claim");
-assertIncludes(bastcareArchitecture, "More than 25 users triggers", "staging review threshold");
-assertIncludes(bastcareArchitecture, "it is not a user cap", "no user admission cap");
+assertIncludes(bastcareDeleteAccount, "Choose Delete Bast Account", "in-app deletion path");
+assertIncludes(bastcareDeleteAccount, "Only after server success", "server-first deletion order");
 assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
 assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
+const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
+for (const internalPhrase of [
+  "pre-submission",
+  "proof points remain",
+  "before App Store submission",
+  "Current release status",
+  "More than 25 users",
+  "Demo/staging now",
+  "production-hardening review",
+  "being implemented and tested",
+]) {
+  assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
+}
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of ["privacy", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
