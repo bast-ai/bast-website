@@ -39,7 +39,7 @@
   <section class="plain-language" aria-labelledby="plain-title">
     <p class="panel-label">In 100 simple words</p>
     <h2 id="plain-title">The short version</h2>
-    <p>With everyone’s permission, record the conversation and receive a plain-language summary. Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to create the summary, but Bast does not save or log transcript text.</p>
+    <p>With everyone’s permission, record the conversation and receive a plain-language summary. Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.</p>
   </section>
 
   <div class="bastcare-layout">
@@ -61,7 +61,7 @@
         <ul>
           <li><strong>Account:</strong> your Bast identity, sign-in state, and device/account identifiers.</li>
           <li><strong>On your iPhone:</strong> temporary audio and transcript text, your saved summary, notes, sharing choices, and encryption keys.</li>
-          <li><strong>Temporary processing:</strong> masked transcript text sent over authenticated HTTPS to create the summary you requested.</li>
+          <li><strong>Temporary processing:</strong> masked transcript text sent over authenticated HTTPS to OpenAI to create the summary you requested.</li>
           <li><strong>Sharing:</strong> an encrypted copy of a summary and note only after you choose a CareTeam.</li>
           <li><strong>Technical records:</strong> content-free times, status, app version, delivery, consent, security, token-count, and deletion results.</li>
         </ul>
@@ -101,7 +101,8 @@
       <section id="security">
         <h2>Security and service providers</h2>
         <p>BastCare uses authenticated HTTPS, account isolation, encrypted relay content, device-held keys, and least-privilege access. No internet service can promise perfect security.</p>
-        <p>Apple provides device speech and Sign in with Apple. Bast also uses infrastructure, database, and model-processing providers only for the purposes described here.</p>
+        <p>Apple provides device speech and Sign in with Apple. Bast also uses named infrastructure, database, identity, deployment, and model-processing providers only for the purposes described here.</p>
+        <p><a class="text-link" href="/bastcare/processors/">See the current BastCare service-provider and processor disclosure</a></p>
       </section>
 
       <section id="rights">

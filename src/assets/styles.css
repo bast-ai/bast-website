@@ -2374,6 +2374,90 @@ h1 span {
   width: fit-content;
 }
 
+.architecture-download {
+  display: flex;
+  gap: var(--bast-space-6);
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--bast-space-8);
+  border-radius: var(--bast-radius-default);
+  padding: var(--bast-space-5);
+  background: var(--paper);
+  box-shadow: var(--neu-raise-sm);
+}
+
+.architecture-download p {
+  max-width: 650px;
+  margin: var(--bast-space-1) 0 0;
+  color: var(--quiet);
+  font-size: var(--fs-body-sm);
+}
+
+.architecture-download .button {
+  flex: 0 0 auto;
+}
+
+.processor-intro,
+.processor-boundary {
+  max-width: 900px;
+  border-radius: var(--bast-radius-large);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--paper);
+  box-shadow: var(--neu-raise);
+}
+
+.processor-intro h2,
+.processor-boundary h2 {
+  margin: var(--bast-space-3) 0 var(--bast-space-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-thin);
+  line-height: 1.1;
+}
+
+.processor-intro p:last-child,
+.processor-boundary p {
+  color: var(--quiet);
+}
+
+.processor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--bast-space-4);
+}
+
+.processor-grid article {
+  border-radius: var(--bast-radius-default);
+  padding: var(--bast-space-6);
+  background: var(--paper);
+  box-shadow: var(--neu-raise-sm);
+}
+
+.processor-grid h3 {
+  margin: var(--bast-space-3) 0 var(--bast-space-4);
+  color: var(--ink);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
+}
+
+.processor-grid p {
+  color: var(--quiet);
+  font-size: var(--fs-body-sm);
+}
+
+.processor-grid p:last-child {
+  margin-bottom: 0;
+}
+
+.processor-grid .processor-name {
+  margin: 0;
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .section-heading {
   max-width: 760px;
   margin-bottom: var(--bast-space-8);
@@ -2751,7 +2835,8 @@ h1 span {
   }
 
   .process-flow,
-  .architecture-grid {
+  .architecture-grid,
+  .processor-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -2781,8 +2866,14 @@ h1 span {
   .help-grid,
   .decision-list,
   .process-flow,
-  .architecture-grid {
+  .architecture-grid,
+  .processor-grid {
     grid-template-columns: 1fr;
+  }
+
+  .architecture-download {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .section-nav {

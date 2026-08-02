@@ -22,10 +22,12 @@ const requiredFiles = [
   "careteam/invite/index.html",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
+  "bastcare/processors/index.html",
   "bastcare/support/index.html",
   "bastcare/terms/index.html",
   "bastcare/delete-account/index.html",
   "bastcare/architecture/index.html",
+  "bastcare/architecture/bastcare-solution-architecture.pdf",
 ];
 
 const forbidden = [
@@ -84,6 +86,8 @@ const bastcareHome = await readFile(
   path.join(distDir, "bastcare/index.html"), "utf8");
 const bastcarePrivacy = await readFile(
   path.join(distDir, "bastcare/privacy/index.html"), "utf8");
+const bastcareProcessors = await readFile(
+  path.join(distDir, "bastcare/processors/index.html"), "utf8");
 const bastcareSupport = await readFile(
   path.join(distDir, "bastcare/support/index.html"), "utf8");
 const bastcareTerms = await readFile(
@@ -148,6 +152,7 @@ assertExcludes(careteamInvite, "location.hash", "invitation token parsing in web
 const bastcarePages = [
   [bastcareHome, "home"],
   [bastcarePrivacy, "privacy"],
+  [bastcareProcessors, "processors"],
   [bastcareSupport, "support"],
   [bastcareTerms, "terms"],
   [bastcareDeleteAccount, "delete account"],
@@ -165,13 +170,18 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
 }
 
-const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to create the summary, but Bast does not save or log transcript text.";
+const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
 assertIncludes(bastcareSupport, "hello@bast.ai", "monitored support contact");
 assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
 assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
+assertIncludes(bastcarePrivacy, 'href="/bastcare/processors/"', "named processor disclosure link");
+for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Google", "DuploCloud"]) {
+  assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
+}
+assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
 assertIncludes(bastcareTerms, "BastCare 1.0 is offered free of charge", "free-first terms");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -179,6 +189,7 @@ assertIncludes(bastcareDeleteAccount, "Choose Delete Bast Account", "in-app dele
 assertIncludes(bastcareDeleteAccount, "Only after server success", "server-first deletion order");
 assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
 assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
+assertIncludes(bastcareArchitecture, "bastcare-solution-architecture.pdf", "architecture PDF download");
 const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
 for (const internalPhrase of [
   "pre-submission",
@@ -193,7 +204,7 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
-for (const route of ["privacy", "support", "terms", "delete-account", "architecture"]) {
+for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
 }
 
