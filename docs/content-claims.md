@@ -15,9 +15,24 @@ publish.
 | Maryville University saved $1.2M in the first semester. | Draft | Beth | Investor deck and personal-site public copy use this proof point. Confirm approved public wording before launch. |
 | Bast has 5 patents filed. | Draft | Beth / Legal | Used on investor teaser page and source teaser PDF. Confirm approved patent count and wording before launch. |
 | Bast has live deployments, paying customers, and healthcare pull. | Draft | Beth | Used as investor teaser framing from the June 2026 teaser PDF. Keep general unless approved names/numbers are added. |
+| BastCare audio stays on the iPhone and Bast does not persist or log transcript text server-side. | Approved | Beth | Owner-approved wording for the public policy and App Store description; release evidence remains part of submission readiness. |
+| A BastCare summary stays on the patient's iPhone unless the patient explicitly shares it with a CareTeam. | Approved | Beth | Owner-validated two-phone create, share, and unshare flow. |
+| BastCare retains content-free operational metadata, de-identified token counts, and minimal deletion evidence. | Approved boundary | Beth | Mongo evidence and deletion implementation tests remain release evidence; public copy does not claim full deletion is currently live. |
+| Full Bast account deletion removes account-linked identity, sessions, relay data, memberships, and local app data. | Not live | Beth / Thanh / Sarah | Do not present as available until the authenticated endpoint and iPhone success/failure flow are implemented and tested. The public page explicitly states the current limitation. |
+| BastCare is not a medical device and does not diagnose, treat, monitor, predict, or recommend care. | Approved | Beth | Product-owner posture used consistently in public and App Store copy. |
+| The current public HTTPS development deployment is operated as demo/staging; more than 25 users triggers a production-hardening review and is not an enrollment cap. | Approved decision | Beth | `bast-careloop/docs/decisions/2026-08-01-apple-store-bound-v2.md`. |
+| BastCare 1.0 is free; paid BastCare Plus is future work. | Approved decision | Beth | Current public copy does not describe purchase, restore, or subscription management as a released feature. |
 
 ## Analytics Claim
 
 The site says GA4 is off until the visitor chooses "Allow analytics." This must
 stay true in code. The consent script must not fetch `googletagmanager.com`
 before opt-in.
+
+## BastCare publication gate
+
+Beth approved publication of the BastCare pages on August 2, 2026. Known gaps,
+including full account deletion, remain stated plainly rather than being
+presented as live. The launch includes the existing Bast GA4 configuration and
+consent verification; analytics remain content-free and off until the visitor
+chooses to allow them.

@@ -16,4 +16,28 @@
     <loc>__SITE_URL__/principles.html</loc>
     <lastmod>2026-07-17</lastmod>
   </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/privacy/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/support/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/terms/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/delete-account/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
+  <url>
+    <loc>__SITE_URL__/bastcare/architecture/</loc>
+    <lastmod>2026-08-02</lastmod>
+  </url>
 </urlset>
