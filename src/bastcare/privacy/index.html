@@ -19,6 +19,7 @@
   <nav class="site-nav bastcare-nav" aria-label="BastCare">
     <a href="/bastcare/">BastCare</a>
     <a aria-current="page" href="/bastcare/privacy/">Privacy</a>
+    <a href="/bastcare/processors/">Processors</a>
     <a href="/bastcare/support/">Support</a>
     <a href="/bastcare/terms/">Terms</a>
     <a href="/bastcare/delete-account/">Delete account</a>
@@ -60,9 +61,9 @@
         <p>BastCare handles the minimum information needed to provide an account, create a visit summary, deliver a share you request, and show whether those actions worked.</p>
         <ul>
           <li><strong>Account:</strong> your Bast identity, sign-in state, and device/account identifiers.</li>
-          <li><strong>On your iPhone:</strong> temporary audio and transcript text, your saved summary, notes, sharing choices, and encryption keys.</li>
+          <li><strong>On your iPhone:</strong> temporary audio and transcript text, your saved summary, sharing choices, and encryption keys.</li>
           <li><strong>Temporary processing:</strong> masked transcript text sent over authenticated HTTPS to OpenAI to create the summary you requested.</li>
-          <li><strong>Sharing:</strong> an encrypted copy of a summary and note only after you choose a CareTeam.</li>
+          <li><strong>Sharing:</strong> an encrypted copy of a summary only after you choose a CareTeam.</li>
           <li><strong>Technical records:</strong> content-free times, status, app version, delivery, consent, security, token-count, and deletion results.</li>
         </ul>
       </section>
@@ -70,7 +71,7 @@
       <section id="never">
         <h2>What Bast does not keep in server logs or storage</h2>
         <div class="exclusion-grid">
-          <span>Audio</span><span>Transcript words</span><span>Prompt bodies</span><span>Model response bodies</span><span>Summary words</span><span>Visit notes</span><span>Diagnoses</span><span>Medications</span><span>Payment-card details</span>
+          <span>Audio</span><span>Transcript words</span><span>Prompt bodies</span><span>Model response bodies</span><span>Summary words</span><span>Diagnoses</span><span>Medications</span><span>Payment-card details</span>
         </div>
         <p>Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Bast does not save or log transcript text on its servers.</p>
       </section>
@@ -82,7 +83,7 @@
 
       <section id="sharing">
         <h2>Sharing and your choices</h2>
-        <p>Sharing nothing is always valid. A summary stays on your iPhone unless you explicitly choose to share it. Before sharing, you can review the summary, add a note, and select a CareTeam. You can stop sharing later from My Visits.</p>
+        <p>Sharing nothing is always valid. A summary stays on your iPhone unless you explicitly choose to share it. Before sharing, you can review the summary and select a CareTeam. You can stop sharing later from My Visits.</p>
         <ul>
           <li>Decline recording or cloud processing.</li>
           <li>Keep every summary private.</li>
@@ -121,7 +122,7 @@
   <div class="footer-top">
     <div class="footer-brand"><a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a><p>BastCare helps patients and caregivers keep and share visit summaries on their terms.</p></div>
     <nav class="footer-nav" aria-label="BastCare footer">
-      <div class="footer-col"><p class="footer-head">BastCare</p><a href="/bastcare/">Overview</a><a href="/bastcare/privacy/">Privacy</a><a href="/bastcare/support/">Support</a><a href="/bastcare/terms/">Terms</a></div>
+      <div class="footer-col"><p class="footer-head">BastCare</p><a href="/bastcare/">Overview</a><a href="/bastcare/privacy/">Privacy</a><a href="/bastcare/processors/">Processors</a><a href="/bastcare/support/">Support</a><a href="/bastcare/terms/">Terms</a></div>
       <div class="footer-col"><p class="footer-head">Your account</p><a href="/bastcare/delete-account/">Delete account</a><a href="/bastcare/architecture/">How it works</a></div>
       <div class="footer-col"><p class="footer-head">Bast</p><a href="/">Bast.ai</a><a href="/privacy.html">Website privacy</a><a href="mailto:hello@bast.ai">Contact</a></div>
     </nav>
