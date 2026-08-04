@@ -2,13 +2,113 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>How BastCare Works</title><meta name="description" content="A public, plain-language view of BastCare context, components, data boundaries, decisions, requirements, and deletion flow."><meta name="robots" content="__ROBOTS_META__"><link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml"><link rel="canonical" href="__SITE_URL__/bastcare/architecture/"><link rel="stylesheet" href="/assets/styles.css"><script>window.BAST_GA_MEASUREMENT_ID="__GA_MEASUREMENT_ID__";window.BAST_SITE_ENV="__SITE_ENV__";</script><script src="/assets/analytics-consent.js" defer></script></head>
 <body class="bastcare-site"><a class="skip-link" href="#main">Skip to content</a><header class="site-header bastcare-header"><a class="brand" href="/bastcare/" aria-label="BastCare home"><img src="/assets/bast-logo.svg" alt="Bast"></a><nav class="site-nav bastcare-nav" aria-label="BastCare"><a href="/bastcare/">BastCare</a><a href="/bastcare/privacy/">Privacy</a><a href="/bastcare/support/">Support</a><a href="/bastcare/terms/">Terms</a><a href="/bastcare/delete-account/">Delete account</a><a aria-current="page" href="/bastcare/architecture/">How it works</a></nav></header>
 <main class="bastcare-page architecture-page" id="main">
-<section class="bastcare-hero"><p class="eyebrow">BastCare solution architecture</p><h1>Small by design. Patient-controlled by default.</h1><p class="lede">This public view explains the people, components, data boundaries, decisions, functional requirements, and quality requirements behind BastCare.</p><div class="policy-meta"><span>Architecture snapshot</span><span>August 2, 2026</span></div><div class="architecture-download"><div><strong>Take the architecture with you.</strong><p>Download the public six-page system context, visit lifecycle, CareTeam sharing, deletion, and accountability view.</p></div><a class="button button-primary" href="/bastcare/architecture/bastcare-solution-architecture.pdf" download data-resource="bastcare-solution-architecture">Download PDF</a></div></section>
+<section class="bastcare-hero"><p class="eyebrow">BastCare solution architecture</p><h1>Small by design. Patient-controlled by default.</h1><p class="lede">This public view explains the people, components, data boundaries, decisions, functional requirements, and quality requirements behind BastCare.</p><div class="policy-meta"><span>Architecture snapshot</span><span>August 3, 2026</span></div><div class="architecture-download"><div><strong>Take the architecture with you.</strong><p>Download the public seven-page system context, visit lifecycle, CareTeam connection, sharing, deletion, and accountability view.</p></div><a class="button button-primary" href="/bastcare/architecture/bastcare-solution-architecture.pdf" download data-resource="bastcare-solution-architecture">Download PDF</a></div></section>
 
 <section aria-labelledby="context-title"><div class="section-heading"><p class="panel-label">Context</p><h2 id="context-title">The patient is in control.</h2><p>A patient records with everyone’s permission, receives a plain-language summary, and decides whether a CareTeam can see it. BastCare organizes and communicates; it does not provide medical advice.</p></div><div class="context-diagram" role="img" aria-label="Patient controls the BastCare iPhone app. The app uses Apple services and the Bast platform. The Bast platform temporarily uses a model provider. Only a patient-approved encrypted summary reaches a CareTeam member."><div class="diagram-person">Patient</div><div class="diagram-arrow" aria-hidden="true">controls →</div><div class="diagram-system primary-node">BastCare app<small>consent · capture · summary · choice</small></div><div class="diagram-branches"><div><span aria-hidden="true">↗</span><div class="diagram-system">Apple services<small>Speech · sign-in</small></div></div><div><span aria-hidden="true">→</span><div class="diagram-system">Bast platform<small>temporary processing · encrypted relay · evidence</small></div></div><div><span aria-hidden="true">↘</span><div class="diagram-person">CareTeam member<small>sees only what was shared</small></div></div></div></div></section>
 
 <section aria-labelledby="flow-title"><div class="section-heading"><p class="panel-label">Visit flow</p><h2 id="flow-title">One simple path from permission to a private summary.</h2></div><ol class="data-flow"><li><span>1</span><h3>Ask</h3><p>Everyone agrees before recording.</p></li><li><span>2</span><h3>Capture</h3><p>Audio and Apple Speech stay on the iPhone.</p></li><li><span>3</span><h3>Summarize</h3><p>Temporary masked text travels securely for processing.</p></li><li><span>4</span><h3>Delete exhaust</h3><p>Temporary audio and transcript text are removed.</p></li><li><span>5</span><h3>Choose</h3><p>The summary stays private unless the patient shares.</p></li></ol><div class="boundary-note"><strong>Content boundary:</strong> Bast server logs and storage exclude audio, transcript words, prompt and response bodies, summary words, diagnoses, medications, and CareTeam notes.</div></section>
 
 <section aria-labelledby="components-title"><div class="section-heading"><p class="panel-label">Components</p><h2 id="components-title">Each part has one job.</h2></div><div class="architecture-grid"><article><span>01</span><h3>BastCare iPhone app</h3><p>Consent, on-device capture, local summaries, encryption keys, sharing choices, and deletion.</p></article><article><span>02</span><h3>Apple services</h3><p>Device speech and Sign in with Apple.</p></article><article><span>03</span><h3>Summary boundary</h3><p>Authenticated temporary processing with content-free success, failure, timing, and token-count evidence.</p></article><article><span>04</span><h3>CareTeam relay</h3><p>Delivers only patient-approved encrypted summary copies and removes access after revocation.</p></article><article><span>05</span><h3>Metadata ledger</h3><p>Stores limited operational facts without visit words and records deletion outcomes.</p></article><article><span>06</span><h3>Model provider</h3><p>Temporarily turns the requested masked text into a summary response.</p></article></div></section>
+
+<section aria-labelledby="careteam-sequence-title">
+  <div class="section-heading">
+    <p class="panel-label">CareTeam connection</p>
+    <h2 id="careteam-sequence-title">Invitation, confirmation, sharing, and removal stay patient-controlled.</h2>
+    <p>An invitation is tied to one local person. Only that recognized invitation can become an active membership, and BastCare keeps the local person until relay removal succeeds.</p>
+  </div>
+
+  <figure class="careteam-sequence" aria-labelledby="careteam-sequence-title careteam-sequence-caption">
+    <figcaption id="careteam-sequence-caption" class="visually-hidden">UML sequence diagram showing how a patient adds, invites, confirms, shares with, and removes a CareTeam person through the BastCare app and Bast Relay.</figcaption>
+
+    <div class="careteam-actors" aria-hidden="true">
+      <div class="careteam-actor careteam-actor-patient">Patient</div>
+      <div class="careteam-actor careteam-actor-app">BastCare<small>patient iPhone</small></div>
+      <div class="careteam-actor careteam-actor-relay">Bast Relay</div>
+      <div class="careteam-actor careteam-actor-person">CareTeam<small>person</small></div>
+    </div>
+
+    <div class="careteam-sequence-body">
+      <span class="careteam-lifeline careteam-lane-1" aria-hidden="true"></span>
+      <span class="careteam-lifeline careteam-lane-2" aria-hidden="true"></span>
+      <span class="careteam-lifeline careteam-lane-3" aria-hidden="true"></span>
+      <span class="careteam-lifeline careteam-lane-4" aria-hidden="true"></span>
+
+      <div class="careteam-phase">
+        <h3>Add and invite</h3>
+        <div class="careteam-message careteam-between-1-2"><div class="careteam-label">Add person</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Create local CareTeam person</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-1-2"><div class="careteam-label">Send invite</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3"><div class="careteam-label">Create invitation</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3 careteam-return"><div class="careteam-label"><code>invitation_id</code> + secure token</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Store <code>invitation_id</code> ↔ local person</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-4 careteam-return"><div class="careteam-label">Send invitation link</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Show <span class="careteam-state">Pending</span></div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+
+        <div class="careteam-fragment">
+          <div class="careteam-fragment-header"><span>opt</span> Patient taps Resend</div>
+          <div class="careteam-message careteam-between-2-3 careteam-destructive"><div class="careteam-label">Revoke previous <code>invitation_id</code></div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+          <div class="careteam-message careteam-between-2-3"><div class="careteam-label">Create replacement invitation</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+          <div class="careteam-message careteam-between-2-3 careteam-return"><div class="careteam-label">New <code>invitation_id</code> + token</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+          <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Replace mapping; remain <span class="careteam-state">Pending</span></div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+          <div class="careteam-message careteam-between-2-4 careteam-return"><div class="careteam-label">Send replacement link</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        </div>
+      </div>
+
+      <div class="careteam-phase">
+        <h3>Accept and confirm</h3>
+        <div class="careteam-message careteam-between-3-4"><div class="careteam-label">Sign in and accept token</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-relay"><div class="careteam-label">Create membership linked to <code>invitation_id</code></div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3 careteam-return"><div class="careteam-label"><code>invitation_id</code> + <code>membership_id</code> + pending state</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Match <code>invitation_id</code> to exact local person</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3"><div class="careteam-label">Approve recognized membership</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3"><div class="careteam-label">Upload encrypted CareTeam key</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-between-2-3 careteam-return"><div class="careteam-label">Membership active</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+        <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Show <span class="careteam-state careteam-state-active">Confirmed</span></div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+      </div>
+
+      <div class="careteam-phase">
+        <h3>Explicit visit sharing</h3>
+        <div class="careteam-fragment">
+          <div class="careteam-fragment-header"><span>opt</span> Patient explicitly shares a visit</div>
+          <div class="careteam-message careteam-between-1-2"><div class="careteam-label">Select CareTeam and review summary</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+          <div class="careteam-message careteam-between-2-3"><div class="careteam-label">Send encrypted summary to active members</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+        </div>
+      </div>
+
+      <div class="careteam-phase">
+        <h3>Remove person</h3>
+        <div class="careteam-message careteam-between-1-2 careteam-destructive"><div class="careteam-label">Remove person</div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+
+        <div class="careteam-fragment">
+          <div class="careteam-fragment-header"><span>alt</span> Removal target</div>
+          <div class="careteam-operand">
+            <div class="careteam-guard">[Invitation still Pending]</div>
+            <div class="careteam-message careteam-between-2-3 careteam-destructive"><div class="careteam-label">Revoke <code>invitation_id</code></div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+          </div>
+          <div class="careteam-operand">
+            <div class="careteam-guard">[Person is Confirmed]</div>
+            <div class="careteam-message careteam-between-2-3 careteam-destructive"><div class="careteam-label">Revoke <code>membership_id</code></div><div class="careteam-edge careteam-right" aria-hidden="true"></div></div>
+            <div class="careteam-message careteam-self careteam-self-relay"><div class="careteam-label">Delete wrapped key and issue tombstone</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+          </div>
+        </div>
+
+        <div class="careteam-fragment">
+          <div class="careteam-fragment-header"><span>alt</span> Relay result</div>
+          <div class="careteam-operand">
+            <div class="careteam-guard">[Removal succeeds]</div>
+            <div class="careteam-message careteam-between-2-3 careteam-return"><div class="careteam-label">Removal confirmed</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+            <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Remove local person</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+          </div>
+          <div class="careteam-operand">
+            <div class="careteam-guard">[Removal fails]</div>
+            <div class="careteam-message careteam-between-2-3 careteam-return careteam-destructive"><div class="careteam-label">Failure</div><div class="careteam-edge careteam-left" aria-hidden="true"></div></div>
+            <div class="careteam-message careteam-self careteam-self-app"><div class="careteam-label">Keep person and offer retry</div><div class="careteam-self-edge" aria-hidden="true"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</section>
 
 <section aria-labelledby="delete-title"><div class="section-heading"><p class="panel-label">Account deletion</p><h2 id="delete-title">Confirm → delete server data → clear the phone.</h2></div><ol class="sequence-flow"><li><strong>Patient</strong><span>confirms account deletion</span></li><li><strong>BastCare</strong><span>sends one authenticated request</span></li><li><strong>Bast</strong><span>revokes sessions and deletes account-linked auth, relay, and metadata</span></li><li><strong>Evidence</strong><span>de-links aggregate token counts and records a content-free deletion event</span></li><li><strong>BastCare</strong><span>clears the iPhone only after success</span></li></ol></section>
 

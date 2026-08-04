@@ -190,6 +190,12 @@ assertIncludes(bastcareDeleteAccount, "Only after server success", "server-first
 assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
 assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
 assertIncludes(bastcareArchitecture, "bastcare-solution-architecture.pdf", "architecture PDF download");
+assertIncludes(bastcareArchitecture, "CareTeam connection", "CareTeam sequence section");
+assertIncludes(bastcareArchitecture, "Store <code>invitation_id</code> ↔ local person", "invitation identity binding");
+assertIncludes(bastcareArchitecture, "Approve recognized membership", "membership approval gate");
+assertIncludes(bastcareArchitecture, "Send encrypted summary to active members", "explicit CareTeam sharing");
+assertIncludes(bastcareArchitecture, "Keep person and offer retry", "server-first CareTeam removal");
+assertIncludes(bastcareArchitecture, "public seven-page system context", "updated PDF page count");
 const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
 for (const internalPhrase of [
   "pre-submission",
