@@ -162,6 +162,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "BastCare", `BastCare name on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/"', `BastCare home link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/privacy/"', `privacy link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/processors/"', `processors link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/support/"', `support link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/terms/"', `terms link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/delete-account/"', `deletion link on ${label} page`);
@@ -185,12 +186,13 @@ assertIncludes(bastcareProcessors, "Libraries and processors are different lists
 assertIncludes(bastcareTerms, "BastCare 1.0 is offered free of charge", "free-first terms");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
-assertIncludes(bastcareDeleteAccount, "Choose Delete Bast Account", "in-app deletion path");
+assertIncludes(bastcareDeleteAccount, "Choose Delete BastCare Account", "in-app deletion path");
 assertIncludes(bastcareDeleteAccount, "Only after server success", "server-first deletion order");
 assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
 assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
 assertIncludes(bastcareArchitecture, "bastcare-solution-architecture.pdf", "architecture PDF download");
 const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
+assertExcludes(bastcarePublicCopy, "add a note", "deferred patient-note wording");
 for (const internalPhrase of [
   "pre-submission",
   "proof points remain",
