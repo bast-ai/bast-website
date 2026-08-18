@@ -17,6 +17,14 @@ const requiredFiles = [
   "assets/bast-logo.svg",
   "assets/bast-ai-healthcare-teaser.pdf",
   "assets/bast-ai-healthcare-teaser-cover.png",
+  "assets/advisory.css",
+  "assets/bast-healthcare-advisory.pdf",
+  "assets/bast-eu-ai-act-briefing.pdf",
+  "assets/bast-change-adoption.pdf",
+  "advisory/index.html",
+  "advisory/healthcare.html",
+  "advisory/eu-ai-act.html",
+  "advisory/change.html",
   ".nojekyll",
   ".well-known/apple-app-site-association",
   "careteam/invite/index.html",
@@ -75,7 +83,15 @@ for (const file of requiredFiles) {
 }
 
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
+const investorsHtml = await readFile(path.join(distDir, "investors.html"), "utf8");
 const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
+const privacyHtml = await readFile(path.join(distDir, "privacy.html"), "utf8");
+const advisoryPages = await Promise.all([
+  "index.html",
+  "healthcare.html",
+  "eu-ai-act.html",
+  "change.html",
+].map((file) => readFile(path.join(distDir, "advisory", file), "utf8")));
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const appleAssociation = await readFile(
@@ -135,6 +151,18 @@ for (const { needle, label } of requiredHomepageSnippets) {
 }
 for (const { needle, label } of replacedHomepageSnippets) {
   assertExcludes(indexHtml, needle, label);
+}
+
+for (const [contents, label] of [
+  [indexHtml, "home"],
+  [investorsHtml, "investors"],
+  [principlesHtml, "principles"],
+  [privacyHtml, "privacy"],
+]) {
+  assertExcludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
+}
+for (const contents of advisoryPages) {
+  assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
@@ -206,6 +234,7 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
+assertExcludes(sitemapXml, "/advisory/", "Advisory sitemap route");
 for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
 }

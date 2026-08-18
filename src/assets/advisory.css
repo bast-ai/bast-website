@@ -24,7 +24,9 @@
    ========================================================================== */
 
 :root {
-  --adv-max: 58rem;
+  /* Match the site's full content rail on screen. The old 58rem cap made the
+     advisory read like a document embedded inside the website. */
+  --adv-max: var(--max);
 
   --adv-figure: clamp(4.25rem, 8vw, 5.5rem);
   --adv-h1: clamp(1.9rem, 3.6vw, 2.5rem);
@@ -39,9 +41,413 @@
 
 /* ---------- the sheet ---------------------------------------------------- */
 .sheet {
-  max-width: var(--adv-max);
+  width: min(var(--adv-max), calc(100% - 40px));
+  max-width: none;
   margin: 0 auto;
-  padding: 3.5rem 0 4rem;
+  padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(4.5rem, 8vw, 7rem);
+}
+
+/* ---------- advisory landing page --------------------------------------- */
+.advisory-index {
+  padding-top: clamp(4.5rem, 9vw, 8rem);
+}
+
+.advisory-index > * + * {
+  margin-top: clamp(6rem, 11vw, 10rem);
+}
+
+.advisory-index .sheet-label {
+  color: var(--accent-text);
+  font-size: var(--fs-label);
+}
+
+.advisory-hero {
+  position: relative;
+  overflow: clip;
+}
+
+.advisory-hero::before {
+  content: "";
+  position: absolute;
+  width: min(34rem, 60vw);
+  height: min(34rem, 60vw);
+  right: -12rem;
+  top: -14rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 144, 204, 0.13), rgba(60, 84, 161, 0.04) 48%, transparent 70%);
+  pointer-events: none;
+}
+
+.advisory-hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  margin-top: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.advisory-index h1 {
+  max-width: 12ch;
+  font-size: clamp(3.9rem, 7.2vw, 6.35rem);
+  font-weight: var(--fw-thin);
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+
+.advisory-hero-note {
+  padding-bottom: 0.45rem;
+}
+
+.advisory-hero-note p {
+  margin: 0 0 1.6rem;
+  color: var(--quiet);
+  font-size: clamp(1.08rem, 1.6vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.advisory-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent-text);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.advisory-arrow-link span {
+  font-size: 1.35em;
+  transition: transform 160ms ease;
+}
+
+.advisory-arrow-link:hover span { transform: translateX(0.3rem); }
+
+.advisory-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+  border-top: 2px solid transparent;
+  border-image: var(--grad) 1;
+}
+
+.advisory-rail p {
+  margin: 0;
+  padding: 1.25rem 1.5rem 0 0;
+}
+
+.advisory-rail p + p {
+  border-left: 1px solid var(--line);
+  padding-left: 1.5rem;
+}
+
+.advisory-rail strong,
+.advisory-rail span {
+  display: block;
+}
+
+.advisory-rail strong {
+  color: var(--ink);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+}
+
+.advisory-rail span {
+  margin-top: 0.25rem;
+  color: var(--quieter);
+  font-size: var(--fs-body-sm);
+  line-height: 1.45;
+}
+
+.advisory-library-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.advisory-library-head h2,
+.advisory-offer h2 {
+  margin: 0.8rem 0 0;
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  font-weight: var(--fw-thin);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.advisory-library-head > p {
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--fs-body-lg);
+  line-height: 1.55;
+}
+
+.advisory-brief-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.advisory-brief-card {
+  position: relative;
+  display: flex;
+  min-height: 35rem;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--card-face);
+  box-shadow: var(--neu-raise-sm);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.advisory-brief-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--grad);
+}
+
+.advisory-brief-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--neu-raise);
+}
+
+.advisory-brief-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--accent-text);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.advisory-brief-card h3 {
+  min-height: 4.8rem;
+  margin: 3.5rem 0 1rem;
+  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
+  font-weight: var(--fw-light);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.advisory-brief-card > p {
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+}
+
+.advisory-proof {
+  margin: auto 0 2rem;
+  padding-top: 2rem;
+}
+
+.advisory-proof strong {
+  display: block;
+  color: var(--accent-text);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: var(--fw-thin);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.advisory-proof span {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--quieter);
+  font-size: var(--fs-body-sm);
+  line-height: 1.45;
+}
+
+.advisory-brief-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.advisory-brief-actions .button {
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  font-size: var(--fs-body-sm);
+}
+
+.advisory-download {
+  color: var(--accent-text);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  text-underline-offset: 3px;
+}
+
+.advisory-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+  border-radius: calc(var(--radius-lg) * 1.5);
+  background: var(--ink);
+  color: #fff;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.advisory-offer .sheet-label { color: #7fd0f0; }
+.advisory-offer h2 { color: #fff; }
+
+.advisory-offer-copy p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: var(--fs-body-lg);
+  line-height: 1.55;
+}
+
+.advisory-offer-copy strong { color: #fff; }
+.advisory-offer-copy .button { margin-top: 0.75rem; }
+
+.advisory-fit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.advisory-fit > div {
+  background: var(--ink);
+  padding: 1.25rem;
+}
+
+.advisory-fit span {
+  display: block;
+  color: #7fd0f0;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.advisory-fit p {
+  margin: 0.65rem 0 0;
+  font-size: var(--fs-body-sm);
+}
+
+.advisory-capacity { margin-bottom: 0; }
+
+/* ---------- detail-page wayfinding and source ledger -------------------- */
+.advisory-subnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  width: min(var(--max), calc(100% - 40px));
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0 auto;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line-subtle);
+  border-bottom: 1px solid var(--line-subtle);
+  background: rgba(221, 227, 233, 0.92);
+  backdrop-filter: blur(12px);
+  color: var(--quiet);
+  font-size: var(--fs-body-sm);
+}
+
+.advisory-subnav a {
+  color: inherit;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.advisory-subnav a:hover { color: var(--accent-text); }
+.advisory-subnav-back { color: var(--accent-text) !important; }
+
+.advisory-subnav div {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.advisory-receipts {
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(4rem, 9vw, 7.5rem) 0;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.advisory-receipts-head {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.65fr) minmax(0, 1.35fr);
+  gap: 1rem clamp(2rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.advisory-receipts-head .sheet-label {
+  grid-row: 1 / span 2;
+  color: var(--accent-text);
+}
+
+.advisory-receipts-head h2 {
+  margin: 0;
+  font-size: clamp(2.25rem, 4.5vw, 3.8rem);
+  font-weight: var(--fw-thin);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.advisory-receipts-head > p:last-child {
+  max-width: 58ch;
+  margin: 0.75rem 0 0;
+  color: var(--quiet);
+  line-height: 1.55;
+}
+
+.advisory-source-list {
+  margin: clamp(2.5rem, 5vw, 4.5rem) 0 2.5rem;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+
+.advisory-source-list li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.advisory-source-list span {
+  color: var(--quieter);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.1em;
+}
+
+.advisory-source-list a {
+  color: var(--ink);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: 1.45;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+}
+
+.advisory-source-list a:hover {
+  color: var(--accent-text);
+  text-decoration-color: currentColor;
 }
 
 /* One .sheet-page per printed page. On screen they are just sections of the
@@ -155,13 +561,16 @@
   font-weight: 300;
   line-height: 1.5;
   margin-bottom: 0;             /* margin-top belongs to the .sheet rhythm */
-  max-width: 68ch;
+  max-width: none;
+  columns: 2;
+  column-gap: 2.25rem;
+  column-fill: balance;
 }
 
 .turn strong { font-weight: var(--fw-semibold); }
 
 /* A turn can run to several paragraphs when the argument needs room. */
-.turn p { margin: 0 0 0.7rem; }
+.turn p { margin: 0 0 0.7rem; break-inside: avoid-column; }
 .turn p:last-child { margin-bottom: 0; }
 
 /* Fine print that belongs to the block above it, not to the page. */
@@ -319,15 +728,131 @@
 
 .sheet-foot p { margin: 0; }
 
+/* The website already carries the brand and global footer. Keep the document
+   furniture for print, but let the screen version behave like a proper page.
+   This sits after the shared sheet rules so the screen treatment wins. */
+@media screen {
+  .sheet-head img,
+  .sheet-foot { display: none; }
+
+  .sheet-head {
+    justify-content: flex-start;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .sheet-page + .sheet-page {
+    margin-top: clamp(5rem, 10vw, 8rem);
+    padding-top: clamp(4rem, 8vw, 6.5rem);
+    border-top: 1px solid var(--line-subtle);
+  }
+}
+
 /* Continuation head. Hidden on screen; printed at the top of a second page so
    the sheet still says who it is from if the pages get separated. */
 .sheet-contd { display: none; }
 
+@media (max-width: 64rem) {
+  .advisory-hero-grid,
+  .advisory-library-head,
+  .advisory-offer {
+    grid-template-columns: 1fr;
+  }
+
+  .advisory-hero-note,
+  .advisory-library-head > p,
+  .advisory-offer-copy {
+    max-width: 44rem;
+  }
+
+  .advisory-brief-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .advisory-brief-card {
+    min-height: 0;
+  }
+
+  .advisory-brief-card h3 {
+    min-height: 0;
+    max-width: 20ch;
+    margin-top: 2.5rem;
+  }
+
+  .advisory-proof {
+    margin-top: 3rem;
+  }
+}
+
 @media (max-width: 46rem) {
   .sheet-intro, .ask { grid-template-columns: 1fr; gap: 1.25rem; }
+  .turn { columns: 1; }
   .story-body { columns: 1; }
   .row3, .running ul, .proofs-2up { grid-template-columns: 1fr; }
   .stat { grid-template-columns: 1fr; gap: 1rem; }
+  .advisory-index .proofs > li { min-height: 0; }
+
+  .advisory-index {
+    padding-top: 3.5rem;
+  }
+
+  .advisory-index > * + * {
+    margin-top: 5rem;
+  }
+
+  .advisory-index h1 {
+    font-size: clamp(3.2rem, 15vw, 4.1rem);
+  }
+
+  .advisory-rail {
+    grid-template-columns: 1fr;
+    margin-top: 3.5rem;
+  }
+
+  .advisory-rail p {
+    padding: 1rem 0;
+  }
+
+  .advisory-rail p + p {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .advisory-library-head h2,
+  .advisory-offer h2 {
+    font-size: clamp(2.25rem, 11vw, 3.2rem);
+  }
+
+  .advisory-offer {
+    padding: 2rem 1.5rem;
+  }
+
+  .advisory-fit {
+    grid-template-columns: 1fr;
+  }
+
+  .advisory-subnav {
+    align-items: flex-start;
+    padding: 0.7rem 0;
+  }
+
+  .advisory-subnav div {
+    gap: 0.9rem;
+  }
+
+  .advisory-receipts-head {
+    grid-template-columns: 1fr;
+  }
+
+  .advisory-receipts-head .sheet-label {
+    grid-row: auto;
+  }
+
+  .advisory-source-list li {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
 }
 
 /* ==========================================================================
@@ -358,6 +883,7 @@
 
   .site-header,
   .site-footer,
+  .bast-consent,
   .skip-link,
   .print-hide { display: none !important; }
 
@@ -397,10 +923,8 @@
 
   .story   { padding-top: calc(0.9rem * var(--adv-scale)); }
   .proof-stat { margin-top: calc(0.55rem * var(--adv-scale)); padding-top: calc(0.5rem * var(--adv-scale)); }
-  /* The argument stays one column. Two columns fill the width, but a reader
-     has to jump back up the page mid-sentence to follow a paragraph, and a
-     short opening paragraph leaves a hole under it. The white to the right of
-     a 68ch measure is the measure doing its job. */
+  /* Let the argument flow across the full page instead of stranding a wide
+     unused margin to its right. Paragraphs stay intact where they can. */
   .turn p { margin-bottom: calc(0.55rem * var(--adv-scale)); }
   .story-body { column-gap: 2rem; }
 
