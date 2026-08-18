@@ -1,0 +1,460 @@
+/* ==========================================================================
+   Bast advisory one-pagers
+   Layers on assets/styles.css. Same tokens, same Estedad, re-weighted.
+
+   THE RE-WEIGHT
+   The site anchors display type at 200 thin, which is right at 68px on a
+   landing page and anaemic at 40px on a one-pager. Same role map, one step
+   heavier where the canvas got smaller:
+
+     figure  200 thin      the hero number only, where thin still sings
+     h1      300 light     the elegant voice, with enough presence to lead
+     h2      500 medium    proof headings, functional
+     label   600 semibold  tracked, accent - orients, never shouts
+     body    400 regular
+     strong  600 semibold  Estedad 700 is too heavy against 400 at this size
+
+   USING THE PAGE
+   Prose does not get wider to fill a sheet - a 110-character line is
+   unreadable. The page gets filled by putting structure beside the prose:
+   the title sits next to the lede, facts and proofs run as three-up rows,
+   the ask splits in two. Measure stays ~60ch everywhere text is read.
+
+   Screen and print are the same document. Print drops the chrome.
+   ========================================================================== */
+
+:root {
+  --adv-max: 58rem;
+
+  --adv-figure: clamp(4.25rem, 8vw, 5.5rem);
+  --adv-h1: clamp(1.9rem, 3.6vw, 2.5rem);
+  --adv-lede: 1.0625rem;
+  --adv-proof: 1.0625rem;
+  --adv-body: 0.9375rem;
+  --adv-label: 0.75rem;
+  --adv-fine: 0.8125rem;
+
+  --adv-gap: 2rem;
+}
+
+/* ---------- the sheet ---------------------------------------------------- */
+.sheet {
+  max-width: var(--adv-max);
+  margin: 0 auto;
+  padding: 3.5rem 0 4rem;
+}
+
+/* One .sheet-page per printed page. On screen they are just sections of the
+   same scroll; in print each one is exactly one Letter page, with its own
+   padding, so page two is not a leftover fragment of page one. */
+.sheet-page > * + * { margin-top: var(--adv-gap); }
+.sheet-page + .sheet-page { margin-top: calc(var(--adv-gap) * 1.5); }
+
+/* ---------- masthead ----------------------------------------------------- */
+.sheet-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid transparent;
+  border-image: var(--grad) 1;
+}
+
+.sheet-head img { width: 104px; height: auto; display: block; }
+
+.sheet-label {
+  font-family: var(--font-display);
+  font-size: var(--adv-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin: 0;
+}
+
+/* Title beside the lede - this is what fills the top of the page. */
+.sheet-intro {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  align-items: end;
+}
+
+.sheet h1 {
+  font-size: var(--adv-h1);
+  font-weight: var(--fw-light);   /* 300, not the site's 200 */
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.sheet-lede {
+  font-size: var(--adv-lede);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--quiet);
+  margin: 0;
+}
+
+/* ---------- the number --------------------------------------------------- */
+.stat {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) 1fr;
+  gap: 2rem;
+  align-items: center;
+  background: var(--ink);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+}
+
+.stat-figure {
+  font-size: var(--adv-figure);
+  font-weight: var(--fw-thin);    /* 200 - the one place thin belongs */
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.stat-unit {
+  font-size: var(--adv-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #7fd0f0;
+  margin: 0.55rem 0 0;
+}
+
+.stat-claim {
+  font-size: var(--adv-lede);
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.stat-claim strong { font-weight: var(--fw-semibold); }
+
+/* A sheet whose argument is the point carries a statement here, not a number.
+   Same block, same weight in the page, no invented metric. */
+.stat-statement { grid-template-columns: 1fr; }
+.stat-label { color: #7fd0f0; margin-bottom: 0.7rem; }
+.stat-statement .stat-claim { font-size: calc(var(--adv-lede) * 1.14); line-height: 1.38; max-width: 74ch; }
+
+.stat-source {
+  font-size: var(--adv-fine);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0.6rem 0 0;
+}
+
+.stat-source a { color: rgba(255, 255, 255, 0.82); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- the turn ----------------------------------------------------- */
+.turn {
+  font-size: var(--adv-lede);
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 0;             /* margin-top belongs to the .sheet rhythm */
+  max-width: 68ch;
+}
+
+.turn strong { font-weight: var(--fw-semibold); }
+
+/* A turn can run to several paragraphs when the argument needs room. */
+.turn p { margin: 0 0 0.7rem; }
+.turn p:last-child { margin-bottom: 0; }
+
+/* Fine print that belongs to the block above it, not to the page. */
+.stat-note {
+  font-size: var(--adv-fine);
+  color: var(--quieter);
+  margin-top: 0.55rem !important;
+}
+
+/* Inside the ink band the muted colour has to be light, not dark. */
+.stat .stat-note { color: rgba(255, 255, 255, 0.45); }
+
+/* ---------- three-up rows ------------------------------------------------ */
+.row3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;             /* margin-top belongs to the .sheet rhythm */
+}
+
+/* facts: a number and what it means */
+.facts > li { border-top: 1px solid var(--line); padding-top: 0.85rem; }
+
+.facts b {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: var(--fw-light);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.facts p { font-size: var(--adv-body); line-height: 1.45; color: var(--quiet); margin: 0; }
+.facts cite { display: block; font-style: normal; font-size: var(--adv-fine); color: var(--quieter); margin-top: 0.35rem; }
+
+/* proofs: what the work is. Four of them go two-up rather than four-across -
+   four columns on Letter gives each about 1.6in, which is not a column. */
+.proofs > li { border-top: 2px solid var(--accent); padding-top: 0.85rem; }
+.proofs-2up { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2rem; }
+.proofs p + p { margin-top: 0.55rem; }
+
+.proofs h2 {
+  font-size: var(--adv-proof);
+  font-weight: var(--fw-medium);  /* 500 */
+  line-height: 1.25;
+  margin: 0 0 0.4rem;
+}
+
+.proofs p { font-size: var(--adv-body); line-height: 1.5; color: var(--quiet); margin: 0; }
+
+.proofs cite {
+  display: block;
+  font-style: normal;
+  font-size: var(--adv-fine);
+  color: var(--quieter);
+  margin-top: 0.5rem;
+}
+
+.proofs cite a { color: var(--accent-text); }
+
+/* A number that proves the mechanism, sitting under the claim it supports.
+   Never replaces the voice line; it earns the voice line. */
+.proof-stat {
+  font-size: var(--adv-body);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0.7rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.proof-stat b {
+  font-weight: var(--fw-light);
+  font-size: 1.4em;
+  letter-spacing: -0.015em;
+  color: var(--accent-text);
+}
+
+.proof-stat span {
+  display: block;
+  font-size: var(--adv-fine);
+  color: var(--quieter);
+  margin-top: 0.25rem;
+}
+
+/* ---------- the running band --------------------------------------------- */
+.running {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
+}
+
+.running > .sheet-label { margin-bottom: 0.85rem; }
+
+.running ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.running li { font-size: var(--adv-body); line-height: 1.45; color: var(--quiet); margin: 0; }
+.running b { display: block; font-weight: var(--fw-semibold); color: var(--ink); }
+
+
+/* ---------- the story ----------------------------------------------------
+   Long-form prose that has to earn its space on a sheet. Two columns keep the
+   measure readable while using the full width, which is the same trick the
+   three-up rows pull with structure.
+   -------------------------------------------------------------------------- */
+.story { border-top: 2px solid transparent; border-image: var(--grad) 1; padding-top: 1.1rem; }
+
+.story > .sheet-label { margin-bottom: 0.75rem; }
+
+.story-body {
+  columns: 2;
+  column-gap: 2.25rem;
+  font-size: var(--adv-body);
+  line-height: 1.5;
+  color: var(--quiet);
+}
+
+.story-body p { margin: 0 0 0.7rem; break-inside: avoid; }
+.story-body p:last-child { margin-bottom: 0; }
+.story-body strong { font-weight: var(--fw-semibold); color: var(--ink); }
+
+/* ---------- the ask ------------------------------------------------------ */
+.ask {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  border-top: 2px solid transparent;
+  border-image: var(--grad) 1;
+  padding-top: 1.25rem;
+}
+
+.ask p { margin: 0; font-size: var(--adv-body); line-height: 1.5; }
+.ask strong { font-weight: var(--fw-semibold); }
+.ask .ask-price { font-size: var(--adv-lede); font-weight: 300; }
+
+.sheet-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: var(--adv-fine);
+  color: var(--quieter);
+  border-top: 1px solid var(--line-subtle);
+  padding-top: 0.85rem;
+}
+
+.sheet-foot p { margin: 0; }
+
+/* Continuation head. Hidden on screen; printed at the top of a second page so
+   the sheet still says who it is from if the pages get separated. */
+.sheet-contd { display: none; }
+
+@media (max-width: 46rem) {
+  .sheet-intro, .ask { grid-template-columns: 1fr; gap: 1.25rem; }
+  .story-body { columns: 1; }
+  .row3, .running ul, .proofs-2up { grid-template-columns: 1fr; }
+  .stat { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+/* ==========================================================================
+   PRINT - this is the PDF. Chromium renders it; CSS owns the page.
+   ========================================================================== */
+@page {
+  size: Letter;
+  margin: 0;
+}
+
+@media print {
+  /* --adv-scale is set by scripts/advisory-pdf.mjs, which shrinks the sheet
+     until it fits one page. Edit the copy freely; the fit corrects itself. */
+  :root {
+    --adv-scale: 1;
+
+    --adv-figure: calc(4.5rem  * var(--adv-scale));
+    --adv-h1:     calc(2.15rem * var(--adv-scale));
+    --adv-lede:   calc(1.02rem * var(--adv-scale));
+    --adv-proof:  calc(1.02rem * var(--adv-scale));
+    --adv-body:   calc(0.9rem  * var(--adv-scale));
+    --adv-label:  calc(0.7rem  * var(--adv-scale));
+    --adv-fine:   calc(0.75rem * var(--adv-scale));
+    --adv-gap:    calc(1.4rem  * var(--adv-scale));
+  }
+
+  html, body { background: #fff; color: var(--ink); font-size: 16px; }
+
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .print-hide { display: none !important; }
+
+  main { padding: 0 !important; margin: 0 !important; }
+
+  .sheet { max-width: none; width: 100%; margin: 0; padding: 0; }
+
+  /* Each page is a real page: fixed to Letter, with its own margins, so the
+     second one is not a fragment inheriting whatever padding was left over.
+     Laid out as a column that distributes its slack, which is what stops a
+     short page from ending two inches up and reading as if it were cut off.
+     Children do not shrink - if the copy will not fit, it spills to another
+     page where the build catches it, rather than quietly compressing. */
+  .sheet-page {
+    height: 11in;
+    padding: calc(0.58in * var(--adv-scale)) 0.6in calc(0.4in * var(--adv-scale));
+    box-sizing: border-box;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    break-after: page;
+    break-inside: avoid;
+  }
+  .sheet-page:last-child { break-after: auto; }
+  .sheet-page > * { flex: 0 0 auto; }
+
+  /* Fills and rules must survive the print pipeline. */
+  .stat,
+  .running,
+  .facts > li,
+  .proofs > li {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    break-inside: avoid;
+  }
+
+  .story   { padding-top: calc(0.9rem * var(--adv-scale)); }
+  .proof-stat { margin-top: calc(0.55rem * var(--adv-scale)); padding-top: calc(0.5rem * var(--adv-scale)); }
+  /* The argument stays one column. Two columns fill the width, but a reader
+     has to jump back up the page mid-sentence to follow a paragraph, and a
+     short opening paragraph leaves a hole under it. The white to the right of
+     a 68ch measure is the measure doing its job. */
+  .turn p { margin-bottom: calc(0.55rem * var(--adv-scale)); }
+  .story-body { column-gap: 2rem; }
+
+  .sheet-contd {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: calc(0.7rem * var(--adv-scale));
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet-contd img { width: calc(74px * var(--adv-scale)); height: auto; display: block; }
+  .stat    { padding: calc(1.25rem * var(--adv-scale)) 1.4rem; border-radius: 9px; }
+  .running { padding: calc(1.05rem * var(--adv-scale)) 1.25rem; border-radius: 9px; }
+
+  .facts b            { font-size: calc(1.6rem * var(--adv-scale)); margin-bottom: calc(0.32rem * var(--adv-scale)); }
+  .facts > li,
+  .proofs > li        { padding-top: calc(0.72rem * var(--adv-scale)); }
+  .sheet-head         { padding-bottom: calc(0.85rem * var(--adv-scale)); }
+  .sheet-intro        { gap: 2.1rem; }
+  .ask                { padding-top: calc(1rem * var(--adv-scale)); gap: 1.8rem; }
+  .sheet-foot         { padding-top: calc(0.7rem * var(--adv-scale)); }
+  .running > .sheet-label { margin-bottom: calc(0.7rem * var(--adv-scale)); }
+  .running ul         { gap: 1.35rem; }
+  .row3               { gap: 1.4rem; }
+
+  .sheet-head img { width: calc(92px * var(--adv-scale)); }
+
+  a { text-decoration: none; color: inherit; }
+  .stat-source a { color: rgba(255, 255, 255, 0.7); }
+  .proofs cite a { color: var(--accent-text); }
+
+/* A number that proves the mechanism, sitting under the claim it supports.
+   Never replaces the voice line; it earns the voice line. */
+.proof-stat {
+  font-size: var(--adv-body);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0.7rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.proof-stat b {
+  font-weight: var(--fw-light);
+  font-size: 1.4em;
+  letter-spacing: -0.015em;
+  color: var(--accent-text);
+}
+
+.proof-stat span {
+  display: block;
+  font-size: var(--adv-fine);
+  color: var(--quieter);
+  margin-top: 0.25rem;
+}
+}
