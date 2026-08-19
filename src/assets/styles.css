@@ -72,7 +72,7 @@
 
   --font-display: "Estedad", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  /* Type scale — one role per size, aligned to the @bast/shared-styles ramp.
+  /* Type scale - one role per size, aligned to the @bast/shared-styles ramp.
      Fit form to function:
        display/h2 -> thin (200), the elegant high-impact voice
        h3         -> light (300), large statements
@@ -83,13 +83,13 @@
   --fs-display: clamp(2.6rem, 5.6vw, 4.25rem);
   --fs-h2: clamp(2rem, 4.2vw, 3rem);
   --fs-h3: clamp(1.6rem, 2.7vw, 2.05rem);
-  --fs-title: 1.1875rem;   /* 19px — card & component headings */
-  --fs-eyebrow: 1.1875rem; /* 19px — section eyebrows / kickers */
-  --fs-label: 0.75rem;     /* 12px — micro-labels, tags, footer heads */
+  --fs-title: 1.1875rem;   /* 19px - card & component headings */
+  --fs-eyebrow: 1.1875rem; /* 19px - section eyebrows / kickers */
+  --fs-label: 0.75rem;     /* 12px - micro-labels, tags, footer heads */
   --fs-body-lg: clamp(1.0625rem, 1.5vw, 1.1875rem); /* lede / intros */
-  --fs-body: 1rem;         /* 16px — body, lists, nav, controls */
-  --fs-body-sm: 0.9375rem; /* 15px — card copy, secondary links */
-  --fs-caption: 0.8125rem; /* 13px — helper notes */
+  --fs-body: 1rem;         /* 16px - body, lists, nav, controls */
+  --fs-body-sm: 0.9375rem; /* 15px - card copy, secondary links */
+  --fs-caption: 0.8125rem; /* 13px - helper notes */
 
   --fw-thin: 200;
   --fw-light: 300;
@@ -169,7 +169,7 @@ button:focus-visible {
   transform: translateY(0);
 }
 
-/* Section-level eyebrows — the "THE SHIFT" treatment: larger, slate */
+/* Section-level eyebrows - the "THE SHIFT" treatment: larger, slate */
 .eyebrow,
 .section-kicker {
   margin: 0;

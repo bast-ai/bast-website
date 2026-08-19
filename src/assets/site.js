@@ -143,7 +143,7 @@
           window.bastTrack("lead_submit_success", leadParams);
         }
         form.reset();
-        setFormStatus(status, "Thanks — we'll be in touch shortly.", "success");
+        setFormStatus(status, "Thanks - we'll be in touch shortly.", "success");
       }).catch(() => {
         if (typeof window.bastTrack === "function") {
           window.bastTrack("lead_email_fallback", {

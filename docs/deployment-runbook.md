@@ -6,7 +6,7 @@ Decision: [2026-07-06-github-pages-hosting.md](./decisions/2026-07-06-github-pag
 Companion reference: [deployment.md](./deployment.md)
 
 Goal: publish the static site to GitHub Pages, point `www.bast.ai` at it, and
-retire Webflow — with near-zero downtime because Webflow stays live until the
+retire Webflow - with near-zero downtime because Webflow stays live until the
 new site is verified.
 
 Deploy is **automatic**: the `.github/workflows/deploy.yml` workflow builds and
@@ -18,7 +18,7 @@ before touching DNS; it is the value GoDaddy points at.
 
 ---
 
-## Phase 1 — GitHub repo + Pages (Beth)
+## Phase 1 - GitHub repo + Pages (Beth)
 
 1. Create/confirm the GitHub repo `bast-ai/bast-website` and push this branch
    (main). Keep Bitbucket as a mirror if you like; GitHub is now the deploy
@@ -27,31 +27,31 @@ before touching DNS; it is the value GoDaddy points at.
 3. Repo → **Settings → Secrets and variables → Actions → Variables** → add
    repository variable `GA_MEASUREMENT_ID = G-XXXXXXXXXX` (see Phase 2).
 
-## Phase 2 — Take over the existing Bast GA4 property (Beth)
+## Phase 2 - Take over the existing Bast GA4 property (Beth)
 
 1. Find the existing Bast measurement ID (`G-XXXXXXXXXX`): GA Admin →
    Data Streams → Web → the Bast stream, or the GA snippet in the Webflow
    project settings.
 2. Confirm you have **Admin** on that GA4 property (transfer ownership if needed).
 3. Set it as the `GA_MEASUREMENT_ID` Actions variable.
-   - It must NOT be the Beth Rudden site's id `G-FL8JCB0PXZ` — `scripts/check.mjs`
+   - It must NOT be the Beth Rudden site's id `G-FL8JCB0PXZ` - `scripts/check.mjs`
      fails the build if that string appears.
 4. Behavior to validate later: the site loads GA **only after the visitor
    allows analytics** (consent defaults to denied). Same property = continuous
    history.
 
-## Phase 3 — First deploy + validate on the Pages URL (before DNS)
+## Phase 3 - First deploy + validate on the Pages URL (before DNS)
 
 1. Push to `main` (or Actions tab → Deploy to GitHub Pages → Run workflow).
 2. Watch the Actions run go green.
 3. Validate against the checklist below. Before DNS, the live URL is the Pages
    default (`https://bast-ai.github.io/bast-website/`). Note: absolute `/assets/`
    paths render at root once the custom domain is live; on the project-page
-   subpath some assets/links may 404 — that's expected pre-cutover. For a clean
+   subpath some assets/links may 404 - that's expected pre-cutover. For a clean
    pre-DNS check, either add the custom domain first (Phase 4) and validate via
    a local hosts-file override, or accept a low-TTL staged DNS cutover.
 
-## Phase 4 — Custom domain + DNS cutover (GitHub Pages + GoDaddy)
+## Phase 4 - Custom domain + DNS cutover (GitHub Pages + GoDaddy)
 
 1. Repo → Settings → Pages → **Custom domain** → `www.bast.ai` → Save.
    (`src/CNAME` already pins this in every build, so it persists across deploys.)

@@ -20,7 +20,7 @@ black/white/Helvetica look the initial shell shipped with. Concretely:
 - One brand. The site should look like the product (admin-ui / chat-ui), which
   already renders from `@bast/shared-styles`. Values were copied from that
   package so the two stay in sync.
-- Reuse existing assets and patterns before inventing new ones — the tokens,
+- Reuse existing assets and patterns before inventing new ones - the tokens,
   gradient, and type ramp already exist and are maintained elsewhere.
 - Self-hosting the font keeps the privacy posture intact: analytics are gated
   behind consent, so the site should not make an uncredited third-party request

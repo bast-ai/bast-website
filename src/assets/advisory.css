@@ -123,6 +123,20 @@
 
 .advisory-arrow-link:hover span { transform: translateX(0.3rem); }
 
+/* Two doors out of the hero: start a conversation, or go read her first. */
+.advisory-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 2.25rem;
+}
+
+.advisory-arrow-link-quiet {
+  color: var(--quieter);
+  font-weight: 400;
+}
+
+.advisory-arrow-link-quiet:hover { color: var(--accent-text); }
+
 .advisory-rail {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

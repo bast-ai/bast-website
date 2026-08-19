@@ -118,16 +118,16 @@ This is not a compliance deck passed between departments, a legal opinion, or a 
 
 SOURCES AND LINKS
 
-1. Regulation (EU) 2024/1689 — Artificial Intelligence Act, including Articles 50 and 99
+1. Regulation (EU) 2024/1689 - Artificial Intelligence Act, including Articles 50 and 99
 https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng
 
-2. Regulation (EU) 2026/1744 — AI Omnibus amendments
+2. Regulation (EU) 2026/1744 - AI Omnibus amendments
 https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=OJ:L_202601744
 
-3. European Commission AI Act Service Desk — implementation timeline
+3. European Commission AI Act Service Desk - implementation timeline
 https://ai-act-service-desk.ec.europa.eu/en/ai-act/eu-ai-act-implementation-timeline
 
-4. European Commission — enforcement and transparency requirements from 2 August 2026
+4. European Commission - enforcement and transparency requirements from 2 August 2026
 https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august
 
 Note: This briefing is an operational reading of the current text, not legal advice.

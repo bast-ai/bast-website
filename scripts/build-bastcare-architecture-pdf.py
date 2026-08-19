@@ -166,7 +166,7 @@ def build():
     c.setAuthor("Bast, Inc.")
     c.setSubject("Public architecture and privacy boundaries for BastCare")
 
-    # 1 — Cover
+    # 1 - Cover
     page_base(c, 1, "Architecture at a glance")
     c.setFont("Helvetica-Bold", 10)
     c.setFillColor(ACCENT)
@@ -186,9 +186,9 @@ def build():
     text_block(c, "BastCare helps a patient capture a visit, receive a plain-language summary, and choose whether to share it with trusted people. The summary is the durable record. The patient remains in control.", 58, 146, 668, 12.2, 18, color=white)
     c.showPage()
 
-    # 2 — Context
+    # 2 - Context
     page_base(c, 2, "System context")
-    title(c, "System context", "Who participates — and where data crosses a boundary", "Arrows show purposeful exchanges. They do not imply that every component stores the data it handles.")
+    title(c, "System context", "Who participates - and where data crosses a boundary", "Arrows show purposeful exchanges. They do not imply that every component stores the data it handles.")
     node(c, 45, 302, 136, 95, "Patient", "Records with permission, reviews the summary, and controls sharing.", fill=PALE_GREEN, accent=GREEN)
     node(c, 45, 158, 136, 95, "CareTeam member", "Accepts an invitation and sees only summaries the patient shares.", fill=PALE_VIOLET, accent=SECONDARY)
     node(c, 278, 230, 154, 105, "BastCare on iPhone", "Capture, consent, review, local data, sharing choices, and deletion controls.", fill=PALE_BLUE)
@@ -209,7 +209,7 @@ def build():
     text_block(c, "Visit content leaves the iPhone only for the user-requested summary and explicit sharing flow.", 59, 82, 250, 8.5, 11, color=MUTED)
     c.showPage()
 
-    # 3 — Visit lifecycle
+    # 3 - Visit lifecycle
     page_base(c, 3, "Visit lifecycle")
     title(c, "Visit lifecycle", "From permission to a useful summary", "The lifecycle is intentionally short. Temporary material is removed when its job is done.")
     xs = [38, 286, 534]
@@ -218,7 +218,7 @@ def build():
     step(c, 3, xs[2], 330, 220, "Mask transcript text", "Direct identifiers are reduced before temporary processing.", fill=PALE_BLUE)
     step(c, 4, xs[2], 222, 220, "Create the summary", "A model-processing provider returns a plain-language draft.", fill=WARM)
     step(c, 5, xs[1], 222, 220, "Delete temporary material", "Audio and the full transcript are removed from the iPhone; Bast keeps no transcript archive.", fill=PALE_GREEN)
-    step(c, 6, xs[0], 222, 220, "Review and choose", "The patient keeps the summary and may share it—or share nothing.", fill=PALE_VIOLET)
+    step(c, 6, xs[0], 222, 220, "Review and choose", "The patient keeps the summary and may share it - or share nothing.", fill=PALE_VIOLET)
     arrow(c, 258, 367, 286, 367)
     arrow(c, 506, 367, 534, 367)
     arrow(c, 644, 330, 644, 296)
@@ -231,7 +231,7 @@ def build():
     text_block(c, "The visit summary, its provenance, and the patient's sharing choices. Audio and transcript text do not become a shadow health record.", 56, 130, 675, 10.5, 15, color=white)
     c.showPage()
 
-    # 4 — Sharing and revocation
+    # 4 - Sharing and revocation
     page_base(c, 4, "Sharing and revocation")
     title(c, "Sharing and revocation", "One patient choice, one scoped result", "Sharing is summary-by-summary and CareTeam-by-CareTeam. Revocation follows the same clear path.")
     lanes = [(145, "Patient's iPhone", ACCENT), (390, "Bast sharing relay", SECONDARY), (637, "Confirmed CareTeam", GREEN)]
@@ -265,7 +265,7 @@ def build():
     c.drawString(125, 69, "No blanket access. No automatic resharing. No penalty for sharing nothing.")
     c.showPage()
 
-    # 5 — Account deletion
+    # 5 - Account deletion
     page_base(c, 5, "Account deletion")
     title(c, "Account deletion", "Delete the account; preserve accountable evidence", "The flow separates user data removal from the minimum records Bast needs to prove what happened.")
     step(c, 1, 38, 335, 220, "Confirm in BastCare", "The user reviews the effects and confirms account deletion.", fill=PALE_BLUE)
@@ -277,14 +277,14 @@ def build():
     c.setFillColor(INK)
     c.drawString(38, 287, "After deletion")
     card(c, 38, 115, 342, 145, "Deleted", "User-facing account data", "Account identity links, authentication access, CareTeam membership, invitations, shared content, device registrations, and local BastCare data.", fill=PALE_GREEN, accent=GREEN)
-    card(c, 412, 115, 342, 145, "Retained — limited", "Audit and usage evidence", "Deletion event, outcome, timing, and minimized usage or token totals needed for security, billing transparency, legal duties, and aggregate operations. No audio or transcript text.", fill=WARM, accent=ORANGE)
+    card(c, 412, 115, 342, 145, "Retained - limited", "Audit and usage evidence", "Deletion event, outcome, timing, and minimized usage or token totals needed for security, billing transparency, legal duties, and aggregate operations. No audio or transcript text.", fill=WARM, accent=ORANGE)
     rounded_panel(c, 38, 52, 716, 43, fill=INK, stroke=INK)
     c.setFont("Helvetica-Bold", 9.2)
     c.setFillColor(white)
     c.drawCentredString(PAGE_W / 2, 69, "Retention is purpose-limited, access-controlled, and governed by Bast's documented retention schedule.")
     c.showPage()
 
-    # 6 — Commitments and responsibilities
+    # 6 - Commitments and responsibilities
     page_base(c, 6, "Design commitments")
     title(c, "Design commitments", "What the architecture is designed to protect", "A release-ready summary for users, reviewers, partners, and future contributors.")
     commitments = [
