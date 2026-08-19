@@ -162,11 +162,13 @@ for (const [contents, label] of [
   [principlesHtml, "principles"],
   [privacyHtml, "privacy"],
 ]) {
-  assertExcludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
+  assertIncludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
 }
 for (const contents of advisoryPages) {
-  assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
+  assertExcludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
+assertIncludes(advisoryIndexHtml, "Founder-led AI advisory", "founder-led advisory positioning");
+assertIncludes(advisoryIndexHtml, "Bast is building in healthcare", "healthcare operating focus");
 assertIncludes(advisoryIndexHtml, 'href="/assets/bast-narrative.pdf"', "advisory narrative PDF link");
 assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "advisory narrative cover");
 assertIncludes(advisoryIndexHtml, "The models are not the community&rsquo;s intelligence. The community is.", "advisory narrative point of view");
@@ -240,7 +242,9 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
-assertExcludes(sitemapXml, "/advisory/", "Advisory sitemap route");
+for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
+  assertIncludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
+}
 for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
 }
