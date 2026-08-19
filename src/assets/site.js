@@ -69,7 +69,7 @@
       "Organization: " + (data.organization || "-") + "\n\n" +
       data.message;
     window.location.href =
-      "mailto:hello@bast.ai?subject=" + encodeURIComponent(subject) +
+      "mailto:community@bast.ai?subject=" + encodeURIComponent(subject) +
       "&body=" + encodeURIComponent(body);
   }
 

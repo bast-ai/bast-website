@@ -211,7 +211,7 @@ const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary i
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
-assertIncludes(bastcareSupport, "hello@bast.ai", "monitored support contact");
+assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact");
 assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
 assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
 assertIncludes(bastcarePrivacy, 'href="/bastcare/processors/"', "named processor disclosure link");
