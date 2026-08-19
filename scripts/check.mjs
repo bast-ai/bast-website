@@ -21,6 +21,8 @@ const requiredFiles = [
   "assets/bast-healthcare-advisory.pdf",
   "assets/bast-eu-ai-act-briefing.pdf",
   "assets/bast-change-adoption.pdf",
+  "assets/bast-narrative.pdf",
+  "assets/bast-narrative-cover.png",
   "advisory/index.html",
   "advisory/healthcare.html",
   "advisory/eu-ai-act.html",
@@ -92,6 +94,7 @@ const advisoryPages = await Promise.all([
   "eu-ai-act.html",
   "change.html",
 ].map((file) => readFile(path.join(distDir, "advisory", file), "utf8")));
+const advisoryIndexHtml = advisoryPages[0];
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const appleAssociation = await readFile(
@@ -164,6 +167,9 @@ for (const [contents, label] of [
 for (const contents of advisoryPages) {
   assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
+assertIncludes(advisoryIndexHtml, 'href="/assets/bast-narrative.pdf"', "advisory narrative PDF link");
+assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "advisory narrative cover");
+assertIncludes(advisoryIndexHtml, "The models are not the community&rsquo;s intelligence. The community is.", "advisory narrative point of view");
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
