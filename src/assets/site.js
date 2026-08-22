@@ -157,8 +157,121 @@
     });
   }
 
+  function initBastCareTour() {
+    document.querySelectorAll("[data-tour-track]").forEach((track) => {
+      const cards = Array.from(track.querySelectorAll(".bastcare-tour-card"));
+      const tour = track.closest(".bastcare-tour");
+      const previous = tour && tour.querySelector("[data-tour-prev]");
+      const next = tour && tour.querySelector("[data-tour-next]");
+      const status = tour && tour.querySelector("[data-tour-status]");
+      let currentIndex = 0;
+      let frame = null;
+
+      if (!cards.length || !previous || !next || !status) return;
+
+      function nearestCardIndex() {
+        const trackLeft = track.getBoundingClientRect().left;
+        let nearestIndex = 0;
+        let nearestDistance = Infinity;
+
+        cards.forEach((card, index) => {
+          const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        return nearestIndex;
+      }
+
+      function updateControls(index) {
+        currentIndex = Math.max(0, Math.min(cards.length - 1, index));
+        previous.disabled = currentIndex === 0;
+        next.disabled = currentIndex === cards.length - 1;
+        status.textContent = `${currentIndex + 1} of ${cards.length}`;
+      }
+
+      function showCard(index) {
+        const targetIndex = Math.max(0, Math.min(cards.length - 1, index));
+        const target = cards[targetIndex];
+        const left = target.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        track.scrollTo({ left, behavior: reducedMotion ? "auto" : "smooth" });
+        updateControls(targetIndex);
+      }
+
+      previous.addEventListener("click", () => showCard(currentIndex - 1));
+      next.addEventListener("click", () => showCard(currentIndex + 1));
+
+      track.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        showCard(currentIndex + (event.key === "ArrowRight" ? 1 : -1));
+      });
+
+      track.addEventListener("scroll", () => {
+        if (frame) return;
+        frame = window.requestAnimationFrame(() => {
+          frame = null;
+          updateControls(nearestCardIndex());
+        });
+      }, { passive: true });
+
+      window.addEventListener("resize", () => updateControls(nearestCardIndex()));
+      updateControls(0);
+    });
+  }
+
+  function initBastCareMetrics() {
+    const panel = document.querySelector("[data-bastcare-metrics]");
+    if (!panel) return;
+
+    fetch("/assets/data/bastcare-metrics.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Metrics unavailable");
+        return response.json();
+      })
+      .then((document) => {
+        const metrics = document && document.metrics;
+        const displayed = ["successfulSummaries", "inputTokens", "outputTokens"];
+        const required = [...displayed, "summariesWithTokenUsage"];
+        const valid = document && document.schemaVersion === 1 && metrics && required.every((name) =>
+          Number.isSafeInteger(metrics[name]) && metrics[name] >= 0
+        );
+
+        if (!valid || metrics.successfulSummaries < 1) return;
+
+        displayed.forEach((name) => {
+          const output = panel.querySelector(`[data-bastcare-metric="${name}"]`);
+          if (output) output.textContent = metrics[name].toLocaleString("en-US");
+        });
+
+        const coverage = metrics.summariesWithTokenUsage;
+        const note = panel.querySelector("[data-bastcare-metrics-note]");
+        const updated = new Date(document.generatedAt);
+        const updatedLabel = Number.isNaN(updated.valueOf())
+          ? ""
+          : ` Updated ${updated.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}.`;
+
+        if (note) {
+          note.textContent = Number.isSafeInteger(coverage) && coverage < metrics.successfulSummaries
+            ? `Token totals cover ${coverage.toLocaleString("en-US")} of ${metrics.successfulSummaries.toLocaleString("en-US")} successful runs.${updatedLabel} No transcript text is included.`
+            : `Aggregate AI processing totals.${updatedLabel} No transcript text is included.`;
+        }
+
+        panel.hidden = false;
+      })
+      .catch(() => {
+        // Keep the proof block hidden until a validated aggregate is available.
+      });
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     handleContactForm();
+    initBastCareTour();
+    initBastCareMetrics();
 
     document.querySelectorAll("[data-mode]").forEach((tab) => {
       tab.addEventListener("click", function() {

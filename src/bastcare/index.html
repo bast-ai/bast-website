@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/assets/styles.css">
 <script>window.BAST_GA_MEASUREMENT_ID="__GA_MEASUREMENT_ID__";window.BAST_SITE_ENV="__SITE_ENV__";</script>
 <script src="/assets/analytics-consent.js" defer></script>
+<script src="/assets/site.js" defer></script>
 </head>
 <body class="bastcare-site">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,13 +30,92 @@
 
 <main class="bastcare-page" id="main">
   <section class="bastcare-hero bastcare-marketing-hero">
-    <p class="eyebrow">BastCare for iPhone</p>
-    <h1>Visit summaries you control.</h1>
-    <p class="lede">Record with permission, receive a plain-language summary, and decide exactly what your CareTeam can see.</p>
-    <div class="hero-actions">
-      <a class="button button-primary" href="/bastcare/privacy/">Read our privacy policy</a>
-      <a class="button button-ghost" href="/bastcare/support/">Get support</a>
+    <div class="bastcare-hero-copy">
+      <p class="eyebrow">BastCare for iPhone</p>
+      <h1>Visit summaries you control.</h1>
+      <p class="lede">Record with permission, receive a plain-language summary, and decide exactly what your CareTeam can see.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#bastcare-tour">See it in action</a>
+        <a class="button button-ghost" href="/bastcare/privacy/">Read our privacy policy</a>
+      </div>
     </div>
+    <figure class="bastcare-hero-device">
+      <div class="bastcare-screen-frame bastcare-screen-frame-hero">
+        <img src="/assets/bastcare/screens/home.webp" width="660" height="1434" fetchpriority="high" alt="BastCare home screen with a Record a visit action and tabs for My Visits, CareTeam, and Shared">
+      </div>
+      <figcaption>One calm place for the visit, the summary, and the people you trust.</figcaption>
+    </figure>
+  </section>
+
+  <section class="bastcare-tour" id="bastcare-tour" aria-labelledby="bastcare-tour-title">
+    <div class="bastcare-tour-heading">
+      <div class="section-heading">
+        <p class="eyebrow">See BastCare in action</p>
+        <h2 id="bastcare-tour-title">A visit becomes something you can keep.</h2>
+        <p>Follow the complete path from permission to a private summary and an intentional share.</p>
+      </div>
+      <div class="bastcare-tour-controls" aria-label="BastCare walkthrough controls">
+        <button type="button" data-tour-prev aria-label="Show the previous BastCare screen">&larr;</button>
+        <p><span data-tour-status aria-live="polite">1 of 8</span><span aria-hidden="true"> &middot; </span>Swipe or use the arrows</p>
+        <button type="button" data-tour-next aria-label="Show the next BastCare screen">&rarr;</button>
+      </div>
+    </div>
+
+    <div class="bastcare-tour-track" data-tour-track tabindex="0" aria-label="BastCare screen walkthrough">
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/recording-disclosure.webp" width="660" height="1434" loading="lazy" alt="BastCare recording disclosure explaining microphone, speech recognition, temporary processing, deletion, and privacy"></div>
+        <div class="bastcare-tour-copy"><span>01</span><h3>Understand the boundary</h3><p>See what stays on the iPhone, what is processed temporarily, and what is deleted.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/consent.webp" width="660" height="1434" loading="lazy" alt="BastCare consent screen asking the user to confirm that everyone knows the conversation is being recorded"></div>
+        <div class="bastcare-tour-copy"><span>02</span><h3>Ask first</h3><p>Every recording begins with a clear reminder that everyone in the room must know.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/recording.webp" width="660" height="1434" loading="lazy" alt="BastCare recording screen with an elapsed timer, audio waveform, and finish button"></div>
+        <div class="bastcare-tour-copy"><span>03</span><h3>Record on the iPhone</h3><p>The visit audio stays protected on the device while the conversation is captured.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/processing.webp" width="660" height="1434" loading="lazy" alt="BastCare processing screen showing that the visit is being transcribed on the iPhone"></div>
+        <div class="bastcare-tour-copy"><span>04</span><h3>Create the summary</h3><p>BastCare handles the processing steps and lets you return to My Visits while it works.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/summary.webp" width="660" height="1434" loading="lazy" alt="BastCare visit summary marked Private, just you, with an option to export a PDF"></div>
+        <div class="bastcare-tour-copy"><span>05</span><h3>Keep a useful summary</h3><p>The plain-language result is private by default and ready to revisit or export.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/visits.webp" width="660" height="1434" loading="lazy" alt="BastCare My Visits screen with private visit summaries organized by date"></div>
+        <div class="bastcare-tour-copy"><span>06</span><h3>Find the visit again</h3><p>My Visits keeps summaries organized without turning the app into a clinical record.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/careteam.webp" width="660" height="1434" loading="lazy" alt="BastCare CareTeam screen with Family and Close Friends groups"></div>
+        <div class="bastcare-tour-copy"><span>07</span><h3>Choose people you trust</h3><p>Create CareTeams around the real relationships that help you navigate care.</p></div>
+      </article>
+      <article class="bastcare-tour-card">
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/share-preview.webp" width="660" height="1434" loading="lazy" alt="BastCare Review summary screen showing the exact content selected for a Family CareTeam"></div>
+        <div class="bastcare-tour-copy"><span>08</span><h3>Preview every share</h3><p>Review exactly what the CareTeam will see before choosing Share it.</p></div>
+      </article>
+    </div>
+    <p class="bastcare-demo-note">Screens show fictional demonstration names and visit information. BastCare is not medical advice.</p>
+  </section>
+
+  <section class="bastcare-sparkle" aria-labelledby="bastcare-sparkle-title">
+    <div class="bastcare-sparkle-mark" aria-hidden="true"><span>✦</span></div>
+    <div class="bastcare-sparkle-copy">
+      <p class="eyebrow">5.0 on the App Store</p>
+      <div class="bastcare-stars" aria-label="Five out of five stars"><span aria-hidden="true">★★★★★</span></div>
+      <h2 id="bastcare-sparkle-title">Our first written review.</h2>
+      <blockquote class="bastcare-review-quote">
+        <p>&ldquo;Loved the ease and accuracy to help capture the conversation with my parents and their doctors!&rdquo;</p>
+        <cite>MapleFan2 <span aria-hidden="true">&middot;</span> App Store review</cite>
+      </blockquote>
+    </div>
+    <div class="bastcare-review-seal" aria-label="5.0 average from 2 App Store ratings"><span>5.0</span><small>2 ratings</small></div>
+    <dl class="bastcare-proof-metrics" data-bastcare-metrics hidden>
+      <div><dt>Successful AI summary runs</dt><dd data-bastcare-metric="successfulSummaries">—</dd></div>
+      <div><dt>Input tokens processed</dt><dd data-bastcare-metric="inputTokens">—</dd></div>
+      <div><dt>Output tokens generated</dt><dd data-bastcare-metric="outputTokens">—</dd></div>
+      <p data-bastcare-metrics-note>Aggregate processing totals. No transcript text is included.</p>
+    </dl>
   </section>
 
   <section class="plain-language" aria-labelledby="privacy-promise-title">
