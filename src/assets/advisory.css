@@ -278,6 +278,11 @@
   letter-spacing: -0.035em;
 }
 
+.advisory-library-head h2 {
+  max-width: none;
+  white-space: nowrap;
+}
+
 .advisory-brief-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -928,6 +933,10 @@
   .advisory-library-head h2,
   .advisory-offer h2 {
     font-size: clamp(3.15rem, 13vw, 4rem);
+  }
+
+  .advisory-library-head h2 {
+    white-space: normal;
   }
 
   .advisory-narrative {
