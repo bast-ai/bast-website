@@ -179,11 +179,12 @@ for (const [contents, label] of [
 for (const contents of advisoryPages) {
   assertExcludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
-assertIncludes(advisoryIndexHtml, "Founder-led AI advisory", "founder-led advisory positioning");
-assertIncludes(advisoryIndexHtml, "Bast is building in healthcare", "healthcare operating focus");
+assertIncludes(advisoryIndexHtml, "AI advice for senior leaders", "direct advisory positioning");
+assertIncludes(advisoryIndexHtml, "where data is private and the stakes are high", "high-stakes operating focus");
+assertIncludes(advisoryIndexHtml, "I advise three organizations at a time", "limited direct advisory capacity");
 assertIncludes(advisoryIndexHtml, 'href="/assets/bast-narrative.pdf"', "advisory narrative PDF link");
 assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "advisory narrative cover");
-assertIncludes(advisoryIndexHtml, "The models are not the community&rsquo;s intelligence. The community is.", "advisory narrative point of view");
+assertIncludes(advisoryIndexHtml, "It knows your information. It shows its sources. Your people stay in charge.", "plain-language advisory point of view");
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
