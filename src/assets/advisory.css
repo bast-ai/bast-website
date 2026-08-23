@@ -49,30 +49,35 @@
 
 /* ---------- advisory landing page --------------------------------------- */
 .advisory-index {
-  padding-top: clamp(4.5rem, 9vw, 8rem);
+  padding-top: clamp(3rem, 6vw, 5rem);
 }
 
 .advisory-index > * + * {
-  margin-top: clamp(6rem, 11vw, 10rem);
+  margin-top: clamp(8rem, 15vw, 13rem);
 }
 
 .advisory-index .sheet-label {
   color: var(--accent-text);
-  font-size: var(--fs-label);
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
 }
 
 .advisory-hero {
   position: relative;
+  display: flex;
+  min-height: min(48rem, calc(100svh - 7rem));
+  flex-direction: column;
+  justify-content: center;
   overflow: clip;
+  padding: 2rem 0;
 }
 
 .advisory-hero::before {
   content: "";
   position: absolute;
-  width: min(34rem, 60vw);
-  height: min(34rem, 60vw);
-  right: -12rem;
-  top: -14rem;
+  width: min(46rem, 70vw);
+  height: min(46rem, 70vw);
+  right: -17rem;
+  top: -17rem;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(0, 144, 204, 0.13), rgba(60, 84, 161, 0.04) 48%, transparent 70%);
   pointer-events: none;
@@ -81,18 +86,18 @@
 .advisory-hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
-  gap: clamp(2rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.55fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
   align-items: end;
   margin-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
 .advisory-index h1 {
-  max-width: 12ch;
-  font-size: clamp(3.9rem, 7.2vw, 6.35rem);
+  max-width: 9ch;
+  font-size: clamp(5rem, 11.5vw, 9rem);
   font-weight: var(--fw-thin);
-  line-height: 0.93;
-  letter-spacing: -0.045em;
+  line-height: 0.84;
+  letter-spacing: -0.055em;
 }
 
 .advisory-hero-note {
@@ -100,10 +105,10 @@
 }
 
 .advisory-hero-note p {
-  margin: 0 0 1.6rem;
+  margin: 0 0 2rem;
   color: var(--quiet);
-  font-size: clamp(1.08rem, 1.6vw, 1.3rem);
-  line-height: 1.55;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  line-height: 1.42;
 }
 
 .advisory-arrow-link {
@@ -111,7 +116,7 @@
   align-items: center;
   gap: 0.65rem;
   color: var(--accent-text);
-  font-size: var(--fs-body);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   font-weight: var(--fw-semibold);
   text-decoration: none;
 }
@@ -127,7 +132,8 @@
 .advisory-hero-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.9rem 2.25rem;
+  align-items: center;
+  gap: 1rem 2.25rem;
 }
 
 .advisory-arrow-link-quiet {
@@ -140,14 +146,14 @@
 .advisory-rail {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+  margin-top: clamp(4rem, 8vw, 7rem);
   border-top: 2px solid transparent;
   border-image: var(--grad) 1;
 }
 
 .advisory-rail p {
   margin: 0;
-  padding: 1.25rem 1.5rem 0 0;
+  padding: 1.5rem 2rem 0 0;
 }
 
 .advisory-rail p + p {
@@ -162,41 +168,32 @@
 
 .advisory-rail strong {
   color: var(--ink);
-  font-size: var(--fs-body);
-  font-weight: var(--fw-semibold);
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: var(--fw-medium);
 }
 
 .advisory-rail span {
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   color: var(--quieter);
-  font-size: var(--fs-body-sm);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
   line-height: 1.45;
 }
 
-/* ---------- the narrative beneath the advisory work -------------------- */
+/* ---------- the idea beneath the advisory work ------------------------- */
 .advisory-narrative {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
-  gap: clamp(2.5rem, 7vw, 7rem);
+  grid-template-columns: minmax(0, 1.45fr) minmax(12rem, 0.55fr);
+  gap: clamp(3rem, 9vw, 9rem);
   align-items: center;
   overflow: hidden;
-  border-radius: calc(var(--radius-lg) * 1.5);
-  background: var(--ink);
-  color: #fff;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  border-top: 2px solid transparent;
+  border-image: var(--grad) 1;
+  padding: clamp(3rem, 6vw, 5rem) 0 0;
 }
 
 .advisory-narrative::before {
-  content: "";
-  position: absolute;
-  width: 28rem;
-  height: 28rem;
-  left: -13rem;
-  bottom: -20rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 169, 225, 0.24), transparent 68%);
-  pointer-events: none;
+  content: none;
 }
 
 .advisory-narrative-copy {
@@ -204,34 +201,23 @@
   z-index: 1;
 }
 
-.advisory-narrative .sheet-label { color: #7fd0f0; }
+.advisory-narrative .sheet-label { color: var(--accent-text); }
 
 .advisory-narrative h2 {
-  max-width: 13ch;
-  margin: 1rem 0 1.25rem;
-  color: #fff;
-  font-size: clamp(2.7rem, 5vw, 4.7rem);
+  max-width: 11ch;
+  margin: 1.25rem 0 1.5rem;
+  color: var(--ink);
+  font-size: clamp(4rem, 7.5vw, 7rem);
   font-weight: var(--fw-thin);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
 }
 
 .advisory-narrative-lede {
-  max-width: 56ch;
+  max-width: 32ch;
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: var(--fs-body-lg);
-  line-height: 1.6;
-}
-
-.advisory-narrative blockquote {
-  max-width: 38ch;
-  margin: 2rem 0 0;
-  padding-left: 1.25rem;
-  border-left: 2px solid #55c7ec;
-  color: #fff;
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  font-weight: var(--fw-light);
+  color: var(--quiet);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
   line-height: 1.45;
 }
 
@@ -240,30 +226,17 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1.25rem;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
-.advisory-narrative-actions .button {
-  background: #fff;
-  color: var(--ink);
-  box-shadow: none;
-}
-
-.advisory-narrative-actions .button:hover {
-  background: #eaf7fc;
-}
-
-.advisory-narrative-actions .advisory-download {
-  color: #a8ddf2;
-}
+.advisory-narrative-actions cite { font-style: normal; }
 
 .advisory-narrative-cover {
   position: relative;
   z-index: 1;
   display: block;
-  width: min(100%, 22rem);
+  width: min(100%, 17rem);
   justify-self: end;
-  color: #fff;
   text-decoration: none;
 }
 
@@ -271,56 +244,34 @@
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 2px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+  border-radius: 3px;
+  box-shadow: 16px 16px 36px rgba(22, 27, 29, 0.18), -8px -8px 24px rgba(250, 251, 255, 0.75);
   transition: transform 180ms ease, box-shadow 180ms ease;
-}
-
-.advisory-narrative-cover > span {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.9rem;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: var(--fs-body-sm);
-  font-weight: var(--fw-semibold);
 }
 
 .advisory-narrative-cover:hover img {
   transform: translateY(-4px);
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+  box-shadow: 18px 20px 44px rgba(22, 27, 29, 0.22), -8px -8px 24px rgba(250, 251, 255, 0.75);
 }
 
-.advisory-narrative-cover:hover > span { color: #fff; }
-
 .advisory-library-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
-  gap: clamp(2rem, 6vw, 6rem);
-  align-items: end;
-  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
 }
 
 .advisory-library-head h2,
 .advisory-offer h2 {
-  margin: 0.8rem 0 0;
-  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  max-width: 10ch;
+  margin: 1rem 0 0;
+  font-size: clamp(4rem, 7.5vw, 7rem);
   font-weight: var(--fw-thin);
-  line-height: 1;
-  letter-spacing: -0.035em;
-}
-
-.advisory-library-head > p {
-  margin: 0;
-  color: var(--quiet);
-  font-size: var(--fs-body-lg);
-  line-height: 1.55;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
 }
 
 .advisory-brief-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -329,13 +280,13 @@
 .advisory-brief-card {
   position: relative;
   display: flex;
-  min-height: 35rem;
+  min-height: 29rem;
   flex-direction: column;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: var(--card-face);
   box-shadow: var(--neu-raise-sm);
-  padding: clamp(1.5rem, 2.5vw, 2rem);
+  padding: clamp(2rem, 3.5vw, 2.75rem);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -357,26 +308,25 @@
   justify-content: space-between;
   gap: 1rem;
   color: var(--accent-text);
-  font-size: var(--fs-label);
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
   font-weight: var(--fw-semibold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .advisory-brief-card h3 {
-  min-height: 4.8rem;
-  margin: 3.5rem 0 1rem;
-  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
+  margin: clamp(3rem, 5vw, 5rem) 0 1.5rem;
+  font-size: clamp(2.4rem, 4vw, 3.25rem);
   font-weight: var(--fw-light);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 .advisory-brief-card > p {
   margin: 0;
   color: var(--quiet);
-  font-size: var(--fs-body);
-  line-height: 1.55;
+  font-size: clamp(1.15rem, 1.65vw, 1.35rem);
+  line-height: 1.45;
 }
 
 .advisory-proof {
@@ -406,14 +356,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  padding-top: 1.5rem;
+  margin-top: auto;
+  padding-top: 2.5rem;
   border-top: 1px solid var(--line);
-}
-
-.advisory-brief-actions .button {
-  min-height: 42px;
-  padding: 0.65rem 1rem;
-  font-size: var(--fs-body-sm);
 }
 
 .advisory-download {
@@ -425,13 +370,13 @@
 
 .advisory-offer {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2.5rem, 7vw, 7rem);
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.75fr);
+  gap: clamp(3rem, 8vw, 8rem);
   align-items: start;
   border-radius: calc(var(--radius-lg) * 1.5);
   background: var(--ink);
   color: #fff;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  padding: clamp(2.5rem, 6vw, 5.5rem);
 }
 
 .advisory-offer .sheet-label { color: #7fd0f0; }
@@ -439,44 +384,52 @@
 
 .advisory-offer-copy p {
   color: rgba(255, 255, 255, 0.72);
-  font-size: var(--fs-body-lg);
-  line-height: 1.55;
+  font-size: clamp(1.15rem, 1.65vw, 1.35rem);
+  line-height: 1.45;
 }
 
 .advisory-offer-copy strong { color: #fff; }
 .advisory-offer-copy .button { margin-top: 0.75rem; }
 
-.advisory-fit {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
-  margin: 2rem 0;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.16);
+.advisory-offer-copy .advisory-offer-lede {
+  margin-bottom: 2rem;
+  color: #fff;
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: var(--fw-light);
+  line-height: 1.25;
 }
 
-.advisory-fit > div {
-  background: var(--ink);
-  padding: 1.25rem;
+.advisory-steps {
+  counter-reset: advisory-step;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.advisory-fit span {
-  display: block;
+.advisory-steps li {
+  counter-increment: advisory-step;
+  position: relative;
+  min-height: 3.5rem;
+  padding: 1.15rem 0 1.15rem 3.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  line-height: 1.3;
+}
+
+.advisory-steps li::before {
+  content: counter(advisory-step);
+  position: absolute;
+  left: 0;
+  top: 0.95rem;
   color: #7fd0f0;
-  font-size: var(--fs-label);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  font-size: 1.75rem;
+  font-weight: var(--fw-light);
 }
 
-.advisory-fit p {
-  margin: 0.65rem 0 0;
-  font-size: var(--fs-body-sm);
+.advisory-capacity {
+  margin: 2rem 0 0;
 }
-
-.advisory-capacity { margin-bottom: 0; }
 
 /* ---------- detail-page wayfinding and source ledger -------------------- */
 .advisory-subnav {
@@ -889,13 +842,11 @@
 @media (max-width: 64rem) {
   .advisory-hero-grid,
   .advisory-narrative,
-  .advisory-library-head,
   .advisory-offer {
     grid-template-columns: 1fr;
   }
 
   .advisory-hero-note,
-  .advisory-library-head > p,
   .advisory-offer-copy {
     max-width: 44rem;
   }
@@ -919,7 +870,7 @@
   }
 
   .advisory-narrative-cover {
-    width: min(100%, 20rem);
+    width: min(100%, 15rem);
     justify-self: start;
   }
 }
@@ -933,15 +884,20 @@
   .advisory-index .proofs > li { min-height: 0; }
 
   .advisory-index {
-    padding-top: 3.5rem;
+    padding-top: 2rem;
   }
 
   .advisory-index > * + * {
-    margin-top: 5rem;
+    margin-top: 7rem;
   }
 
   .advisory-index h1 {
-    font-size: clamp(3.2rem, 15vw, 4.1rem);
+    font-size: clamp(4.5rem, 20vw, 6.2rem);
+  }
+
+  .advisory-hero {
+    min-height: auto;
+    padding: 3rem 0 1rem;
   }
 
   .advisory-rail {
@@ -961,27 +917,23 @@
 
   .advisory-library-head h2,
   .advisory-offer h2 {
-    font-size: clamp(2.25rem, 11vw, 3.2rem);
+    font-size: clamp(3.5rem, 15vw, 4.75rem);
   }
 
   .advisory-narrative {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 0 0;
   }
 
   .advisory-narrative h2 {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    font-size: clamp(3.5rem, 15vw, 4.75rem);
   }
 
   .advisory-narrative-cover {
-    width: 100%;
+    width: min(70%, 15rem);
   }
 
   .advisory-offer {
     padding: 2rem 1.5rem;
-  }
-
-  .advisory-fit {
-    grid-template-columns: 1fr;
   }
 
   .advisory-subnav {
