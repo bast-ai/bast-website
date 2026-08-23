@@ -2153,11 +2153,12 @@ h1 span {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.46fr);
   gap: clamp(2.5rem, 7vw, 7rem);
-  align-items: center;
+  align-items: start;
 }
 
 .bastcare-hero-copy {
   max-width: 760px;
+  padding-top: clamp(1rem, 4vw, 3.5rem);
 }
 
 .bastcare-hero-device {
@@ -2515,6 +2516,48 @@ h1 span {
   margin: var(--bast-space-2) 0 0;
   color: rgba(255, 255, 255, 0.62);
   font-size: var(--fs-caption);
+}
+
+.bastcare-download-cta {
+  display: flex;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(7, 89, 133, 0.14);
+  border-radius: clamp(24px, 4vw, 38px);
+  padding: clamp(2rem, 5vw, 4rem);
+  background:
+    radial-gradient(circle at 94% 8%, rgba(66, 188, 235, 0.18), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(230, 244, 249, 0.74));
+  box-shadow: var(--neu-raise);
+}
+
+.bastcare-download-cta > div {
+  max-width: 720px;
+}
+
+.bastcare-download-cta h2 {
+  max-width: 18ch;
+  margin: var(--bast-space-2) 0 var(--bast-space-4);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: var(--fw-thin);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.bastcare-download-cta p:last-child {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--fs-body-lg);
+  line-height: 1.55;
+}
+
+.bastcare-download-cta .button {
+  flex: 0 0 auto;
+  min-height: 56px;
+  padding-inline: clamp(1.35rem, 3vw, 2rem);
+  white-space: nowrap;
 }
 
 .policy-meta {
@@ -3244,6 +3287,15 @@ h1 span {
     grid-template-columns: 1fr;
   }
 
+  .bastcare-hero-copy {
+    padding-top: 0;
+  }
+
+  .bastcare-download-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .bastcare-proof-metrics {
     grid-template-columns: 1fr;
   }
@@ -3251,6 +3303,10 @@ h1 span {
   .bastcare-hero-device {
     width: min(84vw, 310px);
     justify-self: center;
+  }
+
+  .bastcare-hero-device::before {
+    inset-inline: -8%;
   }
 
   .bastcare-tour-controls {
@@ -3282,6 +3338,11 @@ h1 span {
 
   .bastcare-review-seal {
     grid-column: 1;
+  }
+
+  .bastcare-download-cta .button {
+    width: 100%;
+    white-space: normal;
   }
 
   .policy-meta {

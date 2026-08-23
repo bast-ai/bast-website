@@ -235,6 +235,12 @@ assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified r
 assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
 assertIncludes(bastcareHome, "2 ratings", "BastCare App Store rating count");
 assertIncludes(bastcareHome, "Successful AI summary runs", "BastCare aggregate proof metrics");
+assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
+assertIncludes(bastcareHome, 'data-app-store-placement="proof"', "proof App Store download action");
+const bastcareAppStoreLink = 'href="https://apps.apple.com/app/id6789669565"';
+if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 2) {
+  throw new Error("BastCare App Store link must appear in both download actions");
+}
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
 assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact");
