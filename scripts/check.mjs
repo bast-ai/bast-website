@@ -179,6 +179,11 @@ for (const [contents, label] of [
 for (const contents of advisoryPages) {
   assertExcludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
+for (const contents of advisoryPages.slice(1)) {
+  assertIncludes(contents, 'class="button button-primary advisory-subnav-download"', "visible advisory PDF action");
+  assertIncludes(contents, "Talk with Beth", "direct advisory contact action");
+  assertIncludes(contents, "Get the PDF", "plain-language advisory PDF action");
+}
 assertIncludes(advisoryIndexHtml, "AI advice for senior leaders", "direct advisory positioning");
 assertIncludes(advisoryIndexHtml, "where data is private and the stakes are high", "high-stakes operating focus");
 assertIncludes(advisoryIndexHtml, "I advise three organizations at a time", "limited direct advisory capacity");

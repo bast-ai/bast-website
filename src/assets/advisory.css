@@ -475,6 +475,15 @@
 .advisory-subnav a:hover { color: var(--accent-text); }
 .advisory-subnav-back { color: var(--accent-text) !important; }
 
+.advisory-subnav .advisory-subnav-download {
+  min-height: 40px;
+  padding: 0.55rem 1rem;
+  color: #fff;
+  font-size: var(--fs-body-sm);
+}
+
+.advisory-subnav .advisory-subnav-download:hover { color: #fff; }
+
 .advisory-subnav div {
   display: flex;
   align-items: center;
@@ -550,6 +559,12 @@
 .advisory-source-list a:hover {
   color: var(--accent-text);
   text-decoration-color: currentColor;
+}
+
+.advisory-receipts-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 /* One .sheet-page per printed page. On screen they are just sections of the
@@ -848,6 +863,104 @@
     padding-top: clamp(4rem, 8vw, 6.5rem);
     border-top: 1px solid var(--line-subtle);
   }
+
+  .sheet:not(.advisory-index) {
+    padding-top: clamp(4rem, 7vw, 6rem);
+  }
+
+  .sheet:not(.advisory-index) .sheet-page > * + * {
+    margin-top: clamp(2.75rem, 5vw, 4.5rem);
+  }
+
+  .sheet:not(.advisory-index) .sheet-label,
+  .advisory-receipts .sheet-label {
+    font-size: var(--adv-screen-label);
+    letter-spacing: 0.1em;
+  }
+
+  .sheet:not(.advisory-index) .sheet-intro {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+  }
+
+  .sheet:not(.advisory-index) h1 {
+    font-size: clamp(3.75rem, 6vw, 5.5rem);
+    font-weight: var(--fw-light);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+  }
+
+  .sheet:not(.advisory-index) .sheet-lede,
+  .sheet:not(.advisory-index) .turn,
+  .sheet:not(.advisory-index) .stat-claim {
+    font-size: var(--adv-screen-copy-lg);
+    line-height: 1.5;
+  }
+
+  .sheet:not(.advisory-index) .stat {
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .sheet:not(.advisory-index) .stat-figure {
+    font-size: clamp(5rem, 8vw, 7rem);
+  }
+
+  .sheet:not(.advisory-index) .stat-unit,
+  .sheet:not(.advisory-index) .stat-label {
+    font-size: var(--adv-screen-label);
+  }
+
+  .sheet:not(.advisory-index) .stat-source,
+  .sheet:not(.advisory-index) .facts cite,
+  .sheet:not(.advisory-index) .proofs cite {
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+  }
+
+  .sheet:not(.advisory-index) .row3 {
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .sheet:not(.advisory-index) .facts b {
+    font-size: clamp(2.1rem, 3vw, 2.6rem);
+  }
+
+  .sheet:not(.advisory-index) .facts p,
+  .sheet:not(.advisory-index) .proofs p,
+  .sheet:not(.advisory-index) .running li,
+  .sheet:not(.advisory-index) .story-body,
+  .sheet:not(.advisory-index) .ask p {
+    font-size: var(--adv-screen-copy);
+    line-height: 1.55;
+  }
+
+  .sheet:not(.advisory-index) .proofs h2 {
+    margin-bottom: 0.75rem;
+    font-size: var(--adv-screen-display-md);
+    font-weight: var(--fw-light);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .sheet:not(.advisory-index) .running {
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .sheet:not(.advisory-index) .ask .ask-price {
+    font-size: var(--adv-screen-copy-lg);
+  }
+
+  .advisory-receipts-head h2 {
+    font-size: clamp(3.25rem, 5vw, 4.5rem);
+    font-weight: var(--fw-light);
+    line-height: 0.98;
+  }
+
+  .advisory-receipts-head > p:last-child,
+  .advisory-source-list a {
+    font-size: var(--adv-screen-copy);
+    line-height: 1.5;
+  }
 }
 
 /* Continuation head. Hidden on screen; printed at the top of a second page so
@@ -892,6 +1005,7 @@
 
 @media (max-width: 46rem) {
   .sheet-intro, .ask { grid-template-columns: 1fr; gap: 1.25rem; }
+  .sheet:not(.advisory-index) .sheet-intro { grid-template-columns: 1fr; gap: 1.5rem; }
   .turn { columns: 1; }
   .story-body { columns: 1; }
   .row3, .running ul, .proofs-2up { grid-template-columns: 1fr; }
@@ -957,10 +1071,13 @@
 
   .advisory-subnav {
     align-items: flex-start;
+    flex-wrap: wrap;
     padding: 0.7rem 0;
   }
 
   .advisory-subnav div {
+    width: 100%;
+    justify-content: space-between;
     gap: 0.9rem;
   }
 
