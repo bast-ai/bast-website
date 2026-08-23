@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-08-22T02:46:31Z",
+  "metrics": {
+    "inputTokens": 89498,
+    "outputTokens": 53631,
+    "successfulSummaries": 29,
+    "summariesWithTokenUsage": 29,
+    "summariesWithoutTokenUsage": 0,
+    "totalTokens": 143129
+  },
+  "period": {
+    "endsAt": "2026-08-22T02:46:31Z",
+    "kind": "all-time",
+    "startsAt": null
+  },
+  "schemaVersion": 1
+}

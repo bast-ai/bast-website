@@ -15,6 +15,16 @@ const requiredFiles = [
   "assets/site.js",
   "assets/analytics-consent.js",
   "assets/bast-logo.svg",
+  "assets/bastcare/screens/home.webp",
+  "assets/bastcare/screens/recording-disclosure.webp",
+  "assets/bastcare/screens/consent.webp",
+  "assets/bastcare/screens/recording.webp",
+  "assets/bastcare/screens/processing.webp",
+  "assets/bastcare/screens/summary.webp",
+  "assets/bastcare/screens/visits.webp",
+  "assets/bastcare/screens/careteam.webp",
+  "assets/bastcare/screens/share-preview.webp",
+  "assets/data/bastcare-metrics.json",
   "assets/bast-ai-healthcare-teaser.pdf",
   "assets/bast-ai-healthcare-teaser-cover.png",
   "assets/advisory.css",
@@ -97,6 +107,8 @@ const advisoryPages = await Promise.all([
 const advisoryIndexHtml = advisoryPages[0];
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
+const bastcareMetrics = JSON.parse(await readFile(
+  path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
 const appleAssociation = await readFile(
   path.join(distDir, ".well-known/apple-app-site-association"), "utf8");
 const careteamInvite = await readFile(
@@ -176,6 +188,12 @@ assertIncludes(advisoryIndexHtml, "The models are not the community&rsquo;s inte
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
+assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
+if (bastcareMetrics.schemaVersion !== 1 ||
+    !Number.isSafeInteger(bastcareMetrics.metrics?.successfulSummaries) ||
+    bastcareMetrics.metrics.successfulSummaries < 1) {
+  throw new Error("Invalid BastCare public metrics snapshot");
+}
 assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
 assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
@@ -209,6 +227,13 @@ for (const [contents, label] of bastcarePages) {
 
 const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
+assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
+assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
+assertIncludes(bastcareHome, "Our first written review", "BastCare verified review milestone");
+assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
+assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
+assertIncludes(bastcareHome, "2 ratings", "BastCare App Store rating count");
+assertIncludes(bastcareHome, "Successful AI summary runs", "BastCare aggregate proof metrics");
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
 assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact");
