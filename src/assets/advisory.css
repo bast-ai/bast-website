@@ -46,6 +46,8 @@
   --adv-screen-copy-lg: clamp(1.2rem, 1.6vw, 1.4rem);
   --adv-screen-copy: clamp(1.05rem, 1.3vw, 1.18rem);
   --adv-screen-label: clamp(0.85rem, 0.95vw, 0.95rem);
+  --adv-screen-section-gap: clamp(2rem, 3vw, 3rem);
+  --adv-screen-page-gap: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 /* ---------- the sheet ---------------------------------------------------- */
@@ -493,7 +495,7 @@
 .advisory-receipts {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: clamp(4rem, 9vw, 7.5rem) 0;
+  padding: clamp(3rem, 6vw, 5rem) 0;
   border-top: 1px solid var(--line-subtle);
 }
 
@@ -859,18 +861,23 @@
   }
 
   .sheet-page + .sheet-page {
-    margin-top: clamp(5rem, 10vw, 8rem);
-    padding-top: clamp(4rem, 8vw, 6.5rem);
+    margin-top: var(--adv-screen-page-gap);
+    padding-top: var(--adv-screen-page-gap);
     border-top: 1px solid var(--line-subtle);
   }
 
   .sheet:not(.advisory-index) {
-    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-top: clamp(3rem, 5vw, 4.5rem);
+    padding-bottom: clamp(3.5rem, 6vw, 5rem);
   }
 
   .sheet:not(.advisory-index) .sheet-page > * + * {
-    margin-top: clamp(2.75rem, 5vw, 4.5rem);
+    margin-top: var(--adv-screen-section-gap);
   }
+
+  /* The continuation heading only exists on paper. Do not reserve its normal
+     sibling spacing in the web layout. */
+  .sheet:not(.advisory-index) .sheet-contd + * { margin-top: 0; }
 
   .sheet:not(.advisory-index) .sheet-label,
   .advisory-receipts .sheet-label {
