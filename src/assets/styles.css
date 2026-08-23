@@ -1270,6 +1270,133 @@ h1 span {
   font-weight: 600;
 }
 
+/* ---- Offerings: platform, product, advisory ---- */
+.offerings .section-heading {
+  max-width: 820px;
+}
+
+.offering-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 2.2rem;
+}
+
+.offering-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 390px;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--neu-raise-sm);
+  padding: clamp(1.4rem, 2.6vw, 2rem);
+}
+
+.offering-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 5px;
+  background: var(--grad);
+  content: "";
+}
+
+.offering-card-bastcare::before {
+  background: linear-gradient(90deg, #0090cc, #24a8ce);
+}
+
+.offering-card-advisory::before {
+  background: linear-gradient(90deg, #3c54a1, #6657a6);
+}
+
+.offering-card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.offering-card-topline > span {
+  flex: 0 0 auto;
+  color: var(--quieter);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+}
+
+.offering-card h3 {
+  max-width: 17ch;
+  margin: 1.35rem 0 0.9rem;
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  font-weight: var(--fw-light);
+  line-height: 1.08;
+}
+
+.offering-card > p:not(.card-kicker) {
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--fs-body-sm);
+}
+
+.offering-layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offering-layers li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent-text);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  padding: 0.35rem 0.7rem;
+}
+
+.offering-card .offering-proof {
+  margin-top: 1.35rem;
+  color: var(--accent-text);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+}
+
+.offering-card-bastcare .offering-proof span {
+  letter-spacing: 0.08em;
+}
+
+.offering-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.offering-link {
+  color: var(--accent-text);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.offering-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.offering-link-secondary {
+  color: var(--quiet);
+  font-weight: var(--fw-medium);
+}
+
 .case-sector {
   margin: 2.6rem 0 0;
   color: var(--quiet);
@@ -1974,6 +2101,18 @@ h1 span {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .offering-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offering-card-platform {
+    grid-column: 1 / -1;
+  }
+
+  .offering-card {
+    min-height: 350px;
+  }
+
   .ownership-list {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -2038,6 +2177,18 @@ h1 span {
   .card-grid-3,
   .card-grid-4 {
     grid-template-columns: 1fr;
+  }
+
+  .offering-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offering-card-platform {
+    grid-column: auto;
+  }
+
+  .offering-card {
+    min-height: 0;
   }
 
   .contact-form {
