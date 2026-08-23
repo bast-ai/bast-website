@@ -104,7 +104,7 @@
   margin-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
-.advisory-index h1 {
+.sheet.advisory-index h1 {
   max-width: 10ch;
   font-size: var(--adv-screen-display-xl);
   font-weight: var(--fw-light);
@@ -282,6 +282,8 @@
 
 .advisory-library-head h2 {
   max-width: none;
+  font-size: var(--adv-screen-display-xl);
+  line-height: 0.94;
   white-space: nowrap;
 }
 
@@ -1027,7 +1029,8 @@
     margin-top: 7rem;
   }
 
-  .advisory-index h1 {
+  .sheet.advisory-index h1,
+  .advisory-library-head h2 {
     font-size: clamp(3.75rem, 16vw, 5rem);
   }
 
@@ -1051,7 +1054,6 @@
     padding-left: 0;
   }
 
-  .advisory-library-head h2,
   .advisory-offer h2 {
     font-size: clamp(3.15rem, 13vw, 4rem);
   }
