@@ -205,6 +205,10 @@ assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "adv
 assertIncludes(advisoryIndexHtml, "It knows your information. It shows its sources. Your people stay in charge.", "plain-language advisory point of view");
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
+assertIncludes(indexHtml, 'href="assets/styles.css?v=', "versioned homepage stylesheet");
+assertIncludes(indexHtml, 'src="assets/site.js?v=', "versioned homepage behavior");
+assertIncludes(indexHtml, 'src="assets/analytics-consent.js?v=', "versioned homepage analytics behavior");
+assertExcludes(indexHtml, 'href="assets/styles.css"', "unversioned homepage stylesheet");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
 assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
@@ -248,6 +252,9 @@ for (const [contents, label] of bastcarePages) {
 
 const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
+assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
+assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare behavior");
+assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
 assertIncludes(bastcareHome, "Our first written review", "BastCare verified review milestone");
