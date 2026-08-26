@@ -225,8 +225,8 @@
   }
 
   function initBastCareMetrics() {
-    const panel = document.querySelector("[data-bastcare-metrics]");
-    if (!panel) return;
+    const panels = Array.from(document.querySelectorAll("[data-bastcare-metrics]"));
+    if (!panels.length) return;
 
     fetch("/assets/data/bastcare-metrics.json", { cache: "no-store" })
       .then((response) => {
@@ -243,25 +243,32 @@
 
         if (!valid || metrics.successfulSummaries < 1) return;
 
-        displayed.forEach((name) => {
-          const output = panel.querySelector(`[data-bastcare-metric="${name}"]`);
-          if (output) output.textContent = metrics[name].toLocaleString("en-US");
-        });
-
         const coverage = metrics.summariesWithTokenUsage;
-        const note = panel.querySelector("[data-bastcare-metrics-note]");
         const updated = new Date(document.generatedAt);
-        const updatedLabel = Number.isNaN(updated.valueOf())
+        const updatedDate = Number.isNaN(updated.valueOf())
           ? ""
-          : ` Updated ${updated.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}.`;
+          : updated.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-        if (note) {
-          note.textContent = Number.isSafeInteger(coverage) && coverage < metrics.successfulSummaries
-            ? `Token totals cover ${coverage.toLocaleString("en-US")} of ${metrics.successfulSummaries.toLocaleString("en-US")} successful runs.${updatedLabel} No transcript text is included.`
-            : `Aggregate AI processing totals.${updatedLabel} No transcript text is included.`;
-        }
+        panels.forEach((panel) => {
+          displayed.forEach((name) => {
+            const output = panel.querySelector(`[data-bastcare-metric="${name}"]`);
+            if (output) output.textContent = metrics[name].toLocaleString("en-US");
+          });
 
-        panel.hidden = false;
+          const note = panel.querySelector("[data-bastcare-metrics-note]");
+          const isGrowthCounter = panel.getAttribute("data-bastcare-metrics-context") === "growth";
+
+          if (note && isGrowthCounter) {
+            note.textContent = `${updatedDate ? `Refreshed ${updatedDate}. ` : ""}Each successful BastCare summary moves this number.`;
+          } else if (note) {
+            const updatedLabel = updatedDate ? ` Updated ${updatedDate}.` : "";
+            note.textContent = Number.isSafeInteger(coverage) && coverage < metrics.successfulSummaries
+              ? `Token totals cover ${coverage.toLocaleString("en-US")} of ${metrics.successfulSummaries.toLocaleString("en-US")} successful runs.${updatedLabel} No transcript text is included.`
+              : `Every successful summary moves this number.${updatedLabel} No transcript text is included.`;
+          }
+
+          panel.hidden = false;
+        });
       })
       .catch(() => {
         // Keep the proof block hidden until a validated aggregate is available.
