@@ -149,6 +149,18 @@ const requiredHomepageSnippets = [
     label: "operating principles page link",
     needle: 'href="principles.html"',
   },
+  {
+    label: "BastCare summary gallery",
+    needle: 'class="offering-summary-gallery"',
+  },
+  {
+    label: "homepage BastCare growth counter",
+    needle: 'data-bastcare-metrics-context="growth"',
+  },
+  {
+    label: "homepage BastCare App Store action",
+    needle: 'data-app-store-placement="bast-home-offering"',
+  },
 ];
 const replacedHomepageSnippets = [
   {
@@ -174,10 +186,11 @@ for (const [contents, label] of [
   [principlesHtml, "principles"],
   [privacyHtml, "privacy"],
 ]) {
-  assertIncludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
+  assertExcludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/"', `public BastCare link on ${label} page`);
 }
 for (const contents of advisoryPages) {
-  assertExcludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
+  assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
 }
 for (const contents of advisoryPages.slice(1)) {
   assertIncludes(contents, 'class="button button-primary advisory-subnav-download"', "visible advisory PDF action");
@@ -195,6 +208,7 @@ assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "c
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
 assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
+assertIncludes(siteJs, 'data-bastcare-metrics-context', "BastCare growth counter context");
 if (bastcareMetrics.schemaVersion !== 1 ||
     !Number.isSafeInteger(bastcareMetrics.metrics?.successfulSummaries) ||
     bastcareMetrics.metrics.successfulSummaries < 1) {
@@ -202,6 +216,7 @@ if (bastcareMetrics.schemaVersion !== 1 ||
 }
 assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
 assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
+assertIncludes(analyticsConsentJs, 'window.bastTrack("app_store_click"', "App Store conversion tracking");
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
 assertIncludes(appleAssociation, "N9WW75Q3VS.ai.bast.careloop", "BastCare App ID association");
 assertIncludes(appleAssociation, '"/careteam/invite"', "CareTeam invitation path");
@@ -239,12 +254,13 @@ assertIncludes(bastcareHome, "Our first written review", "BastCare verified revi
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
 assertIncludes(bastcareHome, "2 ratings", "BastCare App Store rating count");
-assertIncludes(bastcareHome, "Successful AI summary runs", "BastCare aggregate proof metrics");
+assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
+assertIncludes(bastcareHome, 'data-app-store-placement="tour"', "tour App Store download action");
 assertIncludes(bastcareHome, 'data-app-store-placement="proof"', "proof App Store download action");
 const bastcareAppStoreLink = 'href="https://apps.apple.com/app/id6789669565"';
-if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 2) {
-  throw new Error("BastCare App Store link must appear in both download actions");
+if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
+  throw new Error("BastCare App Store link must appear in all three download actions");
 }
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
@@ -280,7 +296,7 @@ for (const internalPhrase of [
 }
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
-  assertIncludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
+  assertExcludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
 }
 for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);

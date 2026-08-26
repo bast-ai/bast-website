@@ -45,6 +45,7 @@ GA_MEASUREMENT_ID=G-0D3N068YJH pnpm build
 ## Deployment Shape
 
 - GitHub is the source of truth.
+- `.github/workflows/pr-ci.yml` runs the full site and BastCare metrics checks on every pull request to `main`.
 - `.github/workflows/deploy.yml` builds the static site with `pnpm verify`.
 - On push to `main` (or manual run) it publishes `dist/` to GitHub Pages.
 - `www.bast.ai` points at Pages via GoDaddy DNS; `src/CNAME` pins the domain.

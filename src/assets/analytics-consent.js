@@ -85,6 +85,14 @@
         window.bastTrack("cta_click", eventBase);
       }
 
+      const appStorePlacement = link.getAttribute("data-app-store-placement");
+      if (appStorePlacement) {
+        window.bastTrack("app_store_click", {
+          ...eventBase,
+          placement: appStorePlacement
+        });
+      }
+
       if (url.pathname.toLowerCase().endsWith(".pdf")) {
         window.bastTrack("file_download", {
           ...eventBase,

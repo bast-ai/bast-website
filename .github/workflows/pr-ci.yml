@@ -1,0 +1,59 @@
+name: PR checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+# Pull requests only need to read the repository. This workflow never deploys
+# and does not use repository secrets.
+permissions:
+  contents: read
+
+# A new push supersedes the previous run for the same pull request.
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check pull request diff
+        run: git diff --check "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
+
+      - name: Build and run static checks
+        run: pnpm verify
+        env:
+          SITE_ENV: production
+          SITE_URL: https://www.bast.ai
+          ROBOTS_META: "index, follow"
+          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID || 'G-0D3N068YJH' }}
+
+      - name: Run BastCare metrics checks
+        run: |
+          python3 -m unittest scripts/test_collect_bastcare_metrics.py
+          sh -n scripts/run-bastcare-metrics.sh
