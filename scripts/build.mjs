@@ -11,6 +11,11 @@ const siteEnv = process.env.SITE_ENV || "local";
 const siteUrl = process.env.SITE_URL || "https://www.bast.ai";
 const robotsMeta = process.env.ROBOTS_META || (siteEnv === "production" ? "index, follow" : "noindex, nofollow");
 const measurementDisplay = gaMeasurementId || "not configured yet";
+const assetVersion = (
+  process.env.ASSET_VERSION ||
+  process.env.GITHUB_SHA ||
+  Date.now().toString(36)
+).replace(/[^a-zA-Z0-9._-]/g, "").slice(0, 12) || "local";
 
 const replacements = new Map([
   ["__GA_MEASUREMENT_ID__", gaMeasurementId],
@@ -27,6 +32,12 @@ async function replacePlaceholders(filePath) {
   let contents = await readFile(filePath, "utf8");
   for (const [token, value] of replacements) {
     contents = contents.split(token).join(value);
+  }
+  if (ext === ".html") {
+    contents = contents.replace(
+      /((?:href|src)="\/?assets\/[^"?]+\.(?:css|js))"/g,
+      `$1?v=${assetVersion}"`,
+    );
   }
   await writeFile(filePath, contents);
 }
@@ -48,4 +59,4 @@ await mkdir(distDir, { recursive: true });
 await cp(srcDir, distDir, { recursive: true });
 await walk(distDir);
 
-console.log(`Built ${path.relative(root, distDir)} for ${siteEnv}`);
+console.log(`Built ${path.relative(root, distDir)} for ${siteEnv} with assets ${assetVersion}`);
