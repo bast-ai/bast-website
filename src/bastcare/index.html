@@ -8,6 +8,49 @@
 <meta name="robots" content="__ROBOTS_META__">
 <link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
 <link rel="canonical" href="__SITE_URL__/bastcare/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "__SITE_URL__/#organization",
+      "name": "Bast AI",
+      "legalName": "Bast, Inc.",
+      "url": "__SITE_URL__/"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "__SITE_URL__/bastcare/#software",
+      "name": "BastCare",
+      "url": "__SITE_URL__/bastcare/",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "iOS",
+      "description": "BastCare is a free iPhone app from Bast AI for patients and caregivers. Record a medical visit with everyone's permission, receive a plain-language summary, and decide exactly what your CareTeam can see. Audio stays on the iPhone until the summary is created, and Bast does not save or log transcript text. BastCare is an organization and communication tool, not a medical device.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "image": "__SITE_URL__/assets/bastcare/screens/home.webp",
+      "installUrl": "https://apps.apple.com/app/id6789669565",
+      "featureList": [
+        "Consent-first visit recording",
+        "Audio stays on the iPhone until the summary is created",
+        "Plain-language visit summaries",
+        "CareTeam sharing with preview and revocation",
+        "Sharing nothing is always valid",
+        "Full account deletion"
+      ],
+      "provider": { "@id": "__SITE_URL__/#organization" },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "__SITE_URL__/bastcare/",
+        "url": "__SITE_URL__/bastcare/",
+        "name": "BastCare - Visit summaries you control",
+        "dateModified": "2026-08-28",
+        "publisher": { "@id": "__SITE_URL__/#organization" }
+      }
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="/assets/styles.css">
 <script>window.BAST_GA_MEASUREMENT_ID="__GA_MEASUREMENT_ID__";window.BAST_SITE_ENV="__SITE_ENV__";</script>
 <script src="/assets/analytics-consent.js" defer></script>

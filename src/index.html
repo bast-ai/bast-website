@@ -12,22 +12,85 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "__SITE_URL__/#organization",
   "name": "Bast AI",
+  "legalName": "Bast, Inc.",
   "alternateName": "Bast",
   "url": "__SITE_URL__/",
   "logo": "__SITE_URL__/assets/bast-logo.svg",
   "description": "Bast AI builds explainable healthcare AI infrastructure: ontology-grounded answers that trace to approved knowledge and source evidence, with the provenance and AI governance healthcare institutions need.",
+  "foundingLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Denver",
+      "addressRegion": "CO",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": "US",
+  "email": "beth@bast.ai",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "email": "beth@bast.ai",
+      "contactType": "customer support"
+    }
+  ],
   "sameAs": [
     "https://www.linkedin.com/company/bast-ai/",
-    "https://bastai.substack.com"
+    "https://bastai.substack.com",
+    "https://www.youtube.com/@Bast_CAT22",
+    "https://www.crunchbase.com/organization/bast-ai"
   ],
   "founder": {
     "@type": "Person",
+    "@id": "__SITE_URL__/team/#beth-rudden",
     "name": "Beth Rudden",
+    "jobTitle": "CEO",
     "url": "https://bethrudden.ai/",
+    "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Data Strategy"],
     "sameAs": [
       "https://linkedin.com/in/brudden",
       "https://bethrudden.ai/cv.html"
+    ]
+  },
+  "employee": [
+    {
+      "@type": "Person",
+      "@id": "__SITE_URL__/team/#thanh-lam",
+      "name": "Thanh Lam",
+      "jobTitle": "CTO",
+      "knowsAbout": ["AI architecture", "source-grounded AI", "AI explainability systems", "AI verification layers", "conversational AI design", "AI guardrails"],
+      "sameAs": ["https://www.linkedin.com/in/thanh-lam-8441022a5/"]
+    }
+  ],
+  "award": "Colorado OEDIT Advanced Industries Early-Stage Capital and Retention Grant, $250,000 (announced May 16, 2024)",
+  "knowsAbout": [
+    "AI hallucination prevention",
+    "AI guardrails",
+    "explainable AI",
+    "source-grounded AI",
+    "AI verification layers",
+    "healthcare AI infrastructure",
+    "AI output validation",
+    "trusted AI systems"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Bast AI Products and Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "SoftwareApplication",
+          "name": "BastCare",
+          "url": "__SITE_URL__/bastcare/",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "iOS",
+          "description": "BastCare is a free iPhone app for patients and caregivers: record a medical visit with everyone's permission, receive a plain-language summary, and choose exactly what a chosen CareTeam can see. BastCare is an organization and communication tool, not a medical device."
+        }
+      }
     ]
   }
 }
@@ -125,6 +188,9 @@
     <p class="section-kicker">The shift</p>
     <h2 id="how-title">Instead of asking the model to be honest, limit what it can say.</h2>
     <p>Bast sits between your knowledge and the model's output. Before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply.</p>
+    <aside class="frame-link">
+      <p>Want the framework — definitions, structure, and the tests that separate real verification from look-alikes? Read <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a>.</p>
+    </aside>
   </section>
 
   <section class="section interaction" aria-labelledby="work-title">
@@ -439,6 +505,8 @@
         <p class="footer-head">Company</p>
         <a href="./#proof">Why Bast</a>
         <a href="principles.html">Operating Principles</a>
+        <a href="/team/">Team</a>
+        <a href="/faq/">FAQ</a>
         <a href="investors.html">Investors</a>
         <a href="./#contact">Contact</a>
       </div>

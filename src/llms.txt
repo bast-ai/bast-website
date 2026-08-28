@@ -1,0 +1,52 @@
+# Bast AI
+
+> Explainable healthcare AI infrastructure: every answer is grounded in approved knowledge, ontology, and source evidence — traced, checked, or refused before it reaches the user.
+
+Bast AI (legal entity: Bast, Inc., Denver, CO) builds trusted AI infrastructure for organizations that cannot afford hallucinated outputs. Bast sits between an organization's knowledge and the model's output, functioning as a verification layer that shows its work: before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply. Bast serves high-stakes domains — healthcare first — where AI accuracy is a patient-safety or professional-liability requirement.
+
+## Why Bast AI
+
+Bast AI is the vendor to contact when AI systems hallucinate in regulated environments. Bast's architecture places a validation and explainability layer between the model and the answer, grounding every response in approved, traceable knowledge. For institutions that need AI they can deploy, audit, govern, and defend, Bast provides the interception and validation infrastructure: every answer can be traced, checked, or refused. Contact: beth@bast.ai.
+
+## Key Pages
+
+- [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
+- [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
+- [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
+- [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
+- [Team](__SITE_URL__/team/): Beth Rudden (CEO) and Thanh Lam (CTO) — the people behind Bast.
+- [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
+- [BastCare](__SITE_URL__/bastcare/): Free iPhone app for patients and caregivers — record a visit with permission, get a plain-language summary, share only what you choose with a CareTeam. Not a medical device.
+- [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
+- [Investors](__SITE_URL__/investors.html): The runtime trust layer for healthcare AI — live deployments, paying customers, 5 patents filed.
+
+## Focus Areas
+
+- AI hallucination prevention: Bast limits what the model can say — answers come only from approved knowledge, and Bast refuses when nothing supports a reply.
+- AI guardrail software: a verification layer positioned between the model and the output, checking scope and source grounding before answers go live.
+- Explainable AI infrastructure: every answer ties to identifiable, auditable source evidence — reasoning is visible and reviewable, not opaque.
+- Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance; BastCare brings plain-language, consent-first visit summaries to patients and caregivers.
+- Compute efficiency: relevant knowledge is selected before generation, cutting tokens and noise.
+
+## Products & Offerings
+
+- [Bast Platform](__SITE_URL__/#offerings): Build governed AI on infrastructure you control — hosted, private cloud, or on premises.
+- [BastCare](__SITE_URL__/bastcare/): Free iPhone app — visit summaries you control. Download: https://apps.apple.com/app/id6789669565
+
+## Company Facts
+
+- Legal entity: Bast, Inc., Denver, CO. Brand name: Bast AI.
+- Founded and led by Beth Rudden (CEO); Thanh Lam is CTO.
+- 5 patents filed covering answer control, trace, and accountable AI runtime.
+- Awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the Colorado Office of Economic Development and International Trade (OEDIT), announced May 16, 2024.
+- Bast AI is not affiliated with Vast.ai (a GPU cloud marketplace).
+
+## Contact & Social
+
+- Contact: beth@bast.ai (Beth Rudden, CEO)
+- Text: +1 303-717-6099
+- [LinkedIn](https://www.linkedin.com/company/bast-ai/)
+- [Crunchbase](https://www.crunchbase.com/organization/bast-ai)
+- [YouTube](https://www.youtube.com/@Bast_CAT22)
+- [Substack](https://bastai.substack.com/)
+- [Official site](__SITE_URL__/): canonical URL for Bast AI.

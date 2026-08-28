@@ -48,6 +48,11 @@ const requiredFiles = [
   "bastcare/delete-account/index.html",
   "bastcare/architecture/index.html",
   "bastcare/architecture/bastcare-solution-architecture.pdf",
+  "llms.txt",
+  "faq/index.html",
+  "team/index.html",
+  "frames/index.html",
+  "frames/claim-level-source-grounding/index.html",
 ];
 
 const forbidden = [
@@ -58,6 +63,8 @@ const forbidden = [
   "__SITE_ENV__",
   "__SITE_URL__",
   "__ROBOTS_META__",
+  // Wrong legal entity name — the registered entity is "Bast, Inc." (decision 2026-08-28).
+  "Bast AI, Inc.",
 ];
 
 async function exists(relPath) {
@@ -302,12 +309,37 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
+for (const route of ["faq/", "team/", "frames/", "frames/claim-level-source-grounding/"]) {
+  assertIncludes(sitemapXml, `/${route}</loc>`, `GEO ${route} sitemap route`);
+}
 for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
   assertExcludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
 }
 for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
 }
+
+// GEO layer: structured data and crawler surfaces (2026-08-28).
+const llmsTxt = await readFile(path.join(distDir, "llms.txt"), "utf8");
+const faqHtml = await readFile(path.join(distDir, "faq/index.html"), "utf8");
+const teamHtml = await readFile(path.join(distDir, "team/index.html"), "utf8");
+const frameHtml = await readFile(
+  path.join(distDir, "frames/claim-level-source-grounding/index.html"), "utf8");
+assertIncludes(indexHtml, '"legalName": "Bast, Inc."', "Organization legalName");
+assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
+assertIncludes(indexHtml, 'href="/frames/claim-level-source-grounding/"', "homepage frame crosslink");
+assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
+assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
+assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame entry");
+assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
+assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");
+assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
+assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
+assertIncludes(teamHtml, '"Person"', "team Person structured data");
+assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
+assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
+assertIncludes(bastcareHome, '"operatingSystem": "iOS"', "BastCare SoftwareApplication schema");
+assertIncludes(bastcareArchitecture, '"BreadcrumbList"', "architecture BreadcrumbList schema");
 
 const requiredPrinciplesSnippets = [
   "Nature runs on sunlight.",

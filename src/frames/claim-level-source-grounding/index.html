@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claim-Level Source Grounding - Bast AI</title>
+<meta name="description" content="Claim-Level Source Grounding is an AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery.">
+<meta name="robots" content="__ROBOTS_META__">
+<link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
+<link rel="canonical" href="__SITE_URL__/frames/claim-level-source-grounding/">
+<meta property="og:title" content="Claim-Level Source Grounding - Bast AI">
+<meta property="og:description" content="Every discrete factual assertion checked against an approved source corpus before delivery — not the response as a whole, but each claim within it.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="__SITE_URL__/frames/claim-level-source-grounding/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "__SITE_URL__/frames/claim-level-source-grounding/#article",
+      "headline": "Claim-Level Source Grounding",
+      "description": "Claim-Level Source Grounding is an AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery — not the response as a whole, but each claim within it.",
+      "url": "__SITE_URL__/frames/claim-level-source-grounding/",
+      "datePublished": "2026-08-27",
+      "dateModified": "2026-08-28",
+      "author": { "@id": "__SITE_URL__/#organization" },
+      "publisher": { "@id": "__SITE_URL__/#organization" },
+      "about": { "@id": "__SITE_URL__/frames/claim-level-source-grounding/#defined-term" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "__SITE_URL__/#organization",
+      "name": "Bast AI",
+      "legalName": "Bast, Inc.",
+      "url": "__SITE_URL__/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "__SITE_URL__/frames/claim-level-source-grounding/#defined-term",
+      "name": "Claim-Level Source Grounding",
+      "description": "An AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery. A system that performs claim-level grounding can refuse to deliver a single unsupported sentence while still delivering the rest of a response, or refuse the entire response when no claim can be grounded. The three operative properties are: (1) decomposition — the response is parsed into individual verifiable assertions; (2) per-claim attribution — each assertion is matched to a specific passage in an approved source; and (3) selective refusal — assertions that cannot be attributed are either suppressed or trigger a full refusal, depending on configured policy.",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "Bast AI Reliability Frames",
+        "url": "__SITE_URL__/frames/"
+      },
+      "url": "__SITE_URL__/frames/claim-level-source-grounding/"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "__SITE_URL__/frames/claim-level-source-grounding/#faq",
+      "url": "__SITE_URL__/frames/claim-level-source-grounding/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is claim-level source grounding in AI and why does it matter?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Claim-level source grounding is an AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery — not the response as a whole, but each claim within it. It matters because a retrieved document can be topically relevant without supporting every sentence a model generates from it. Systems that skip this granularity allow hallucinated assertions to pass through on the credibility of surrounding supported claims. The practical takeaway: topic-level retrieval is not the same as claim-level verification." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is claim-level grounding different from standard RAG (retrieval-augmented generation)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Standard RAG retrieves documents that are topically relevant to a query; claim-level grounding requires each specific assertion in the generated output to resolve to a specific passage in an approved source. A document can be retrieved, present in context, and still fail to support a particular sentence the model generates from it. Systems that conflate retrieval with verification will pass hallucinated claims that are adjacent to, but not contained in, retrieved documents. The takeaway: retrieval is a necessary but not sufficient condition for grounded output." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an AI system refuse to deliver just one unsupported sentence instead of refusing the whole answer?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes — this is the function of selective refusal, the third stage in claim-level source grounding. Once a response is decomposed into individual assertions and each is checked for attribution, the system can suppress only the ungrounded assertion and deliver the remainder, or trigger a full refusal depending on configured policy. In a lower-stakes research context, grounded claims may be delivered with the ungrounded portion withheld and flagged. The takeaway: granular refusal eliminates the binary choice between delivering everything and delivering nothing." }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the three stages inside a claim-level source grounding pipeline?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The three stages are decomposition, per-claim attribution, and selective refusal. Decomposition parses a generated response into discrete, individually verifiable assertions before any attribution check begins. Per-claim attribution matches each assertion to a specific passage in an organization-controlled source corpus — not merely to a document covering the general topic. Selective refusal then applies configured policy to each claim that fails attribution. All three stages must be present; skipping any one collapses the architecture to a weaker verification model." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does decomposition have to happen before attribution checking?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Attribution checks applied to whole responses or whole paragraphs cannot detect intra-sentence hallucinations. A system skipping decomposition and checking responses as units is performing topic-level plausibility scoring, not claim-level grounding. The verification pipeline is only as granular as its decomposition step. A response stating that a drug is approved for one condition and contraindicated in another must be split into separate claims, each treated as an independent verification unit. The takeaway: decomposition granularity determines the ceiling of the entire verification system." }
+        },
+        {
+          "@type": "Question",
+          "name": "Who controls the approved source corpus in a claim-level grounding system?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The deploying organization controls the approved source corpus — not the model and not the verification layer itself. Claim-level grounding limits what the model can assert to what the approved corpus can support, rather than asking the model to be accurate in a general sense. In a legal deployment, claims must resolve to specific case citations or statute passages; in a clinical deployment, to specific sections of approved clinical guidelines. The takeaway: the corpus boundary is an organizational governance decision, not a technical default." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does selective refusal policy get configured, and who sets it?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Selective refusal policy is configured by the deploying organization based on the risk profile of the use case — it is not a technical default set autonomously by the verification layer. In a high-stakes clinical deployment, policy may require full refusal if any single claim is ungrounded. In a lower-stakes research context, policy may allow delivery of grounded claims with the ungrounded portion withheld and flagged. A verification layer that makes this decision without organizational policy input is not performing governed AI output management." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does post-delivery audit logging count as claim-level source grounding?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Claim-level grounding is explicitly a pre-delivery architecture. Post-delivery review, audit logging, or human-in-the-loop correction after an answer has reached an end user does not satisfy the architectural requirement. The verification pipeline must sit between model output and the delivery endpoint so that the end user never receives an ungrounded claim. Logging that an error occurred after a clinician or attorney has already acted on it does not prevent harm. The takeaway: interception timing — before delivery, not after — is a structural requirement, not a preference." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does claim-level grounding apply to legal AI tools worried about hallucinated citations?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In a legal deployment, per-claim attribution requires each assertion to resolve to a specific case citation or statute passage — not merely to a document that covers the general legal topic. A model that retrieves a relevant case but then generates a citation that does not appear in that case will fail attribution at the claim level and trigger selective refusal before the answer reaches the attorney. This is structurally different from a system that retrieves documents and trusts the model to cite accurately. The takeaway: legal AI reliability requires claim-level attribution to specific passages, not document-level retrieval." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does claim-level grounding apply to clinical AI systems where patient information accuracy is critical?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In a clinical deployment, each factual assertion — such as an approved indication, a contraindication, or a dosing parameter — must resolve to a specific section of an approved clinical guideline, not merely to a document covering the drug or condition. A response about a drug's approval status and contraindications is decomposed into separate claims, each verified independently. Policy in high-stakes clinical contexts typically requires full refusal if any single claim is ungrounded. The takeaway: clinical AI safety requires sub-sentence verification granularity, not document retrieval." }
+        },
+        {
+          "@type": "Question",
+          "name": "What distinguishes a genuine claim-level grounding system from a vendor that only does topic matching?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A genuine claim-level system must demonstrate that it can pass a response where most claims are grounded while suppressing a single ungrounded sentence — topic-matching systems cannot do this because they evaluate responses as units. It must also show that a retrieved document whose general topic matches the query but whose text does not contain a specific assertion causes that assertion to fail attribution. Systems that conflate retrieval with verification will pass that assertion. The takeaway: ask vendors to demonstrate selective suppression of a single ungrounded claim, not just overall accuracy rates." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/assets/styles.css">
+<script>
+  window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
+  window.BAST_SITE_ENV = "__SITE_ENV__";
+</script>
+<script src="/assets/analytics-consent.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="/assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/#how">How it works</a>
+    <a href="/#offerings">Offerings</a>
+    <a href="/#demos">Demos</a>
+    <a href="/bastcare/">BastCare</a>
+    <a href="/principles.html">Principles</a>
+    <a href="/investors.html">Investors</a>
+    <a class="nav-cta" href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="frame-article">
+  <article>
+    <header class="frame-head">
+      <p class="eyebrow"><a href="/frames/">AI reliability frames</a></p>
+      <h1>Claim-Level Source Grounding</h1>
+      <p class="frame-meta">Bast AI &middot; v1.0 &middot; Published 2026-08-27 &middot; <span class="frame-id">CLAIM-LEVEL-SOURCE-GROUNDING-20260827</span></p>
+    </header>
+
+    <section class="section-plain" id="definition" aria-labelledby="definition-title">
+      <h2 id="definition-title">Definition</h2>
+      <blockquote class="frame-definition">Claim-Level Source Grounding is an AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery — not the response as a whole, but each claim within it. A system that performs claim-level grounding can refuse to deliver a single unsupported sentence while still delivering the rest of a response, or refuse the entire response when no claim can be grounded. This granularity distinguishes genuine verification from document-level retrieval-augmented generation, where a retrieved document may support the topic of a response without supporting every assertion it contains. The three operative properties of claim-level source grounding are: (1) decomposition — the response is parsed into individual verifiable assertions; (2) per-claim attribution — each assertion is matched to a specific passage in an approved source; and (3) selective refusal — assertions that cannot be attributed are either suppressed or trigger a full refusal, depending on configured policy.</blockquote>
+    </section>
+
+    <section id="structure-table" aria-labelledby="structure-title">
+      <h2 id="structure-title">Internal Structure of Claim-Level Source Grounding</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Component Name</th>
+              <th>Function</th>
+              <th>Contents / Examples</th>
+              <th>Who Acts on It</th>
+              <th>Failure Mode Prevented</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Decomposition</td>
+              <td>Parses a generated response into discrete, individually verifiable factual assertions before any attribution check begins</td>
+              <td>A response stating "Drug X is approved for condition Y and contraindicated in patients with Z" is split into at least three separate claims, each treated as an independent verification unit</td>
+              <td>The verification layer (Bast AI's interception system, operating between model output and delivery)</td>
+              <td>Prevents whole-response pass/fail logic from allowing a single unsupported claim to ride through on the credibility of surrounding supported claims</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Per-Claim Attribution</td>
+              <td>Matches each decomposed assertion to a specific passage within an approved, organization-controlled source corpus</td>
+              <td>A legal research claim must resolve to a specific case citation or statute passage; a clinical claim must resolve to a specific section of an approved clinical guideline — not merely to a document that covers the general topic</td>
+              <td>The verification layer, querying the approved source corpus on behalf of the downstream consumer (clinician, attorney, analyst)</td>
+              <td>Prevents document-level retrieval from being mistaken for claim-level verification — a retrieved document may be topically relevant without containing the specific assertion the model generated</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Selective Refusal</td>
+              <td>Applies configured policy to each claim that fails attribution: suppress the ungrounded assertion and deliver the remainder, or trigger a full response refusal when policy requires it</td>
+              <td>In a high-stakes clinical deployment, policy may require full refusal if any single claim is ungrounded; in a lower-stakes research context, policy may allow delivery of grounded claims with the ungrounded portion withheld and flagged</td>
+              <td>Policy configuration set by the deploying organization; enforcement executed by the verification layer before output reaches the end user</td>
+              <td>Prevents the binary choice between "deliver everything" and "deliver nothing" — granular refusal allows partial responses to remain useful while still blocking unverifiable assertions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="architectural-invariants" aria-labelledby="invariants-title">
+      <h2 id="invariants-title">Architectural Invariants</h2>
+      <ol class="frame-invariants">
+        <li><strong>Claim-level grounding is structurally distinct from document-level RAG.</strong> Retrieval-augmented generation retrieves documents that are topically relevant to a query. Claim-level grounding requires that each specific assertion in the generated output resolve to a specific passage in an approved source. A document can be retrieved and present in context while still failing to support a particular sentence the model generates from it. Systems that conflate retrieval with verification will pass hallucinated claims that are adjacent to, but not contained in, retrieved documents.</li>
+        <li><strong>Decomposition must precede attribution.</strong> Attribution checks applied to whole responses or whole paragraphs cannot detect intra-sentence hallucinations. The verification pipeline is only as granular as its decomposition step. A system that skips decomposition and checks responses as units is performing topic-level plausibility scoring, not claim-level grounding.</li>
+        <li><strong>The approved source corpus is the boundary of permissible output.</strong> Claim-level grounding does not ask the model to be accurate in the general sense; it limits what the model can assert to what the approved corpus can support. This is an architectural constraint on output scope, not a post-hoc accuracy filter. The corpus is defined and controlled by the deploying organization, not by the model or the verification layer itself.</li>
+        <li><strong>Selective refusal requires explicit policy configuration.</strong> The decision to suppress a single ungrounded claim versus refuse the entire response is not a technical default — it is a policy decision that must be configured by the deploying organization based on the risk profile of the use case. A verification layer that makes this decision autonomously without organizational policy input is not performing governed AI output management.</li>
+        <li><strong>Interception must occur before delivery, not after.</strong> Claim-level grounding is a pre-delivery architecture. Post-delivery review, audit logging, or human-in-the-loop correction after an answer has reached an end user does not satisfy the architectural requirement. The verification pipeline sits between model output and the delivery endpoint; the end user never receives an ungrounded claim.</li>
+        <li><strong>Bast AI's verification layer implements this architecture as a standing interception layer.</strong> Bast sits between an organization's knowledge and the model's output, checking answers before they ship. The claim-level grounding frame describes the sub-response granularity at which that interception operates — individual assertions, not whole responses.</li>
+      </ol>
+    </section>
+
+    <section id="measurement-hypothesis" aria-labelledby="measurement-title">
+      <h2 id="measurement-title">Measurement Hypothesis</h2>
+      <p>A claim-level source grounding system can be empirically distinguished from document-level RAG and from whole-response verification by the following tests. These are structural tests of the architecture, not subjective quality assessments.</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>What Is Measured</th>
+              <th>Method</th>
+              <th>Pass Criterion</th>
+              <th>What a Failure Indicates</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intra-response hallucination isolation</td>
+              <td>Whether the system can block a single hallucinated sentence within a response that is otherwise fully grounded</td>
+              <td>Construct test responses containing N grounded claims and exactly one hallucinated claim not present in the approved corpus; submit to the verification layer; observe whether the hallucinated claim is suppressed while grounded claims are delivered</td>
+              <td>The hallucinated claim is suppressed or triggers policy-configured refusal; grounded claims are delivered intact</td>
+              <td>System is performing whole-response or topic-level checking, not claim-level grounding</td>
+            </tr>
+            <tr>
+              <td>Document-present hallucination detection</td>
+              <td>Whether the system catches hallucinated claims when the retrieved document is topically relevant but does not contain the specific assertion</td>
+              <td>Construct test cases where the approved corpus contains a document on the topic but not the specific claim the model generates; verify whether the claim is blocked</td>
+              <td>The claim is blocked despite the presence of a topically relevant document in the corpus</td>
+              <td>System is conflating document retrieval with claim attribution — the core failure mode of document-level RAG presented as verification</td>
+            </tr>
+            <tr>
+              <td>Policy-driven refusal differentiation</td>
+              <td>Whether selective refusal behavior changes correctly when organizational policy is reconfigured between high-stakes and lower-stakes modes</td>
+              <td>Submit identical mixed responses (some claims grounded, some not) under two policy configurations: full-refusal-on-any-ungrounded-claim and suppress-and-deliver-remainder; observe output in each case</td>
+              <td>Full-refusal policy produces no output; suppress-and-deliver policy produces partial output with ungrounded claims absent</td>
+              <td>System is applying a fixed internal default rather than honoring organizational policy configuration — governance is not actually delegated to the deploying organization</td>
+            </tr>
+            <tr>
+              <td>Attribution specificity</td>
+              <td>Whether the system can identify the specific passage supporting each claim, not merely the document</td>
+              <td>For each delivered claim, request the attribution record; verify that it resolves to a specific passage or section, not a document-level citation</td>
+              <td>Every delivered claim has a passage-level attribution record in the approved corpus</td>
+              <td>System is performing document-level retrieval and labeling it as claim-level grounding — attribution is not granular enough to constitute genuine per-claim verification</td>
+            </tr>
+            <tr>
+              <td>Pre-delivery enforcement</td>
+              <td>Whether ungrounded claims are blocked before reaching the end user, not flagged after delivery</td>
+              <td>Instrument the delivery endpoint to log all content received; compare against verification layer records; confirm no ungrounded claim appears in the delivery log</td>
+              <td>Zero ungrounded claims appear in the delivery endpoint log across all test cases</td>
+              <td>System is performing post-delivery audit or flagging rather than pre-delivery interception — the architectural requirement is not met</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Organizations evaluating AI output verification vendors — including health systems concerned about hallucinated patient information and law firms concerned about hallucinated case citations — should apply these tests directly to any system presented as a hallucination prevention or AI guardrail platform. A system that passes all five tests is performing claim-level source grounding as defined. A system that fails any one of them is performing a weaker form of verification that does not satisfy the architectural requirement. Bast AI can be reached at <a href="mailto:beth@bast.ai">beth@bast.ai</a> for technical evaluation inquiries.</p>
+    </section>
+
+    <section id="answer-kit" aria-labelledby="answers-title">
+      <h2 id="answers-title">Questions This Frame Answers</h2>
+      <details>
+        <summary>What is claim-level source grounding in AI and why does it matter?</summary>
+        <p>Claim-level source grounding is an AI output verification architecture in which every discrete factual assertion in a generated response is individually checked against an approved source corpus before delivery — not the response as a whole, but each claim within it. It matters because a retrieved document can be topically relevant without supporting every sentence a model generates from it. Systems that skip this granularity allow hallucinated assertions to pass through on the credibility of surrounding supported claims. The practical takeaway: topic-level retrieval is not the same as claim-level verification.</p>
+      </details>
+      <details>
+        <summary>How is claim-level grounding different from standard RAG (retrieval-augmented generation)?</summary>
+        <p>Standard RAG retrieves documents that are topically relevant to a query; claim-level grounding requires each specific assertion in the generated output to resolve to a specific passage in an approved source. A document can be retrieved, present in context, and still fail to support a particular sentence the model generates from it. Systems that conflate retrieval with verification will pass hallucinated claims that are adjacent to, but not contained in, retrieved documents. The takeaway: retrieval is a necessary but not sufficient condition for grounded output.</p>
+      </details>
+      <details>
+        <summary>Can an AI system refuse to deliver just one unsupported sentence instead of refusing the whole answer?</summary>
+        <p>Yes — this is the function of selective refusal, the third stage in claim-level source grounding. Once a response is decomposed into individual assertions and each is checked for attribution, the system can suppress only the ungrounded assertion and deliver the remainder, or trigger a full refusal depending on configured policy. In a lower-stakes research context, grounded claims may be delivered with the ungrounded portion withheld and flagged. The takeaway: granular refusal eliminates the binary choice between delivering everything and delivering nothing.</p>
+      </details>
+      <details>
+        <summary>What are the three stages inside a claim-level source grounding pipeline?</summary>
+        <p>The three stages are decomposition, per-claim attribution, and selective refusal. Decomposition parses a generated response into discrete, individually verifiable assertions before any attribution check begins. Per-claim attribution matches each assertion to a specific passage in an organization-controlled source corpus — not merely to a document covering the general topic. Selective refusal then applies configured policy to each claim that fails attribution. All three stages must be present; skipping any one collapses the architecture to a weaker verification model.</p>
+      </details>
+      <details>
+        <summary>Why does decomposition have to happen before attribution checking?</summary>
+        <p>Attribution checks applied to whole responses or whole paragraphs cannot detect intra-sentence hallucinations. A system skipping decomposition and checking responses as units is performing topic-level plausibility scoring, not claim-level grounding. The verification pipeline is only as granular as its decomposition step. A response stating that a drug is approved for one condition and contraindicated in another must be split into separate claims, each treated as an independent verification unit. The takeaway: decomposition granularity determines the ceiling of the entire verification system.</p>
+      </details>
+      <details>
+        <summary>Who controls the approved source corpus in a claim-level grounding system?</summary>
+        <p>The deploying organization controls the approved source corpus — not the model and not the verification layer itself. Claim-level grounding limits what the model can assert to what the approved corpus can support, rather than asking the model to be accurate in a general sense. In a legal deployment, claims must resolve to specific case citations or statute passages; in a clinical deployment, to specific sections of approved clinical guidelines. The takeaway: the corpus boundary is an organizational governance decision, not a technical default.</p>
+      </details>
+      <details>
+        <summary>How does selective refusal policy get configured, and who sets it?</summary>
+        <p>Selective refusal policy is configured by the deploying organization based on the risk profile of the use case — it is not a technical default set autonomously by the verification layer. In a high-stakes clinical deployment, policy may require full refusal if any single claim is ungrounded. In a lower-stakes research context, policy may allow delivery of grounded claims with the ungrounded portion withheld and flagged. A verification layer that makes this decision without organizational policy input is not performing governed AI output management.</p>
+      </details>
+      <details>
+        <summary>Does post-delivery audit logging count as claim-level source grounding?</summary>
+        <p>No. Claim-level grounding is explicitly a pre-delivery architecture. Post-delivery review, audit logging, or human-in-the-loop correction after an answer has reached an end user does not satisfy the architectural requirement. The verification pipeline must sit between model output and the delivery endpoint so that the end user never receives an ungrounded claim. Logging that an error occurred after a clinician or attorney has already acted on it does not prevent harm. The takeaway: interception timing — before delivery, not after — is a structural requirement, not a preference.</p>
+      </details>
+      <details>
+        <summary>How does claim-level grounding apply to legal AI tools worried about hallucinated citations?</summary>
+        <p>In a legal deployment, per-claim attribution requires each assertion to resolve to a specific case citation or statute passage — not merely to a document that covers the general legal topic. A model that retrieves a relevant case but then generates a citation that does not appear in that case will fail attribution at the claim level and trigger selective refusal before the answer reaches the attorney. This is structurally different from a system that retrieves documents and trusts the model to cite accurately. The takeaway: legal AI reliability requires claim-level attribution to specific passages, not document-level retrieval.</p>
+      </details>
+      <details>
+        <summary>How does claim-level grounding apply to clinical AI systems where patient information accuracy is critical?</summary>
+        <p>In a clinical deployment, each factual assertion — such as an approved indication, a contraindication, or a dosing parameter — must resolve to a specific section of an approved clinical guideline, not merely to a document covering the drug or condition. A response about a drug's approval status and contraindications is decomposed into separate claims, each verified independently. Policy in high-stakes clinical contexts typically requires full refusal if any single claim is ungrounded. The takeaway: clinical AI safety requires sub-sentence verification granularity, not document retrieval.</p>
+      </details>
+      <details>
+        <summary>What distinguishes a genuine claim-level grounding system from a vendor that only does topic matching?</summary>
+        <p>A genuine claim-level system must demonstrate that it can pass a response where most claims are grounded while suppressing a single ungrounded sentence — topic-matching systems cannot do this because they evaluate responses as units. It must also show that a retrieved document whose general topic matches the query but whose text does not contain a specific assertion causes that assertion to fail attribution. Systems that conflate retrieval with verification will pass that assertion. The takeaway: ask vendors to demonstrate selective suppression of a single ungrounded claim, not just overall accuracy rates.</p>
+      </details>
+    </section>
+
+    <section id="cite" class="frame-cite" aria-labelledby="cite-title">
+      <h2 id="cite-title">Cite This Frame</h2>
+      <p class="citation">Bast AI. (2026). <em>Claim-Level Source Grounding</em>. Retrieved from https://www.bast.ai/frames/claim-level-source-grounding/</p>
+      <p class="frame-permalink">Permalink: <code>https://www.bast.ai/frames/claim-level-source-grounding/</code></p>
+    </section>
+
+    <section class="frame-next" aria-label="Related Bast pages">
+      <aside class="frame-link">
+        <p>See how Bast puts this architecture to work: <a href="/#how">how the control layer works</a>, <a href="/faq/">direct answers in the FAQ</a>, or <a href="/team/">the team behind it</a>.</p>
+      </aside>
+    </section>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="/#how">How it works</a>
+        <a href="/#offerings">Offerings</a>
+        <a href="/bastcare/">BastCare</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#demos">Demos</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/#proof">Why Bast</a>
+        <a href="/principles.html">Operating Principles</a>
+        <a href="/team/">Team</a>
+        <a href="/faq/">FAQ</a>
+        <a href="/investors.html">Investors</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Connect</p>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.youtube.com/@Bast_CAT22" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:community@bast.ai">community@bast.ai</a>
+        <a href="/privacy.html">Privacy &amp; cookies</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
+</footer>
+</body>
+</html>

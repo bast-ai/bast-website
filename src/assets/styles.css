@@ -3710,3 +3710,210 @@ h1 span {
     transform: none;
   }
 }
+
+/* Frame pages, FAQ, and team (GEO layer, 2026-08-28) */
+.frame-link {
+  margin: 28px auto 0;
+  max-width: 720px;
+  padding: 18px 22px;
+  background: var(--card-face);
+  border-radius: var(--radius);
+  box-shadow: var(--neu-raise-sm);
+}
+
+.frame-link p {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--quiet);
+}
+
+.frame-link a {
+  color: var(--accent-text);
+  font-weight: var(--fw-semibold);
+}
+
+.section-plain .frame-link,
+.system-thesis .frame-link {
+  margin-top: 36px;
+}
+
+.frame-article {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.frame-article .frame-head {
+  margin-bottom: 40px;
+}
+
+.frame-article .frame-head h1 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-thin);
+  margin: 10px 0 12px;
+}
+
+.frame-article .frame-head .eyebrow a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.frame-article .lede {
+  font-size: var(--fs-body-lg);
+  color: var(--quiet);
+  max-width: 62ch;
+}
+
+.frame-meta {
+  font-size: var(--fs-caption);
+  color: var(--quieter);
+  letter-spacing: 0.02em;
+}
+
+.frame-meta .frame-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+}
+
+.frame-article section {
+  margin-top: 48px;
+}
+
+.frame-article h2 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
+  margin: 0 0 16px;
+}
+
+.frame-article p,
+.frame-article li {
+  color: var(--quiet);
+  line-height: 1.6;
+}
+
+.frame-article p strong,
+.frame-article li strong {
+  color: var(--ink);
+}
+
+.frame-definition {
+  margin: 0;
+  padding: 22px 26px;
+  background: var(--card-face);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: var(--neu-raise-sm);
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.frame-invariants {
+  display: grid;
+  gap: 14px;
+  padding-left: 22px;
+  margin: 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--neu-raise-sm);
+  background: var(--surface);
+}
+
+.frame-article table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 880px;
+  font-size: var(--fs-body-sm);
+}
+
+.frame-article th,
+.frame-article td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.frame-article thead th {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--quieter);
+  background: var(--card-face);
+}
+
+.frame-article details {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--neu-raise-sm);
+  padding: 4px 20px;
+  margin-bottom: 12px;
+}
+
+.frame-article summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-weight: var(--fw-medium);
+  color: var(--ink);
+}
+
+.frame-article details[open] summary {
+  border-bottom: 1px solid var(--line-subtle);
+  margin-bottom: 8px;
+}
+
+.frame-cite .citation {
+  font-size: var(--fs-body-sm);
+}
+
+.frame-permalink code {
+  font-size: 0.8rem;
+  background: var(--card-face);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.faq-list {
+  display: grid;
+  gap: 20px;
+}
+
+.faq-item {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--neu-raise-sm);
+  padding: 22px 26px;
+}
+
+.faq-item h2 {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
+  margin: 0 0 10px;
+}
+
+.faq-item p {
+  margin: 0;
+}
+
+.faq-item a {
+  color: var(--accent-text);
+  font-weight: var(--fw-semibold);
+}
+
+.team-grid .card h2 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
+  margin: 4px 0 10px;
+}
+
+.team-links {
+  font-size: var(--fs-body-sm);
+}
+
+.team-links a {
+  color: var(--accent-text);
+  font-weight: var(--fw-semibold);
+}
