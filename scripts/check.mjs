@@ -98,6 +98,46 @@ function assertExcludes(contents, needle, label) {
   }
 }
 
+function assertBalancedCssBlocks(contents, label) {
+  let depth = 0;
+  let quote = null;
+  let escaped = false;
+  let inComment = false;
+
+  for (let index = 0; index < contents.length; index += 1) {
+    const character = contents[index];
+    const next = contents[index + 1];
+    if (inComment) {
+      if (character === "*" && next === "/") {
+        inComment = false;
+        index += 1;
+      }
+      continue;
+    }
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === quote) quote = null;
+      continue;
+    }
+    if (character === "/" && next === "*") {
+      inComment = true;
+      index += 1;
+    } else if (character === '"' || character === "'") {
+      quote = character;
+    } else if (character === "{") {
+      depth += 1;
+    } else if (character === "}") {
+      depth -= 1;
+      if (depth < 0) throw new Error(`Unbalanced ${label}: unexpected closing brace`);
+    }
+  }
+
+  if (inComment || quote || depth !== 0) {
+    throw new Error(`Unbalanced ${label}: unterminated CSS block, comment, or string`);
+  }
+}
+
 for (const file of requiredFiles) {
   await exists(file);
 }
@@ -115,6 +155,8 @@ const advisoryPages = await Promise.all([
 const advisoryIndexHtml = advisoryPages[0];
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
+const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
+assertBalancedCssBlocks(siteCss, "site stylesheet");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
 const bastcareReviews = JSON.parse(await readFile(
