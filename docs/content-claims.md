@@ -6,9 +6,9 @@ publish.
 
 | Claim | Status | Owner | Evidence / note |
 |---|---|---|---|
-| Bast grounds AI in approved knowledge, ontology, and source material. | Draft | Beth | Core product thesis. Tie to platform docs before launch. |
-| Every answer can be traced, checked, or refused. | Draft | Beth / Adam | Confirm exact wording against current runtime behavior. |
-| Hosted, private cloud, or on prem deployment. | Draft | Beth | Validate against active deployment offers. |
+| Bast grounds AI in approved knowledge, ontology, and source material. | Approved public positioning | Beth | Owner requested the dedicated platform page on 2026-09-01; exact wording reuses the existing homepage position. See `docs/decisions/2026-09-01-bast-platform-splash-page.md`. |
+| Every answer can be traced, checked, or refused. | Approved public positioning | Beth | Owner requested the dedicated platform page on 2026-09-01; the page expresses the existing answer, trace, or refusal position without adding a runtime guarantee. |
+| Hosted, private cloud, or on prem deployment. | Approved public positioning | Beth | Owner requested the dedicated platform page on 2026-09-01; exact deployment wording reuses the existing homepage offer. |
 | Relevant knowledge is selected before generation, reducing token load and noise. | Draft | Adam | Confirm compute/token reduction number before publishing any numeric claim. |
 | Bast records blocked, missing, or out-of-scope answer paths. | Draft | Adam | Confirm analytics/refusal logging fields before production copy. |
 | DVC featured Bast as a medical AI case study with full provenance, reproducible answers, and offline operation. | Draft | Beth | Public DVC blog link is used from homepage outcome teaser. Confirm final wording against DVC page. |
