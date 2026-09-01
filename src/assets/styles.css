@@ -3916,4 +3916,212 @@ h1 span {
 .team-links a {
   color: var(--accent-text);
   font-weight: var(--fw-semibold);
+/* ---- BastCare App Store reviews ---- */
+.bastcare-reviews {
+  display: block;
+}
+
+.bastcare-reviews-header {
+  display: flex;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.bastcare-reviews-heading {
+  max-width: 790px;
+}
+
+.bastcare-reviews h2 {
+  max-width: 15ch;
+  margin-bottom: var(--bast-space-5);
+}
+
+.bastcare-rating-row {
+  display: flex;
+  gap: var(--bast-space-3);
+  align-items: baseline;
+  flex-wrap: wrap;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.bastcare-rating-row .bastcare-stars {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+}
+
+.bastcare-rating-row strong {
+  color: #fff;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: var(--fw-thin);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.bastcare-review-note {
+  margin: var(--bast-space-4) 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: var(--fs-caption);
+}
+
+.bastcare-review-source {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.8rem 1.1rem;
+  color: #fff;
+  font-size: var(--fs-body-sm);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.bastcare-review-source:hover,
+.bastcare-review-source:focus-visible {
+  border-color: rgba(140, 231, 255, 0.72);
+  color: #8ce7ff;
+}
+
+.bastcare-review-carousel {
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.bastcare-review-carousel-toolbar {
+  display: flex;
+  gap: var(--bast-space-4);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--bast-space-4);
+}
+
+.bastcare-review-carousel-toolbar p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: var(--fs-body-sm);
+}
+
+.bastcare-review-controls {
+  display: flex;
+  gap: var(--bast-space-2);
+}
+
+.bastcare-review-controls button {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  color: #fff;
+  font: inherit;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.bastcare-review-controls button:hover,
+.bastcare-review-controls button:focus-visible {
+  border-color: #8ce7ff;
+  color: #8ce7ff;
+}
+
+.bastcare-review-controls button:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.bastcare-review-track {
+  display: flex;
+  gap: var(--bast-space-4);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding: 2px 2px var(--bast-space-5);
+  scroll-padding-inline: 2px;
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: none;
+}
+
+.bastcare-review-track::-webkit-scrollbar {
+  display: none;
+}
+
+.bastcare-review-track:focus-visible {
+  outline: 3px solid #8ce7ff;
+  outline-offset: 6px;
+  border-radius: var(--bast-radius-default);
+}
+
+.bastcare-review-card {
+  display: flex;
+  min-height: 340px;
+  flex: 0 0 clamp(300px, 44vw, 520px);
+  scroll-snap-align: start;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--bast-radius-default);
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.bastcare-review-stars {
+  color: #ffd65a;
+  letter-spacing: 0.12em;
+}
+
+.bastcare-review-card h3 {
+  margin: var(--bast-space-3) 0 0;
+  color: #fff;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  line-height: 1.12;
+}
+
+.bastcare-review-card blockquote {
+  margin: var(--bast-space-6) 0;
+}
+
+.bastcare-review-card blockquote p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.bastcare-review-meta {
+  display: flex;
+  gap: var(--bast-space-2);
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--fs-caption);
+}
+
+.bastcare-review-meta strong {
+  color: rgba(255, 255, 255, 0.76);
+  font-weight: var(--fw-semibold);
+}
+
+@media (max-width: 660px) {
+  .bastcare-reviews-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bastcare-review-source {
+    width: 100%;
+    text-align: center;
+  }
+
+  .bastcare-review-card {
+    min-height: 360px;
+    flex-basis: min(84vw, 360px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bastcare-review-track {
+    scroll-behavior: auto;
+  }
 }

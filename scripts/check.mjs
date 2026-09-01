@@ -15,16 +15,17 @@ const requiredFiles = [
   "assets/site.js",
   "assets/analytics-consent.js",
   "assets/bast-logo.svg",
-  "assets/bastcare/screens/home.webp",
-  "assets/bastcare/screens/recording-disclosure.webp",
-  "assets/bastcare/screens/consent.webp",
-  "assets/bastcare/screens/recording.webp",
-  "assets/bastcare/screens/processing.webp",
-  "assets/bastcare/screens/summary.webp",
+  "assets/bastcare/screens/home-build-51.jpg",
+  "assets/bastcare/screens/consent-build-51.jpg",
+  "assets/bastcare/screens/recording-build-51.jpg",
+  "assets/bastcare/screens/processing-build-51.jpg",
+  "assets/bastcare/screens/summary-build-51.jpg",
   "assets/bastcare/screens/visits.webp",
-  "assets/bastcare/screens/careteam.webp",
-  "assets/bastcare/screens/share-preview.webp",
+  "assets/bastcare/screens/careteam-build-51.jpg",
+  "assets/bastcare/screens/sharing-settings-build-51.jpg",
+  "assets/bastcare/screens/share-preview-build-51.jpg",
   "assets/data/bastcare-metrics.json",
+  "assets/data/bastcare-reviews.json",
   "assets/bast-ai-healthcare-teaser.pdf",
   "assets/bast-ai-healthcare-teaser-cover.png",
   "assets/advisory.css",
@@ -116,6 +117,8 @@ const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-c
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
+const bastcareReviews = JSON.parse(await readFile(
+  path.join(distDir, "assets/data/bastcare-reviews.json"), "utf8"));
 const appleAssociation = await readFile(
   path.join(distDir, ".well-known/apple-app-site-association"), "utf8");
 const careteamInvite = await readFile(
@@ -220,6 +223,18 @@ assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "s
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
 assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
 assertIncludes(siteJs, 'data-bastcare-metrics-context', "BastCare growth counter context");
+assertIncludes(siteJs, 'fetch("/assets/data/bastcare-reviews.json"', "privacy-safe App Store review loading");
+assertIncludes(siteJs, 'setupBastCareReviewCarousel', "accessible App Store review carousel behavior");
+assertExcludes(siteJs, 'https://itunes.apple.com/', "browser-side Apple review request");
+if (bastcareReviews.schemaVersion !== 1 ||
+    bastcareReviews.app?.id !== 6789669565 ||
+    typeof bastcareReviews.rating?.average !== "number" ||
+    !Number.isSafeInteger(bastcareReviews.rating?.count) ||
+    !Array.isArray(bastcareReviews.reviews) ||
+    bastcareReviews.reviews.length !== bastcareReviews.rating?.writtenReviewCount ||
+    bastcareReviews.reviews.length < 1) {
+  throw new Error("Invalid BastCare App Store review snapshot");
+}
 if (bastcareMetrics.schemaVersion !== 1 ||
     !Number.isSafeInteger(bastcareMetrics.metrics?.successfulSummaries) ||
     bastcareMetrics.metrics.successfulSummaries < 1) {
@@ -264,10 +279,19 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-assertIncludes(bastcareHome, "Our first written review", "BastCare verified review milestone");
+assertIncludes(bastcareHome, "home-build-51.jpg", "Build 51 home screen");
+assertIncludes(bastcareHome, "summary-build-51.jpg", "Build 51 visit summary screen");
+assertIncludes(bastcareHome, "careteam-build-51.jpg", "Build 51 CareTeam screen");
+assertIncludes(bastcareHome, "sharing-settings-build-51.jpg", "Build 51 sharing controls screen");
+assertIncludes(bastcareHome, "share-preview-build-51.jpg", "Build 51 CareTeam share preview");
+assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
+assertIncludes(bastcareHome, "Real help. In their words.", "BastCare review carousel headline");
+assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
-assertIncludes(bastcareHome, "2 ratings", "BastCare App Store rating count");
+assertIncludes(bastcareHome, "6 ratings", "BastCare App Store rating count fallback");
+assertIncludes(bastcareHome, "4 written reviews", "BastCare written review count fallback");
+assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
 assertIncludes(bastcareHome, 'data-app-store-placement="tour"', "tour App Store download action");

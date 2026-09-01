@@ -224,6 +224,197 @@
     });
   }
 
+  function validBastCareReviewSnapshot(document) {
+    const rating = document && document.rating;
+    const reviews = document && document.reviews;
+    const validReviews = Array.isArray(reviews) && reviews.every((review) =>
+      review &&
+      typeof review.id === "string" && review.id.length > 0 &&
+      typeof review.title === "string" && review.title.length > 0 &&
+      typeof review.excerpt === "string" && review.excerpt.length > 0 &&
+      typeof review.author === "string" && review.author.length > 0 &&
+      Number.isSafeInteger(review.rating) && review.rating >= 1 && review.rating <= 5 &&
+      typeof review.version === "string" && review.version.length > 0 &&
+      typeof review.updatedAt === "string"
+    );
+
+    return document &&
+      document.schemaVersion === 1 &&
+      document.app && document.app.id === 6789669565 &&
+      typeof document.app.appStoreUrl === "string" &&
+      document.app.appStoreUrl.startsWith("https://apps.apple.com/") &&
+      rating && typeof rating.average === "number" &&
+      rating.average >= 0 && rating.average <= 5 &&
+      Number.isSafeInteger(rating.count) && rating.count >= 0 &&
+      Number.isSafeInteger(rating.writtenReviewCount) &&
+      Array.isArray(reviews) && rating.writtenReviewCount === reviews.length &&
+      rating.count >= reviews.length &&
+      validReviews;
+  }
+
+  function ratingCountLabel(count) {
+    return count.toLocaleString("en-US") + " " + (count === 1 ? "rating" : "ratings");
+  }
+
+  function writtenReviewCountLabel(count) {
+    return count.toLocaleString("en-US") + " written " + (count === 1 ? "review" : "reviews");
+  }
+
+  function createBastCareReviewCard(review, index, total) {
+    const card = document.createElement("article");
+    card.className = "bastcare-review-card";
+    card.setAttribute("aria-label", "Review " + (index + 1) + " of " + total + ": " + review.title);
+
+    const headingGroup = document.createElement("div");
+    const stars = document.createElement("div");
+    stars.className = "bastcare-review-stars";
+    stars.setAttribute("aria-label", review.rating + " out of 5 stars");
+    const starText = document.createElement("span");
+    starText.setAttribute("aria-hidden", "true");
+    starText.textContent = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+    stars.appendChild(starText);
+    const title = document.createElement("h3");
+    title.textContent = review.title;
+    headingGroup.append(stars, title);
+
+    const quote = document.createElement("blockquote");
+    const quoteText = document.createElement("p");
+    quoteText.textContent = "“" + review.excerpt + "”";
+    quote.appendChild(quoteText);
+
+    const meta = document.createElement("p");
+    meta.className = "bastcare-review-meta";
+    const author = document.createElement("strong");
+    author.textContent = review.author;
+    const separator = document.createElement("span");
+    separator.setAttribute("aria-hidden", "true");
+    separator.textContent = "·";
+    const source = document.createTextNode(" App Store · Version " + review.version);
+    meta.append(author, separator, source);
+
+    card.append(headingGroup, quote, meta);
+    return card;
+  }
+
+  function setupBastCareReviewCarousel(section) {
+    if (section.dataset.reviewCarouselReady === "true") return;
+    const track = section.querySelector("[data-review-track]");
+    const cards = track ? Array.from(track.querySelectorAll(".bastcare-review-card")) : [];
+    const previous = section.querySelector("[data-review-prev]");
+    const next = section.querySelector("[data-review-next]");
+    const status = section.querySelector("[data-review-status]");
+    let currentIndex = 0;
+    let frame = null;
+
+    if (!track || !cards.length || !previous || !next || !status) return;
+    section.dataset.reviewCarouselReady = "true";
+
+    function nearestCardIndex() {
+      const trackLeft = track.getBoundingClientRect().left;
+      let nearestIndex = 0;
+      let nearestDistance = Infinity;
+      cards.forEach((card, index) => {
+        const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+      return nearestIndex;
+    }
+
+    function updateControls(index) {
+      currentIndex = Math.max(0, Math.min(cards.length - 1, index));
+      previous.disabled = currentIndex === 0;
+      next.disabled = currentIndex === cards.length - 1;
+      status.textContent = (currentIndex + 1) + " of " + cards.length;
+    }
+
+    function showCard(index) {
+      const targetIndex = Math.max(0, Math.min(cards.length - 1, index));
+      const target = cards[targetIndex];
+      const left = target.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      track.scrollTo({ left, behavior: reducedMotion ? "auto" : "smooth" });
+      updateControls(targetIndex);
+    }
+
+    previous.addEventListener("click", () => showCard(currentIndex - 1));
+    next.addEventListener("click", () => showCard(currentIndex + 1));
+    track.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      showCard(currentIndex + (event.key === "ArrowRight" ? 1 : -1));
+    });
+    track.addEventListener("scroll", () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = null;
+        updateControls(nearestCardIndex());
+      });
+    }, { passive: true });
+    window.addEventListener("resize", () => updateControls(nearestCardIndex()));
+    updateControls(0);
+  }
+
+  function initBastCareReviews() {
+    const sections = Array.from(document.querySelectorAll("[data-bastcare-reviews]"));
+    const ratingOutputs = document.querySelectorAll("[data-bastcare-rating-average], [data-bastcare-rating-count]");
+    if (!sections.length && !ratingOutputs.length) return;
+
+    fetch("/assets/data/bastcare-reviews.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Reviews unavailable");
+        return response.json();
+      })
+      .then((reviewDocument) => {
+        if (!validBastCareReviewSnapshot(reviewDocument)) throw new Error("Invalid review snapshot");
+        const average = reviewDocument.rating.average.toFixed(1);
+        const countLabel = ratingCountLabel(reviewDocument.rating.count);
+        const writtenLabel = writtenReviewCountLabel(reviewDocument.rating.writtenReviewCount);
+
+        document.querySelectorAll("[data-bastcare-rating-average]").forEach((output) => {
+          output.textContent = average;
+        });
+        document.querySelectorAll("[data-bastcare-rating-count]").forEach((output) => {
+          output.textContent = countLabel;
+        });
+        document.querySelectorAll("[data-bastcare-written-review-count]").forEach((output) => {
+          output.textContent = writtenLabel;
+        });
+        document.querySelectorAll("[data-bastcare-rating-line]").forEach((line) => {
+          line.setAttribute("aria-label", average + " out of 5 stars from " + countLabel + " on the App Store");
+        });
+        document.querySelectorAll("[data-bastcare-review-source]").forEach((link) => {
+          link.href = reviewDocument.app.appStoreUrl;
+        });
+
+        const generated = new Date(reviewDocument.generatedAt);
+        const generatedLabel = Number.isNaN(generated.valueOf()) ? "" : generated.toLocaleDateString("en-US", {
+          month: "short", day: "numeric", year: "numeric"
+        });
+
+        sections.forEach((section) => {
+          const track = section.querySelector("[data-review-track]");
+          if (track && reviewDocument.reviews.length) {
+            const fragment = document.createDocumentFragment();
+            reviewDocument.reviews.forEach((review, index) => {
+              fragment.appendChild(createBastCareReviewCard(review, index, reviewDocument.reviews.length));
+            });
+            track.replaceChildren(fragment);
+          }
+          const note = section.querySelector("[data-bastcare-review-note]");
+          if (note) {
+            note.textContent = (generatedLabel ? "Latest verified " + generatedLabel + ". " : "") + "Reviews are from the U.S. App Store.";
+          }
+          setupBastCareReviewCarousel(section);
+        });
+      })
+      .catch(() => {
+        sections.forEach(setupBastCareReviewCarousel);
+      });
+  }
+
   function initBastCareMetrics() {
     const panels = Array.from(document.querySelectorAll("[data-bastcare-metrics]"));
     if (!panels.length) return;
@@ -278,6 +469,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     handleContactForm();
     initBastCareTour();
+    initBastCareReviews();
     initBastCareMetrics();
 
     document.querySelectorAll("[data-mode]").forEach((tab) => {

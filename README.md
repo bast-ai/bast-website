@@ -46,8 +46,10 @@ GA_MEASUREMENT_ID=G-0D3N068YJH pnpm build
 
 - GitHub is the source of truth.
 - `.github/workflows/pr-ci.yml` runs the full site and BastCare metrics checks on every pull request to `main`.
-- `.github/workflows/deploy.yml` builds the static site with `pnpm verify`.
-- On push to `main` (or manual run) it publishes `dist/` to GitHub Pages.
+- `.github/workflows/deploy.yml` refreshes BastCare's public App Store review
+  snapshot, builds the static site with `pnpm verify`, and publishes `dist/`.
+- It runs on push to `main`, on manual request, and daily so public rating and
+  written-review counts stay current without browser-side calls to Apple.
 - `www.bast.ai` points at Pages via GoDaddy DNS; `src/CNAME` pins the domain.
 
 Set the `GA_MEASUREMENT_ID` repository variable before the production deploy.

@@ -8,6 +8,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 15 * * *"
 
 # Least-privilege token: read the repo, write Pages, mint the OIDC token
 # actions/deploy-pages needs.
@@ -37,6 +39,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Refresh BastCare App Store ratings and reviews
+        run: python3 scripts/collect-bastcare-reviews.py
 
       # pnpm verify = build + check. Production env: Bast GA id, indexable.
       # GA_MEASUREMENT_ID can come from a repo variable; otherwise this uses
