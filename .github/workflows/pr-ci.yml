@@ -56,4 +56,5 @@ jobs:
       - name: Run BastCare metrics checks
         run: |
           python3 -m unittest scripts/test_collect_bastcare_metrics.py
+          python3 -m unittest scripts/test_collect_bastcare_reviews.py
           sh -n scripts/run-bastcare-metrics.sh
