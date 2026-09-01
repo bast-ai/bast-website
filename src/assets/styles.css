@@ -3916,6 +3916,8 @@ h1 span {
 .team-links a {
   color: var(--accent-text);
   font-weight: var(--fw-semibold);
+}
+
 /* ---- BastCare App Store reviews ---- */
 .bastcare-reviews {
   display: block;
