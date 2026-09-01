@@ -12,6 +12,7 @@ const requiredFiles = [
   "robots.txt",
   "sitemap.xml",
   "assets/styles.css",
+  "assets/platform.css",
   "assets/site.js",
   "assets/analytics-consent.js",
   "assets/bast-logo.svg",
@@ -41,6 +42,7 @@ const requiredFiles = [
   ".nojekyll",
   ".well-known/apple-app-site-association",
   "careteam/invite/index.html",
+  "platform/index.html",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
   "bastcare/processors/index.html",
@@ -143,6 +145,7 @@ for (const file of requiredFiles) {
 }
 
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
+const platformHtml = await readFile(path.join(distDir, "platform/index.html"), "utf8");
 const investorsHtml = await readFile(path.join(distDir, "investors.html"), "utf8");
 const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
 const privacyHtml = await readFile(path.join(distDir, "privacy.html"), "utf8");
@@ -156,7 +159,9 @@ const advisoryIndexHtml = advisoryPages[0];
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
+const platformCss = await readFile(path.join(distDir, "assets/platform.css"), "utf8");
 assertBalancedCssBlocks(siteCss, "site stylesheet");
+assertBalancedCssBlocks(platformCss, "platform stylesheet");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
 const bastcareReviews = JSON.parse(await readFile(
@@ -206,6 +211,22 @@ const requiredHomepageSnippets = [
     needle: 'class="offering-summary-gallery"',
   },
   {
+    label: "Build 51 visit summary homepage screen",
+    needle: "summary-build-51.jpg",
+  },
+  {
+    label: "Build 51 CareTeam homepage screen",
+    needle: "careteam-build-51.jpg",
+  },
+  {
+    label: "Build 51 sharing preview homepage screen",
+    needle: "share-preview-build-51.jpg",
+  },
+  {
+    label: "dedicated Bast Platform homepage link",
+    needle: 'href="/platform/"',
+  },
+  {
     label: "homepage BastCare growth counter",
     needle: 'data-bastcare-metrics-context="growth"',
   },
@@ -222,6 +243,18 @@ const replacedHomepageSnippets = [
   {
     label: "old chat and admin console demo video",
     needle: 'data-video-id="Q-j02Y1AHEw"',
+  },
+  {
+    label: "old My Visits homepage screen",
+    needle: "/assets/bastcare/screens/visits.webp",
+  },
+  {
+    label: "old visit summary homepage screen",
+    needle: "/assets/bastcare/screens/summary.webp",
+  },
+  {
+    label: "old sharing preview homepage screen",
+    needle: "/assets/bastcare/screens/share-preview.webp",
   },
 ];
 
@@ -261,6 +294,21 @@ assertIncludes(indexHtml, 'href="assets/styles.css?v=', "versioned homepage styl
 assertIncludes(indexHtml, 'src="assets/site.js?v=', "versioned homepage behavior");
 assertIncludes(indexHtml, 'src="assets/analytics-consent.js?v=', "versioned homepage analytics behavior");
 assertExcludes(indexHtml, 'href="assets/styles.css"', "unversioned homepage stylesheet");
+assertIncludes(platformHtml, 'href="/assets/styles.css?v=', "versioned Platform shared stylesheet");
+assertIncludes(platformHtml, 'href="/assets/platform.css?v=', "versioned Platform stylesheet");
+assertIncludes(platformHtml, 'src="/assets/site.js?v=', "versioned Platform behavior");
+assertExcludes(platformHtml, 'href="/assets/platform.css"', "unversioned Platform stylesheet");
+assertIncludes(platformHtml, "Build governed AI on infrastructure you control.", "Platform positioning");
+assertIncludes(platformHtml, "Bast control layer", "Platform system map");
+assertIncludes(platformHtml, "Approved sources", "Platform approved-source boundary");
+assertIncludes(platformHtml, "Grounded", "Platform grounded-answer outcome");
+assertIncludes(platformHtml, "Refusal", "Platform refusal outcome");
+assertIncludes(platformHtml, "Bast hosted", "Bast-hosted deployment option");
+assertIncludes(platformHtml, "Private cloud", "private-cloud deployment option");
+assertIncludes(platformHtml, "On premises", "on-premises deployment option");
+assertIncludes(platformHtml, "Your IP stays yours.", "Platform ownership statement");
+assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
+assertIncludes(platformHtml, 'href="/frames/claim-level-source-grounding/"', "Platform technical frame link");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
 assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
@@ -374,6 +422,7 @@ for (const internalPhrase of [
 ]) {
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
+assertIncludes(sitemapXml, "/platform/</loc>", "Bast Platform sitemap route");
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of ["faq/", "team/", "frames/", "frames/claim-level-source-grounding/"]) {
   assertIncludes(sitemapXml, `/${route}</loc>`, `GEO ${route} sitemap route`);
@@ -396,6 +445,7 @@ assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(indexHtml, 'href="/frames/claim-level-source-grounding/"', "homepage frame crosslink");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
+assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");
 assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame entry");
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
 assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");

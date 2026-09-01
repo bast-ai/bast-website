@@ -11,6 +11,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 ## Key Pages
 
 - [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
+- [Bast Platform](__SITE_URL__/platform/): Governed AI infrastructure, deployment options, system layers, and the controlled route to an answer, trace, or refusal.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
@@ -30,7 +31,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Products & Offerings
 
-- [Bast Platform](__SITE_URL__/#offerings): Build governed AI on infrastructure you control — hosted, private cloud, or on premises.
+- [Bast Platform](__SITE_URL__/platform/): Build governed AI on infrastructure you control — hosted, private cloud, or on premises.
 - [BastCare](__SITE_URL__/bastcare/): Free iPhone app — visit summaries you control. Download: https://apps.apple.com/app/id6789669565
 
 ## Company Facts
