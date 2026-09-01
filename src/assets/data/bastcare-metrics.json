@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-01T17:17:01Z",
+  "generatedAt": "2026-09-01T18:17:01Z",
   "metrics": {
-    "inputTokens": 280748,
-    "outputTokens": 139238,
-    "successfulSummaries": 69,
-    "summariesWithTokenUsage": 69,
+    "inputTokens": 289305,
+    "outputTokens": 141774,
+    "successfulSummaries": 70,
+    "summariesWithTokenUsage": 70,
     "summariesWithoutTokenUsage": 0,
-    "totalTokens": 419986
+    "totalTokens": 431079
   },
   "period": {
-    "endsAt": "2026-09-01T17:17:01Z",
+    "endsAt": "2026-09-01T18:17:01Z",
     "kind": "all-time",
     "startsAt": null
   },
