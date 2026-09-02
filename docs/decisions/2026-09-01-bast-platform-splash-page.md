@@ -36,3 +36,11 @@ The Claim-Level Source Grounding promotion added by the earlier Noviant GEO
 package was removed from the homepage at Beth's request. The detailed frame
 remains public as a deeper technical resource but is no longer promoted from
 the homepage.
+
+The homepage Platform panel now presents two owner-supplied dashboard captures
+from Bast's public YouTube demos in layered desktop product frames. The
+interaction log leads because persistent, inspectable history of questions,
+responses, routes, scores, timestamps, and flags is a core product capability;
+the analytics view shows what that history makes possible. The dedicated
+Platform page retains the control-path diagram. A primary-blue “Watch the
+demos” action links directly to the homepage demo section.

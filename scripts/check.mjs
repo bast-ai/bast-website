@@ -16,6 +16,8 @@ const requiredFiles = [
   "assets/site.js",
   "assets/analytics-consent.js",
   "assets/bast-logo.svg",
+  "assets/platform/admin-interaction-log.jpg",
+  "assets/platform/admin-usage-analytics.jpg",
   "assets/bastcare/screens/home-build-51.jpg",
   "assets/bastcare/screens/consent-build-51.jpg",
   "assets/bastcare/screens/recording-build-51.jpg",
@@ -223,8 +225,16 @@ const requiredHomepageSnippets = [
     needle: "share-preview-build-51.jpg",
   },
   {
-    label: "homepage Bast Platform control-path diagram",
-    needle: 'class="platform-system-figure offering-platform-figure"',
+    label: "homepage Bast Platform interaction-log product view",
+    needle: "/assets/platform/admin-interaction-log.jpg",
+  },
+  {
+    label: "homepage Bast Platform analytics product view",
+    needle: "/assets/platform/admin-usage-analytics.jpg",
+  },
+  {
+    label: "homepage Bast Platform demos action",
+    needle: 'class="button button-primary" href="#demos">Watch the demos</a>',
   },
   {
     label: "homepage Bast Platform copy panel",
@@ -267,6 +277,10 @@ const replacedHomepageSnippets = [
   {
     label: "homepage technical-frame promotion",
     needle: 'href="/frames/claim-level-source-grounding/"',
+  },
+  {
+    label: "old homepage Platform control-path diagram",
+    needle: 'class="platform-system-figure offering-platform-figure"',
   },
 ];
 
