@@ -34,15 +34,19 @@
   min-height: min(680px, calc(100vh - 120px));
 }
 
+.platform-title-line {
+  display: block;
+}
+
 .platform-hero-copy h1 {
-  max-width: 14ch;
+  max-width: 20ch;
   margin: 0.8rem 0 1.4rem;
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-display);
   font-weight: var(--fw-thin);
   line-height: 1.02;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
 }
 
 .platform-hero-copy .lede {
@@ -206,14 +210,14 @@
 
 .platform-section-heading h2,
 .platform-cta h2 {
-  max-width: 18ch;
+  max-width: 24ch;
   margin: 0.7rem 0 1rem;
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: var(--fw-thin);
   line-height: 1.04;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
 .platform-section-heading > p:last-child,
