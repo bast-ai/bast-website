@@ -100,6 +100,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="__SITE_URL__/">
 <link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/platform.css">
 <script>
   if (window.location.pathname.endsWith("/index.html")) {
     const canonicalPath = window.location.pathname.slice(0, -"index.html".length);
@@ -189,9 +190,6 @@
     <p class="section-kicker">The shift</p>
     <h2 id="how-title">Instead of asking the model to be honest, limit what it can say.</h2>
     <p>Bast sits between your knowledge and the model's output. Before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply.</p>
-    <aside class="frame-link">
-      <p>Want the framework — definitions, structure, and the tests that separate real verification from look-alikes? Read <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a>.</p>
-    </aside>
   </section>
 
   <section class="section interaction" aria-labelledby="work-title">
@@ -267,20 +265,44 @@
       </article>
 
       <article class="offering-card offering-card-platform">
-        <div class="offering-card-topline">
-          <p class="card-kicker">Bast Platform</p>
-          <span>Build with Bast</span>
-        </div>
-        <h3>Build governed AI on infrastructure you control.</h3>
-        <p>Deploy Bast hosted, in your private cloud, or on premises. Ground every answer in approved knowledge and keep the route back to its source.</p>
-        <ul class="offering-layers" aria-label="Bast Platform layers">
-          <li>Infrastructure</li>
-          <li>Data</li>
-          <li>Orchestration</li>
-          <li>Application</li>
-        </ul>
-        <div class="offering-actions">
-          <a class="offering-link" href="/platform/">Explore Bast Platform <span aria-hidden="true">&rarr;</span></a>
+        <figure class="platform-system-figure offering-platform-figure" aria-label="Bast Platform control path from approved sources to an answer or refusal">
+          <div class="platform-system-map">
+            <div class="platform-system-node platform-system-source">
+              <span>01 · Your knowledge</span><strong>Approved sources</strong><small>Ontology · policy · context</small>
+            </div>
+            <div class="platform-system-connector" aria-hidden="true"><span></span></div>
+            <div class="platform-control-layer">
+              <p>Bast control layer</p>
+              <ol>
+                <li><span>Scope</span><small>Is this question allowed?</small></li>
+                <li><span>Select</span><small>Which sources matter?</small></li>
+                <li><span>Generate</span><small>Use only relevant context.</small></li>
+                <li><span>Check</span><small>Can the answer point back?</small></li>
+              </ol>
+            </div>
+            <div class="platform-system-connector" aria-hidden="true"><span></span></div>
+            <div class="platform-output-grid">
+              <div class="platform-system-node platform-system-answer"><span>Grounded</span><strong>Answer</strong><small>Source route included</small></div>
+              <div class="platform-system-node platform-system-refusal"><span>Unsupported</span><strong>Refusal</strong><small>No confident guess</small></div>
+            </div>
+          </div>
+        </figure>
+        <div class="offering-platform-copy">
+          <div class="offering-card-topline">
+            <p class="card-kicker">Bast Platform</p>
+            <span>Build with Bast</span>
+          </div>
+          <h3>Build governed AI on infrastructure you control.</h3>
+          <p>Deploy Bast hosted, in your private cloud, or on premises. Ground every answer in approved knowledge and keep the route back to its source.</p>
+          <ul class="offering-layers" aria-label="Bast Platform layers">
+            <li>Infrastructure</li>
+            <li>Data</li>
+            <li>Orchestration</li>
+            <li>Application</li>
+          </ul>
+          <div class="offering-actions">
+            <a class="offering-link" href="/platform/">Explore Bast Platform <span aria-hidden="true">&rarr;</span></a>
+          </div>
         </div>
       </article>
     </div>
