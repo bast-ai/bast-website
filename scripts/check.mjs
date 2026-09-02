@@ -325,7 +325,10 @@ assertIncludes(platformHtml, 'href="/assets/styles.css?v=', "versioned Platform 
 assertIncludes(platformHtml, 'href="/assets/platform.css?v=', "versioned Platform stylesheet");
 assertIncludes(platformHtml, 'src="/assets/site.js?v=', "versioned Platform behavior");
 assertExcludes(platformHtml, 'href="/assets/platform.css"', "unversioned Platform stylesheet");
-assertIncludes(platformHtml, "Build governed AI on infrastructure you control.", "Platform positioning");
+assertIncludes(platformHtml, '<span class="platform-title-line">Build governed</span>', "Platform hero title line");
+assertIncludes(platformHtml, '<span class="platform-title-line">AI on infrastructure</span>', "Platform hero infrastructure line");
+assertIncludes(platformHtml, '<span class="platform-title-line">Four layers.</span>', "Platform layers title line");
+assertIncludes(platformHtml, '<span class="platform-title-line">Your operating boundary.</span>', "Platform ownership title line");
 assertIncludes(platformHtml, "Bast control layer", "Platform system map");
 assertIncludes(platformHtml, "Approved sources", "Platform approved-source boundary");
 assertIncludes(platformHtml, "Grounded", "Platform grounded-answer outcome");

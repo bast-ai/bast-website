@@ -44,3 +44,9 @@ responses, routes, scores, timestamps, and flags is a core product capability;
 the analytics view shows what that history makes possible. The dedicated
 Platform page retains the control-path diagram. A primary-blue “Watch the
 demos” action links directly to the homepage demo section.
+
+Platform display headings use deliberate phrase-level line breaks so the page
+reads in concise, controlled statements: “Build governed / AI on infrastructure
+/ you control,” “Four layers / One inspectable route,” and “Your data / Your
+decisions / Your operating boundary.” Their tracking now matches the shared
+Estedad display treatment used by BastCare.
