@@ -223,6 +223,14 @@ const requiredHomepageSnippets = [
     needle: "share-preview-build-51.jpg",
   },
   {
+    label: "homepage Bast Platform control-path diagram",
+    needle: 'class="platform-system-figure offering-platform-figure"',
+  },
+  {
+    label: "homepage Bast Platform copy panel",
+    needle: 'class="offering-platform-copy"',
+  },
+  {
     label: "dedicated Bast Platform homepage link",
     needle: 'href="/platform/"',
   },
@@ -255,6 +263,10 @@ const replacedHomepageSnippets = [
   {
     label: "old sharing preview homepage screen",
     needle: "/assets/bastcare/screens/share-preview.webp",
+  },
+  {
+    label: "homepage technical-frame promotion",
+    needle: 'href="/frames/claim-level-source-grounding/"',
   },
 ];
 
@@ -291,6 +303,7 @@ assertIncludes(advisoryIndexHtml, "It knows your information. It shows its sourc
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(indexHtml, 'href="assets/styles.css?v=', "versioned homepage stylesheet");
+assertIncludes(indexHtml, 'href="assets/platform.css?v=', "versioned homepage Platform diagram stylesheet");
 assertIncludes(indexHtml, 'src="assets/site.js?v=', "versioned homepage behavior");
 assertIncludes(indexHtml, 'src="assets/analytics-consent.js?v=', "versioned homepage analytics behavior");
 assertExcludes(indexHtml, 'href="assets/styles.css"', "unversioned homepage stylesheet");
@@ -442,7 +455,6 @@ const frameHtml = await readFile(
   path.join(distDir, "frames/claim-level-source-grounding/index.html"), "utf8");
 assertIncludes(indexHtml, '"legalName": "Bast, Inc."', "Organization legalName");
 assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
-assertIncludes(indexHtml, 'href="/frames/claim-level-source-grounding/"', "homepage frame crosslink");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
 assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");

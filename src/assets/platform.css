@@ -31,17 +31,18 @@
   grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
   gap: clamp(2.5rem, 7vw, 6rem);
   align-items: center;
-  min-height: min(760px, calc(100vh - 120px));
+  min-height: min(680px, calc(100vh - 120px));
 }
 
 .platform-hero-copy h1 {
-  max-width: 12ch;
+  max-width: 14ch;
   margin: 0.8rem 0 1.4rem;
   color: var(--platform-navy);
-  font-size: clamp(3rem, 6.6vw, 6.2rem);
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
   font-weight: var(--fw-thin);
-  line-height: 0.94;
-  letter-spacing: -0.055em;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
 }
 
 .platform-hero-copy .lede {
@@ -205,13 +206,14 @@
 
 .platform-section-heading h2,
 .platform-cta h2 {
-  max-width: 14ch;
+  max-width: 18ch;
   margin: 0.7rem 0 1rem;
   color: var(--platform-navy);
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
   font-weight: var(--fw-thin);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
 }
 
 .platform-section-heading > p:last-child,
@@ -253,7 +255,7 @@
 .platform-outcome-grid h3 {
   margin: 3.2rem 0 0.8rem;
   color: var(--platform-navy);
-  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-size: var(--fs-title);
   font-weight: var(--fw-medium);
 }
 
@@ -379,10 +381,6 @@
 
   .platform-page {
     width: min(100% - 28px, 1240px);
-  }
-
-  .platform-hero-copy h1 {
-    font-size: clamp(2.65rem, 11.8vw, 3.4rem);
   }
 
   .platform-layer-grid,
