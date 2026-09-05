@@ -58,6 +58,7 @@ const requiredFiles = [
   "team/index.html",
   "frames/index.html",
   "frames/claim-level-source-grounding/index.html",
+  "frames/zero-tolerance-ai-output-architecture/index.html",
 ];
 
 const forbidden = [
@@ -279,6 +280,10 @@ const replacedHomepageSnippets = [
     needle: 'href="/frames/claim-level-source-grounding/"',
   },
   {
+    label: "homepage zero-tolerance frame promotion",
+    needle: 'href="/frames/zero-tolerance-ai-output-architecture/"',
+  },
+  {
     label: "old homepage Platform control-path diagram",
     needle: 'class="platform-system-figure offering-platform-figure"',
   },
@@ -454,7 +459,13 @@ for (const internalPhrase of [
 }
 assertIncludes(sitemapXml, "/platform/</loc>", "Bast Platform sitemap route");
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
-for (const route of ["faq/", "team/", "frames/", "frames/claim-level-source-grounding/"]) {
+for (const route of [
+  "faq/",
+  "team/",
+  "frames/",
+  "frames/claim-level-source-grounding/",
+  "frames/zero-tolerance-ai-output-architecture/",
+]) {
   assertIncludes(sitemapXml, `/${route}</loc>`, `GEO ${route} sitemap route`);
 }
 for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
@@ -470,6 +481,9 @@ const faqHtml = await readFile(path.join(distDir, "faq/index.html"), "utf8");
 const teamHtml = await readFile(path.join(distDir, "team/index.html"), "utf8");
 const frameHtml = await readFile(
   path.join(distDir, "frames/claim-level-source-grounding/index.html"), "utf8");
+const frame2Html = await readFile(
+  path.join(distDir, "frames/zero-tolerance-ai-output-architecture/index.html"), "utf8");
+const framesIndexHtml = await readFile(path.join(distDir, "frames/index.html"), "utf8");
 assertIncludes(indexHtml, '"legalName": "Bast, Inc."', "Organization legalName");
 assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
@@ -485,6 +499,31 @@ assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
 assertIncludes(bastcareHome, '"operatingSystem": "iOS"', "BastCare SoftwareApplication schema");
 assertIncludes(bastcareArchitecture, '"BreadcrumbList"', "architecture BreadcrumbList schema");
+
+// GEO layer, second drop (2026-09-05): frame 02 + verified identity additions.
+const frame2Path = 'href="/frames/zero-tolerance-ai-output-architecture/"';
+assertIncludes(frame2Html, '"DefinedTerm"', "frame 02 DefinedTerm structured data");
+assertIncludes(frame2Html, '"FAQPage"', "frame 02 FAQPage structured data");
+assertIncludes(frame2Html, "Zero-Tolerance AI Output Architecture", "frame 02 title copy");
+assertIncludes(frame2Html, "Tier 3 — Output Interception", "frame 02 tier taxonomy");
+assertIncludes(frame2Html, 'href="/frames/claim-level-source-grounding/"', "frame 02 companion link");
+assertIncludes(frameHtml, frame2Path, "frame 01 companion link");
+assertIncludes(framesIndexHtml, frame2Path, "frames index card for frame 02");
+assertIncludes(framesIndexHtml, '"name": "Zero-Tolerance AI Output Architecture"', "frames index DefinedTermSet entry");
+assertIncludes(principlesHtml, frame2Path, "principles frame 02 crosslink");
+assertIncludes(faqHtml, frame2Path, "FAQ frame 02 crosslink");
+assertIncludes(faqHtml, "bast.ai/frames/zero-tolerance-ai-output-architecture/", "FAQ schema frame 02 reference");
+assertIncludes(llmsTxt, "/frames/zero-tolerance-ai-output-architecture/", "llms.txt frame 02 entry");
+assertIncludes(llmsTxt, "https://github.com/bast-ai", "llms.txt GitHub profile");
+assertIncludes(indexHtml, '"https://github.com/bast-ai"', "Organization GitHub sameAs");
+assertIncludes(indexHtml, '"name": "Bast Platform"', "Organization Bast Platform offer");
+// Gate B1 (2026-09-05): no named customer deployment claim until Beth approves the wording.
+assertExcludes(frame2Html, "Lucid Therapeutics", "unapproved customer claim on frame 02");
+// Policy (decision 2026-08-28): frames define categories without naming other vendors.
+for (const vendor of ["OpenAI", "Anthropic", "Galileo", "Arthur AI", "Guardrails AI", "Fiddler", "Arize", "Patronus", "LangChain"]) {
+  assertExcludes(frameHtml, vendor, `vendor name on frame 01: ${vendor}`);
+  assertExcludes(frame2Html, vendor, `vendor name on frame 02: ${vendor}`);
+}
 
 const requiredPrinciplesSnippets = [
   "Nature runs on sunlight.",

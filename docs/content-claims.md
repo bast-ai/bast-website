@@ -27,6 +27,10 @@ publish.
 | BastCare's displayed App Store rating average, rating count, and written reviews reflect Apple's latest verified U.S. public feeds. | Approved | Beth | Daily deployment refresh validates App Store ID `6789669565` and bundle ID `ai.bast.careloop`; see `docs/decisions/2026-09-01-bastcare-public-review-refresh.md`. |
 | The current public HTTPS development deployment is operated as demo/staging; more than 25 users triggers a production-hardening review and is not an enrollment cap. | Approved decision | Beth | `bast-careloop/docs/decisions/2026-08-01-apple-store-bound-v2.md`. |
 | BastCare 1.0 is free; paid BastCare Plus is future work. | Approved decision | Beth | Current public copy does not describe purchase, restore, or subscription management as a released feature. |
+| Lucid Therapeutics reached production deployment with Bast (admin setup, governed knowledge, CAT building, production analytics). | Draft | Beth | Appears as a "client-confirmed" fact in Noviant's 2026-09-05 account record; not published on bast.ai (the homepage has a "Lucid Therapeutics Demo" video only). Gate B1 in `docs/proposals/2026-09-05-noviant-geo-drop-review.md`; `scripts/check.mjs` blocks the name on the zero-tolerance frame until approved. |
+| Peter Rudden is a Co-Founder and Board Member of Bast. | Draft | Beth | Surfaced by Noviant NEXUS from LinkedIn (linkedin.com/in/peterrudden) on 2026-09-05; not on the site or Beth's CV. Gate B2: confirm role and title before a /team/ entry. |
+| Bast AI is not affiliated with Bastio. | Draft | Beth | Noviant SHIELD (2026-09-05) reports AI engines conflating Bast.ai with Bastio as well as Vast.ai. Gate B3: one clause on /faq/ and llms.txt once confirmed. |
+| github.com/bast-ai is Bast's official GitHub organization. | Verified | Phil | Checked 2026-09-05: org "Bast AI", website bast.ai, contact thanh@bast.ai, public repos incl. this site. Added to Organization `sameAs` and llms.txt. |
 
 ## Analytics Claim
 
