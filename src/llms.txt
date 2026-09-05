@@ -13,6 +13,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
 - [Bast Platform](__SITE_URL__/platform/): Governed AI infrastructure, deployment options, system layers, and the controlled route to an answer, trace, or refusal.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
+- [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
 - [Team](__SITE_URL__/team/): Beth Rudden (CEO) and Thanh Lam (CTO) — the people behind Bast.
@@ -48,6 +49,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - Text: +1 303-717-6099
 - [LinkedIn](https://www.linkedin.com/company/bast-ai/)
 - [Crunchbase](https://www.crunchbase.com/organization/bast-ai)
+- [GitHub](https://github.com/bast-ai)
 - [YouTube](https://www.youtube.com/@Bast_CAT22)
 - [Substack](https://bastai.substack.com/)
 - [Official site](__SITE_URL__/): canonical URL for Bast AI.

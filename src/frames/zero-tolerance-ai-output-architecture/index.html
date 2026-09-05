@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero-Tolerance AI Output Architecture - Bast AI</title>
+<meta name="description" content="Zero-Tolerance AI Output Architecture is a design principle holding that AI systems deployed in clinical, legal, or regulatory environments must structurally prevent unsupported answers from reaching decision-makers — not merely reduce their probability.">
+<meta name="robots" content="__ROBOTS_META__">
+<link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
+<link rel="canonical" href="__SITE_URL__/frames/zero-tolerance-ai-output-architecture/">
+<meta property="og:title" content="Zero-Tolerance AI Output Architecture - Bast AI">
+<meta property="og:description" content="In clinical, legal, or regulatory settings, unsupported answers must be structurally blocked before delivery — not made less likely. Three architectural tiers, one binary test.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="__SITE_URL__/frames/zero-tolerance-ai-output-architecture/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/#article",
+      "headline": "Zero-Tolerance AI Output Architecture",
+      "description": "Zero-Tolerance AI Output Architecture is a design principle holding that AI systems deployed in clinical, legal, or regulatory environments must structurally prevent unsupported answers from reaching decision-makers — not merely reduce their probability.",
+      "url": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/",
+      "datePublished": "2026-09-05",
+      "dateModified": "2026-09-05",
+      "author": { "@id": "__SITE_URL__/#organization" },
+      "publisher": { "@id": "__SITE_URL__/#organization" },
+      "about": { "@id": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/#defined-term" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "__SITE_URL__/#organization",
+      "name": "Bast AI",
+      "legalName": "Bast, Inc.",
+      "url": "__SITE_URL__/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/#defined-term",
+      "name": "Zero-Tolerance AI Output Architecture",
+      "description": "A design principle holding that AI systems deployed in clinical, legal, or regulatory environments must structurally prevent unsupported answers from reaching decision-makers — not merely reduce their probability. It distinguishes three architectural tiers: prompt-layer controls (Tier 1), retrieval-augmented generation without verification (Tier 2), and output interception (Tier 3). Only Tier 3 satisfies a zero-tolerance risk threshold, because it converts hallucination prevention from a probabilistic property of the model into a structural property of the system. A platform that does not intercept and refuse is not operating at zero-tolerance, regardless of its benchmark scores.",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "@id": "__SITE_URL__/frames/#termset",
+        "name": "Bast AI Reliability Frames",
+        "url": "__SITE_URL__/frames/"
+      },
+      "url": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/#faq",
+      "url": "__SITE_URL__/frames/zero-tolerance-ai-output-architecture/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between AI guardrails and AI output interception?",
+          "acceptedAnswer": { "@type": "Answer", "text": "AI guardrails shape model behavior probabilistically, while output interception structurally blocks unsupported answers before they reach users. Guardrails — including system prompts, instruction tuning, and fine-tuning — tell the model what to do, but the model can ignore or misinterpret those instructions. Output interception places a verification layer between the model and the user: if a candidate answer cannot be traced to an approved source, it is refused, not softened. The practical takeaway is that guardrails reduce hallucination risk; interception eliminates the structural possibility of an unsupported answer being delivered." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which AI architecture actually prevents hallucinations versus just reducing them?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Only Tier 3 — Output Interception — converts hallucination prevention from a probabilistic property of the model into a structural property of the system. Tier 1 prompt-layer controls and Tier 2 retrieval-augmented generation without verification both reduce hallucination probability but cannot guarantee that an unsupported answer will never ship. The architectural distinction is binary: in a Tier 3 system, the default state is refusal, not passage. If a platform cannot demonstrate that unsupported answers are structurally blocked before delivery, it is not operating at zero-tolerance, regardless of its benchmark scores." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does zero-tolerance AI reliability mean in healthcare?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Zero-tolerance AI reliability means that unsupported answers are structurally prevented from reaching clinicians — not merely made less likely. In clinical deployment contexts such as decision support, care protocol lookup, or patient information retrieval, a hallucinated drug interaction or dosage can cause a patient safety event. Zero-tolerance architecture requires that every candidate answer be verified against approved sources before delivery, and that answers failing verification be refused outright. The key takeaway for health system buyers is that benchmark accuracy scores are insufficient; the question to ask vendors is whether refusal is the structural default when no approved source supports a reply." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I evaluate AI hallucination prevention vendors for a hospital?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Apply a binary pass/fail criterion across three questions: Does the platform structurally block unsupported answers before delivery, or does it soften them with hedging language? Is hallucination prevention a property of the system's verification layer, or does it depend on model compliance with instructions? Is source traceability enforced at output — meaning every delivered answer carries a traceable link to an approved source — or is it only assumed at input? A vendor that cannot answer yes to all three is operating at Tier 1 or Tier 2, which does not satisfy a zero-tolerance risk threshold for clinical environments." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I choose between RAG and output interception for a regulated industry?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Retrieval-augmented generation and output interception solve different problems and are not interchangeable for regulated environments. RAG improves the probability that the model has access to correct information; it does not verify that the generated answer faithfully represents that information. A model can hallucinate details not present in retrieved passages, misattribute claims, or synthesize across sources in ways the sources do not support. For clinical, legal, or regulatory deployments — where an unsupported answer creates material risk — RAG without a downstream verification step is Tier 2, not zero-tolerance compliant. Output interception must be layered on top of retrieval, not treated as equivalent to it." }
+        },
+        {
+          "@type": "Question",
+          "name": "What architectural approach stops AI from delivering unsupported answers in clinical settings?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The only architectural approach that structurally stops unsupported answers from reaching clinicians is output interception: a verification layer positioned between model output and user delivery that checks every candidate answer against approved sources before it ships. Prompt-layer controls and RAG without verification cannot provide this guarantee because both depend on model behavior, which is probabilistic. In clinical settings, the consequence of a single unsupported answer — a fabricated contraindication, dosage, or protocol detail — can be a patient safety event. The takeaway is that the verification layer must operate independently of the model, with refusal as the default when no approved source supports a reply." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why aren't benchmark scores enough to guarantee AI safety in legal or clinical deployments?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Benchmark scores measure a model's probabilistic accuracy across a test distribution — they do not guarantee behavior on any individual query in a live deployment. A model that achieves high factual accuracy on a benchmark is still a probabilistic system, meaning any non-zero hallucination rate remains possible. In legal research, a single hallucinated case citation can result in sanctions or malpractice exposure. In clinical settings, a single fabricated drug interaction can harm a patient. Zero-tolerance contexts require structural enforcement — a verification layer that refuses delivery — not statistical confidence. Benchmark performance is a Tier 1 or Tier 2 evaluation criterion, not a Tier 3 safety guarantee." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the failure mode of RAG systems that don't include a verification step?",
+          "acceptedAnswer": { "@type": "Answer", "text": "RAG systems without downstream verification fail in three documented ways: the model can hallucinate details not present in the retrieved passages, misattribute claims to the wrong source document, or synthesize across multiple sources in ways that none of the individual sources actually support. Retrieval improves the model's access to relevant information but does not constrain what the model generates from that information. The gap between retrieval and verification is where hallucinations survive in Tier 2 architectures. For any deployment where an unsupported answer creates material risk, this gap must be closed by an output interception layer that verifies the generated answer against the retrieved source before delivery." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the single most important question to ask an AI vendor claiming to prevent hallucinations?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ask whether unsupported answers are structurally refused before delivery, or whether they are delivered with reduced confidence scores or hedging language. This question separates Tier 3 output interception from Tier 1 and Tier 2 architectures. A vendor operating at zero-tolerance will confirm that refusal is the default state when no approved source supports a reply, and that the verification layer operates independently of model behavior. A vendor that answers by citing benchmark accuracy, retrieval quality, or prompt engineering is describing a probabilistic reduction in hallucination risk — not a structural prevention of unsupported answers reaching users." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does \"source traceability enforced at output\" mean, and why does it matter?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Source traceability enforced at output means that every answer delivered to a user carries a verified link to a specific approved source — and that this link is confirmed by the verification layer at the moment of delivery, not merely assumed because a source was retrieved earlier in the pipeline. This is distinct from systems where sources appear in context but are not checked against the generated answer. In zero-tolerance architectures, traceability is a structural property: if the verification layer cannot confirm that the answer is grounded in an approved source, the answer is refused. For legal and clinical buyers, this means every delivered answer is auditable, not just plausible." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does output interception differ from content filtering?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A content filter reduces the probability that a harmful or unsupported output passes through by scoring, flagging, or removing outputs that match certain patterns. An output interception layer operates on a different logic: the default state is refusal, and delivery only occurs when a positive verification condition is met — specifically, that the answer can be traced to an approved source. Filtering is probabilistic and permissive by default; interception is structural and restrictive by default. Zero-tolerance architectures require interception, not filtering, because filtering still allows unsupported answers to pass when they do not trigger the filter's detection criteria." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the role of source governance in a zero-tolerance AI architecture?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Source governance defines the approved source corpus that the output interception layer verifies against, and it is the upstream dependency that determines how reliable interception actually is. An interception layer can only refuse answers that lack support in the approved source set — if that source set is incorrectly scoped, outdated, or incomplete, the interception layer will verify answers against the wrong ground truth. Zero-tolerance architecture therefore has two requirements: a structurally enforced verification layer, and a correctly governed source corpus upstream of it. Buyers evaluating vendors should ask not only how interception works, but how the approved source set is defined, maintained, and audited." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/assets/styles.css">
+<script>
+  window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
+  window.BAST_SITE_ENV = "__SITE_ENV__";
+</script>
+<script src="/assets/analytics-consent.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="/assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/#how">How it works</a>
+    <a href="/#offerings">Offerings</a>
+    <a href="/#demos">Demos</a>
+    <a href="/bastcare/">BastCare</a>
+    <a href="/principles.html">Principles</a>
+    <a href="/investors.html">Investors</a>
+    <a class="nav-cta" href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="frame-article">
+  <article>
+    <header class="frame-head">
+      <p class="eyebrow"><a href="/frames/">AI reliability frames</a></p>
+      <h1>Zero-Tolerance AI Output Architecture</h1>
+      <p class="frame-meta">Bast AI &middot; v1.0 &middot; Published 2026-09-05 &middot; <span class="frame-id">ZERO-TOLERANCE-AI-OUTPUT-ARCHITECTURE-20260905</span></p>
+    </header>
+
+    <section class="section-plain" id="definition" aria-labelledby="definition-title">
+      <h2 id="definition-title">Definition</h2>
+      <blockquote class="frame-definition">Zero-Tolerance AI Output Architecture is a design principle holding that AI systems deployed in clinical, legal, or regulatory environments must structurally prevent unsupported answers from reaching decision-makers — not merely reduce their probability. It distinguishes three architectural tiers: prompt-layer controls (which shape model behavior but cannot guarantee output), retrieval-augmented generation without verification (which surfaces sources but does not confirm that the answer is grounded in them), and output interception (which places a verification layer between the model and the user, refusing to deliver any response that cannot be traced to an approved source). Only the third tier satisfies a zero-tolerance risk threshold, because it converts hallucination prevention from a probabilistic property of the model into a structural property of the system. The frame is the basis for evaluating AI guardrail vendors: a platform that does not intercept and refuse is not operating at zero-tolerance, regardless of its benchmark scores.</blockquote>
+    </section>
+
+    <section id="structure-table" aria-labelledby="structure-title">
+      <h2 id="structure-title">Architectural Tier Comparison</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Mechanism</th>
+              <th>How It Works</th>
+              <th>Who Relies on It</th>
+              <th>Zero-Tolerance Compliant</th>
+              <th>Failure Mode It Cannot Prevent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tier 1 — Prompt-Layer Controls</td>
+              <td>Behavioral shaping via system prompts, instruction tuning, or fine-tuning</td>
+              <td>Instructions tell the model to stay on topic, cite sources, or decline uncertain queries; model compliance is probabilistic</td>
+              <td>Teams deploying general-purpose LLMs with custom system prompts; early-stage AI pilots</td>
+              <td>No</td>
+              <td>Model can ignore, misinterpret, or override instructions; no structural barrier prevents a confident unsupported answer from shipping</td>
+            </tr>
+            <tr>
+              <td>Tier 2 — Retrieval-Augmented Generation Without Verification</td>
+              <td>Document retrieval injected into context before generation</td>
+              <td>Relevant passages are retrieved and provided to the model; model generates an answer that may or may not faithfully reflect those passages</td>
+              <td>Enterprise search tools, knowledge-base chatbots, document Q&amp;A systems without a downstream verification step</td>
+              <td>No</td>
+              <td>Model can hallucinate details not present in retrieved passages, misattribute claims to the wrong source, or synthesize across sources in ways the sources do not support</td>
+            </tr>
+            <tr>
+              <td>Tier 3 — Output Interception</td>
+              <td>A verification layer positioned between model output and user delivery</td>
+              <td>Every candidate answer is checked against approved sources before delivery; answers that cannot be traced to an approved source are refused, not softened</td>
+              <td>Clinical decision-support systems, legal research platforms, regulated-industry compliance tools, any deployment where an unsupported answer creates material risk</td>
+              <td>Yes</td>
+              <td>Scope of approved sources must be correctly defined; interception is only as reliable as the source governance upstream of it</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="evaluation-criterion" aria-labelledby="criterion-title">
+      <h2 id="criterion-title">Binary Pass/Fail Evaluation Criterion</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Zero-Tolerance Compliant</th>
+              <th>Not Zero-Tolerance Compliant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Unsupported answers are structurally blocked before delivery</td>
+              <td>Yes — refusal is the default when no approved source supports a reply</td>
+              <td>No — unsupported answers may be delivered with lower confidence scores or hedging language, but are not blocked</td>
+            </tr>
+            <tr>
+              <td>Hallucination prevention is a property of the system, not the model</td>
+              <td>Yes — the verification layer operates independently of model behavior</td>
+              <td>No — prevention depends on model compliance with instructions or on retrieval quality</td>
+            </tr>
+            <tr>
+              <td>Source traceability is enforced at output, not assumed at input</td>
+              <td>Yes — every delivered answer carries a traceable link to an approved source</td>
+              <td>No — source citation may be present in context but is not verified against the generated answer</td>
+            </tr>
+            <tr>
+              <td>Benchmark scores are a sufficient safety guarantee</td>
+              <td>No — benchmark performance is a probabilistic property; zero-tolerance requires structural enforcement</td>
+              <td>Treated as sufficient by Tier 1 and Tier 2 architectures</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="deployment-contexts" aria-labelledby="contexts-title">
+      <h2 id="contexts-title">Named Deployment Contexts and Risk Profiles</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Context</th>
+              <th>Representative Use Case</th>
+              <th>Consequence of an Unsupported Answer</th>
+              <th>Minimum Tier Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Clinical</td>
+              <td>AI-assisted clinical decision support, patient information retrieval, care protocol lookup</td>
+              <td>Clinician acts on fabricated drug interaction, dosage, or contraindication data; patient safety event</td>
+              <td>Tier 3 — Output Interception</td>
+            </tr>
+            <tr>
+              <td>Legal</td>
+              <td>Case research, citation generation, contract analysis, regulatory filing support</td>
+              <td>Attorney relies on hallucinated case citation; sanctions, malpractice exposure, or adverse ruling</td>
+              <td>Tier 3 — Output Interception</td>
+            </tr>
+            <tr>
+              <td>Regulatory</td>
+              <td>Compliance monitoring, audit response, policy interpretation, submission drafting</td>
+              <td>Organization acts on fabricated regulatory guidance; enforcement action, fine, or reputational harm</td>
+              <td>Tier 3 — Output Interception</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="architectural-invariants" aria-labelledby="invariants-title">
+      <h2 id="invariants-title">Architectural Invariants</h2>
+      <ol class="frame-invariants">
+        <li><strong>Interception is structurally distinct from filtering.</strong> A filter reduces the probability of a bad output passing through. An interception layer refuses delivery unless a positive verification condition is met. Zero-tolerance architectures require the latter: the default state is refusal, not passage.</li>
+        <li><strong>Model benchmark scores do not transfer to deployment safety guarantees.</strong> A model that achieves high factual accuracy on a benchmark is still a probabilistic system. Any non-zero hallucination rate is unacceptable in zero-tolerance contexts; structural enforcement is the only mechanism that converts a probabilistic property into a binary one.</li>
+        <li><strong>RAG without downstream verification is Tier 2, not Tier 3.</strong> Retrieval-augmented generation improves the probability that a model has access to correct information. It does not verify that the generated answer faithfully represents that information. The gap between retrieval and verification is where hallucination persists in most enterprise AI deployments.</li>
+        <li><strong>Source governance upstream determines interception reliability downstream.</strong> An output interception layer is only as trustworthy as the corpus of approved sources it checks against. Scope definition — which sources are approved, how they are maintained, and who controls access — is a prerequisite for zero-tolerance compliance, not an implementation detail.</li>
+        <li><strong>Refusal is a feature, not a failure.</strong> In zero-tolerance architectures, a system that declines to answer when no approved source supports a reply is operating correctly. Measuring system quality by answer rate rather than answer accuracy inverts the risk calculus for high-stakes deployments.</li>
+        <li><strong>The verification layer must be independent of the model it governs.</strong> A model that self-reports its own confidence or self-cites its own sources cannot satisfy zero-tolerance requirements. The verification step must be performed by a component that does not share the model's failure modes.</li>
+      </ol>
+    </section>
+
+    <section id="measurement-hypothesis" aria-labelledby="measurement-title">
+      <h2 id="measurement-title">Measurement Hypothesis</h2>
+      <p>Zero-Tolerance AI Output Architecture is a falsifiable design claim. The following metrics operationalize it:</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>What It Measures</th>
+              <th>Test Method</th>
+              <th>Zero-Tolerance Threshold</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Unsupported Answer Delivery Rate</td>
+              <td>Fraction of delivered answers that cannot be traced to an approved source</td>
+              <td>Inject a controlled set of queries whose correct answers are absent from the approved source corpus; measure how many receive a delivered (non-refused) response</td>
+              <td>Zero — any non-refused unsupported answer is a system failure</td>
+            </tr>
+            <tr>
+              <td>Source Attribution Accuracy</td>
+              <td>Fraction of delivered answers whose cited source actually supports the specific claim made</td>
+              <td>Human review of a random sample of delivered answers against cited sources; flag any answer where the citation does not directly support the claim</td>
+              <td>All delivered answers must be traceable; partial or approximate attribution is a failure</td>
+            </tr>
+            <tr>
+              <td>Refusal Precision</td>
+              <td>Fraction of refused answers that were correctly refused (i.e., no approved source existed)</td>
+              <td>Cross-reference refused queries against the approved source corpus; identify false refusals where a valid source existed but was not retrieved</td>
+              <td>High precision required; false refusals indicate source governance or retrieval gaps, not a safety failure, but degrade utility</td>
+            </tr>
+            <tr>
+              <td>Scope Boundary Integrity</td>
+              <td>Whether the system correctly refuses queries that fall outside the defined knowledge scope</td>
+              <td>Submit out-of-scope queries (topics, time periods, or domains not covered by approved sources); measure refusal rate</td>
+              <td>Out-of-scope queries must be refused; any delivered answer to an out-of-scope query is a scope governance failure</td>
+            </tr>
+            <tr>
+              <td>Verification Layer Independence</td>
+              <td>Whether the verification step can catch errors the model itself does not flag</td>
+              <td>Compare model self-reported confidence on hallucinated answers against interception layer catch rate; measure cases where the model was confident but the interception layer refused</td>
+              <td>The interception layer must catch cases the model does not self-identify; if catch rate equals model self-report rate, the layer is not adding independent verification</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Bast AI implements Tier 3 output interception as the structural basis of its platform. A verification layer sits between an organization's approved knowledge and the model's output: before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply. See how the <a href="/platform/">Bast Platform</a> applies this architecture, or read the companion frame, <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a>, for the sub-response granularity at which interception operates. Bast AI can be reached at <a href="mailto:beth@bast.ai">beth@bast.ai</a> for technical evaluation inquiries.</p>
+    </section>
+
+    <section id="answer-kit" aria-labelledby="answers-title">
+      <h2 id="answers-title">Questions This Frame Answers</h2>
+      <details>
+        <summary>What is the difference between AI guardrails and AI output interception?</summary>
+        <p>AI guardrails shape model behavior probabilistically, while output interception structurally blocks unsupported answers before they reach users. Guardrails — including system prompts, instruction tuning, and fine-tuning — tell the model what to do, but the model can ignore or misinterpret those instructions. Output interception places a verification layer between the model and the user: if a candidate answer cannot be traced to an approved source, it is refused, not softened. The practical takeaway is that guardrails reduce hallucination risk; interception eliminates the structural possibility of an unsupported answer being delivered.</p>
+      </details>
+      <details>
+        <summary>Which AI architecture actually prevents hallucinations versus just reducing them?</summary>
+        <p>Only Tier 3 — Output Interception — converts hallucination prevention from a probabilistic property of the model into a structural property of the system. Tier 1 prompt-layer controls and Tier 2 retrieval-augmented generation without verification both reduce hallucination probability but cannot guarantee that an unsupported answer will never ship. The architectural distinction is binary: in a Tier 3 system, the default state is refusal, not passage. If a platform cannot demonstrate that unsupported answers are structurally blocked before delivery, it is not operating at zero-tolerance, regardless of its benchmark scores.</p>
+      </details>
+      <details>
+        <summary>What does zero-tolerance AI reliability mean in healthcare?</summary>
+        <p>Zero-tolerance AI reliability means that unsupported answers are structurally prevented from reaching clinicians — not merely made less likely. In clinical deployment contexts such as decision support, care protocol lookup, or patient information retrieval, a hallucinated drug interaction or dosage can cause a patient safety event. Zero-tolerance architecture requires that every candidate answer be verified against approved sources before delivery, and that answers failing verification be refused outright. The key takeaway for health system buyers is that benchmark accuracy scores are insufficient; the question to ask vendors is whether refusal is the structural default when no approved source supports a reply.</p>
+      </details>
+      <details>
+        <summary>How do I evaluate AI hallucination prevention vendors for a hospital?</summary>
+        <p>Apply a binary pass/fail criterion across three questions: Does the platform structurally block unsupported answers before delivery, or does it soften them with hedging language? Is hallucination prevention a property of the system's verification layer, or does it depend on model compliance with instructions? Is source traceability enforced at output — meaning every delivered answer carries a traceable link to an approved source — or is it only assumed at input? A vendor that cannot answer yes to all three is operating at Tier 1 or Tier 2, which does not satisfy a zero-tolerance risk threshold for clinical environments.</p>
+      </details>
+      <details>
+        <summary>How do I choose between RAG and output interception for a regulated industry?</summary>
+        <p>Retrieval-augmented generation and output interception solve different problems and are not interchangeable for regulated environments. RAG improves the probability that the model has access to correct information; it does not verify that the generated answer faithfully represents that information. A model can hallucinate details not present in retrieved passages, misattribute claims, or synthesize across sources in ways the sources do not support. For clinical, legal, or regulatory deployments — where an unsupported answer creates material risk — RAG without a downstream verification step is Tier 2, not zero-tolerance compliant. Output interception must be layered on top of retrieval, not treated as equivalent to it.</p>
+      </details>
+      <details>
+        <summary>What architectural approach stops AI from delivering unsupported answers in clinical settings?</summary>
+        <p>The only architectural approach that structurally stops unsupported answers from reaching clinicians is output interception: a verification layer positioned between model output and user delivery that checks every candidate answer against approved sources before it ships. Prompt-layer controls and RAG without verification cannot provide this guarantee because both depend on model behavior, which is probabilistic. In clinical settings, the consequence of a single unsupported answer — a fabricated contraindication, dosage, or protocol detail — can be a patient safety event. The takeaway is that the verification layer must operate independently of the model, with refusal as the default when no approved source supports a reply.</p>
+      </details>
+      <details>
+        <summary>Why aren't benchmark scores enough to guarantee AI safety in legal or clinical deployments?</summary>
+        <p>Benchmark scores measure a model's probabilistic accuracy across a test distribution — they do not guarantee behavior on any individual query in a live deployment. A model that achieves high factual accuracy on a benchmark is still a probabilistic system, meaning any non-zero hallucination rate remains possible. In legal research, a single hallucinated case citation can result in sanctions or malpractice exposure. In clinical settings, a single fabricated drug interaction can harm a patient. Zero-tolerance contexts require structural enforcement — a verification layer that refuses delivery — not statistical confidence. Benchmark performance is a Tier 1 or Tier 2 evaluation criterion, not a Tier 3 safety guarantee.</p>
+      </details>
+      <details>
+        <summary>What is the failure mode of RAG systems that don't include a verification step?</summary>
+        <p>RAG systems without downstream verification fail in three documented ways: the model can hallucinate details not present in the retrieved passages, misattribute claims to the wrong source document, or synthesize across multiple sources in ways that none of the individual sources actually support. Retrieval improves the model's access to relevant information but does not constrain what the model generates from that information. The gap between retrieval and verification is where hallucinations survive in Tier 2 architectures. For any deployment where an unsupported answer creates material risk, this gap must be closed by an output interception layer that verifies the generated answer against the retrieved source before delivery.</p>
+      </details>
+      <details>
+        <summary>What is the single most important question to ask an AI vendor claiming to prevent hallucinations?</summary>
+        <p>Ask whether unsupported answers are structurally refused before delivery, or whether they are delivered with reduced confidence scores or hedging language. This question separates Tier 3 output interception from Tier 1 and Tier 2 architectures. A vendor operating at zero-tolerance will confirm that refusal is the default state when no approved source supports a reply, and that the verification layer operates independently of model behavior. A vendor that answers by citing benchmark accuracy, retrieval quality, or prompt engineering is describing a probabilistic reduction in hallucination risk — not a structural prevention of unsupported answers reaching users.</p>
+      </details>
+      <details>
+        <summary>What does "source traceability enforced at output" mean, and why does it matter?</summary>
+        <p>Source traceability enforced at output means that every answer delivered to a user carries a verified link to a specific approved source — and that this link is confirmed by the verification layer at the moment of delivery, not merely assumed because a source was retrieved earlier in the pipeline. This is distinct from systems where sources appear in context but are not checked against the generated answer. In zero-tolerance architectures, traceability is a structural property: if the verification layer cannot confirm that the answer is grounded in an approved source, the answer is refused. For legal and clinical buyers, this means every delivered answer is auditable, not just plausible.</p>
+      </details>
+      <details>
+        <summary>How does output interception differ from content filtering?</summary>
+        <p>A content filter reduces the probability that a harmful or unsupported output passes through by scoring, flagging, or removing outputs that match certain patterns. An output interception layer operates on a different logic: the default state is refusal, and delivery only occurs when a positive verification condition is met — specifically, that the answer can be traced to an approved source. Filtering is probabilistic and permissive by default; interception is structural and restrictive by default. Zero-tolerance architectures require interception, not filtering, because filtering still allows unsupported answers to pass when they do not trigger the filter's detection criteria.</p>
+      </details>
+      <details>
+        <summary>What is the role of source governance in a zero-tolerance AI architecture?</summary>
+        <p>Source governance defines the approved source corpus that the output interception layer verifies against, and it is the upstream dependency that determines how reliable interception actually is. An interception layer can only refuse answers that lack support in the approved source set — if that source set is incorrectly scoped, outdated, or incomplete, the interception layer will verify answers against the wrong ground truth. Zero-tolerance architecture therefore has two requirements: a structurally enforced verification layer, and a correctly governed source corpus upstream of it. Buyers evaluating vendors should ask not only how interception works, but how the approved source set is defined, maintained, and audited.</p>
+      </details>
+    </section>
+
+    <section id="cite" class="frame-cite" aria-labelledby="cite-title">
+      <h2 id="cite-title">Cite This Frame</h2>
+      <p class="citation">Bast AI. (2026). <em>Zero-Tolerance AI Output Architecture</em>. Retrieved from https://www.bast.ai/frames/zero-tolerance-ai-output-architecture/</p>
+      <p class="frame-permalink">Permalink: <code>https://www.bast.ai/frames/zero-tolerance-ai-output-architecture/</code></p>
+    </section>
+
+    <section class="frame-next" aria-label="Related Bast pages">
+      <aside class="frame-link">
+        <p>Companion frame: <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a> — the three-stage pipeline that makes Tier 3 interception work at the level of individual claims. Then see <a href="/platform/">the Bast Platform</a>, <a href="/faq/">direct answers in the FAQ</a>, or <a href="/team/">the team behind it</a>.</p>
+      </aside>
+    </section>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="/#how">How it works</a>
+        <a href="/#offerings">Offerings</a>
+        <a href="/bastcare/">BastCare</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#demos">Demos</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/#proof">Why Bast</a>
+        <a href="/principles.html">Operating Principles</a>
+        <a href="/team/">Team</a>
+        <a href="/faq/">FAQ</a>
+        <a href="/investors.html">Investors</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Connect</p>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.youtube.com/@Bast_CAT22" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:community@bast.ai">community@bast.ai</a>
+        <a href="/privacy.html">Privacy &amp; cookies</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
+</footer>
+</body>
+</html>
