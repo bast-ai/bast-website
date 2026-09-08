@@ -373,12 +373,12 @@
 
 @media (max-width: 660px) {
   .platform-header {
-    display: grid;
+    display: flex;
   }
 
   .platform-nav {
-    justify-content: flex-start;
-    gap: 0.55rem 1rem;
+    justify-content: flex-end;
+    gap: 0.9rem;
     flex-wrap: wrap;
     overflow: visible;
   }

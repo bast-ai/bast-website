@@ -143,6 +143,12 @@ function assertBalancedCssBlocks(contents, label) {
   }
 }
 
+function extractPrimaryNav(contents, label) {
+  const match = contents.match(/<nav class="site-nav[^"]*" aria-label="Primary">([\s\S]*?)<\/nav>/);
+  if (!match) throw new Error(`Missing primary navigation on ${label} page`);
+  return match[1];
+}
+
 for (const file of requiredFiles) {
   await exists(file);
 }
@@ -188,6 +194,27 @@ const bastcareDeleteAccount = await readFile(
 const bastcareArchitecture = await readFile(
   path.join(distDir, "bastcare/architecture/index.html"), "utf8");
 const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
+
+assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
+for (const [contents, label] of [
+  [indexHtml, "home"],
+  [platformHtml, "platform"],
+  [bastcareHome, "BastCare"],
+  [bastcarePrivacy, "BastCare privacy"],
+]) {
+  const primaryNav = extractPrimaryNav(contents, label);
+  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
+  if (primaryLinkCount !== 3) {
+    throw new Error(`Expected exactly three primary links on ${label} page; found ${primaryLinkCount}`);
+  }
+  assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
+  assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
+  assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
+  for (const legacyLabel of ["How it works", "Offerings", "Demos", "Principles", "Investors", "Advisory"]) {
+    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
+  }
+}
+
 const requiredHomepageSnippets = [
   {
     label: "mobile SMS link",

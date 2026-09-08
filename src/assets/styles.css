@@ -4303,3 +4303,251 @@ h1 span {
     scroll-behavior: auto;
   }
 }
+
+/* ---- 2026 product-first editorial refresh ----
+   Keep Bast's type and brand color, while borrowing the quieter spacing,
+   flatter surfaces, and restrained navigation of bethrudden.ai. */
+.site-header {
+  width: min(1080px, calc(100% - 48px));
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header .brand {
+  width: 112px;
+}
+
+.site-nav {
+  gap: clamp(1.25rem, 3vw, 2.2rem);
+  font-size: var(--fs-body-sm);
+}
+
+.site-nav a {
+  border-bottom: 1px solid transparent;
+  padding: 0.35rem 0 0.3rem;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  border-bottom-color: currentColor;
+  color: var(--ink);
+}
+
+.site-nav .nav-cta {
+  color: var(--accent-text);
+}
+
+.home-page {
+  --ink: #172d37;
+  --paper: #fafbfc;
+  --surface: #ffffff;
+  --card-face: #ffffff;
+  --quiet: #52636c;
+  --quieter: #748189;
+  --line: #d7dde1;
+  --line-subtle: #e8ecef;
+  --accent-text: #087aa5;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --max: 1080px;
+  --neu-raise: 0 1px 2px rgba(13, 41, 53, 0.05), 0 14px 36px rgba(13, 41, 53, 0.07);
+  --neu-raise-sm: 0 1px 2px rgba(13, 41, 53, 0.05), 0 8px 24px rgba(13, 41, 53, 0.055);
+  --neu-btn: 0 0 0 1px var(--line);
+  --neu-btn-grad: 0 8px 18px rgba(7, 89, 133, 0.18);
+  --neu-inset: inset 0 0 0 1px var(--line);
+}
+
+.home-page .site-header {
+  width: min(var(--max), calc(100% - 48px));
+}
+
+.home-page .hero {
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: clamp(3.5rem, 8vw, 7rem);
+  align-items: end;
+  min-height: auto;
+  padding: clamp(5rem, 10vw, 8.5rem) 0 clamp(4.5rem, 9vw, 7rem);
+}
+
+.home-page .hero h1 {
+  max-width: 9ch;
+  margin-bottom: 1.5rem;
+  font-size: clamp(4rem, 8.8vw, 7.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.home-page .hero .lede {
+  max-width: 34rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.58;
+}
+
+.home-page .questions {
+  border-left: 1px solid var(--line);
+  padding-left: clamp(1.4rem, 3vw, 2.25rem);
+  text-align: left;
+}
+
+.home-page .questions::before {
+  display: block;
+  margin-bottom: 1.1rem;
+  color: var(--accent-text);
+  content: "THE QUESTIONS";
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.14em;
+}
+
+.home-page .questions li {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--quiet);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+}
+
+.home-page .questions li + li {
+  margin-top: 1.2rem;
+}
+
+.home-page .questions li strong {
+  color: var(--ink);
+  font-weight: var(--fw-semibold);
+}
+
+.home-page .button {
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+.home-page .button-primary {
+  background: var(--ink);
+  box-shadow: none;
+}
+
+.home-page .button-primary:hover {
+  background: var(--accent-text);
+  filter: none;
+}
+
+.home-page .button-secondary {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.home-page .button-primary:active,
+.home-page .button-secondary:active {
+  box-shadow: none;
+}
+
+.home-page .section,
+.home-page .outcomes {
+  padding-top: clamp(4.5rem, 8vw, 6.5rem);
+  padding-bottom: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.home-page .outcomes {
+  border-top: 1px solid var(--line-subtle);
+}
+
+.home-page .outcome-card,
+.home-page .card,
+.home-page .demo-card,
+.home-page .proof-list article,
+.home-page .mode-panels article {
+  border: 1px solid var(--line-subtle);
+  background: var(--surface);
+}
+
+.home-page .mode-tabs button,
+.home-page .contact-form input,
+.home-page .contact-form textarea {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.home-page .mode-tabs button[aria-selected="true"] {
+  border-color: var(--accent-text);
+  box-shadow: none;
+}
+
+.home-page .offering-card {
+  border: 1px solid var(--line-subtle);
+  box-shadow: var(--neu-raise-sm);
+}
+
+.home-page .offering-card-featured,
+.home-page .offering-card-platform {
+  background: var(--surface);
+}
+
+@media (max-width: 860px) {
+  .site-header,
+  .home-page .site-header {
+    width: min(100% - 32px, var(--max));
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .bastcare-header {
+    display: flex;
+  }
+
+  .site-nav {
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .bastcare-nav {
+    gap: clamp(1.25rem, 3vw, 2.2rem);
+    justify-content: flex-end;
+  }
+
+  .home-page .hero {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    padding-top: clamp(4rem, 11vw, 6rem);
+  }
+
+  .home-page .hero-lead {
+    grid-row: 1;
+  }
+
+  .home-page .hero .questions {
+    grid-row: 2;
+    margin-top: 1.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header,
+  .home-page .site-header {
+    width: min(100% - 28px, var(--max));
+    padding: 18px 0 14px;
+  }
+
+  .site-header .brand {
+    width: 92px;
+  }
+
+  .site-nav {
+    gap: 0.9rem;
+    font-size: 0.82rem;
+  }
+
+  .home-page .hero h1 {
+    font-size: clamp(3.45rem, 18vw, 5rem);
+  }
+
+  .home-page .questions {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    padding-top: 1.5rem;
+    padding-left: 0;
+  }
+}
