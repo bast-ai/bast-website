@@ -371,7 +371,10 @@ assertIncludes(analyticsConsentJs, 'window.bastTrack("app_store_click"', "App St
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
 assertIncludes(appleAssociation, "N9WW75Q3VS.ai.bast.careloop", "BastCare App ID association");
 assertIncludes(appleAssociation, '"/careteam/invite"', "CareTeam invitation path");
-assertIncludes(careteamInvite, "does not receive or store the private invitation token", "token-blind fallback disclosure");
+assertIncludes(careteamInvite, 'href="https://apps.apple.com/app/id6789669565"', "BastCare installation link");
+assertIncludes(careteamInvite, "After installing, return to the invitation message", "post-install invitation recovery");
+assertIncludes(careteamInvite, 'name="referrer" content="no-referrer"', "invitation referrer protection");
+assertExcludes(careteamInvite, "current TestFlight invitation", "obsolete tester-only installation instructions");
 assertExcludes(careteamInvite, "analytics-consent", "analytics on private invitation fallback");
 assertExcludes(careteamInvite, "location.hash", "invitation token parsing in website fallback");
 
