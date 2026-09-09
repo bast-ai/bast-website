@@ -429,6 +429,7 @@ for (const [contents, label] of bastcarePages) {
 
 const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
+assertIncludes(bastcareHome, 'class="bastcare-page bastcare-home"', "aligned BastCare homepage panels");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare behavior");
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");

@@ -3109,6 +3109,17 @@ h1 span {
   box-shadow: var(--neu-raise);
 }
 
+/* Match the two stacked feature panels on the BastCare homepage. */
+.bastcare-home > .bastcare-download-cta,
+.bastcare-home > .plain-language {
+  width: 100%;
+  max-width: none;
+}
+
+.bastcare-home > .plain-language {
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
 .plain-language h2,
 .section-heading h2,
 .support-contact h2,
