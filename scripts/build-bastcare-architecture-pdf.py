@@ -70,7 +70,7 @@ def page_base(c, page_no, section):
     c.line(38, 28, PAGE_W - 38, 28)
     c.setFont("Helvetica", 7.5)
     c.setFillColor(MUTED)
-    c.drawString(38, 16, "Public solution architecture  |  Version 1.0  |  August 2026")
+    c.drawString(38, 16, "Public solution architecture  |  Version 1.1  |  September 2026")
     c.drawCentredString(PAGE_W / 2, 16, "BastCare is not a medical device.")
     c.drawRightString(PAGE_W - 38, 16, str(page_no))
 
@@ -176,14 +176,14 @@ def build():
     c.drawString(38, PAGE_H - 124, "Small by design.")
     c.drawString(38, PAGE_H - 162, "Patient-controlled by default.")
     text_block(c, "A plain-language view of BastCare's system context, visit lifecycle, sharing controls, account deletion, and retained audit evidence.", 38, PAGE_H - 193, 660, 13, 18, color=MUTED)
-    card(c, 38, 244, 222, 132, "01", "Temporary transcript", "Audio stays on the iPhone. Masked transcript text is sent securely to create the summary; Bast does not save or log transcript text.", fill=PALE_BLUE)
+    card(c, 38, 244, 222, 132, "01", "On-device transcript", "The original transcript stays protected on the iPhone. A masked copy is sent only to create or regenerate a summary; Bast keeps no transcript archive.", fill=PALE_BLUE)
     card(c, 285, 244, 222, 132, "02", "Explicit sharing", "The patient chooses each summary and each CareTeam. Only confirmed members receive it. Sharing nothing is valid, and access can be revoked.", fill=PALE_VIOLET, accent=SECONDARY)
     card(c, 532, 244, 222, 132, "03", "Evidence, not content", "Limited audit and usage records support deletion evidence and billing transparency. They do not contain audio or transcript text.", fill=PALE_GREEN, accent=GREEN)
     rounded_panel(c, 38, 68, 716, 137, fill=INK, stroke=INK)
     c.setFont("Helvetica-Bold", 14)
     c.setFillColor(white)
     c.drawString(58, 172, "The design promise")
-    text_block(c, "BastCare helps a patient capture a visit, receive a plain-language summary, and choose whether to share it with trusted people. The summary is the durable record. The patient remains in control.", 58, 146, 668, 12.2, 18, color=white)
+    text_block(c, "BastCare helps a patient capture a visit, receive a plain-language summary, and choose whether to share it with trusted people. The transcript stays on the iPhone so the patient can view, download, or regenerate from it.", 58, 146, 668, 12.2, 18, color=white)
     c.showPage()
 
     # 2 - Context
@@ -211,14 +211,14 @@ def build():
 
     # 3 - Visit lifecycle
     page_base(c, 3, "Visit lifecycle")
-    title(c, "Visit lifecycle", "From permission to a useful summary", "The lifecycle is intentionally short. Temporary material is removed when its job is done.")
+    title(c, "Visit lifecycle", "From permission to a useful summary", "Audio is temporary. The original recognized transcript remains protected on the iPhone with the visit.")
     xs = [38, 286, 534]
     step(c, 1, xs[0], 330, 220, "Ask permission", "Everyone present agrees before recording begins.", fill=PALE_GREEN)
     step(c, 2, xs[1], 330, 220, "Record on iPhone", "Audio remains local while the visit is captured.", fill=PALE_BLUE)
     step(c, 3, xs[2], 330, 220, "Mask transcript text", "Direct identifiers are reduced before temporary processing.", fill=PALE_BLUE)
     step(c, 4, xs[2], 222, 220, "Create the summary", "A model-processing provider returns a plain-language draft.", fill=WARM)
-    step(c, 5, xs[1], 222, 220, "Delete temporary material", "Audio and the full transcript are removed from the iPhone; Bast keeps no transcript archive.", fill=PALE_GREEN)
-    step(c, 6, xs[0], 222, 220, "Review and choose", "The patient keeps the summary and may share it - or share nothing.", fill=PALE_VIOLET)
+    step(c, 5, xs[1], 222, 220, "Keep the source", "Audio is removed; the original transcript remains on the iPhone with the visit.", fill=PALE_GREEN)
+    step(c, 6, xs[0], 222, 220, "Review and choose", "View or download the transcript; regenerate, share, or keep the summary private.", fill=PALE_VIOLET)
     arrow(c, 258, 367, 286, 367)
     arrow(c, 506, 367, 534, 367)
     arrow(c, 644, 330, 644, 296)
@@ -228,7 +228,7 @@ def build():
     c.setFont("Helvetica-Bold", 12)
     c.setFillColor(white)
     c.drawString(56, 151, "What remains")
-    text_block(c, "The visit summary, its provenance, and the patient's sharing choices. Audio and transcript text do not become a shadow health record.", 56, 130, 675, 10.5, 15, color=white)
+    text_block(c, "The original transcript and current summary remain protected on the patient's iPhone. Bast keeps no server transcript archive. Deleting the visit removes its transcript and summary.", 56, 130, 675, 10.5, 15, color=white)
     c.showPage()
 
     # 4 - Sharing and revocation
@@ -290,7 +290,7 @@ def build():
     commitments = [
         ("Consent", "Recording begins only after permission from everyone present."),
         ("Provenance", "The summary identifies what came from the visit and what the patient added."),
-        ("Data minimization", "Bast stores no audio or transcript archive; durable data serves a stated purpose."),
+        ("Data minimization", "Bast keeps no server audio or transcript archive; the transcript remains on the patient's iPhone."),
         ("Patient control", "Each CareTeam share is explicit, scoped, visible, and revocable."),
         ("Account deletion", "The app offers deletion without requiring support intervention."),
         ("Accountability", "Limited audit evidence records actions without retaining transcript content."),
@@ -304,7 +304,7 @@ def build():
     c.setFont("Helvetica-Bold", 12)
     c.setFillColor(white)
     c.drawString(56, 145, "Plain-language architecture")
-    text_block(c, "BastCare records only with permission. Audio stays on the iPhone. Masked text is sent securely to create a summary; Bast does not save or log transcript text. The patient reviews the summary and decides who may see it. Access can be removed. Deleting an account removes active identity and sharing data while Bast keeps only limited evidence needed for accountability.", 56, 123, 675, 10.2, 14, color=white)
+    text_block(c, "BastCare records only with permission. Audio is deleted after the summary is saved. The original transcript stays protected on the iPhone, where the patient can view or download it and use it to regenerate a summary. Bast does not save or log transcript text. Sharing remains explicit. Deleting a visit removes its transcript and summary.", 56, 123, 675, 10.2, 14, color=white)
     c.save()
     print(OUTPUT)
 

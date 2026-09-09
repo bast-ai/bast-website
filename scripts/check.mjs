@@ -169,8 +169,10 @@ const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-c
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
 const platformCss = await readFile(path.join(distDir, "assets/platform.css"), "utf8");
+const advisoryCss = await readFile(path.join(distDir, "assets/advisory.css"), "utf8");
 assertBalancedCssBlocks(siteCss, "site stylesheet");
 assertBalancedCssBlocks(platformCss, "platform stylesheet");
+assertBalancedCssBlocks(advisoryCss, "advisory stylesheet");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
 const bastcareReviews = JSON.parse(await readFile(
@@ -334,6 +336,17 @@ for (const [contents, label] of [
 }
 for (const contents of advisoryPages) {
   assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
+  assertIncludes(contents, '<body class="advisory-site">', "Advisory visual scope");
+  const primaryNav = extractPrimaryNav(contents, "advisory");
+  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
+  if (primaryLinkCount !== 2) {
+    throw new Error(`Expected exactly two primary links on advisory page; found ${primaryLinkCount}`);
+  }
+  assertIncludes(primaryNav, "Advisory", "Advisory primary link");
+  assertIncludes(primaryNav, "Contact", "Advisory contact link");
+  for (const legacyLabel of ["How it works", "Offerings", "Demos", "Principles", "Investors"]) {
+    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} advisory primary link`);
+  }
 }
 for (const contents of advisoryPages.slice(1)) {
   assertIncludes(contents, 'class="button button-primary advisory-subnav-download"', "visible advisory PDF action");
@@ -346,6 +359,8 @@ assertIncludes(advisoryIndexHtml, "I advise three organizations at a time", "lim
 assertIncludes(advisoryIndexHtml, 'href="/assets/bast-narrative.pdf"', "advisory narrative PDF link");
 assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "advisory narrative cover");
 assertIncludes(advisoryIndexHtml, "It knows your information. It shows its sources. Your people stay in charge.", "plain-language advisory point of view");
+assertIncludes(advisoryIndexHtml, 'id="contact"', "advisory contact section");
+assertIncludes(advisoryIndexHtml, "Bring me one hard AI decision.", "advisory contact invitation");
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(indexHtml, 'href="assets/styles.css?v=', "versioned homepage stylesheet");
@@ -414,6 +429,7 @@ const bastcarePages = [
   [bastcareDeleteAccount, "delete account"],
   [bastcareArchitecture, "architecture"],
 ];
+const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
 for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "BastCare", `BastCare name on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/"', `BastCare home link on ${label} page`);
@@ -427,7 +443,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
 }
 
-const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
+const approvedVisitPrivacyCopy = "Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to OpenAI, Bast’s AI processing provider, only when you ask BastCare to create or regenerate a summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcareHome, 'class="bastcare-page bastcare-home"', "aligned BastCare homepage panels");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
@@ -457,6 +473,20 @@ if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
   throw new Error("BastCare App Store link must appear in all three download actions");
 }
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
+assertIncludes(bastcareHome, "Use it to regenerate the summary", "BastCare transcript regeneration message");
+assertIncludes(bastcarePrivacy, "Use this summary", "BastCare regeneration preview choice");
+assertIncludes(bastcareSupport, "Regenerate summary", "BastCare regeneration support");
+assertIncludes(bastcareSupport, "View transcript", "BastCare transcript support");
+assertIncludes(bastcareArchitecture, "On-device source", "BastCare transcript architecture commitment");
+for (const staleTranscriptClaim of [
+  "audio and full transcript are deleted from your iPhone",
+  "temporary audio and transcript text do not",
+  "temporary audio and transcript text are removed",
+  "deletes temporary audio and transcript text from the iPhone",
+  "remove temporary audio and text after the summary is saved",
+]) {
+  assertExcludes(bastcarePublicCopy, staleTranscriptClaim, `stale transcript deletion claim: ${staleTranscriptClaim}`);
+}
 assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
 assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact");
 assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
@@ -474,7 +504,6 @@ assertIncludes(bastcareDeleteAccount, "Only after server success", "server-first
 assertIncludes(bastcareArchitecture, "Functional requirements", "architecture FRs");
 assertIncludes(bastcareArchitecture, "Non-functional requirements", "architecture NFRs");
 assertIncludes(bastcareArchitecture, "bastcare-solution-architecture.pdf", "architecture PDF download");
-const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
 assertExcludes(bastcarePublicCopy, "add a note", "deferred patient-note wording");
 for (const internalPhrase of [
   "pre-submission",

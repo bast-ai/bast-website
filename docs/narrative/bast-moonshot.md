@@ -118,7 +118,7 @@ You need your community's knowledge and the will to govern it. You do not need a
 
 This model only works if it keeps institutional knowledge and personal experience in their proper places.
 
-BastCare is where an individual exercises that boundary. Record a visit with everyone's permission. Receive a plain-language summary. After the summary is saved, the audio and full transcript are deleted from the iPhone, and Bast does not save or log transcript text on its servers. Content-free operational records remain, and an encrypted summary copy reaches the CareTeam relay only when the patient chooses to share. Then preview exactly what would be shared, decide who can see the summary, and revoke access later.
+BastCare is where an individual exercises that boundary. Record a visit with everyone's permission. Receive a plain-language summary. After the summary is saved, the audio is deleted; the original transcript stays protected on the iPhone with the visit, where its owner can view or download it and use it to regenerate the summary. Bast does not save or log transcript text on its servers. Content-free operational records remain, and an encrypted summary copy reaches the CareTeam relay only when the patient chooses to share. Then preview exactly what would be shared, decide who can see the summary, and revoke access later.
 
 Sharing nothing is always valid.
 
