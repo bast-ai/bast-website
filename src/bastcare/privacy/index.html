@@ -29,14 +29,14 @@
     <h1>Your visit stays yours.</h1>
     <p class="lede">BastCare is built so you choose when to record, what to keep, and who can see a summary.</p>
     <div class="policy-meta" aria-label="Policy version">
-      <span>Effective September 8, 2026</span><span>Version 1.1</span>
+      <span>Effective September 9, 2026</span><span>Version 1.2</span>
     </div>
   </section>
 
   <section class="plain-language" aria-labelledby="plain-title">
     <p class="panel-label">In 100 simple words</p>
     <h2 id="plain-title">The short version</h2>
-    <p>With everyone’s permission, record the conversation and receive a plain-language summary. Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to OpenAI, Bast’s AI processing provider, only when you ask BastCare to create or regenerate a summary. Bast does not save or log transcript text.</p>
+    <p>With everyone’s permission, record the conversation and receive a plain-language summary. Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to Anthropic or OpenAI, whichever AI provider BastCare selects for the request, only when you ask BastCare to create or regenerate a summary. A request uses the selected provider; it does not automatically go to both. Bast does not save or log transcript text.</p>
   </section>
 
   <div class="bastcare-layout">
@@ -58,7 +58,7 @@
         <ul>
           <li><strong>Account:</strong> your Bast identity, sign-in state, and device/account identifiers.</li>
           <li><strong>On your iPhone:</strong> temporary audio, the original transcript, your saved summary, sharing choices, and encryption keys.</li>
-          <li><strong>Temporary processing:</strong> a masked copy of transcript text sent over authenticated HTTPS to OpenAI when you create or regenerate a summary.</li>
+          <li><strong>AI processing:</strong> a masked copy of transcript text sent over authenticated HTTPS to the selected AI provider when you create or regenerate a summary. The text may contain personal or health information from the conversation.</li>
           <li><strong>Sharing:</strong> an encrypted copy of a summary only after you choose a CareTeam.</li>
           <li><strong>Technical records:</strong> content-free times, status, app version, delivery, consent, security, token-count, and deletion results.</li>
         </ul>
@@ -102,6 +102,7 @@
         <h2>Security and service providers</h2>
         <p>BastCare uses authenticated HTTPS, account isolation, encrypted relay content, device-held keys, and least-privilege access. No internet service can promise perfect security.</p>
         <p>Apple provides device speech and Sign in with Apple. Bast also uses named infrastructure, database, identity, deployment, and model-processing providers only for the purposes described here.</p>
+        <p>BastCare can use Anthropic or OpenAI. We select the model for the task and may change that selection as quality, reliability, speed, or resource needs change. Each request goes only to the provider selected for that request.</p>
         <p><a class="text-link" href="/bastcare/processors/">See the current BastCare service-provider and processor disclosure</a></p>
       </section>
 

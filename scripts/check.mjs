@@ -443,7 +443,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
 }
 
-const approvedVisitPrivacyCopy = "Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to OpenAI, Bast’s AI processing provider, only when you ask BastCare to create or regenerate a summary. Bast does not save or log transcript text.";
+const approvedVisitPrivacyCopy = "Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to Anthropic or OpenAI, whichever AI provider BastCare selects for the request, only when you ask BastCare to create or regenerate a summary. A request uses the selected provider; it does not automatically go to both. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcareHome, 'class="bastcare-page bastcare-home"', "aligned BastCare homepage panels");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
@@ -473,6 +473,12 @@ if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
   throw new Error("BastCare App Store link must appear in all three download actions");
 }
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
+assertIncludes(bastcareHome, 'href="/bastcare/processors/"', "BastCare processing disclosure link");
+assertIncludes(bastcarePrivacy, "Each request goes only to the provider selected for that request", "single-provider request boundary");
+for (const provider of ["Anthropic", "OpenAI"]) {
+  assertIncludes(bastcareProcessors, `<p class="processor-name">${provider}</p>`, `${provider} processor disclosure`);
+  assertIncludes(bastcareArchitecture, provider, `${provider} architecture disclosure`);
+}
 assertIncludes(bastcareHome, "Use it to regenerate the summary", "BastCare transcript regeneration message");
 assertIncludes(bastcarePrivacy, "Use this summary", "BastCare regeneration preview choice");
 assertIncludes(bastcareSupport, "Regenerate summary", "BastCare regeneration support");
