@@ -400,7 +400,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
 }
 
-const approvedVisitPrivacyCopy = "Audio stays on your iPhone until the summary is created. Then the audio and full transcript are deleted from your iPhone. Temporary masked transcript text is sent securely to OpenAI, Bast’s AI processing provider, to create the summary. Bast does not save or log transcript text.";
+const approvedVisitPrivacyCopy = "Keep or download your transcript on your iPhone. Delete the visit to remove it. BastCare masks configured names before sending text securely to OpenAI for your summary. Bast does not save or log transcript text.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare behavior");
@@ -429,7 +429,7 @@ if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
   throw new Error("BastCare App Store link must appear in all three download actions");
 }
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
-assertIncludes(bastcareSupport, "Never send us visit audio", "content-free support guidance");
+assertIncludes(bastcareSupport, "Find your app version and build", "support build identification");
 assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact");
 assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
 assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
