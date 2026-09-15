@@ -1,19 +1,28 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T19:40:59Z",
+  "generatedAt": "2026-09-15T01:40:19Z",
   "storefront": "us",
   "app": {
     "id": 6789669565,
     "bundleId": "ai.bast.careloop",
-    "version": "1.0.6",
+    "version": "1.0.9",
     "appStoreUrl": "https://apps.apple.com/us/app/bastcare/id6789669565"
   },
   "rating": {
     "average": 5.0,
-    "count": 6,
-    "writtenReviewCount": 4
+    "count": 8,
+    "writtenReviewCount": 5
   },
   "reviews": [
+    {
+      "id": "14533518123",
+      "title": "Thank you",
+      "excerpt": "This is a very, very clever way to use AI in order to keep track of what armies of doctors may be saying around…",
+      "author": "Circe-QQ",
+      "rating": 5,
+      "version": "1.0.8",
+      "updatedAt": "2026-09-10T15:17:27Z"
+    },
     {
       "id": "14483568506",
       "title": "Privacy and trust - so needed",

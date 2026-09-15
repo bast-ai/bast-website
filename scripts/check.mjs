@@ -27,6 +27,14 @@ const requiredFiles = [
   "assets/bastcare/screens/careteam-build-51.jpg",
   "assets/bastcare/screens/sharing-settings-build-51.jpg",
   "assets/bastcare/screens/share-preview-build-51.jpg",
+  "assets/bastcare/screens/home-1-0-9.jpg",
+  "assets/bastcare/screens/visits-1-0-9.jpg",
+  "assets/bastcare/screens/summary-1-0-9.jpg",
+  "assets/bastcare/screens/translate-1-0-9.jpg",
+  "assets/bastcare/screens/export-1-0-9.jpg",
+  "assets/bastcare/screens/share-1-0-9.jpg",
+  "assets/bastcare/screens/share-review-1-0-9.jpg",
+  "assets/bastcare/screens/shared-1-0-9.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
   "assets/bast-ai-healthcare-teaser.pdf",
@@ -451,18 +459,32 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-assertIncludes(bastcareHome, "home-build-51.jpg", "Build 51 home screen");
-assertIncludes(bastcareHome, "summary-build-51.jpg", "Build 51 visit summary screen");
-assertIncludes(bastcareHome, "careteam-build-51.jpg", "Build 51 CareTeam screen");
-assertIncludes(bastcareHome, "sharing-settings-build-51.jpg", "Build 51 sharing controls screen");
-assertIncludes(bastcareHome, "share-preview-build-51.jpg", "Build 51 CareTeam share preview");
+assertIncludes(bastcareHome, "New in BastCare 1.0.9", "BastCare 1.0.9 release hero");
+assertIncludes(bastcareHome, "A fresh look. Care that speaks your language.", "BastCare translation headline");
+assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
+assertIncludes(bastcareHome, "Tests passed for 1.0.9", "BastCare release-gate proof metric");
+assertIncludes(bastcareHome, "Built by people. Accelerated by machines.", "BastCare human-machine iteration story");
+assertIncludes(bastcareHome, "two to three a day", "BastCare build cadence");
+for (const screen of [
+  "home-1-0-9.jpg",
+  "visits-1-0-9.jpg",
+  "summary-1-0-9.jpg",
+  "translate-1-0-9.jpg",
+  "export-1-0-9.jpg",
+  "share-1-0-9.jpg",
+  "share-review-1-0-9.jpg",
+  "shared-1-0-9.jpg",
+]) {
+  assertIncludes(bastcareHome, screen, `BastCare 1.0.9 walkthrough screen: ${screen}`);
+}
+assertExcludes(bastcareHome, "build-51", "stale Build 51 BastCare walkthrough screen");
 assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
 assertIncludes(bastcareHome, "Real help. In their words.", "BastCare review carousel headline");
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
-assertIncludes(bastcareHome, "6 ratings", "BastCare App Store rating count fallback");
-assertIncludes(bastcareHome, "4 written reviews", "BastCare written review count fallback");
+assertIncludes(bastcareHome, "8 ratings", "BastCare App Store rating count fallback");
+assertIncludes(bastcareHome, "5 written reviews", "BastCare written review count fallback");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
@@ -502,7 +524,7 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
   assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
-assertIncludes(bastcareTerms, "BastCare 1.0 is offered free of charge", "free-first terms");
+assertIncludes(bastcareTerms, "BastCare is free to download and includes the first two recorded hours", "current included-hours terms");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
 assertIncludes(bastcareDeleteAccount, "Choose Delete BastCare Account", "in-app deletion path");
