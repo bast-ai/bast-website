@@ -53,6 +53,10 @@ const requiredFiles = [
   ".well-known/apple-app-site-association",
   "careteam/invite/index.html",
   "platform/index.html",
+  "platform/architecture/index.html",
+  "platform/delivery/index.html",
+  "platform/evidence/index.html",
+  "platform/demo/index.html",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
   "bastcare/processors/index.html",
@@ -163,6 +167,10 @@ for (const file of requiredFiles) {
 
 const indexHtml = await readFile(path.join(distDir, "index.html"), "utf8");
 const platformHtml = await readFile(path.join(distDir, "platform/index.html"), "utf8");
+const platformArchitectureHtml = await readFile(path.join(distDir, "platform/architecture/index.html"), "utf8");
+const platformDeliveryHtml = await readFile(path.join(distDir, "platform/delivery/index.html"), "utf8");
+const platformEvidenceHtml = await readFile(path.join(distDir, "platform/evidence/index.html"), "utf8");
+const platformDemoHtml = await readFile(path.join(distDir, "platform/demo/index.html"), "utf8");
 const investorsHtml = await readFile(path.join(distDir, "investors.html"), "utf8");
 const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
 const privacyHtml = await readFile(path.join(distDir, "privacy.html"), "utf8");
@@ -380,20 +388,28 @@ assertIncludes(platformHtml, 'href="/assets/styles.css?v=', "versioned Platform 
 assertIncludes(platformHtml, 'href="/assets/platform.css?v=', "versioned Platform stylesheet");
 assertIncludes(platformHtml, 'src="/assets/site.js?v=', "versioned Platform behavior");
 assertExcludes(platformHtml, 'href="/assets/platform.css"', "unversioned Platform stylesheet");
-assertIncludes(platformHtml, '<span class="platform-title-line">Build governed</span>', "Platform hero title line");
-assertIncludes(platformHtml, '<span class="platform-title-line">AI on infrastructure</span>', "Platform hero infrastructure line");
-assertIncludes(platformHtml, '<span class="platform-title-line">Four layers.</span>', "Platform layers title line");
-assertIncludes(platformHtml, '<span class="platform-title-line">Your operating boundary.</span>', "Platform ownership title line");
-assertIncludes(platformHtml, "Bast control layer", "Platform system map");
-assertIncludes(platformHtml, "Approved sources", "Platform approved-source boundary");
-assertIncludes(platformHtml, "Grounded", "Platform grounded-answer outcome");
-assertIncludes(platformHtml, "Refusal", "Platform refusal outcome");
-assertIncludes(platformHtml, "Bast hosted", "Bast-hosted deployment option");
-assertIncludes(platformHtml, "Private cloud", "private-cloud deployment option");
-assertIncludes(platformHtml, "On premises", "on-premises deployment option");
-assertIncludes(platformHtml, "Your IP stays yours.", "Platform ownership statement");
+assertIncludes(platformHtml, "AI infrastructure a CFO can defend.", "CFO-led Platform headline");
+assertIncludes(platformHtml, "The architecture is the business case.", "Platform business-case framing");
+assertIncludes(platformHtml, "Commit history helps us find change", "Platform evidence contract");
+assertIncludes(platformHtml, "Full detect-remediate-verify-rollback autonomy remains an explicit target", "bounded self-healing language");
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
-assertIncludes(platformHtml, 'href="/frames/claim-level-source-grounding/"', "Platform technical frame link");
+for (const [contents, label] of [
+  [platformArchitectureHtml, "architecture"],
+  [platformDeliveryHtml, "delivery"],
+  [platformEvidenceHtml, "evidence"],
+  [platformDemoHtml, "demo"],
+]) {
+  assertIncludes(contents, 'class="evidence-nav"', `${label} evidence navigation`);
+  assertIncludes(contents, 'href="/platform/architecture/"', `${label} architecture link`);
+  assertIncludes(contents, 'href="/platform/delivery/"', `${label} delivery link`);
+  assertIncludes(contents, 'href="/platform/evidence/"', `${label} evidence link`);
+  assertIncludes(contents, 'href="/platform/demo/"', `${label} demo link`);
+}
+assertIncludes(platformArchitectureHtml, "one microservice per agent remains a direction", "bounded agent microservice language");
+assertIncludes(platformArchitectureHtml, "detect, remediate within bounds, verify recovery", "self-healing definition");
+assertIncludes(platformEvidenceHtml, "BAST-AGENT-001", "evidence claim identifier");
+assertIncludes(platformEvidenceHtml, "Review needed", "publication review state");
+assertIncludes(platformDemoHtml, "Too broad without bounded comparative evidence", "quality comparison boundary");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
 assertIncludes(siteJs, 'fetch("/assets/data/bastcare-metrics.json"', "privacy-safe BastCare metrics loading");
@@ -546,6 +562,9 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/platform/</loc>", "Bast Platform sitemap route");
+for (const route of ["architecture", "delivery", "evidence", "demo"]) {
+  assertIncludes(sitemapXml, `/platform/${route}/</loc>`, `Platform ${route} sitemap route`);
+}
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of [
   "faq/",

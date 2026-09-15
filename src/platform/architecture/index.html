@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bast Architecture - Current system and target state</title>
+<meta name="description" content="Inspect Bast's public-safe architecture, current deployment units, agent operating model, recovery controls, and explicitly labeled target state.">
+<meta name="robots" content="__ROBOTS_META__"><link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
+<link rel="canonical" href="__SITE_URL__/platform/architecture/"><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/platform.css">
+<script>window.BAST_GA_MEASUREMENT_ID="__GA_MEASUREMENT_ID__";window.BAST_SITE_ENV="__SITE_ENV__";</script><script src="/assets/analytics-consent.js" defer></script><script src="/assets/site.js" defer></script>
+</head>
+<body class="platform-site"><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header platform-header"><a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a><nav class="site-nav platform-nav" aria-label="Primary"><a aria-current="page" href="/platform/">Platform</a><a href="/bastcare/">BastCare</a><a class="nav-cta" href="/#contact">Contact</a></nav></header>
+<main class="platform-page evidence-portal" id="main">
+  <nav class="evidence-nav" aria-label="Architecture and evidence"><a href="/platform/">Business case</a><a aria-current="page" href="/platform/architecture/">Architecture</a><a href="/platform/delivery/">Build, test, deploy</a><a href="/platform/evidence/">Evidence</a><a href="/platform/demo/">Demo guide</a></nav>
+  <section class="evidence-doc-hero"><p class="eyebrow">Architecture · Current and target</p><h1>Bounded services. Inspectable decisions.</h1><p class="lede">Bast separates public architectural truth from architectural direction. The current system packages specialized capabilities into independently built runtime services. Configuration-defined agents operate inside those service boundaries; one microservice per agent remains a direction, not a current system claim.</p></section>
+  <section class="platform-section" aria-labelledby="current-title">
+    <div class="platform-section-heading"><p class="eyebrow">Current operating model</p><h2 id="current-title">What the implementation supports today.</h2><p>The current development delivery path builds four named backend images. That count describes deployable images in the inspected pipeline—not every API package, agent, library, or future service.</p></div>
+    <div class="evidence-grid">
+      <article class="evidence-card"><span class="maturity maturity-validated">Validated build path</span><h3>Platform API</h3><p>Shared platform and product-facing capabilities packaged behind an independently built service boundary.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-validated">Validated build path</span><h3>Organization services</h3><p>Organization-scoped services packaged for the current deployment path.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-validated">Validated build path</span><h3>CAT runtime</h3><p>Configuration-defined specialized agents and orchestration execute inside this runtime boundary.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-validated">Validated build path</span><h3>BastCare summarizer</h3><p>BastCare processing is built as a bounded backend image supporting the product workflow.</p></article>
+    </div>
+  </section>
+  <section class="platform-section" aria-labelledby="layers-title">
+    <div class="platform-section-heading"><p class="eyebrow">Control path</p><h2 id="layers-title">Five layers connect intent to evidence.</h2></div>
+    <ol class="evidence-flow"><li><strong>Define</strong><span>Specification, policy, ontology, and approved knowledge.</span></li><li><strong>Package</strong><span>Bounded code and agent configuration become build artifacts.</span></li><li><strong>Deploy</strong><span>Infrastructure and runtime configuration establish the operating boundary.</span></li><li><strong>Observe</strong><span>Health, requests, tests, and content-free operational evidence show behavior.</span></li><li><strong>Explain</strong><span>Claims point back to evidence, maturity, ownership, and review dates.</span></li></ol>
+  </section>
+  <section class="platform-section" id="recovery" aria-labelledby="recovery-title">
+    <div class="platform-section-heading"><p class="eyebrow">Reliability &amp; recovery</p><h2 id="recovery-title">Self-healing is a testable sequence.</h2><p>We reserve the term for a complete loop: detect, remediate within bounds, verify recovery, and roll back or fail safely. The documentation shows which parts are current and which remain target state.</p></div>
+    <div class="evidence-grid">
+      <article class="evidence-card"><span class="maturity maturity-validated">Validated detection</span><h3>Health and orchestrator recovery</h3><p>Health checks provide infrastructure-level detection signals. Environment-specific restart or replacement behavior still requires deployment evidence.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-roadmap">Roadmap</span><h3>Autonomous functional recovery</h3><p>Application-level detection, bounded remediation, post-recovery verification, and safe rollback must be proven end to end before being described as live.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-validated">Configured path</span><h3>Current Duplo path</h3><p>Version-controlled deployment configuration continues to reflect DuploCloud where it remains in use; this does not assert every environment is currently healthy.</p></article>
+      <article class="evidence-card"><span class="maturity maturity-roadmap">Target state</span><h3>Post-Duplo infrastructure</h3><p>Directly managed cloud infrastructure remains separately labeled until migration and operational verification are complete.</p></article>
+    </div>
+  </section>
+  <section class="platform-cta"><div><p class="eyebrow">Next</p><h2>See how the system moves from change to evidence.</h2></div><div class="platform-cta-actions"><a class="button button-primary" href="/platform/delivery/">Build, test, deploy</a><a class="button button-secondary" href="/platform/evidence/">Evidence model</a></div></section>
+</main>
+<footer class="site-footer platform-footer"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a><p>Explainable AI infrastructure. Every material claim has a route to evidence.</p></div><nav class="footer-nav" aria-label="Footer"><div class="footer-col"><p class="footer-head">Architecture &amp; Evidence</p><a href="/platform/">Business case</a><a href="/platform/architecture/">Architecture</a><a href="/platform/evidence/">Evidence</a></div><div class="footer-col"><p class="footer-head">Product</p><a href="/bastcare/">BastCare</a><a href="/platform/demo/">Demo guide</a><a href="/#contact">Contact</a></div></nav></div><div class="footer-bottom"><span>&copy; 2026 Bast AI &middot; Explainable by construction.</span><button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences &amp;&amp; window.bastOpenConsentPreferences()">Cookie preferences</button></div></footer>
+</body></html>
