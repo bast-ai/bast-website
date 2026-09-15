@@ -27,6 +27,14 @@ const requiredFiles = [
   "assets/bastcare/screens/careteam-build-51.jpg",
   "assets/bastcare/screens/sharing-settings-build-51.jpg",
   "assets/bastcare/screens/share-preview-build-51.jpg",
+  "assets/bastcare/screens/home-1-0-9.jpg",
+  "assets/bastcare/screens/visits-1-0-9.jpg",
+  "assets/bastcare/screens/summary-1-0-9.jpg",
+  "assets/bastcare/screens/translate-1-0-9.jpg",
+  "assets/bastcare/screens/export-1-0-9.jpg",
+  "assets/bastcare/screens/share-1-0-9.jpg",
+  "assets/bastcare/screens/share-review-1-0-9.jpg",
+  "assets/bastcare/screens/shared-1-0-9.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
   "assets/bast-ai-healthcare-teaser.pdf",
@@ -457,11 +465,19 @@ assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language li
 assertIncludes(bastcareHome, "Tests passed for 1.0.9", "BastCare release-gate proof metric");
 assertIncludes(bastcareHome, "Built by people. Accelerated by machines.", "BastCare human-machine iteration story");
 assertIncludes(bastcareHome, "two to three a day", "BastCare build cadence");
-assertIncludes(bastcareHome, "home-build-51.jpg", "Build 51 home screen");
-assertIncludes(bastcareHome, "summary-build-51.jpg", "Build 51 visit summary screen");
-assertIncludes(bastcareHome, "careteam-build-51.jpg", "Build 51 CareTeam screen");
-assertIncludes(bastcareHome, "sharing-settings-build-51.jpg", "Build 51 sharing controls screen");
-assertIncludes(bastcareHome, "share-preview-build-51.jpg", "Build 51 CareTeam share preview");
+for (const screen of [
+  "home-1-0-9.jpg",
+  "visits-1-0-9.jpg",
+  "summary-1-0-9.jpg",
+  "translate-1-0-9.jpg",
+  "export-1-0-9.jpg",
+  "share-1-0-9.jpg",
+  "share-review-1-0-9.jpg",
+  "shared-1-0-9.jpg",
+]) {
+  assertIncludes(bastcareHome, screen, `BastCare 1.0.9 walkthrough screen: ${screen}`);
+}
+assertExcludes(bastcareHome, "build-51", "stale Build 51 BastCare walkthrough screen");
 assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
 assertIncludes(bastcareHome, "Real help. In their words.", "BastCare review carousel headline");
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
