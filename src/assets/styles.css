@@ -1036,6 +1036,30 @@ h1 span {
   height: auto;
 }
 
+.evidence-preview {
+  min-height: 360px;
+  padding: clamp(2rem, 5vw, 4rem);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  text-decoration: none;
+}
+
+.evidence-preview-kicker,
+.evidence-preview > span:last-child {
+  color: #8edcff;
+  font-size: var(--fs-body-sm);
+}
+
+.evidence-preview strong {
+  max-width: 11ch;
+  font-size: clamp(2rem, 4vw, 3.75rem);
+  font-weight: var(--fw-thin);
+  line-height: 1.05;
+}
+
 .investor-summary,
 .investor-proof {
   border-top: 1px solid var(--line-subtle);
@@ -1191,6 +1215,12 @@ h1 span {
 .outcome-stat span {
   color: var(--quieter);
   font-size: var(--fs-body-sm);
+}
+
+.outcome-stat .case-badge {
+  color: #fff;
+  font-size: var(--fs-label);
+  font-weight: 700;
 }
 
 .outcome-card h3 {

@@ -24,7 +24,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
 - [BastCare](__SITE_URL__/bastcare/): Free iPhone app for patients and caregivers — record a visit with permission, get a plain-language summary, share only what you choose with a CareTeam. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
-- [Investors](__SITE_URL__/investors.html): The runtime trust layer for healthcare AI — live deployments, paying customers, 5 patents filed.
+- [Investors](__SITE_URL__/investors.html): The business case and evidence behind Bast's accountable AI infrastructure.
 
 ## Focus Areas
 

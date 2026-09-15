@@ -37,8 +37,6 @@ const requiredFiles = [
   "assets/bastcare/screens/shared-1-0-9.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
-  "assets/bast-ai-healthcare-teaser.pdf",
-  "assets/bast-ai-healthcare-teaser-cover.png",
   "assets/advisory.css",
   "assets/bast-healthcare-advisory.pdf",
   "assets/bast-eu-ai-act-briefing.pdf",
@@ -189,6 +187,7 @@ const advisoryCss = await readFile(path.join(distDir, "assets/advisory.css"), "u
 assertBalancedCssBlocks(siteCss, "site stylesheet");
 assertBalancedCssBlocks(platformCss, "platform stylesheet");
 assertBalancedCssBlocks(advisoryCss, "advisory stylesheet");
+assertIncludes(siteCss, ".outcome-stat .case-badge", "readable homepage case-study badge override");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
 const bastcareReviews = JSON.parse(await readFile(
@@ -212,6 +211,10 @@ const bastcareDeleteAccount = await readFile(
 const bastcareArchitecture = await readFile(
   path.join(distDir, "bastcare/architecture/index.html"), "utf8");
 const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
+
+assertExcludes(investorsHtml, "bast-ai-healthcare-teaser", "retired healthcare teaser reference");
+assertExcludes(investorsHtml, "Download teaser", "retired teaser download");
+assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
 for (const [contents, label] of [
