@@ -395,10 +395,18 @@ assertIncludes(platformHtml, 'src="/assets/site.js?v=', "versioned Platform beha
 assertExcludes(platformHtml, 'href="/assets/platform.css"', "unversioned Platform stylesheet");
 assertIncludes(platformHtml, "Stable AI products, built to keep getting better.", "outcome-led Platform headline");
 assertIncludes(platformHtml, "Bast Agent OS", "public Agent OS name");
-assertIncludes(platformHtml, "The architecture is the business case.", "Platform business-case framing");
-assertIncludes(platformHtml, "Commit history helps us find change", "Platform evidence contract");
-assertIncludes(platformHtml, "Full detect-remediate-verify-rollback autonomy remains an explicit target", "bounded self-healing language");
+assertIncludes(platformHtml, "Grounded in what you trust.", "trusted knowledge benefit");
+assertIncludes(platformHtml, "Shows where it came from.", "source visibility benefit");
+assertIncludes(platformHtml, "People stay in charge.", "human accountability benefit");
+assertIncludes(platformHtml, "The platform in the palm of your hand", "BastCare product proof");
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
+assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architecture diligence link");
+assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
+assertExcludes(platformHtml, "The architecture is the business case.", "architecture-led marketing copy");
+assertExcludes(platformHtml, "Commit history helps us find change", "commit-history marketing copy");
+assertExcludes(platformHtml, "detect-remediate-verify-rollback", "recovery-loop marketing copy");
+assertExcludes(platformHtml, 'class="evidence-nav"', "evidence navigation on primary Platform page");
+assertExcludes(platformHtml, 'class="maturity ', "maturity taxonomy on primary Platform page");
 for (const [contents, label] of [
   [platformArchitectureHtml, "architecture"],
   [platformDeliveryHtml, "delivery"],
