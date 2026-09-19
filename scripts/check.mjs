@@ -37,6 +37,8 @@ const requiredFiles = [
   "assets/bastcare/screens/shared-1-0-9.jpg",
   "assets/bastcare/media/bastcare-1-0-10-release.m4v",
   "assets/bastcare/media/bastcare-1-0-10-release-poster.jpg",
+  "assets/bastcare/media/bastcare-1-0-10-walkthrough-captioned.mp4",
+  "assets/bastcare/media/bastcare-1-0-10-walkthrough-poster.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
   "assets/advisory.css",
@@ -501,6 +503,10 @@ assertIncludes(bastcareHome, "Albanian", "BastCare Albanian support");
 assertIncludes(bastcareHome, "German", "BastCare German support");
 assertIncludes(bastcareHome, "bastcare-1-0-10-release.m4v", "BastCare 1.0.10 release video");
 assertIncludes(bastcareHome, "bastcare-1-0-10-release-poster.jpg", "BastCare 1.0.10 release poster");
+assertIncludes(bastcareHome, "bastcare-1-0-10-walkthrough-captioned.mp4", "captioned BastCare 1.0.10 walkthrough");
+assertIncludes(bastcareHome, "bastcare-1-0-10-walkthrough-poster.jpg", "BastCare walkthrough poster");
+assertIncludes(bastcareHome, 'preload="metadata"', "metadata-only walkthrough loading");
+assertIncludes(bastcareHome, "seven-language translation", "carousel translation handoff");
 for (const screen of [
   "home-1-0-9.jpg",
   "visits-1-0-9.jpg",

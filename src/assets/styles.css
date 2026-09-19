@@ -3098,6 +3098,68 @@ h1 span {
   box-shadow: var(--neu-inset);
 }
 
+.bastcare-walkthrough-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(300px, 0.42fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  border: 1px solid rgba(7, 89, 133, 0.1);
+  border-radius: clamp(28px, 5vw, 46px);
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(225, 241, 247, 0.86));
+  box-shadow: var(--neu-raise-sm);
+}
+
+.bastcare-walkthrough-copy h3,
+.bastcare-tour-detail-heading h3 {
+  margin: var(--bast-space-3) 0 var(--bast-space-4);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: var(--fw-thin);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.bastcare-walkthrough-copy > p:not(.panel-label) {
+  max-width: 57ch;
+  color: var(--quiet);
+}
+
+.bastcare-walkthrough-note {
+  font-size: var(--fs-caption);
+}
+
+.bastcare-walkthrough-video-shell {
+  width: min(100%, 390px);
+  justify-self: center;
+  border-radius: 30px;
+  padding: 10px;
+  background: #071e2d;
+  box-shadow: 0 28px 55px rgba(7, 38, 61, 0.22);
+}
+
+.bastcare-walkthrough-video-shell video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 532 / 1280;
+  border-radius: 22px;
+  background: #071e2d;
+  object-fit: contain;
+}
+
+.bastcare-tour-detail-heading {
+  display: flex;
+  gap: var(--bast-space-8);
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: clamp(2.5rem, 7vw, 5rem) 0 var(--bast-space-5);
+}
+
+.bastcare-tour-detail-heading > div:first-child { max-width: 720px; }
+.bastcare-tour-detail-heading h3 { font-size: clamp(1.8rem, 3.5vw, 3rem); }
+.bastcare-tour-detail-heading > div:first-child > p:last-child { margin-bottom: 0; color: var(--quiet); }
+
 .bastcare-tour-track {
   display: flex;
   gap: clamp(1.25rem, 3vw, 2rem);
@@ -4199,6 +4261,18 @@ h1 span {
 
   .bastcare-hero-device::before {
     inset-inline: -8%;
+  }
+
+  .bastcare-walkthrough-feature {
+    grid-template-columns: 1fr;
+    padding: var(--bast-space-5);
+  }
+
+  .bastcare-walkthrough-video-shell { width: min(100%, 360px); }
+
+  .bastcare-tour-detail-heading {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .bastcare-tour-controls {
