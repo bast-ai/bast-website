@@ -320,7 +320,7 @@
       currentIndex = Math.max(0, Math.min(cards.length - 1, index));
       previous.disabled = currentIndex === 0;
       next.disabled = currentIndex === cards.length - 1;
-      status.textContent = (currentIndex + 1) + " of " + cards.length;
+      status.textContent = "Review " + (currentIndex + 1) + " of " + cards.length;
     }
 
     function showCard(index) {
