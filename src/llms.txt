@@ -11,9 +11,9 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 ## Key Pages
 
 - [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
-- [Bast Architecture & Evidence](__SITE_URL__/platform/): CFO-led business case for Bast, with technical maturity and evidence progressively disclosed.
+- [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
-- [Build, Test, and Deploy](__SITE_URL__/platform/delivery/): How specifications, code, tests, artifacts, deployments, and documentation produce inspectable evidence.
+- [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
 - [Evidence Register](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries.
 - [Bast Demo Guide](__SITE_URL__/platform/demo/): Ten-minute path from CFO outcomes through BastCare to architecture and evidence.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
@@ -22,7 +22,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
 - [Team](__SITE_URL__/team/): Beth Rudden (CEO) and Thanh Lam (CTO) — the people behind Bast.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
-- [BastCare](__SITE_URL__/bastcare/): Free iPhone app for patients and caregivers — record a visit with permission, get a plain-language summary, share only what you choose with a CareTeam. Not a medical device.
+- [BastCare](__SITE_URL__/bastcare/): Free iPhone app for patients and caregivers — stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
 - [Investors](__SITE_URL__/investors.html): The business case and evidence behind Bast's accountable AI infrastructure.
 
@@ -36,8 +36,8 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Products & Offerings
 
-- [Bast Platform](__SITE_URL__/platform/): AI infrastructure a CFO can defend—business outcomes first, with architecture and evidence underneath.
-- [BastCare](__SITE_URL__/bastcare/): Free iPhone app — visit summaries you control. Download: https://apps.apple.com/app/id6789669565
+- [Bast Platform](__SITE_URL__/platform/): Governed infrastructure plus Bast Agent OS, the human-and-machine operating model behind stable AI products.
+- [BastCare](__SITE_URL__/bastcare/): Free iPhone app — every feature included for the first two recorded hours. Download: https://apps.apple.com/app/id6789669565
 
 ## Company Facts
 

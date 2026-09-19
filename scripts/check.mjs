@@ -35,6 +35,8 @@ const requiredFiles = [
   "assets/bastcare/screens/share-1-0-9.jpg",
   "assets/bastcare/screens/share-review-1-0-9.jpg",
   "assets/bastcare/screens/shared-1-0-9.jpg",
+  "assets/bastcare/media/bastcare-1-0-10-release.m4v",
+  "assets/bastcare/media/bastcare-1-0-10-release-poster.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
   "assets/advisory.css",
@@ -391,7 +393,8 @@ assertIncludes(platformHtml, 'href="/assets/styles.css?v=', "versioned Platform 
 assertIncludes(platformHtml, 'href="/assets/platform.css?v=', "versioned Platform stylesheet");
 assertIncludes(platformHtml, 'src="/assets/site.js?v=', "versioned Platform behavior");
 assertExcludes(platformHtml, 'href="/assets/platform.css"', "unversioned Platform stylesheet");
-assertIncludes(platformHtml, "AI infrastructure a CFO can defend.", "CFO-led Platform headline");
+assertIncludes(platformHtml, "Stable AI products, built to keep getting better.", "outcome-led Platform headline");
+assertIncludes(platformHtml, "Bast Agent OS", "public Agent OS name");
 assertIncludes(platformHtml, "The architecture is the business case.", "Platform business-case framing");
 assertIncludes(platformHtml, "Commit history helps us find change", "Platform evidence contract");
 assertIncludes(platformHtml, "Full detect-remediate-verify-rollback autonomy remains an explicit target", "bounded self-healing language");
@@ -409,6 +412,8 @@ for (const [contents, label] of [
   assertIncludes(contents, 'href="/platform/demo/"', `${label} demo link`);
 }
 assertIncludes(platformArchitectureHtml, "one microservice per agent remains a direction", "bounded agent microservice language");
+assertIncludes(platformArchitectureHtml, "BastCare on the new AWS path", "current BastCare delivery path");
+assertIncludes(platformArchitectureHtml, "Retire the remaining Duplo estate", "bounded Duplo transition language");
 assertIncludes(platformArchitectureHtml, "detect, remediate within bounds, verify recovery", "self-healing definition");
 assertIncludes(platformEvidenceHtml, "BAST-AGENT-001", "evidence claim identifier");
 assertIncludes(platformEvidenceHtml, "Review needed", "publication review state");
@@ -478,12 +483,16 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-assertIncludes(bastcareHome, "New in BastCare 1.0.9", "BastCare 1.0.9 release hero");
-assertIncludes(bastcareHome, "A fresh look. Care that speaks your language.", "BastCare translation headline");
+assertIncludes(bastcareHome, "BastCare 1.0.10 · Now rolling out", "BastCare 1.0.10 release hero");
+assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
+assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
+assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");
+assertIncludes(bastcareHome, "How this summary was made", "BastCare source view");
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
-assertIncludes(bastcareHome, "Tests passed for 1.0.9", "BastCare release-gate proof metric");
-assertIncludes(bastcareHome, "Built by people. Accelerated by machines.", "BastCare human-machine iteration story");
-assertIncludes(bastcareHome, "two to three a day", "BastCare build cadence");
+assertIncludes(bastcareHome, "Albanian", "BastCare Albanian support");
+assertIncludes(bastcareHome, "German", "BastCare German support");
+assertIncludes(bastcareHome, "bastcare-1-0-10-release.m4v", "BastCare 1.0.10 release video");
+assertIncludes(bastcareHome, "bastcare-1-0-10-release-poster.jpg", "BastCare 1.0.10 release poster");
 for (const screen of [
   "home-1-0-9.jpg",
   "visits-1-0-9.jpg",
@@ -499,6 +508,8 @@ for (const screen of [
 assertExcludes(bastcareHome, "build-51", "stale Build 51 BastCare walkthrough screen");
 assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
 assertIncludes(bastcareHome, "Real help. In their words.", "BastCare review carousel headline");
+assertIncludes(bastcareHome, "This app is a Godsend", "featured Australian review title");
+assertIncludes(bastcareHome, "yessireebob", "featured Australian reviewer attribution");
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
