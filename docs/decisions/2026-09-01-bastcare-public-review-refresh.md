@@ -18,8 +18,9 @@ and preserves the last successfully deployed snapshot if Apple is unavailable.
 
 - Rating average and count come from Apple's lookup response for App Store ID
   6789669565 and bundle ID ai.bast.careloop.
-- Review title, public reviewer handle, rating, app version, date, and an
-  excerpt of at most 24 words come from Apple's public customer-review feed.
+- Review title, rating, app version, date, and an excerpt of at most 24 words
+  come from Apple's public customer-review feed. Public account handles are
+  deliberately omitted from the generated website snapshot.
 - The collector rejects mismatched app identity, malformed counts, invalid
   ratings, oversized responses, duplicate reviews, and an unexpectedly empty
   review feed.

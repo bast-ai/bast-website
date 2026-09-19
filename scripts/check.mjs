@@ -85,6 +85,13 @@ const forbidden = [
   "__ROBOTS_META__",
   // Wrong legal entity name — the registered entity is "Bast, Inc." (decision 2026-08-28).
   "Bast AI, Inc.",
+  // Public review handles reduce credibility and are intentionally omitted from site output.
+  "yessireebob",
+  "Circe-QQ",
+  "TaylorMcLemore",
+  "Ghent Dalgliesh",
+  "wipkmm",
+  "MapleFan2",
 ];
 
 async function exists(relPath) {
@@ -436,6 +443,7 @@ assertIncludes(siteJs, 'fetch("/assets/data/bastcare-reviews.json"', "privacy-sa
 assertIncludes(siteJs, 'setupBastCareReviewCarousel', "accessible App Store review carousel behavior");
 assertExcludes(siteJs, 'https://itunes.apple.com/', "browser-side Apple review request");
 if (bastcareReviews.schemaVersion !== 1 ||
+    bastcareReviews.reviews?.some((review) => Object.hasOwn(review, "author")) ||
     bastcareReviews.app?.id !== 6789669565 ||
     typeof bastcareReviews.rating?.average !== "number" ||
     !Number.isSafeInteger(bastcareReviews.rating?.count) ||
@@ -523,10 +531,10 @@ assertExcludes(bastcareHome, "build-51", "stale Build 51 BastCare walkthrough sc
 assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
 assertIncludes(bastcareHome, "Real help. In their words.", "BastCare review carousel headline");
 assertIncludes(bastcareHome, "This app is a Godsend", "featured Australian review title");
-assertIncludes(bastcareHome, "yessireebob", "featured Australian reviewer attribution");
+assertIncludes(bastcareHome, "Verified Australian App Store review", "featured Australian review attribution");
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
-assertIncludes(bastcareHome, "MapleFan2", "BastCare public reviewer attribution");
+assertIncludes(bastcareHome, "Verified App Store review", "BastCare review source attribution");
 assertIncludes(bastcareHome, "8 ratings", "BastCare App Store rating count fallback");
 assertIncludes(bastcareHome, "5 written reviews", "BastCare written review count fallback");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");

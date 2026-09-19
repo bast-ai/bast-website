@@ -62,6 +62,7 @@ class BastCareReviewCollectorTests(unittest.TestCase):
         self.assertEqual(result["reviews"][0]["updatedAt"], "2026-08-28T21:33:21Z")
         self.assertNotIn("results", result)
         self.assertNotIn("content", result["reviews"][0])
+        self.assertNotIn("author", result["reviews"][0])
 
     def test_truncates_review_excerpt_at_word_boundary(self):
         body = " ".join(f"word{index}" for index in range(30))
