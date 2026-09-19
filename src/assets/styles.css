@@ -4827,8 +4827,10 @@ h1 span {
   }
 
   .bastcare-review-card {
+    min-width: 0;
     min-height: 360px;
-    flex-basis: min(84vw, 360px);
+    flex: 0 0 100%;
+    scroll-snap-stop: always;
   }
 }
 
