@@ -4808,6 +4808,14 @@ h1 span {
 }
 
 @media (max-width: 660px) {
+  .bastcare-review-featured {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--bast-space-5);
+    align-items: start;
+  }
+
+  .bastcare-review-featured blockquote { grid-row: auto; }
+
   .bastcare-reviews-header {
     align-items: flex-start;
     flex-direction: column;
