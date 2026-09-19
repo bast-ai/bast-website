@@ -125,9 +125,6 @@ def build_public_document(
         review_id = _required_text(_label(entry.get("id")), maximum=80)
         if review_id in seen_ids:
             continue
-        author = entry.get("author")
-        if not isinstance(author, dict):
-            raise ValueError("review author is missing")
         review_rating_text = _label(entry.get("im:rating"))
         if not review_rating_text.isdigit():
             raise ValueError("review rating is invalid")
@@ -139,7 +136,6 @@ def build_public_document(
             "id": review_id,
             "title": _required_text(_label(entry.get("title")), maximum=180),
             "excerpt": _excerpt(body),
-            "author": _required_text(_label(author.get("name")), maximum=120),
             "rating": review_rating,
             "version": _required_text(_label(entry.get("im:version")), maximum=32),
             "updatedAt": _utc_timestamp(_label(entry.get("updated"))),

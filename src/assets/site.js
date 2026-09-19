@@ -232,7 +232,6 @@
       typeof review.id === "string" && review.id.length > 0 &&
       typeof review.title === "string" && review.title.length > 0 &&
       typeof review.excerpt === "string" && review.excerpt.length > 0 &&
-      typeof review.author === "string" && review.author.length > 0 &&
       Number.isSafeInteger(review.rating) && review.rating >= 1 && review.rating <= 5 &&
       typeof review.version === "string" && review.version.length > 0 &&
       typeof review.updatedAt === "string"
@@ -284,13 +283,7 @@
 
     const meta = document.createElement("p");
     meta.className = "bastcare-review-meta";
-    const author = document.createElement("strong");
-    author.textContent = review.author;
-    const separator = document.createElement("span");
-    separator.setAttribute("aria-hidden", "true");
-    separator.textContent = "·";
-    const source = document.createTextNode(" App Store · Version " + review.version);
-    meta.append(author, separator, source);
+    meta.textContent = "Verified App Store review · Version " + review.version;
 
     card.append(headingGroup, quote, meta);
     return card;
