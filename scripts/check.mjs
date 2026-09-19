@@ -483,7 +483,7 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-assertIncludes(bastcareHome, "BastCare 1.0.10 · Now rolling out", "BastCare 1.0.10 release hero");
+assertIncludes(bastcareHome, "BastCare 1.0.10 · Now available", "BastCare 1.0.10 release hero");
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
 assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
 assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");

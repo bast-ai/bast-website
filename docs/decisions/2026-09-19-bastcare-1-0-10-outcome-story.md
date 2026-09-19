@@ -12,7 +12,7 @@ Lead the public BastCare story with the caregiver and patient outcome: be presen
 - Introduce **How This Summary Was Made** as a visible source check: the transcript is the source, and the product shows the words behind a key point and the matching moment when available.
 - Reveal enough to create confidence and curiosity without publishing proprietary implementation details or model-internal reasoning.
 - Say BastCare is free to download and that every feature is included for the first two recorded hours.
-- Present 1.0.10 as “Now rolling out” while storefront propagation differs by country.
+- Present 1.0.10 as “Now available.” Apple's live U.S. product page showed Version 1.0.10 on 2026-09-19; do not use the legacy lookup API alone to determine release availability.
 - Feature the verified Australian review separately from the automated U.S. review feed.
 
 ## Marketing boundary
