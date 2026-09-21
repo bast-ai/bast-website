@@ -702,7 +702,7 @@
 }
 
 /* Inside the ink band the muted colour has to be light, not dark. */
-.stat .stat-note { color: rgba(255, 255, 255, 0.45); }
+.stat .stat-note { color: rgba(255, 255, 255, 0.68); }
 
 /* ---------- three-up rows ------------------------------------------------ */
 .row3 {
@@ -1255,7 +1255,7 @@
     --surface: #ffffff;
     --card-face: #ffffff;
     --quiet: #52636c;
-    --quieter: #748189;
+    --quieter: #5f6f77; /* AA-safe on the advisory screen canvas */
     --line: #d7dde1;
     --line-subtle: #e8ecef;
     --radius: 8px;
