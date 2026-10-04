@@ -44,3 +44,9 @@ no publishing platform is needed.
 Publish through the existing GitHub Actions → GitHub Pages workflow. If the first
 deployment occurs on a later date, update the first-publication date in the HTML
 and metadata before deployment, leaving the manuscript date unchanged.
+
+Sharing metadata uses the first successful Pages deployment completion time,
+`2026-10-04T14:46:32-06:00` (20:46:32 UTC). Keep explicit time-zone offsets on
+publication and modification timestamps: date-only values can be interpreted as
+midnight UTC and displayed as the previous day in link previews. The visible
+manuscript date and sitemap remain calendar dates.
