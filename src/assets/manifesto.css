@@ -46,6 +46,7 @@
 
 .manifesto-art { margin: 0 0 2.5rem; }
 .manifesto-art img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.manifesto-art figcaption { margin-top: 0.75rem; color: var(--quiet); font-size: var(--fs-caption); line-height: 1.65; }
 .manifesto-art-toggle {
   margin-top: 0.65rem;
   padding: 0.5rem 0;

@@ -60,3 +60,6 @@ image metadata. Place the unchanged GIF below the article header, at its origina
 and still. Reduced-motion preferences and browsers without JavaScript default
 to the still. The illustration's supplied text is retained as supplied; manuscript
 paragraphs and the first-publication timestamp remain unchanged.
+
+The figure includes Beth’s supplied attribution verbatim, crediting Robin
+Skjoldborg / Getty Images, Beth’s words, Very Peri inspiration, and AI assistance.
