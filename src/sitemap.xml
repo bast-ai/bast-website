@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>__SITE_URL__/</loc>
-    <lastmod>2026-09-19</lastmod>
+    <lastmod>2026-10-04</lastmod>
   </url>
   <url>
     <loc>__SITE_URL__/platform/</loc>
@@ -78,4 +78,5 @@
     <loc>__SITE_URL__/bastcare/architecture/</loc>
     <lastmod>2026-08-28</lastmod>
   </url>
+  <url><loc>__SITE_URL__/manifesto/</loc><lastmod>2026-10-04</lastmod></url>
 </urlset>

@@ -7,6 +7,8 @@ const requiredFiles = [
   "index.html",
   "investors.html",
   "principles.html",
+  "manifesto/index.html",
+  "assets/manifesto.css",
   "404.html",
   "privacy.html",
   "robots.txt",

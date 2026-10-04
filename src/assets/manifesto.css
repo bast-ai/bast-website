@@ -1,0 +1,45 @@
+/* The manifesto uses Bast's existing editorial palette and self-hosted type. */
+.manifesto {
+  width: min(100% - 48px, 720px);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  overflow-wrap: break-word;
+}
+.manifesto-head { margin-bottom: 3rem; }
+.manifesto-head .eyebrow { font-size: var(--fs-caption); letter-spacing: 0.1em; }
+.manifesto-head h1 {
+  margin: 1.1rem 0 1.4rem;
+  font-size: clamp(2.35rem, 5.6vw, 4rem);
+  font-weight: var(--fw-thin);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+.manifesto-subtitle { font-size: 1.25rem; margin-bottom: 1.5rem; }
+.manifesto-byline, .manifesto-status, .manifesto-edition { color: var(--quiet); font-size: var(--fs-body-sm); }
+.manifesto-status { margin-top: 0.5rem; }
+.manifesto-text { font-size: clamp(1.0625rem, 1.5vw, 1.1875rem); line-height: 1.85; }
+.manifesto-text p { margin: 0 0 1.5em; }
+.manifesto-text h2 {
+  margin: 2.5em 0 1em;
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: var(--fw-light);
+  line-height: 1.3;
+  scroll-margin-top: 2rem;
+}
+.manifesto-text a { color: var(--accent-text); text-underline-offset: 0.2em; }
+.manifesto-opening { font-size: 1.15em; }
+.manifesto-definition { border-left: 3px solid var(--accent-text); padding-left: 1.25rem; }
+.manifesto-text strong { font-weight: var(--fw-semibold); }
+.manifesto-edition { margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.manifesto-note { margin-top: 2rem; color: var(--quiet); font-size: var(--fs-body-sm); line-height: 1.75; }
+.manifesto-note summary { cursor: pointer; padding: 0.75rem 0; color: var(--ink); }
+.manifesto-note summary:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 4px; border-radius: 4px; }
+.manifesto-note[open] summary { margin-bottom: 1rem; }
+.manifesto-note p { margin: 0 0 1rem; }
+@media (max-width: 480px) {
+  .manifesto { width: calc(100% - 40px); }
+}
+@media print {
+  .manifesto-page .site-header, .manifesto-page .site-footer { display: none; }
+  .manifesto { width: 100%; padding: 0; }
+}
