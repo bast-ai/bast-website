@@ -5092,3 +5092,9 @@ h1 span {
     padding-left: 0;
   }
 }
+
+/* A quiet editorial entry for the evolving ontology manifesto. */
+.manifesto-entry .section-heading { max-width: 720px; }
+.manifesto-entry h2 a { text-decoration: none; }
+.manifesto-entry h2 a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
+.manifesto-entry .section-heading > a { color: var(--accent-text); text-underline-offset: 0.2em; }
