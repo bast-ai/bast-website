@@ -50,3 +50,16 @@ Sharing metadata uses the first successful Pages deployment completion time,
 publication and modification timestamps: date-only values can be interpreted as
 midnight UTC and displayed as the previous day in link previews. The visible
 manuscript date and sitemap remain calendar dates.
+
+## Author-supplied artwork — 4 October 2026
+
+Beth supplied `Bast_Data_Belonging_Periwinkle_Organic.png` and its animated GIF.
+Use the unchanged PNG for Open Graph, large-image Twitter cards, and Article
+image metadata. Place the unchanged GIF below the article header, at its original
+16:9 aspect ratio. A keyboard-accessible control switches between the animation
+and still. Reduced-motion preferences and browsers without JavaScript default
+to the still. The illustration's supplied text is retained as supplied; manuscript
+paragraphs and the first-publication timestamp remain unchanged.
+
+The figure includes Beth’s supplied attribution verbatim, crediting Robin
+Skjoldborg / Getty Images, Beth’s words, Very Peri inspiration, and AI assistance.

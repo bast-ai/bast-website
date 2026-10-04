@@ -43,3 +43,22 @@
   .manifesto-page .site-header, .manifesto-page .site-footer { display: none; }
   .manifesto { width: 100%; padding: 0; }
 }
+
+.manifesto-art { margin: 0 0 2.5rem; }
+.manifesto-art img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.manifesto-art figcaption { margin-top: 0.75rem; color: var(--quiet); font-size: var(--fs-caption); line-height: 1.65; }
+.manifesto-art-toggle {
+  margin-top: 0.65rem;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-text);
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+@media print {
+  .manifesto-art-toggle { display: none; }
+}
