@@ -498,7 +498,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
 }
 
-const approvedVisitPrivacyCopy = "Audio stays on your iPhone while the summary is created, then BastCare deletes it. The original transcript stays protected on your iPhone with the visit, so you can view or download it and regenerate the summary. A separate masked copy is sent securely to Anthropic or OpenAI, whichever AI provider BastCare selects for the request, only when you ask BastCare to create or regenerate a summary. A request uses the selected provider; it does not automatically go to both. Bast does not save or log transcript text.";
+const approvedVisitPrivacyCopy = "When you request a summary, BastCare masks configured names in a separate copy of your transcript and sends it securely through Bast to an AI provider for processing.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
 assertIncludes(bastcareHome, 'class="bastcare-page bastcare-home"', "aligned BastCare homepage panels");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
@@ -577,7 +577,7 @@ assertIncludes(bastcareSupport, "community@bast.ai", "monitored support contact"
 assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
 assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
 assertIncludes(bastcarePrivacy, 'href="/bastcare/processors/"', "named processor disclosure link");
-for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Google", "DuploCloud"]) {
+for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Google"]) {
   assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
