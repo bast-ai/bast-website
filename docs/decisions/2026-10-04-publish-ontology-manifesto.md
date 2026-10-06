@@ -63,3 +63,13 @@ paragraphs and the first-publication timestamp remain unchanged.
 
 The figure includes Beth’s supplied attribution verbatim, crediting Robin
 Skjoldborg / Getty Images, Beth’s words, Very Peri inspiration, and AI assistance.
+
+## Editorial revision — 6 October 2026
+
+At Beth’s direction, revise the canonical manifesto through her editorial
+dialogue with Robert W. “Bob” Beth. Integrate his opening and clearer explanations
+while retaining Beth’s explainability definition, accountability for considering
+impact, five source links, and the basis of the Craig Hospital material.
+Mark the revision date while retaining the original publication timestamp and
+fourth-anniversary context. A collapsed editorial-lineage note credits Bob and
+links to his unchanged, author-supplied PDF. The site keeps one current manifesto.

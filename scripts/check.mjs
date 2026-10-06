@@ -12,6 +12,7 @@ const requiredFiles = [
   "assets/manifesto.js",
   "assets/manifesto/data-belonging-periwinkle-organic.png",
   "assets/manifesto/data-belonging-periwinkle-organic.gif",
+  "assets/manifesto/robert-w-beth-manifesto-retold.pdf",
   "404.html",
   "privacy.html",
   "robots.txt",
