@@ -10,11 +10,12 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Key Pages
 
-- [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
+- [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, pilot demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
 - [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
 - [Evidence Register](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries.
+- [Demos](__SITE_URL__/demos/): Pilot demo videos (admin console, knowledge manager, end-user view, healthcare ontology), the BastCare captioned walkthrough, and the ten-minute demo guide. All demos are labeled pilot; none is a production performance claim.
 - [Bast Demo Guide](__SITE_URL__/platform/demo/): Ten-minute path from CFO outcomes through BastCare to architecture and evidence.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
 - [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.

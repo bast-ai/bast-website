@@ -65,6 +65,7 @@ const requiredFiles = [
   "platform/delivery/index.html",
   "platform/evidence/index.html",
   "platform/demo/index.html",
+  "demos/index.html",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
   "bastcare/processors/index.html",
@@ -242,13 +243,14 @@ for (const [contents, label] of [
 ]) {
   const primaryNav = extractPrimaryNav(contents, label);
   const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
-  if (primaryLinkCount !== 3) {
-    throw new Error(`Expected exactly three primary links on ${label} page; found ${primaryLinkCount}`);
+  if (primaryLinkCount !== 4) {
+    throw new Error(`Expected exactly four primary links on ${label} page; found ${primaryLinkCount}`);
   }
+  assertIncludes(primaryNav, 'href="/demos/"', `Demos primary link on ${label} page`);
   assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
   assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
   assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
-  for (const legacyLabel of ["How it works", "Offerings", "Demos", "Principles", "Investors", "Advisory"]) {
+  for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory"]) {
     assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
   }
 }
@@ -604,6 +606,30 @@ for (const internalPhrase of [
   assertExcludes(bastcarePublicCopy, internalPhrase, `internal public copy: ${internalPhrase}`);
 }
 assertIncludes(sitemapXml, "/platform/</loc>", "Bast Platform sitemap route");
+assertIncludes(sitemapXml, "/demos/</loc>", "Demos sitemap route");
+
+// Demos page (decision 2026-10-12): one top-nav home for every demo, all labeled Pilot.
+const demosHtml = await readFile(path.join(distDir, "demos/index.html"), "utf8");
+for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
+  assertIncludes(demosHtml, `data-video-id="${videoId}"`, `demos page video ${videoId}`);
+}
+assertIncludes(demosHtml, "data-demo-player", "demos page click-to-load player");
+assertIncludes(demosHtml, 'src="/assets/site.js?v=', "demos page player behavior");
+assertIncludes(demosHtml, 'href="/platform/demo/"', "demos page demo-guide link");
+assertIncludes(demosHtml, 'href="/bastcare/#bastcare-tour"', "demos page BastCare walkthrough link");
+assertIncludes(demosHtml, 'aria-current="page" href="/demos/"', "demos page current navigation");
+assertIncludes(indexHtml, 'href="/demos/"', "homepage link to the demos page");
+for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
+  assertIncludes(contents, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', `Pilot label on ${label} Lucid demo`);
+  assertIncludes(contents, "pilot deployment", `pilot deployment wording on ${label} page`);
+  assertExcludes(contents, "production analytics", `production claim on ${label} demos`);
+}
+const demoCardCount = (demosHtml.match(/class="demo-card"/g) || []).length;
+const pilotLabelCount = (demosHtml.match(/class="demo-pilot-label">Pilot</g) || []).length;
+if (demoCardCount !== 5 || pilotLabelCount !== demoCardCount) {
+  throw new Error(`Expected five demos each labeled Pilot; found ${demoCardCount} demos and ${pilotLabelCount} labels`);
+}
+
 for (const route of ["architecture", "delivery", "evidence", "demo"]) {
   assertIncludes(sitemapXml, `/platform/${route}/</loc>`, `Platform ${route} sitemap route`);
 }
@@ -638,6 +664,7 @@ assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
 assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");
+assertIncludes(llmsTxt, "/demos/", "llms.txt Demos entry");
 assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame entry");
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
 assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");
