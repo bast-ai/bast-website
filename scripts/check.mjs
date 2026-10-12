@@ -47,16 +47,9 @@ const requiredFiles = [
   "assets/bastcare/media/bastcare-1-0-10-walkthrough-poster.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
-  "assets/advisory.css",
-  "assets/bast-healthcare-advisory.pdf",
-  "assets/bast-eu-ai-act-briefing.pdf",
-  "assets/bast-change-adoption.pdf",
   "assets/bast-narrative.pdf",
   "assets/bast-narrative-cover.png",
   "advisory/index.html",
-  "advisory/healthcare.html",
-  "advisory/eu-ai-act.html",
-  "advisory/change.html",
   ".nojekyll",
   ".well-known/apple-app-site-association",
   "careteam/invite/index.html",
@@ -189,21 +182,13 @@ const platformDemoHtml = await readFile(path.join(distDir, "platform/demo/index.
 const investorsHtml = await readFile(path.join(distDir, "investors.html"), "utf8");
 const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
 const privacyHtml = await readFile(path.join(distDir, "privacy.html"), "utf8");
-const advisoryPages = await Promise.all([
-  "index.html",
-  "healthcare.html",
-  "eu-ai-act.html",
-  "change.html",
-].map((file) => readFile(path.join(distDir, "advisory", file), "utf8")));
-const advisoryIndexHtml = advisoryPages[0];
+const advisoryArchiveStub = await readFile(path.join(distDir, "advisory/index.html"), "utf8");
 const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-consent.js"), "utf8");
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
 const platformCss = await readFile(path.join(distDir, "assets/platform.css"), "utf8");
-const advisoryCss = await readFile(path.join(distDir, "assets/advisory.css"), "utf8");
 assertBalancedCssBlocks(siteCss, "site stylesheet");
 assertBalancedCssBlocks(platformCss, "platform stylesheet");
-assertBalancedCssBlocks(advisoryCss, "advisory stylesheet");
 assertIncludes(siteCss, ".outcome-stat .case-badge", "readable homepage case-study badge override");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
@@ -370,33 +355,23 @@ for (const [contents, label] of [
   assertExcludes(contents, 'href="/advisory/"', `public Advisory link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/"', `public BastCare link on ${label} page`);
 }
-for (const contents of advisoryPages) {
-  assertIncludes(contents, '<meta name="robots" content="noindex, nofollow">', "Advisory noindex directive");
-  assertIncludes(contents, '<body class="advisory-site">', "Advisory visual scope");
-  const primaryNav = extractPrimaryNav(contents, "advisory");
-  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
-  if (primaryLinkCount !== 2) {
-    throw new Error(`Expected exactly two primary links on advisory page; found ${primaryLinkCount}`);
-  }
-  assertIncludes(primaryNav, "Advisory", "Advisory primary link");
-  assertIncludes(primaryNav, "Contact", "Advisory contact link");
-  for (const legacyLabel of ["How it works", "Offerings", "Demos", "Principles", "Investors"]) {
-    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} advisory primary link`);
-  }
+// Advisory pages are archived (decision 2026-10-12): only a noindex stub remains.
+assertIncludes(advisoryArchiveStub, '<meta name="robots" content="noindex, nofollow">', "Advisory archive stub noindex");
+assertIncludes(advisoryArchiveStub, 'http-equiv="refresh" content="5; url=/"', "Advisory archive stub redirect");
+assertIncludes(advisoryArchiveStub, "Bast Advisory pages have been archived.", "Advisory archive notice");
+for (const archived of [
+  "advisory/healthcare.html",
+  "advisory/eu-ai-act.html",
+  "advisory/change.html",
+  "assets/advisory.css",
+  "assets/bast-healthcare-advisory.pdf",
+  "assets/bast-eu-ai-act-briefing.pdf",
+  "assets/bast-change-adoption.pdf",
+]) {
+  let published = true;
+  try { await exists(archived); } catch { published = false; }
+  if (published) throw new Error(`Archived advisory file is still published: ${archived}`);
 }
-for (const contents of advisoryPages.slice(1)) {
-  assertIncludes(contents, 'class="button button-primary advisory-subnav-download"', "visible advisory PDF action");
-  assertIncludes(contents, "Talk with Beth", "direct advisory contact action");
-  assertIncludes(contents, "Get the PDF", "plain-language advisory PDF action");
-}
-assertIncludes(advisoryIndexHtml, "AI advice for senior leaders", "direct advisory positioning");
-assertIncludes(advisoryIndexHtml, "where data is private and the stakes are high", "high-stakes operating focus");
-assertIncludes(advisoryIndexHtml, "I advise three organizations at a time", "limited direct advisory capacity");
-assertIncludes(advisoryIndexHtml, 'href="/assets/bast-narrative.pdf"', "advisory narrative PDF link");
-assertIncludes(advisoryIndexHtml, 'src="/assets/bast-narrative-cover.png"', "advisory narrative cover");
-assertIncludes(advisoryIndexHtml, "It knows your information. It shows its sources. Your people stay in charge.", "plain-language advisory point of view");
-assertIncludes(advisoryIndexHtml, 'id="contact"', "advisory contact section");
-assertIncludes(advisoryIndexHtml, "Bring me one hard AI decision.", "advisory contact invitation");
 
 assertIncludes(indexHtml, 'window.location.pathname.endsWith("/index.html")', "canonical homepage redirect");
 assertIncludes(indexHtml, 'href="assets/styles.css?v=', "versioned homepage stylesheet");
@@ -711,6 +686,11 @@ for (const file of files) {
   }
 
   const contents = await readFile(file, "utf8");
+  if (path.extname(file) === ".html" &&
+      path.relative(distDir, file) !== path.join("advisory", "index.html") &&
+      /href="(?:https:\/\/www\.bast\.ai)?\/advisory\//.test(contents)) {
+    throw new Error(`Link to archived /advisory/ found in ${path.relative(root, file)}`);
+  }
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
   }
