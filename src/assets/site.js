@@ -246,8 +246,10 @@
       rating.average >= 0 && rating.average <= 5 &&
       Number.isSafeInteger(rating.count) && rating.count >= 0 &&
       Number.isSafeInteger(rating.writtenReviewCount) &&
-      Array.isArray(reviews) && rating.writtenReviewCount === reviews.length &&
-      rating.count >= reviews.length &&
+      document.app && typeof document.app.version === "string" &&
+      /^[0-9]+(\.[0-9]+){1,3}$/.test(document.app.version) &&
+      Array.isArray(reviews) && rating.count >= reviews.length &&
+      rating.count >= rating.writtenReviewCount &&
       validReviews;
   }
 
@@ -352,7 +354,7 @@
 
   function initBastCareReviews() {
     const sections = Array.from(document.querySelectorAll("[data-bastcare-reviews]"));
-    const ratingOutputs = document.querySelectorAll("[data-bastcare-rating-average], [data-bastcare-rating-count]");
+    const ratingOutputs = document.querySelectorAll("[data-bastcare-rating-average], [data-bastcare-rating-count], [data-bastcare-version]");
     if (!sections.length && !ratingOutputs.length) return;
 
     fetch("/assets/data/bastcare-reviews.json", { cache: "no-store" })
@@ -366,6 +368,11 @@
         const countLabel = ratingCountLabel(reviewDocument.rating.count);
         const writtenLabel = writtenReviewCountLabel(reviewDocument.rating.writtenReviewCount);
 
+        // The build injects the version too; this only matters if Apple ships
+        // a release between deploys. Release notes are never set from Apple.
+        document.querySelectorAll("[data-bastcare-version]").forEach((output) => {
+          output.textContent = reviewDocument.app.version;
+        });
         document.querySelectorAll("[data-bastcare-rating-average]").forEach((output) => {
           output.textContent = average;
         });
@@ -398,7 +405,7 @@
           }
           const note = section.querySelector("[data-bastcare-review-note]");
           if (note) {
-            note.textContent = (generatedLabel ? "Latest verified " + generatedLabel + ". " : "") + "Reviews are from the U.S. App Store.";
+            note.textContent = (generatedLabel ? "Latest verified " + generatedLabel + ". " : "") + "Reviews shown are from the U.S. App Store and approved before publishing.";
           }
           setupBastCareReviewCarousel(section);
         });

@@ -1,0 +1,79 @@
+name: BastCare review queue
+
+# Daily: add new public App Store reviews to data/bastcare-reviews/pending.json
+# and flag App Store version changes, as ONE pull request on a fixed branch.
+# Nothing here publishes a review. Beth approves a review by moving it to
+# approved.json in that PR (or declines it via rejected.json) and merging.
+# See docs/decisions/2026-10-12-bastcare-review-approval-queue.md.
+
+on:
+  schedule:
+    - cron: "41 14 * * *"
+  workflow_dispatch:
+
+# Write access is limited to this workflow; the deploy workflow stays read-only.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bastcare-review-queue
+  cancel-in-progress: false
+
+env:
+  QUEUE_BRANCH: automation/bastcare-review-queue
+
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Start from the open queue branch, if any
+        run: |
+          if git ls-remote --exit-code --heads origin "$QUEUE_BRANCH" >/dev/null; then
+            git fetch origin "$QUEUE_BRANCH"
+            git checkout -B "$QUEUE_BRANCH" "origin/$QUEUE_BRANCH"
+            # Keep the queue branch current with main so the PR stays mergeable.
+            git merge --no-edit origin/main || { git merge --abort; git checkout -B "$QUEUE_BRANCH" origin/main; }
+          else
+            git checkout -B "$QUEUE_BRANCH" origin/main
+          fi
+
+      - name: Fetch Apple's public feeds and update pending.json
+        run: python3 scripts/collect-bastcare-reviews.py --queue --summary "$RUNNER_TEMP/queue-summary.md"
+
+      - name: Open or update the review-queue pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/bastcare-reviews/pending.json && \
+             git diff --quiet origin/main -- data/bastcare-reviews/pending.json; then
+            echo "No new reviews or version changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add data/bastcare-reviews/pending.json
+          git diff --cached --quiet || git commit -m "chore: queue new BastCare App Store reviews for approval"
+          git push origin "HEAD:$QUEUE_BRANCH"
+          {
+            echo "Automated review queue. **Nothing in pending.json is published.**"
+            echo
+            cat "$RUNNER_TEMP/queue-summary.md"
+            echo
+            echo "**To approve** a review, move its entry from \`pending.json\` to \`approved.json\` (add \`approvedAt\`)."
+            echo "**To decline**, move it to \`rejected.json\` so it is never re-proposed."
+            echo "Merging publishes approved reviews on the next deploy."
+          } > "$RUNNER_TEMP/pr-body.md"
+          number=$(gh pr list --head "$QUEUE_BRANCH" --state open --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh pr edit "$number" --body-file "$RUNNER_TEMP/pr-body.md"
+          else
+            gh pr create --base main --head "$QUEUE_BRANCH" \
+              --title "BastCare: App Store reviews waiting for approval" \
+              --body-file "$RUNNER_TEMP/pr-body.md"
+          fi

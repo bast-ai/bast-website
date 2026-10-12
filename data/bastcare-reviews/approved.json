@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "description": "BastCare App Store reviews Beth approved for publication. Only entries here render on bast.ai.",
+  "reviews": [
+    {
+      "id": "14533518123",
+      "storefront": "us",
+      "title": "Thank you",
+      "excerpt": "This is a very, very clever way to use AI in order to keep track of what armies of doctors may be saying around…",
+      "rating": 5,
+      "version": "1.0.8",
+      "updatedAt": "2026-09-10T15:17:27Z",
+      "approvedAt": "2026-10-12",
+      "approvedBy": "Beth (seeded from reviews already live on bast.ai)"
+    },
+    {
+      "id": "14483568506",
+      "storefront": "us",
+      "title": "Privacy and trust - so needed",
+      "excerpt": "In a world full of AI obscurity, I appreciate that BastCare leads with transparency and privacy, especially when it comes to my healthcare data",
+      "rating": 5,
+      "version": "1.0.5",
+      "updatedAt": "2026-08-28T21:33:21Z",
+      "approvedAt": "2026-10-12",
+      "approvedBy": "Beth (seeded from reviews already live on bast.ai)"
+    },
+    {
+      "id": "14479157425",
+      "storefront": "us",
+      "title": "Very helpful",
+      "excerpt": "I’m using this to share notes between my wife and myself for when we take our kids in. This is very useful & keeps…",
+      "rating": 5,
+      "version": "1.0.5",
+      "updatedAt": "2026-08-27T18:28:23Z",
+      "approvedAt": "2026-10-12",
+      "approvedBy": "Beth (seeded from reviews already live on bast.ai)"
+    },
+    {
+      "id": "14473849501",
+      "storefront": "us",
+      "title": "Finally! A way to share the health information my family needs to know",
+      "excerpt": "This app makes all the difference. When my siblings and I got information from Mom about her appointments, it was only as good as…",
+      "rating": 5,
+      "version": "1.0.4",
+      "updatedAt": "2026-08-26T11:15:27Z",
+      "approvedAt": "2026-10-12",
+      "approvedBy": "Beth (seeded from reviews already live on bast.ai)"
+    },
+    {
+      "id": "14451785287",
+      "storefront": "us",
+      "title": "User",
+      "excerpt": "Loved the ease and accuracy to help capture the conversation with my parents and their doctors!",
+      "rating": 5,
+      "version": "1.0.1",
+      "updatedAt": "2026-08-20T18:07:35Z",
+      "approvedAt": "2026-10-12",
+      "approvedBy": "Beth (seeded from reviews already live on bast.ai)"
+    },
+    {
+      "id": "14459797025",
+      "storefront": "au",
+      "placement": "featured",
+      "title": "This app is a Godsend",
+      "excerpt": "Keeping abreast of my Australian mother-in-law’s medical condition from America has been a step-change improvement. The clarity and simplicity of the updates have reduced our stress and frustration immensely.",
+      "rating": 5,
+      "version": "1.0.1",
+      "updatedAt": "2026-08-22T18:59:45Z",
+      "approvedAt": "2026-09-19",
+      "approvedBy": "Beth",
+      "note": "Featured on /bastcare/ as hand-placed HTML (editorially trimmed quote). Verified against Apple's Australian feed; the U.S. refresh never overwrites it and it is not shown in the carousel."
+    }
+  ]
+}
