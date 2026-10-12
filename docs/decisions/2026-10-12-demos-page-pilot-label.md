@@ -14,8 +14,9 @@ Status: Proposed (Beth's direction 2026-10-12; final sign-off is this PR)
   (linked to `/bastcare/#bastcare-tour`, where the video already lives), and the
   ten-minute demo guide at `/platform/demo/`. Descriptions reuse existing copy.
 - Only the Lucid Therapeutics demo carries a **Pilot** label (Beth clarified
-  2026-10-12 that "pilot" applies to Lucid only). It is described as a pilot
-  deployment, and "production analytics" is now "pilot usage analytics".
+  2026-10-12 that "pilot" applies to Lucid only). It is described as "a pilot
+  of Bast applied to Lucid Therapeutics' patient information", replacing
+  "production analytics". No further claim is made.
   The homepage `#demos` section stays and links to `/demos/`.
 
 ## Why

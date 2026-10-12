@@ -621,7 +621,8 @@ assertIncludes(demosHtml, 'aria-current="page" href="/demos/"', "demos page curr
 assertIncludes(indexHtml, 'href="/demos/"', "homepage link to the demos page");
 for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
   assertIncludes(contents, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', `Pilot label on ${label} Lucid demo`);
-  assertIncludes(contents, "pilot deployment", `pilot deployment wording on ${label} page`);
+  assertIncludes(contents, "A pilot of Bast applied to Lucid Therapeutics&rsquo; patient information", `Lucid pilot wording on ${label} page`);
+  assertExcludes(contents, "pilot usage analytics", `superseded Lucid analytics wording on ${label} page`);
   assertExcludes(contents, "production analytics", `production claim on ${label} demos`);
 }
 const demoCardCount = (demosHtml.match(/class="demo-card"/g) || []).length;
