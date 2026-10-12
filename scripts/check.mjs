@@ -608,7 +608,7 @@ for (const internalPhrase of [
 assertIncludes(sitemapXml, "/platform/</loc>", "Bast Platform sitemap route");
 assertIncludes(sitemapXml, "/demos/</loc>", "Demos sitemap route");
 
-// Demos page (decision 2026-10-12): one top-nav home for every demo, all labeled Pilot.
+// Demos page (decision 2026-10-12): one top-nav home for every demo; Lucid labeled Pilot.
 const demosHtml = await readFile(path.join(distDir, "demos/index.html"), "utf8");
 for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
   assertIncludes(demosHtml, `data-video-id="${videoId}"`, `demos page video ${videoId}`);
@@ -626,8 +626,9 @@ for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
 }
 const demoCardCount = (demosHtml.match(/class="demo-card"/g) || []).length;
 const pilotLabelCount = (demosHtml.match(/class="demo-pilot-label">Pilot</g) || []).length;
-if (demoCardCount !== 5 || pilotLabelCount !== demoCardCount) {
-  throw new Error(`Expected five demos each labeled Pilot; found ${demoCardCount} demos and ${pilotLabelCount} labels`);
+// Only the Lucid Therapeutics demo is a pilot (Beth, 2026-10-12).
+if (demoCardCount !== 5 || pilotLabelCount !== 1) {
+  throw new Error(`Expected five demos with only Lucid labeled Pilot; found ${demoCardCount} demos and ${pilotLabelCount} labels`);
 }
 
 for (const route of ["architecture", "delivery", "evidence", "demo"]) {

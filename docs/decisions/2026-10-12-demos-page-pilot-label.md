@@ -1,4 +1,4 @@
-# Demos page in the top navigation; every demo labeled Pilot
+# Demos page in the top navigation; Lucid demo labeled Pilot
 
 Date: 2026-10-12
 Owner: Beth
@@ -13,8 +13,9 @@ Status: Proposed (Beth's direction 2026-10-12; final sign-off is this PR)
   click-to-load embed as the homepage), the BastCare captioned walkthrough
   (linked to `/bastcare/#bastcare-tour`, where the video already lives), and the
   ten-minute demo guide at `/platform/demo/`. Descriptions reuse existing copy.
-- Every demo carries a **Pilot** label. Lucid Therapeutics is described as a
-  pilot deployment, and "production analytics" is now "pilot usage analytics".
+- Only the Lucid Therapeutics demo carries a **Pilot** label (Beth clarified
+  2026-10-12 that "pilot" applies to Lucid only). It is described as a pilot
+  deployment, and "production analytics" is now "pilot usage analytics".
   The homepage `#demos` section stays and links to `/demos/`.
 
 ## Why
@@ -27,5 +28,5 @@ Draft.
 ## Guardrails
 
 `scripts/check.mjs` requires the Demos link in each checked primary nav, five
-Pilot-labeled demos on `/demos/`, pilot wording on the Lucid card, and no
+demos on `/demos/` with only Lucid labeled Pilot, pilot wording on the Lucid card, and no
 "production analytics" on demo surfaces.
