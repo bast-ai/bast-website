@@ -654,6 +654,12 @@ for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
   assertExcludes(contents, "pilot usage analytics", `superseded Lucid analytics wording on ${label} page`);
   assertExcludes(contents, "production analytics", `production claim on ${label} demos`);
 }
+// Beth, 2026-10-12: the Pilot tag and card text carry the pilot status; no
+// louder page-level "not a production deployment" note.
+for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
+  assertExcludes(contents, "demos-pilot-note", `page-level pilot note on ${label}`);
+  assertExcludes(contents, "not a production deployment", `production disclaimer on ${label}`);
+}
 const demoCardCount = (demosHtml.match(/class="demo-card"/g) || []).length;
 const pilotLabelCount = (demosHtml.match(/class="demo-pilot-label">Pilot</g) || []).length;
 // Only the Lucid Therapeutics demo is a pilot (Beth, 2026-10-12).
@@ -683,6 +689,7 @@ for (const route of ["privacy", "processors", "support", "terms", "delete-accoun
 
 // GEO layer: structured data and crawler surfaces (2026-08-28).
 const llmsTxt = await readFile(path.join(distDir, "llms.txt"), "utf8");
+assertExcludes(llmsTxt, "not a production deployment", "production disclaimer in llms.txt");
 const faqHtml = await readFile(path.join(distDir, "faq/index.html"), "utf8");
 const teamHtml = await readFile(path.join(distDir, "team/index.html"), "utf8");
 const frameHtml = await readFile(

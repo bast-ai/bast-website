@@ -31,3 +31,13 @@ Draft.
 `scripts/check.mjs` requires the Demos link in each checked primary nav, five
 demos on `/demos/` with only Lucid labeled Pilot, pilot wording on the Lucid card, and no
 "production analytics" on demo surfaces.
+
+## Update 2026-10-12: quieter pilot status
+
+Beth found the page-level note on `/demos/` ("…not a production deployment")
+too loud. It is removed. The small Pilot tag and the Lucid card description
+("A pilot of Bast applied to Lucid Therapeutics' patient information, shown
+from admin setup to the end-user experience.") carry the pilot status on their
+own. The production boundary stays as an internal note in
+`docs/content-claims.md`. `scripts/check.mjs` blocks the page-level note and
+"not a production deployment" on public demo surfaces and in `llms.txt`.
