@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-15T01:40:19Z",
+  "generatedAt": "2026-10-12T23:17:47Z",
   "storefront": "us",
   "app": {
     "id": 6789669565,
     "bundleId": "ai.bast.careloop",
-    "version": "1.0.9",
+    "version": "1.0.12",
     "appStoreUrl": "https://apps.apple.com/us/app/bastcare/id6789669565"
   },
   "rating": {
     "average": 5.0,
-    "count": 8,
-    "writtenReviewCount": 5
+    "count": 9,
+    "writtenReviewCount": 6
   },
   "reviews": [
     {

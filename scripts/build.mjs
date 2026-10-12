@@ -17,7 +17,31 @@ const assetVersion = (
   Date.now().toString(36)
 ).replace(/[^a-zA-Z0-9._-]/g, "").slice(0, 12) || "local";
 
+// BastCare App Store facts come from the snapshot the deploy job refreshes
+// from Apple just before this build (scripts/collect-bastcare-reviews.py), so
+// no-JS readers and crawlers see the current version and rating in the HTML.
+const bastcareSnapshot = JSON.parse(
+  await readFile(path.join(srcDir, "assets/data/bastcare-reviews.json"), "utf8"),
+);
+const bastcareVersion = bastcareSnapshot.app?.version;
+const bastcareRating = bastcareSnapshot.rating ?? {};
+if (typeof bastcareVersion !== "string" || !/^[0-9]+(\.[0-9]+){1,3}$/.test(bastcareVersion)) {
+  throw new Error("BastCare snapshot has no valid App Store version");
+}
+if (typeof bastcareRating.average !== "number" ||
+    !Number.isSafeInteger(bastcareRating.count) ||
+    !Number.isSafeInteger(bastcareRating.writtenReviewCount)) {
+  throw new Error("BastCare snapshot has no valid App Store rating");
+}
+const countLabel = (count, singular, plural) =>
+  `${count.toLocaleString("en-US")} ${count === 1 ? singular : plural}`;
+
 const replacements = new Map([
+  ["__BASTCARE_VERSION__", bastcareVersion],
+  ["__BASTCARE_RATING_AVERAGE__", bastcareRating.average.toFixed(1)],
+  ["__BASTCARE_RATING_COUNT_LABEL__", countLabel(bastcareRating.count, "rating", "ratings")],
+  ["__BASTCARE_WRITTEN_REVIEW_COUNT_LABEL__",
+    countLabel(bastcareRating.writtenReviewCount, "written review", "written reviews")],
   ["__GA_MEASUREMENT_ID__", gaMeasurementId],
   ["__GA_MEASUREMENT_ID_DISPLAY__", measurementDisplay],
   ["__SITE_ENV__", siteEnv],

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BastCare 1.0.10 - Be in the room</title>
+<title>BastCare __BASTCARE_VERSION__ - Be in the room</title>
 <meta name="description" content="BastCare helps patients and caregivers stay present during a medical visit, then return to a clear summary, the source transcript, and the people they choose. Free to download with every feature included for the first two recorded hours.">
 <meta name="robots" content="__ROBOTS_META__">
 <link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
@@ -26,9 +26,10 @@
       "url": "__SITE_URL__/bastcare/",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "iOS",
+      "softwareVersion": "__BASTCARE_VERSION__",
       "description": "BastCare is a free iPhone app for patients and caregivers. Record a medical visit with everyone's permission, stay present for the conversation, and return to a plain-language summary in one of seven languages. The original transcript stays protected on the iPhone, and How This Summary Was Made connects key points to retained source words. Every feature is included for the first two recorded hours. BastCare is an organization and communication tool, not a medical device.",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "image": "__SITE_URL__/assets/bastcare/media/bastcare-1-0-10-release-poster.jpg",
+      "image": "__SITE_URL__/assets/bastcare/media/bastcare-release-poster.jpg",
       "installUrl": "https://apps.apple.com/app/id6789669565",
       "featureList": [
         "Consent-first visit recording",
@@ -47,8 +48,8 @@
         "@type": "WebPage",
         "@id": "__SITE_URL__/bastcare/",
         "url": "__SITE_URL__/bastcare/",
-        "name": "BastCare 1.0.10 - Be in the room",
-        "dateModified": "2026-09-19",
+        "name": "BastCare __BASTCARE_VERSION__ - Be in the room",
+        "dateModified": "2026-10-12",
         "publisher": { "@id": "__SITE_URL__/#organization" }
       }
     }
@@ -75,7 +76,7 @@
 <main class="bastcare-page bastcare-home" id="main">
   <section class="bastcare-hero bastcare-marketing-hero">
     <div class="bastcare-hero-copy">
-      <p class="eyebrow">BastCare 1.0.10 · Now available</p>
+      <p class="eyebrow">BastCare <span data-bastcare-version>__BASTCARE_VERSION__</span> · Now available</p>
       <h1>Be in the room.</h1>
       <p class="lede">There is a lot going on at the doctor&rsquo;s. BastCare holds onto what happened, what matters, and what comes next&mdash;so you can look up, listen, and be there for the person beside you.</p>
       <p class="bastcare-free-offer"><strong>Free to download.</strong> Use every feature for your first two hours of recorded visits. No card required.</p>
@@ -86,8 +87,8 @@
       </div>
     </div>
     <figure class="bastcare-release-video">
-      <video autoplay muted loop playsinline controls preload="metadata" poster="/assets/bastcare/media/bastcare-1-0-10-release-poster.jpg" aria-label="BastCare 1.0.10 App Store release announcement">
-        <source src="/assets/bastcare/media/bastcare-1-0-10-release.m4v" type="video/x-m4v">
+      <video autoplay muted loop playsinline controls preload="metadata" poster="/assets/bastcare/media/bastcare-release-poster.jpg" aria-label="BastCare App Store release announcement">
+        <source src="/assets/bastcare/media/bastcare-release.m4v" type="video/x-m4v">
       </video>
       <figcaption>Improved with new features. Available on the App Store.</figcaption>
     </figure>
@@ -129,9 +130,21 @@
     <p class="bastcare-translation-note">BastCare translates the saved summary, not the recording or the app interface. AI-generated summaries and translations may contain errors; check important details.</p>
   </section>
 
+  <!-- Release notes are hand-approved copy. They do not change when Apple ships a
+       new version; the review-queue workflow flags when this version is behind. -->
+  <section class="bastcare-release-notes" aria-labelledby="bastcare-release-notes-title" data-bastcare-release-notes-version="1.0.12">
+    <p class="eyebrow">What&rsquo;s new in 1.0.12</p>
+    <h2 id="bastcare-release-notes-title">Smoother recording.</h2>
+    <ul>
+      <li>You can start another visit while the summary from your last recording is still being prepared.</li>
+      <li>Plus features are included for now while we improve subscriptions.</li>
+      <li>If you already subscribe, you can still restore your purchase and manage your subscription in your Apple account.</li>
+    </ul>
+  </section>
+
   <section class="bastcare-lineage" aria-labelledby="bastcare-lineage-title">
     <div class="bastcare-lineage-copy">
-      <p class="eyebrow">New in 1.0.10</p>
+      <p class="eyebrow">Check the source</p>
       <h2 id="bastcare-lineage-title">See where a key point came from.</h2>
       <p>How This Summary Was Made places the summary wording beside the source words and points back to the matching place in the saved transcript when timing is available.</p>
       <p>It is a simple way to check an important detail, feel confident sharing it, and glimpse the personalized, patient-held intelligence Bast is building toward.</p>
@@ -164,9 +177,9 @@
         <p class="bastcare-walkthrough-note">The walkthrough is silent and captioned. Press play when you are ready.</p>
       </div>
       <div class="bastcare-walkthrough-video-shell">
-        <video controls playsinline preload="metadata" poster="/assets/bastcare/media/bastcare-1-0-10-walkthrough-poster.jpg" aria-describedby="bastcare-walkthrough-description">
-          <source src="/assets/bastcare/media/bastcare-1-0-10-walkthrough-captioned.mp4" type="video/mp4">
-          <p>Your browser cannot play this walkthrough. <a href="/assets/bastcare/media/bastcare-1-0-10-walkthrough-captioned.mp4">Download the captioned BastCare walkthrough</a>.</p>
+        <video controls playsinline preload="metadata" poster="/assets/bastcare/media/bastcare-walkthrough-poster.jpg" aria-describedby="bastcare-walkthrough-description">
+          <source src="/assets/bastcare/media/bastcare-walkthrough-captioned.mp4" type="video/mp4">
+          <p>Your browser cannot play this walkthrough. <a href="/assets/bastcare/media/bastcare-walkthrough-captioned.mp4">Download the captioned BastCare walkthrough</a>.</p>
         </video>
       </div>
     </div>
@@ -186,35 +199,35 @@
 
     <div class="bastcare-tour-track" data-tour-track tabindex="0" aria-label="BastCare screen walkthrough">
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/home-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 home screen with the refreshed navigation and private visit overview"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/home-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare home screen with the refreshed navigation and private visit overview"></div>
         <div class="bastcare-tour-copy"><span>01</span><h3>Start somewhere calmer</h3><p>The refreshed home screen keeps your next action clear and your private visits close at hand.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/visits-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 My Visits screen organizing private visit summaries in the refreshed design"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/visits-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare My Visits screen organizing private visit summaries in the refreshed design"></div>
         <div class="bastcare-tour-copy"><span>02</span><h3>Find every visit</h3><p>My Visits brings each saved conversation into a cleaner view that is easy to scan and revisit.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/summary-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 visit summary showing the useful parts of a fictional medical visit"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/summary-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare visit summary showing the useful parts of a fictional medical visit"></div>
         <div class="bastcare-tour-copy"><span>03</span><h3>Keep the useful parts</h3><p>Your plain-language summary makes the important details easier to return to after the visit.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/translate-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 summary language control offering English, Korean, Simplified Chinese, Vietnamese, and Colombian Spanish"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/translate-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare summary language control offering English, Korean, Simplified Chinese, Vietnamese, and Colombian Spanish"></div>
         <div class="bastcare-tour-copy"><span>04</span><h3>Read it in your language</h3><p>Translate a saved summary into English, Korean, Simplified Chinese, Vietnamese, Colombian Spanish, Albanian, or German.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/export-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 visit detail with controls to view or export the original transcript"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/export-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare visit detail with controls to view or export the original transcript"></div>
         <div class="bastcare-tour-copy"><span>05</span><h3>Take a copy with you</h3><p>View or export the original transcript when you need the source alongside the summary.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/share-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 sharing controls for choosing a CareTeam and what to share"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/share-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare sharing controls for choosing a CareTeam and what to share"></div>
         <div class="bastcare-tour-copy"><span>06</span><h3>Choose the sharing boundary</h3><p>Select the CareTeam and the version of the summary you want to share. Keeping it private is always valid.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/share-review-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 share review showing exactly what a chosen CareTeam will receive"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/share-review-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare share review showing exactly what a chosen CareTeam will receive"></div>
         <div class="bastcare-tour-copy"><span>07</span><h3>Review before sharing</h3><p>See exactly what your CareTeam will receive before you share the summary.</p></div>
       </article>
       <article class="bastcare-tour-card">
-        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/shared-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare 1.0.9 Shared screen showing a fictional visit received through a CareTeam"></div>
+        <div class="bastcare-screen-frame"><img src="/assets/bastcare/screens/shared-1-0-9.jpg" width="660" height="1434" loading="lazy" alt="BastCare Shared screen showing a fictional visit received through a CareTeam"></div>
         <div class="bastcare-tour-copy"><span>08</span><h3>Stay together after the visit</h3><p>Shared keeps CareTeam visits in one clear place, with the language chosen for that share preserved.</p></div>
       </article>
     </div>
@@ -235,12 +248,12 @@
       <div class="bastcare-reviews-heading">
         <p class="eyebrow">Loved on the App Store</p>
         <h2 id="bastcare-reviews-title">Real help. In their words.</h2>
-        <div class="bastcare-rating-row" data-bastcare-rating-line aria-label="5 out of 5 stars from 8 App Store ratings">
+        <div class="bastcare-rating-row" data-bastcare-rating-line aria-label="__BASTCARE_RATING_AVERAGE__ out of 5 stars from __BASTCARE_RATING_COUNT_LABEL__ on the App Store">
           <span class="bastcare-stars" aria-hidden="true">★★★★★</span>
-          <strong data-bastcare-rating-average>5.0</strong>
-          <span>from <span data-bastcare-rating-count>8 ratings</span> <span aria-hidden="true">&middot;</span> <span data-bastcare-written-review-count>5 written reviews</span></span>
+          <strong data-bastcare-rating-average>__BASTCARE_RATING_AVERAGE__</strong>
+          <span>from <span data-bastcare-rating-count>__BASTCARE_RATING_COUNT_LABEL__</span> <span aria-hidden="true">&middot;</span> <span data-bastcare-written-review-count>__BASTCARE_WRITTEN_REVIEW_COUNT_LABEL__</span></span>
         </div>
-        <p class="bastcare-review-note" data-bastcare-review-note>Latest verified Sep 14, 2026. Reviews are from the U.S. App Store.</p>
+        <p class="bastcare-review-note" data-bastcare-review-note>Reviews shown are from the U.S. App Store and approved before publishing.</p>
       </div>
       <a class="bastcare-review-source" href="https://apps.apple.com/app/id6789669565" data-bastcare-review-source data-app-store-placement="reviews">Read reviews on the App Store <span aria-hidden="true">&rarr;</span></a>
     </div>

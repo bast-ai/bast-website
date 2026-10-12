@@ -41,10 +41,10 @@ const requiredFiles = [
   "assets/bastcare/screens/share-1-0-9.jpg",
   "assets/bastcare/screens/share-review-1-0-9.jpg",
   "assets/bastcare/screens/shared-1-0-9.jpg",
-  "assets/bastcare/media/bastcare-1-0-10-release.m4v",
-  "assets/bastcare/media/bastcare-1-0-10-release-poster.jpg",
-  "assets/bastcare/media/bastcare-1-0-10-walkthrough-captioned.mp4",
-  "assets/bastcare/media/bastcare-1-0-10-walkthrough-poster.jpg",
+  "assets/bastcare/media/bastcare-release.m4v",
+  "assets/bastcare/media/bastcare-release-poster.jpg",
+  "assets/bastcare/media/bastcare-walkthrough-captioned.mp4",
+  "assets/bastcare/media/bastcare-walkthrough-poster.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
   "assets/bast-narrative.pdf",
@@ -83,6 +83,10 @@ const forbidden = [
   "__SITE_ENV__",
   "__SITE_URL__",
   "__ROBOTS_META__",
+  "__BASTCARE_VERSION__",
+  "__BASTCARE_RATING_AVERAGE__",
+  "__BASTCARE_RATING_COUNT_LABEL__",
+  "__BASTCARE_WRITTEN_REVIEW_COUNT_LABEL__",
   // Wrong legal entity name — the registered entity is "Bast, Inc." (decision 2026-08-28).
   "Bast AI, Inc.",
   // Public review handles reduce credibility and are intentionally omitted from site output.
@@ -431,9 +435,48 @@ if (bastcareReviews.schemaVersion !== 1 ||
     typeof bastcareReviews.rating?.average !== "number" ||
     !Number.isSafeInteger(bastcareReviews.rating?.count) ||
     !Array.isArray(bastcareReviews.reviews) ||
-    bastcareReviews.reviews.length !== bastcareReviews.rating?.writtenReviewCount ||
+    !Number.isSafeInteger(bastcareReviews.rating?.writtenReviewCount) ||
+    bastcareReviews.reviews.length > bastcareReviews.rating.count ||
+    !/^[0-9]+(\.[0-9]+){1,3}$/.test(bastcareReviews.app?.version ?? "") ||
     bastcareReviews.reviews.length < 1) {
   throw new Error("Invalid BastCare App Store review snapshot");
+}
+
+// Review approval queue (decision 2026-10-12): only approved review text ships.
+const reviewQueue = Object.fromEntries(await Promise.all(
+  ["approved", "pending", "rejected"].map(async (name) => {
+    const document = JSON.parse(await readFile(
+      path.join(root, "data/bastcare-reviews", `${name}.json`), "utf8"));
+    if (document.schemaVersion !== 1 || !Array.isArray(document.reviews)) {
+      throw new Error(`Invalid BastCare review queue file: ${name}.json`);
+    }
+    return [name, document.reviews];
+  })));
+const approvedReviewIds = new Set(reviewQueue.approved.map((review) => review.id));
+for (const [name, reviews] of Object.entries(reviewQueue)) {
+  for (const review of reviews) {
+    if (name !== "approved" && approvedReviewIds.has(review.id)) {
+      throw new Error(`BastCare review ${review.id} is both approved and ${name}`);
+    }
+  }
+}
+for (const review of bastcareReviews.reviews) {
+  if (!approvedReviewIds.has(review.id)) {
+    throw new Error(`Unapproved BastCare review ${review.id} in public snapshot`);
+  }
+}
+const bastcarePublicReviewOutput = [
+  JSON.stringify(bastcareReviews),
+  await readFile(path.join(distDir, "bastcare/index.html"), "utf8"),
+  await readFile(path.join(distDir, "index.html"), "utf8"),
+].join("\n");
+for (const review of [...reviewQueue.pending, ...reviewQueue.rejected]) {
+  if (review.excerpt) {
+    assertExcludes(bastcarePublicReviewOutput, review.excerpt, `unapproved BastCare review text (${review.id})`);
+  }
+}
+if (!reviewQueue.approved.some((review) => review.placement === "featured" && review.title === "This app is a Godsend")) {
+  throw new Error("Featured Australian review is not recorded in approved.json");
 }
 if (bastcareMetrics.schemaVersion !== 1 ||
     !Number.isSafeInteger(bastcareMetrics.metrics?.successfulSummaries) ||
@@ -484,7 +527,18 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-assertIncludes(bastcareHome, "BastCare 1.0.10 · Now available", "BastCare 1.0.10 release hero");
+const bastcareVersionTag = `BastCare <span data-bastcare-version>${bastcareReviews.app.version}</span> · Now available`;
+assertIncludes(bastcareHome, bastcareVersionTag, "BastCare App Store version in release hero");
+assertIncludes(indexHtml, bastcareVersionTag, "BastCare App Store version on Bast home");
+assertIncludes(bastcareHome, `<title>BastCare ${bastcareReviews.app.version} - Be in the room</title>`, "BastCare versioned page title");
+assertIncludes(bastcareHome, `"softwareVersion": "${bastcareReviews.app.version}"`, "BastCare structured-data version");
+assertIncludes(bastcareHome, "data-bastcare-release-notes-version=", "hand-approved BastCare release notes marker");
+for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]]) {
+  assertExcludes(contents, "1.0.10", `hardcoded BastCare 1.0.10 on ${label} page`);
+  assertExcludes(contents, 'alt="BastCare 1.0.', `version-specific screenshot alt text on ${label} page`);
+  assertExcludes(contents, 'alt="BastCare Build ', `build-specific screenshot alt text on ${label} page`);
+  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
+}
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
 assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
 assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");
@@ -492,10 +546,10 @@ assertIncludes(bastcareHome, "How this summary was made", "BastCare source view"
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
 assertIncludes(bastcareHome, "Albanian", "BastCare Albanian support");
 assertIncludes(bastcareHome, "German", "BastCare German support");
-assertIncludes(bastcareHome, "bastcare-1-0-10-release.m4v", "BastCare 1.0.10 release video");
-assertIncludes(bastcareHome, "bastcare-1-0-10-release-poster.jpg", "BastCare 1.0.10 release poster");
-assertIncludes(bastcareHome, "bastcare-1-0-10-walkthrough-captioned.mp4", "captioned BastCare 1.0.10 walkthrough");
-assertIncludes(bastcareHome, "bastcare-1-0-10-walkthrough-poster.jpg", "BastCare walkthrough poster");
+assertIncludes(bastcareHome, "bastcare-release.m4v", "BastCare release video");
+assertIncludes(bastcareHome, "bastcare-release-poster.jpg", "BastCare release poster");
+assertIncludes(bastcareHome, "bastcare-walkthrough-captioned.mp4", "captioned BastCare walkthrough");
+assertIncludes(bastcareHome, "bastcare-walkthrough-poster.jpg", "BastCare walkthrough poster");
 assertIncludes(bastcareHome, 'preload="metadata"', "metadata-only walkthrough loading");
 assertIncludes(bastcareHome, "seven-language translation", "carousel translation handoff");
 for (const screen of [
@@ -508,7 +562,7 @@ for (const screen of [
   "share-review-1-0-9.jpg",
   "shared-1-0-9.jpg",
 ]) {
-  assertIncludes(bastcareHome, screen, `BastCare 1.0.9 walkthrough screen: ${screen}`);
+  assertIncludes(bastcareHome, screen, `BastCare walkthrough screen: ${screen}`);
 }
 assertExcludes(bastcareHome, "build-51", "stale Build 51 BastCare walkthrough screen");
 assertExcludes(bastcareHome, "/assets/bastcare/screens/home.webp", "old BastCare home screenshot");
@@ -518,8 +572,8 @@ assertIncludes(bastcareHome, "Verified Australian App Store review", "featured A
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "Verified App Store review", "BastCare review source attribution");
-assertIncludes(bastcareHome, "8 ratings", "BastCare App Store rating count fallback");
-assertIncludes(bastcareHome, "5 written reviews", "BastCare written review count fallback");
+assertIncludes(bastcareHome, `${bastcareReviews.rating.count} ratings`, "BastCare App Store rating count fallback");
+assertIncludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count fallback");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "description": "New App Store reviews waiting for Beth's review. Approve by moving an entry to approved.json; decline by moving its id to rejected.json. Nothing here is published.",
+  "appStoreVersionSeen": "1.0.12",
+  "reviews": [
+    {
+      "id": "14645871725",
+      "storefront": "us",
+      "title": "So helpful",
+      "excerpt": "We are using this app to coordinate on care for our parents out of town. It is an amazing resource.",
+      "rating": 5,
+      "version": "1.0.12",
+      "updatedAt": "2026-10-09T13:32:20Z",
+      "queuedAt": "2026-10-12T23:30:00Z"
+    }
+  ]
+}
