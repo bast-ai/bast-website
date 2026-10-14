@@ -203,6 +203,7 @@ const appleAssociation = await readFile(
   path.join(distDir, ".well-known/apple-app-site-association"), "utf8");
 const careteamInvite = await readFile(
   path.join(distDir, "careteam/invite/index.html"), "utf8");
+const faqHtmlForPlus = await readFile(path.join(distDir, "faq/index.html"), "utf8");
 const bastcareHome = await readFile(
   path.join(distDir, "bastcare/index.html"), "utf8");
 const bastcarePrivacy = await readFile(
@@ -614,6 +615,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
 assertIncludes(bastcareTerms, "BastCare is free to download and includes the first two recorded hours", "current included-hours terms");
+// BastCare Plus is paused (Beth, 2026-10-13; 1.0.12 release notes).
+const plusPaused = "BastCare Plus is paused for now while we improve subscriptions";
+assertIncludes(faqHtmlForPlus, plusPaused, "FAQ BastCare Plus pause");
+assertIncludes(bastcareTerms, plusPaused, "terms BastCare Plus pause");
+assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
 assertIncludes(bastcareDeleteAccount, "Choose Delete BastCare Account", "in-app deletion path");
