@@ -41,8 +41,6 @@ const requiredFiles = [
   "assets/bastcare/screens/share-1-0-9.jpg",
   "assets/bastcare/screens/share-review-1-0-9.jpg",
   "assets/bastcare/screens/shared-1-0-9.jpg",
-  "assets/bastcare/media/bastcare-release.m4v",
-  "assets/bastcare/media/bastcare-release-poster.jpg",
   "assets/bastcare/media/bastcare-walkthrough-captioned.mp4",
   "assets/bastcare/media/bastcare-walkthrough-poster.jpg",
   "assets/data/bastcare-metrics.json",
@@ -547,8 +545,21 @@ assertIncludes(bastcareHome, "How this summary was made", "BastCare source view"
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
 assertIncludes(bastcareHome, "Albanian", "BastCare Albanian support");
 assertIncludes(bastcareHome, "German", "BastCare German support");
-assertIncludes(bastcareHome, "bastcare-release.m4v", "BastCare release video");
-assertIncludes(bastcareHome, "bastcare-release-poster.jpg", "BastCare release poster");
+// The captioned walkthrough replaces the Sept 19 release video in the hero (2026-10-13).
+assertExcludes(bastcareHome, "bastcare-release.m4v", "retired Sept 19 release video");
+assertExcludes(bastcareHome, "bastcare-release-poster.jpg", "retired Sept 19 release poster");
+assertIncludes(bastcareHome, 'id="bastcare-walkthrough"', "BastCare hero walkthrough anchor");
+if ((bastcareHome.match(/<video\b/g) || []).length !== 1) {
+  throw new Error("Expected exactly one video on the BastCare page");
+}
+{
+  const heroVideo = bastcareHome.match(/<figure class="bastcare-release-video[^"]*" id="bastcare-walkthrough">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-walkthrough-captioned\.mp4" type="video\/mp4">/);
+  if (!heroVideo) throw new Error("Missing captioned walkthrough in the BastCare hero");
+  for (const attribute of ["controls", "playsinline", 'poster="/assets/bastcare/media/bastcare-walkthrough-poster.jpg"']) {
+    assertIncludes(heroVideo[1], attribute, `hero walkthrough ${attribute}`);
+  }
+  assertExcludes(heroVideo[1], "autoplay", "autoplaying 43 MB walkthrough");
+}
 assertIncludes(bastcareHome, "bastcare-walkthrough-captioned.mp4", "captioned BastCare walkthrough");
 assertIncludes(bastcareHome, "bastcare-walkthrough-poster.jpg", "BastCare walkthrough poster");
 assertIncludes(bastcareHome, 'preload="metadata"', "metadata-only walkthrough loading");
@@ -651,7 +662,7 @@ for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
 assertIncludes(demosHtml, "data-demo-player", "demos page click-to-load player");
 assertIncludes(demosHtml, 'src="/assets/site.js?v=', "demos page player behavior");
 assertIncludes(demosHtml, 'href="/platform/demo/"', "demos page demo-guide link");
-assertIncludes(demosHtml, 'href="/bastcare/#bastcare-tour"', "demos page BastCare walkthrough link");
+assertIncludes(demosHtml, 'href="/bastcare/#bastcare-walkthrough"', "demos page BastCare walkthrough link");
 assertIncludes(demosHtml, 'aria-current="page" href="/demos/"', "demos page current navigation");
 assertIncludes(indexHtml, 'href="/demos/"', "homepage link to the demos page");
 for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {

@@ -2735,6 +2735,17 @@ h1 span {
   box-shadow: 0 28px 60px rgba(8, 37, 55, 0.2);
 }
 
+.bastcare-hero-walkthrough video {
+  aspect-ratio: 532 / 1280;
+  background: #071e2d;
+  object-fit: contain;
+}
+
+.bastcare-hero-walkthrough figcaption .panel-label {
+  display: block;
+  margin-bottom: var(--bast-space-2);
+}
+
 .bastcare-release-video figcaption {
   max-width: 30ch;
   margin: var(--bast-space-4) auto 0;
