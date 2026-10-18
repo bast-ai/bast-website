@@ -21,6 +21,12 @@ content or layout changes. Use lightweight decision notes in `docs/decisions/`
 when the choice affects hosting, privacy, analytics, positioning, or public
 claims.
 
+This repo is public. Keep internal material out of it: the public-claims
+ledger (evidence, status, owners), vendor reviews, unpublished drafts,
+fundraising, pricing, and local machine paths live in the private
+`bast-ai/ai-workspace` repo under `website/`. Check the claims ledger there
+before adding or changing a public claim.
+
 ## Commands
 
 ```bash

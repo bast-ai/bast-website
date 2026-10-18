@@ -32,7 +32,8 @@ the PDF URLs fall through to the site 404 page.
 ## References
 
 No other page linked to `/advisory/`; it was already noindex and kept out of
-the sitemap and `llms.txt`. `docs/content-claims.md` has no advisory rows.
+the sitemap and `llms.txt`. The claims ledger (private
+`bast-ai/ai-workspace`, `website/content-claims.md`) has no advisory rows.
 Earlier decision notes (2026-08-21, 2026-09-08) and Noviant proposals describe
 the advisory pages as history; this note supersedes them.
 

@@ -10,8 +10,12 @@ Node build script; and a GitHub Actions workflow that publishes to GitHub Pages.
 - `src/` - source HTML, CSS, JavaScript, and assets (`src/CNAME` pins the domain)
 - `scripts/` - local build and repository checks
 - `.github/workflows/` - GitHub Actions build + Pages deploy
-- `docs/content-claims.md` - evidence and owner notes for public claims
+- `docs/deployment*.md` - DNS and GitHub Pages deployment runbooks
 - `docs/decisions/` - lightweight decision records
+
+Internal working material (the public-claims ledger, vendor reviews, drafts,
+and metrics operating notes) lives in the private `bast-ai/ai-workspace` repo
+under `website/`, not here.
 
 ## Local Development
 
