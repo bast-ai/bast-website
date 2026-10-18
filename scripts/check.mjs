@@ -22,6 +22,7 @@ const requiredFiles = [
   "assets/site.js",
   "assets/analytics-consent.js",
   "assets/bast-logo.svg",
+  "assets/og/bast-share.png",
   "assets/platform/admin-interaction-log.jpg",
   "assets/platform/admin-usage-analytics.jpg",
   "assets/bastcare/screens/home-build-51.jpg",
@@ -780,6 +781,41 @@ for (const snippet of requiredPrinciplesSnippets) {
   assertIncludes(principlesHtml, snippet, `principles copy: ${snippet}`);
 }
 assertExcludes(principlesHtml, "Priority stack", "old principles priority stack");
+
+// Share previews (decision 2026-10-18): every sitemap page carries static
+// Open Graph and Twitter tags with an absolute image URL.
+{
+  const siteUrlForShare = process.env.SITE_URL || "https://www.bast.ai";
+  const shareImageBytes = await readFile(path.join(distDir, "assets/og/bast-share.png"));
+  if (shareImageBytes.readUInt32BE(16) !== 1200 || shareImageBytes.readUInt32BE(20) !== 630) {
+    throw new Error("Default share image must be 1200x630");
+  }
+  if (shareImageBytes.length > 300 * 1024) throw new Error("Default share image is over 300 KB");
+  const metaContent = (html, key) =>
+    html.match(new RegExp(`<meta (?:property|name)="${key}" content="([^"]*)"`))?.[1];
+  for (const [, loc] of sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const route = loc.slice(siteUrlForShare.length);
+    const file = route.endsWith("/") ? path.join(route, "index.html") : route;
+    const html = await readFile(path.join(distDir, file), "utf8");
+    for (const key of ["og:title", "og:description", "og:type", "og:url", "og:image",
+      "og:image:width", "og:image:height", "twitter:card", "twitter:title",
+      "twitter:description", "twitter:image"]) {
+      if (!metaContent(html, key)) throw new Error(`Missing ${key} on ${route}`);
+    }
+    for (const key of ["og:image", "twitter:image", "og:url"]) {
+      if (!metaContent(html, key).startsWith(`${siteUrlForShare}/`)) {
+        throw new Error(`${key} on ${route} is not an absolute site URL`);
+      }
+    }
+    if (metaContent(html, "twitter:card") !== "summary_large_image") {
+      throw new Error(`twitter:card on ${route} is not summary_large_image`);
+    }
+    if ((html.match(/<meta property="og:image" /g) || []).length !== 1) {
+      throw new Error(`Expected one og:image on ${route}`);
+    }
+  }
+  assertIncludes(indexHtml, `<meta property="og:image" content="${siteUrlForShare}/assets/og/bast-share.png">`, "default share image on home");
+}
 
 const files = await collectFiles(distDir);
 for (const file of files) {
