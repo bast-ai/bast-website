@@ -749,7 +749,7 @@ assertIncludes(llmsTxt, "/frames/zero-tolerance-ai-output-architecture/", "llms.
 assertIncludes(llmsTxt, "https://github.com/bast-ai", "llms.txt GitHub profile");
 assertIncludes(indexHtml, '"https://github.com/bast-ai"', "Organization GitHub sameAs");
 assertIncludes(indexHtml, '"name": "Bast Platform"', "Organization Bast Platform offer");
-// Gate B1 (2026-09-05): no named customer deployment claim until Beth approves the wording.
+// Gate B1 (2026-09-05; review notes in private bast-ai/ai-workspace website/): no named customer deployment claim until Beth approves the wording.
 assertExcludes(frame2Html, "Lucid Therapeutics", "unapproved customer claim on frame 02");
 // Policy (decision 2026-08-28): frames define categories without naming other vendors.
 for (const vendor of ["OpenAI", "Anthropic", "Galileo", "Arthur AI", "Guardrails AI", "Fiddler", "Arize", "Patronus", "LangChain"]) {

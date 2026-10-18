@@ -23,8 +23,8 @@ Status: Proposed (Beth's direction 2026-10-12; final sign-off is this PR)
 
 Demos were reachable only mid-homepage and from footers, and the demo guide was
 two clicks deep under Platform. The Lucid card's "production" wording outran
-the evidence: `docs/content-claims.md` listed a Lucid production deployment as
-Draft.
+the evidence: the claims ledger (private `bast-ai/ai-workspace`,
+`website/content-claims.md`) listed a Lucid production deployment as Draft.
 
 ## Guardrails
 
@@ -38,6 +38,6 @@ Beth found the page-level note on `/demos/` ("…not a production deployment")
 too loud. It is removed. The small Pilot tag and the Lucid card description
 ("A pilot of Bast applied to Lucid Therapeutics' patient information, shown
 from admin setup to the end-user experience.") carry the pilot status on their
-own. The production boundary stays as an internal note in
-`docs/content-claims.md`. `scripts/check.mjs` blocks the page-level note and
+own. The production boundary stays as an internal note in the claims
+ledger. `scripts/check.mjs` blocks the page-level note and
 "not a production deployment" on public demo surfaces and in `llms.txt`.

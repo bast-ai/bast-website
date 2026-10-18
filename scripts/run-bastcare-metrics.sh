@@ -1,10 +1,22 @@
 #!/bin/sh
 # Cron-safe wrapper for the aggregate-only BastCare metrics collector.
+# Operating notes live in the private bast-ai/ai-workspace repo
+# (website/bastcare-public-metrics.md).
+#
+# BASTCARE_METRICS_ENV_FILE  required: env file holding the API settings
+#                            (kept outside this repository)
+# BASTCARE_METRICS_REPO_DIR  optional: website checkout; defaults to this
+#                            script's repository
 set -eu
 
-REPO_DIR="/Users/bethrudden/bast-website"
-ENV_FILE="/Users/bethrudden/bast-careloop/.env"
+REPO_DIR="${BASTCARE_METRICS_REPO_DIR:-$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)}"
+ENV_FILE="${BASTCARE_METRICS_ENV_FILE:-}"
 LOCK_DIR="/tmp/bastcare-metrics.lock"
+
+if [ -z "$ENV_FILE" ]; then
+  echo "ERROR: set BASTCARE_METRICS_ENV_FILE to the metrics environment file" >&2
+  exit 2
+fi
 
 if [ ! -r "$ENV_FILE" ]; then
   echo "ERROR: metrics environment file is unavailable" >&2
