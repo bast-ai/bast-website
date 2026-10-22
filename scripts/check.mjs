@@ -884,9 +884,12 @@ assertIncludes(pilotHtml, 'href="https://apps.apple.com/app/id6789669565"', "pil
 assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot one-pager download");
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Published findings, not BastCare results.", "pilot research label");
+assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
+assertIncludes(pilotHtml, "Pilot results are measured with the Zarit Burden Interview.", "pilot Zarit fine print");
+assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
 assertIncludes(pilotHtml, "then BastCare deletes it", "pilot audio deletion wording");
 assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
-for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
+for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
 }
 for (const [rel, maxBytes] of [["assets/pilot/beth-and-sister.webp", 250_000], ["assets/pilot/beth-and-sister.jpg", 250_000], ["assets/bastcare-pilot-one-pager.pdf", 600_000]]) {
