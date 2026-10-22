@@ -58,6 +58,11 @@ const requiredFiles = [
   "platform/evidence/index.html",
   "platform/demo/index.html",
   "demos/index.html",
+  "pilot/index.html",
+  "assets/pilot/pilot.css",
+  "assets/pilot/beth-and-sister.webp",
+  "assets/pilot/beth-and-sister.jpg",
+  "assets/bastcare-pilot-one-pager.pdf",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
   "bastcare/processors/index.html",
@@ -861,6 +866,32 @@ for (const file of files) {
       throw new Error(`Forbidden token "${needle}" found in ${path.relative(root, file)}`);
     }
   }
+}
+
+// /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
+// the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
+// counts, Craig Hospital claims, or source-tracing claims; privacy wording
+// matches /bastcare/.
+const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
+const pilotBookHref = 'href="mailto:beth@bast.ai?subject=BastCare%20pilot%20-%2030-minute%20call"';
+assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
+const pilotHeroCta = pilotHtml.indexOf(`<a class="pilot-cta" ${pilotBookHref}>Book a 30-minute call</a>`);
+if (pilotHeroCta < pilotHtml.indexOf('id="book"') || pilotHeroCta > pilotHtml.indexOf("pilot-photo")) {
+  throw new Error("pilot booking CTA must sit in the #book hero, before the photo");
+}
+if (pilotHtml.split(pilotBookHref).length - 1 < 2) throw new Error("pilot page needs a repeated booking CTA");
+assertIncludes(pilotHtml, 'href="https://apps.apple.com/app/id6789669565"', "pilot App Store link");
+assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot one-pager download");
+assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
+assertIncludes(pilotHtml, "Published findings, not BastCare results.", "pilot research label");
+assertIncludes(pilotHtml, "then BastCare deletes it", "pilot audio deletion wording");
+assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
+for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
+  if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
+}
+for (const [rel, maxBytes] of [["assets/pilot/beth-and-sister.webp", 250_000], ["assets/pilot/beth-and-sister.jpg", 250_000], ["assets/bastcare-pilot-one-pager.pdf", 600_000]]) {
+  const { size } = await stat(path.join(distDir, rel));
+  if (size > maxBytes) throw new Error(`${rel} is ${size} bytes; limit ${maxBytes}`);
 }
 
 console.log("Static site checks passed");

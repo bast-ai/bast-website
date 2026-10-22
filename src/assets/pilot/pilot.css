@@ -1,0 +1,73 @@
+/* /pilot/ — standalone, mobile-first page for QR-code visitors. */
+@font-face { font-family: "Estedad"; font-style: normal; font-display: swap; font-weight: 400; src: url("../fonts/estedad-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Estedad"; font-style: normal; font-display: swap; font-weight: 600; src: url("../fonts/estedad-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Estedad"; font-style: normal; font-display: swap; font-weight: 700; src: url("../fonts/estedad-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  --ink: #0d2935;
+  --ink-soft: #24414d;
+  --paper: #f5f7fa;
+  --line: #d7dde1;
+  --accent: #0090cc;
+  --accent-text: #075985;
+  --accent-light: #8fd8f5;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body.pilot { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.125rem/1.55 "Estedad", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.pilot a { color: var(--accent-text); }
+.pilot-skip { position: absolute; left: -9999px; }
+.pilot-skip:focus { left: 1rem; top: 1rem; background: #fff; padding: .5rem 1rem; z-index: 10; }
+
+.pilot-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .875rem 1.25rem; background: #fff; border-bottom: 1px solid var(--line); }
+.pilot-bar img { display: block; height: 34px; width: auto; }
+.pilot-bar p { margin: 0; text-align: right; font-weight: 700; font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1.3; }
+.pilot-bar span { display: block; color: var(--accent-text); font-weight: 600; letter-spacing: .04em; }
+
+main, .pilot-footer { max-width: 40rem; margin: 0 auto; }
+.pilot-hero { background: var(--ink); color: #fff; padding: 1.75rem 1.25rem 1.5rem; }
+.pilot-hero h1 { margin: 0 0 .75rem; font-size: clamp(2rem, 8.4vw, 2.75rem); line-height: 1.12; font-weight: 700; letter-spacing: -.01em; }
+.pilot-hero em { font-style: normal; color: var(--accent-light); }
+.pilot-sub { margin: 0 0 1.25rem; font-size: 1.1875rem; color: #e3edf2; }
+
+.pilot-cta { display: flex; align-items: center; justify-content: center; min-height: 3.5rem; padding: .875rem 1.25rem; border-radius: .75rem; background: var(--accent-light); color: var(--ink) !important; font-weight: 700; font-size: 1.25rem; text-decoration: none; text-align: center; }
+.pilot-cta:hover, .pilot-cta:focus-visible { background: #fff; }
+.pilot-cta-dark { background: var(--accent-text); color: #fff !important; }
+.pilot-cta-dark:hover, .pilot-cta-dark:focus-visible { background: var(--ink); }
+.pilot-secondary { display: flex; align-items: center; justify-content: center; min-height: 3rem; margin-top: .625rem; color: #fff !important; font-weight: 600; text-underline-offset: .2em; }
+.pilot-secondary-dark { color: var(--accent-text) !important; }
+.pilot-photo { display: block; width: 100%; height: auto; margin-top: 1.25rem; border-radius: .75rem; }
+
+.pilot-block { padding: 1.75rem 1.25rem; border-bottom: 1px solid var(--line); background: #fff; }
+.pilot-block h2 { margin: 0 0 1rem; font-size: 1.5rem; line-height: 1.25; font-weight: 700; }
+.pilot-checks, .pilot-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: .875rem; }
+.pilot-checks li, .pilot-steps li { position: relative; padding-left: 2.75rem; min-height: 2rem; display: flex; align-items: center; }
+.pilot-checks li::before { content: "\2713"; position: absolute; left: 0; width: 2rem; height: 2rem; border-radius: 50%; background: var(--accent-text); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 1rem; }
+.pilot-steps { counter-reset: step; }
+.pilot-steps li { counter-increment: step; }
+.pilot-steps li::before { content: counter(step); position: absolute; left: 0; width: 2rem; height: 2rem; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 1rem; }
+
+.pilot-kicker { margin: 0 0 .5rem; font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); }
+.pilot-research { border-left: 6px solid var(--accent-text); }
+.pilot-stat { margin: 0; font-size: 3.5rem; line-height: 1; font-weight: 700; color: var(--accent-text); }
+.pilot-stat-text { margin: .5rem 0; font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
+.pilot-note { margin: 0 0 .75rem; color: var(--ink-soft); }
+.pilot-cite { margin: 0; font-size: .9375rem; color: var(--ink-soft); }
+.pilot-private { background: #e8f3f8; }
+.pilot-private p { margin: 0 0 .75rem; }
+.pilot-private p:last-child { margin: 0; }
+.pilot-private a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 600; }
+.pilot-end { text-align: center; }
+
+.pilot-footer { padding: 1.75rem 1.25rem 2.5rem; background: var(--ink); color: #fff; text-align: center; }
+.pilot-footer p { margin: 0 0 .5rem; }
+.pilot-footer a { color: #fff; display: inline-block; padding: .5rem .125rem; font-weight: 600; }
+.pilot-footer span { color: #8aa3ad; margin: 0 .25rem; }
+.pilot-legal { margin-top: 1rem !important; font-size: .875rem; color: #c4d3da; }
+.pilot-legal button { font: inherit; color: #fff; background: none; border: 0; text-decoration: underline; padding: .5rem; min-height: 2.75rem; cursor: pointer; }
+
+@media (min-width: 48rem) {
+  main, .pilot-footer { margin-top: 0; }
+  .pilot-bar { padding: 1rem 2rem; }
+  .pilot-hero, .pilot-block { padding-left: 2rem; padding-right: 2rem; }
+}
