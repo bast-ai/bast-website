@@ -22,7 +22,7 @@ claims, and no transcript or source-tracing claims. The 17% figure is labelled
 as published findings, not BastCare results: Levoy K et al., Medical Care
 2022;60(7):519-529, 54 RCTs, RR 0.83 (PMID 35679175).
 
-The privacy wording follows `/bastcare/`. The published PDF
+The published PDF
 (`assets/bastcare-pilot-one-pager.pdf`) is the approved v5 one-pager. Its
 privacy line reads "Audio is deleted once the summary is saved. Bast's servers
 don't save the transcript."
@@ -32,3 +32,8 @@ BastCare a free app. Pilot families get free BastCare access during the pilot,
 and pilot results are measured with the Zarit Burden Interview.
 
 `scripts/check.mjs` enforces these rules on the page and checks the asset sizes.
+
+Update 2026-10-22 (later): Beth's edits. The page's "Private by design" text is
+now the PDF's privacy line, word for word, plus a "Privacy policy" link. The fine print keeps only
+the Levoy citation; "Published findings, not BastCare results." and "Pilot
+results are measured with the Zarit Burden Interview." are removed.
