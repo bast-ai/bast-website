@@ -22,11 +22,13 @@ claims, and no transcript or source-tracing claims. The 17% figure is labelled
 as published findings, not BastCare results: Levoy K et al., Medical Care
 2022;60(7):519-529, 54 RCTs, RR 0.83 (PMID 35679175).
 
-The privacy wording follows `/bastcare/`. The one-pager's "No audio or
-transcript is kept" is inaccurate, so the PDF published at
-`assets/bastcare-pilot-one-pager.pdf` is the v5 one-pager re-exported with that
-line replaced: "Audio is deleted once the summary is saved. Bast's servers
-don't save the transcript. Summaries belong to the user. Your organization owns
-its data."
+The privacy wording follows `/bastcare/`. The published PDF
+(`assets/bastcare-pilot-one-pager.pdf`) is the approved v5 one-pager. Its
+privacy line reads "Audio is deleted once the summary is saved. Bast's servers
+don't save the transcript."
+
+Update 2026-10-22: Beth approved revised copy. The page no longer calls
+BastCare a free app. Pilot families get free BastCare access during the pilot,
+and pilot results are measured with the Zarit Burden Interview.
 
 `scripts/check.mjs` enforces these rules on the page and checks the asset sizes.
