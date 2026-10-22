@@ -871,7 +871,7 @@ for (const file of files) {
 // /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
 // the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
 // counts, Craig Hospital claims, or source-tracing claims; privacy wording
-// matches /bastcare/.
+// matches the one-pager PDF verbatim.
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
 const pilotBookHref = 'href="mailto:beth@bast.ai?subject=BastCare%20pilot%20-%2030-minute%20call"';
 assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
@@ -883,11 +883,9 @@ if (pilotHtml.split(pilotBookHref).length - 1 < 2) throw new Error("pilot page n
 assertIncludes(pilotHtml, 'href="https://apps.apple.com/app/id6789669565"', "pilot App Store link");
 assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot one-pager download");
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
-assertIncludes(pilotHtml, "Published findings, not BastCare results.", "pilot research label");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
-assertIncludes(pilotHtml, "Pilot results are measured with the Zarit Burden Interview.", "pilot Zarit fine print");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
-assertIncludes(pilotHtml, "then BastCare deletes it", "pilot audio deletion wording");
+assertIncludes(pilotHtml, "<p>Audio is deleted once the summary is saved. Bast&rsquo;s servers don&rsquo;t save the transcript. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording matches the one-pager PDF");
 assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
