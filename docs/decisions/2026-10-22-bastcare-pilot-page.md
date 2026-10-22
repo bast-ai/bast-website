@@ -37,3 +37,8 @@ Update 2026-10-22 (later): Beth's edits. The page's "Private by design" text is
 now the PDF's privacy line, word for word, plus a "Privacy policy" link. The fine print keeps only
 the Levoy citation; "Published findings, not BastCare results." and "Pilot
 results are measured with the Zarit Burden Interview." are removed.
+
+Update 2026-10-22 (QR): The one-pager PDF now carries a printed booking QR code
+beside its "Book a 30-minute call." band, encoding
+`https://www.bast.ai/pilot/#book`, with "bast.ai/pilot" under it. No other copy
+changed.
