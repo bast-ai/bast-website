@@ -873,7 +873,7 @@ for (const file of files) {
 // counts, Craig Hospital claims, or source-tracing claims; privacy wording
 // matches the one-pager PDF verbatim.
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
-const pilotBookHref = 'href="mailto:beth@bast.ai?subject=BastCare%20pilot%20-%2030-minute%20call"';
+const pilotBookHref = 'href="https://bookings.cloud.microsoft/book/MeetwithBethRudden@bast.ai/s/A-rrdeaqt0e1Y9qQ_L9pSg2" target="_blank" rel="noopener"';
 assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
 const pilotHeroCta = pilotHtml.indexOf(`<a class="pilot-cta" ${pilotBookHref}>Book a 30-minute call</a>`);
 if (pilotHeroCta < pilotHtml.indexOf('id="book"') || pilotHeroCta > pilotHtml.indexOf("pilot-photo")) {
