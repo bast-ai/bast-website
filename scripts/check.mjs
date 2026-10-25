@@ -65,6 +65,7 @@ const requiredFiles = [
   "assets/bastcare-pilot-one-pager.pdf",
   "bastcare/index.html",
   "bastcare/privacy/index.html",
+  "bastcare/privacy-faq/index.html",
   "bastcare/processors/index.html",
   "bastcare/support/index.html",
   "bastcare/terms/index.html",
@@ -212,6 +213,8 @@ const bastcareHome = await readFile(
   path.join(distDir, "bastcare/index.html"), "utf8");
 const bastcarePrivacy = await readFile(
   path.join(distDir, "bastcare/privacy/index.html"), "utf8");
+const bastcarePrivacyFaq = await readFile(
+  path.join(distDir, "bastcare/privacy-faq/index.html"), "utf8");
 const bastcareProcessors = await readFile(
   path.join(distDir, "bastcare/processors/index.html"), "utf8");
 const bastcareSupport = await readFile(
@@ -504,6 +507,7 @@ assertExcludes(careteamInvite, "location.hash", "invitation token parsing in web
 const bastcarePages = [
   [bastcareHome, "home"],
   [bastcarePrivacy, "privacy"],
+  [bastcarePrivacyFaq, "privacy Q&A"],
   [bastcareProcessors, "processors"],
   [bastcareSupport, "support"],
   [bastcareTerms, "terms"],
@@ -515,6 +519,7 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "BastCare", `BastCare name on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/"', `BastCare home link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/privacy/"', `privacy link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/privacy-faq/"', `privacy Q&A link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/processors/"', `processors link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/support/"', `support link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/terms/"', `terms link on ${label} page`);
@@ -706,7 +711,7 @@ for (const route of [
 for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
   assertExcludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
 }
-for (const route of ["privacy", "processors", "support", "terms", "delete-account", "architecture"]) {
+for (const route of ["privacy", "privacy-faq", "processors", "support", "terms", "delete-account", "architecture"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
 }
 
@@ -893,6 +898,30 @@ for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio
 for (const [rel, maxBytes] of [["assets/pilot/beth-and-sister.webp", 250_000], ["assets/pilot/beth-and-sister.jpg", 250_000], ["assets/bastcare-pilot-one-pager.pdf", 600_000]]) {
   const { size } = await stat(path.join(distDir, rel));
   if (size > maxBytes) throw new Error(`${rel} is ${size} bytes; limit ${maxBytes}`);
+}
+
+// /bastcare/privacy-faq/ (Beth, 2026-10-25): approved privacy Q&A copy stays
+// verbatim, the policy links to it, and FAQPage structured data covers it.
+for (const approved of [
+  "<h1>Your data. Your call.</h1>",
+  "Here's how BastCare handles your data, in plain words.",
+  "<p>Audio is deleted once the summary is saved. Bast's servers don't save the transcript. Summaries belong to the user. They stay on your phone until you delete them. We keep only basic technical data that holds no visit content.</p>",
+  "<p>Yes. BastCare is safe for kids. A child's doctor visit should include an adult.</p>",
+  'See the <a href="/bastcare/processors/">provider list</a>.',
+  '<a href="/bastcare/delete-account/">Delete your account</a> anytime in Settings.',
+  'Email <a href="mailto:community@bast.ai">community@bast.ai</a>.',
+]) {
+  assertIncludes(bastcarePrivacyFaq, approved, `approved privacy Q&A copy: ${approved}`);
+}
+if ((bastcarePrivacyFaq.match(/class="faq-item"/g) || []).length !== 11) {
+  throw new Error("privacy Q&A must keep exactly the 11 approved questions");
+}
+assertIncludes(bastcarePrivacyFaq, '"FAQPage"', "privacy Q&A FAQPage structured data");
+assertIncludes(bastcarePrivacy, '<a class="text-link" href="/bastcare/privacy-faq/">Read the privacy Q&amp;A</a>', "policy link to privacy Q&A");
+for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcarePrivacy, "privacy policy"]]) {
+  for (const banned of [/\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i]) {
+    if (banned.test(contents)) throw new Error(`${label} contains banned wording: ${banned}`);
+  }
 }
 
 console.log("Static site checks passed");
