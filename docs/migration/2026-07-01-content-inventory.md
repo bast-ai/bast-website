@@ -11,7 +11,7 @@ Footer adds Case Studies + LinkedIn.
 
 | # | Section | Heading (live) | Notes |
 |---|---------|----------------|-------|
-| Hero | `#Hero` | "Safe AI - Your data, your context, your control" | Sub: "While the world was building to scale, Bast was building a trust layer." Partner logos: Maryville, Simwerx, Craig, Northwestern, Metropolitan. |
+| Hero | `#Hero` | "Safe AI - Your data, your context, your control" | Sub: "While the world was building to scale, Bast was building a trust layer." Partner logos: Maryville, Simwerx, Craig, Northwestern. |
 | Overview | - | "Overview" | Explainable AI on proprietary data; APIs, governance, billing; versioned/auditable pipelines; 70% compute reduction; 8-week deploy. |
 | Safety | `#problem` | "Safety isn't a feature, it's the foundation of everything we do" | On-prem/hosted, decision lineage, deterministic outputs, cloud- & LLM-agnostic APIs. "System of record for AI." |
 | Offerings | `#offering` | "Our offerings" | 4 modules: AI infrastructure (K8s microservices), Data management (versioned storage + ontological NLU), Orchestration (analysis/chat/search/personalization), Application (end-user integrations). |
@@ -37,7 +37,6 @@ Home sections: Hero (3 value-prop lines) · "The shift" · Proof modes (Answer/R
 | Healthcare | Simwerx | Offline medic co-pilot with visual protocol proof | - |
 | Healthcare | Northwestern Medicine | Ontology-driven lookup for instruments/assays | - |
 | Healthcare | (DVC) | Explainable, offline-ready medical AI (already on new site) | DVC blog feature |
-| Education | Metropolitan University | AI Student Advisor pilot | - |
 | Education | Maryville University | Social learning companions | "12% attrition reduction", "$1.2M saved first semester" |
 
 ## 4. Gap analysis - what the new site is missing vs live
@@ -48,7 +47,7 @@ Home sections: Hero (3 value-prop lines) · "The shift" · Proof modes (Answer/R
 - AI technologies (6 components) section.
 - "Data ownership / your control" section.
 - Full case-study set (new site shows DVC + Maryville only; live has 5).
-- Partner logo strip (Maryville, Simwerx, Craig, Northwestern, Metropolitan).
+- Partner logo strip (Maryville, Simwerx, Craig, Northwestern).
 - A real contact path (new site uses mailto; live uses a form).
 
 ## 5. Open decisions (need Beth / team)
@@ -69,7 +68,7 @@ Home sections: Hero (3 value-prop lines) · "The shift" · Proof modes (Answer/R
    Both PDFs are gated behind an email ("give to get"); real lead capture needs
    `window.BAST_LEAD_ENDPOINT` wired (ties to Duplo / #2).
 4. **Partner logos** - do we have permission + assets (SVand/or PNG) for
-   Maryville, Simwerx, Craig, Northwestern, Metropolitan?
+   Maryville, Simwerx, Craig, Northwestern?
 5. **Positioning line** - live leads with "Safe AI"; new site leads with
    "AI that shows its work / Here. It's called Bast." Which is the primary
    message? (Material positioning → human sign-off per CLAUDE.md.)
