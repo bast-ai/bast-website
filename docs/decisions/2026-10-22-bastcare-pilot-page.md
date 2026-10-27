@@ -42,3 +42,10 @@ Update 2026-10-22 (QR): The one-pager PDF now carries a printed booking QR code
 beside its "Book a 30-minute call." band, encoding
 `https://www.bast.ai/pilot/#book`, with "bast.ai/pilot" under it. No other copy
 changed.
+
+Update 2026-10-27 (tagline): Beth's tagline, "Retain more of the conversation,
+so you can be present in the room.", replaces the headline "Help your families
+keep what the doctor said." on `/pilot/` (h1 and `og:title`) and on the
+one-pager PDF (headline only, set at 19 pt so it fits the same box; QR, layout
+and other copy unchanged). The home page hero carries the same line beside a
+"Start a BastCare pilot" link to `/pilot/`.
