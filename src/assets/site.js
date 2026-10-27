@@ -499,5 +499,13 @@
         loadDemo(button);
       });
     });
+
+    // Autoplaying promo video: respect reduced-motion; controls stay available.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll("video[data-reduced-motion-pause]").forEach((video) => {
+        video.removeAttribute("autoplay");
+        video.pause();
+      });
+    }
   });
 })();
