@@ -5054,7 +5054,7 @@ h1 span {
    above 900px, portrait at 900px and below (see <source media>). */
 .home-page .hero-with-promo {
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-  grid-template-areas: "questions promo" "lead promo";
+  grid-template-areas: "pilot pilot" "questions promo" "lead promo";
   row-gap: clamp(1.75rem, 3.5vw, 2.75rem);
   align-items: center;
   padding-top: clamp(3.5rem, 7vw, 6rem);
@@ -5129,6 +5129,28 @@ h1 span {
   .hero-promo video {
     aspect-ratio: 9 / 16;
   }
+}
+
+/* Home hero: BastCare pilot strip across the top of the hero. */
+.hero-pilot {
+  grid-area: pilot;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.hero-pilot-tagline {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.01em;
 }
 
 .home-page .button {
@@ -5238,7 +5260,7 @@ h1 span {
 
   .home-page .hero-with-promo {
     grid-template-columns: 1fr;
-    grid-template-areas: "lead" "promo" "questions";
+    grid-template-areas: "pilot" "lead" "promo" "questions";
   }
 
   .home-page .hero-with-promo .hero-lead { grid-area: lead; }
