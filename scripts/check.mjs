@@ -285,12 +285,8 @@ const requiredHomepageSnippets = [
     needle: "summary-build-51.jpg",
   },
   {
-    label: "homepage BastCare promo poster",
-    needle: 'src="/assets/bastcare/media/bastcare-promo-poster.jpg"',
-  },
-  {
-    label: "homepage BastCare promo link",
-    needle: 'class="offering-promo-link" href="/bastcare/#bastcare-walkthrough"',
+    label: "Build 51 CareTeam homepage screen",
+    needle: "careteam-build-51.jpg",
   },
   {
     label: "Build 51 sharing preview homepage screen",
@@ -579,6 +575,20 @@ if ((bastcareHome.match(/<video\b/g) || []).length !== 1) {
     assertIncludes(heroVideo[1], attribute, `hero promo ${attribute}`);
   }
 }
+// The same promo autoplays in the home hero (2026-10-26), with the same
+// responsive sources and a link to /bastcare/.
+if ((indexHtml.match(/<video\b/g) || []).length !== 1) {
+  throw new Error("Expected exactly one video on the home page");
+}
+{
+  const homeVideo = indexHtml.match(/<section class="hero hero-with-promo"[\s\S]*?<figure class="hero-promo">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-promo-square\.mp4" type="video\/mp4" media="\(min-width: 901px\)">\s*<source src="\/assets\/bastcare\/media\/bastcare-promo\.mp4" type="video\/mp4">[\s\S]*?<\/video>\s*<figcaption><a href="\/bastcare\/">[\s\S]*?<\/figure>\s*<\/section>/);
+  if (!homeVideo) throw new Error("Missing BastCare promo video (square + portrait sources, /bastcare/ link) in the home hero");
+  for (const attribute of ["autoplay", "muted", "loop", "playsinline", "controls", "data-reduced-motion-pause", 'poster="/assets/bastcare/media/bastcare-promo-poster.jpg"']) {
+    assertIncludes(homeVideo[1], attribute, `home hero promo ${attribute}`);
+  }
+}
+assertIncludes(bastcareHome, "data-reduced-motion-pause", "BastCare hero promo reduced-motion pause");
+assertIncludes(await readFile(path.join(distDir, "assets/site.js"), "utf8"), 'video[data-reduced-motion-pause]', "reduced-motion pause behavior");
 for (const media of ["bastcare-promo.mp4", "bastcare-promo-square.mp4"]) {
   const { size } = await stat(path.join(distDir, "assets/bastcare/media", media));
   if (size > 8 * 1024 * 1024) throw new Error(`Autoplaying ${media} is ${(size / 1048576).toFixed(1)} MB; compress it below 8 MB`);

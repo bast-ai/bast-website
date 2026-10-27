@@ -1473,58 +1473,6 @@ h1 span {
   background: #fff;
 }
 
-/* Center slot: the BastCare promo poster, linking to the video on /bastcare/. */
-.offering-summary-gallery:has(.offering-promo) {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);
-}
-
-.offering-promo-link {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border: 1px solid rgba(5, 30, 46, 0.14);
-  border-radius: clamp(18px, 3vw, 30px);
-  background: #fdfdfd;
-  box-shadow: 0 28px 56px rgba(8, 37, 55, 0.2), 0 6px 14px rgba(8, 37, 55, 0.12);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-}
-
-.offering-promo-link:hover,
-.offering-promo-link:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 34px 64px rgba(8, 37, 55, 0.24), 0 8px 18px rgba(8, 37, 55, 0.14);
-}
-
-.offering-promo-link img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.offering-promo-play {
-  position: absolute;
-  bottom: 3.5%;
-  left: 50%;
-  width: clamp(22px, 3.2vw, 44px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 5px rgba(0, 144, 204, 0.16), 0 8px 18px rgba(8, 37, 55, 0.22);
-  transform: translateX(-50%);
-}
-
-.offering-promo-play::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 34%;
-  height: 38%;
-  translate: 12% 0;
-  background: #fff;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
 .offering-summary-gallery figcaption {
   max-width: 20ch;
   margin: 0.7rem auto 0;
@@ -5101,6 +5049,88 @@ h1 span {
   font-weight: var(--fw-semibold);
 }
 
+/* Home hero with the BastCare promo: questions lead into the headline on the
+   left, the video sits in a rounded media panel on the right. Square file
+   above 900px, portrait at 900px and below (see <source media>). */
+.home-page .hero-with-promo {
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  grid-template-areas: "questions promo" "lead promo";
+  row-gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  align-items: center;
+  padding-top: clamp(3.5rem, 7vw, 6rem);
+}
+
+.home-page .hero-with-promo .questions {
+  grid-area: questions;
+  align-self: end;
+}
+
+.home-page .hero-with-promo .questions li {
+  max-width: none;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+.home-page .hero-with-promo .questions li + li {
+  margin-top: 0.55rem;
+}
+
+.home-page .hero-with-promo .hero-lead {
+  grid-area: lead;
+  align-self: start;
+}
+
+.hero-promo {
+  position: relative;
+  grid-area: promo;
+  width: min(100%, 540px);
+  margin: 0;
+  justify-self: end;
+  text-align: center;
+}
+
+.hero-promo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 6% -14% 14%;
+  border-radius: 48%;
+  background: radial-gradient(circle at 50% 42%, rgba(0, 165, 214, 0.26), rgba(60, 84, 161, 0.12) 46%, transparent 72%);
+}
+
+.hero-promo video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(5, 30, 46, 0.12);
+  border-radius: 28px;
+  background: linear-gradient(180deg, #fdfdfd, #eaeff5);
+  box-shadow: 0 30px 70px rgba(8, 37, 55, 0.18), 0 8px 18px rgba(8, 37, 55, 0.08);
+  object-fit: contain;
+}
+
+.hero-promo figcaption {
+  margin-top: 1rem;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.hero-promo figcaption a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.hero-promo figcaption a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .hero-promo video {
+    aspect-ratio: 9 / 16;
+  }
+}
+
 .home-page .button {
   border-radius: var(--radius);
   box-shadow: none;
@@ -5204,6 +5234,20 @@ h1 span {
   .home-page .hero .questions {
     grid-row: 2;
     margin-top: 1.25rem;
+  }
+
+  .home-page .hero-with-promo {
+    grid-template-columns: 1fr;
+    grid-template-areas: "lead" "promo" "questions";
+  }
+
+  .home-page .hero-with-promo .hero-lead { grid-area: lead; }
+  .home-page .hero-with-promo .questions { grid-area: questions; margin-top: 0; }
+  .home-page .hero-with-promo .hero-promo { grid-area: promo; }
+
+  .hero-promo {
+    width: min(100%, 360px);
+    justify-self: center;
   }
 }
 

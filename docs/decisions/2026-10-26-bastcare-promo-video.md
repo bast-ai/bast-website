@@ -27,12 +27,18 @@ promo exists in portrait (1080x1920) and square (1080x1080). A voiceover cut
   The `#bastcare-walkthrough` anchor id is kept so existing links still land
   on the hero video. Reduced-motion visitors get the video paused
   (`site.js`); controls stay available.
-- **Home page.** It already linked to BastCare (nav, offering card). Rather
-  than add a duplicate, the offering card was upgraded: the middle gallery
-  screen became the promo poster with a play badge, linking to
-  `/bastcare/#bastcare-walkthrough`, and the "See how BastCare works" text
-  link became a secondary button. No new copy or claims; captions reuse
-  existing site wording.
+- **Home page hero.** The same promo autoplays in the home hero, with the same
+  attributes, poster, and square/portrait sources, in a rounded media panel
+  to the right of the headline. "The questions" list moves above the headline
+  on desktop so it reads question, then "Here. It's called Bast.", with the
+  video beside both. At 860px and below the hero stacks: headline, video, then
+  the questions (the questions stay after the headline, as before). Under the
+  video, "See BastCare in action" links to `/bastcare/`. The hero copy is
+  unchanged.
+- **Home BastCare card.** Now that the hero plays the video, the card keeps
+  its original three screenshots (summary, CareTeam, sharing preview) instead
+  of repeating the poster. Its "See how BastCare works" text link became a
+  secondary button. No new copy or claims.
 - **Old walkthrough** stays in the repo and the build. The /demos/ card that
   describes it ("Captioned walkthrough, 1 min 20 sec") now links straight to
   the walkthrough file instead of the /bastcare/ hero, so that card stays
@@ -55,14 +61,19 @@ If the duration changes from 18 s, nothing on the page states it.
 
 ## Guardrail
 
-`scripts/check.mjs` requires both promo files and the poster in `dist/`,
-checks the hero video has the square and portrait sources plus autoplay,
-muted, loop, playsinline, controls, and the poster, keeps the walkthrough out
-of the hero, and fails if either autoplaying file exceeds 8 MB.
+`scripts/check.mjs` requires both promo files and the poster in `dist/`.
+For both the /bastcare/ hero and the home hero, it checks the square and
+portrait sources plus autoplay, muted, loop, playsinline, controls, and the
+poster. It also checks for exactly one video per page, the reduced-motion
+pause hook, and the home hero link to `/bastcare/`. The walkthrough must stay
+out of the /bastcare/ hero, and the check fails if either autoplaying file
+exceeds 8 MB.
 
-## Open items for sign-off
+## Sign-off (Beth, 2026-10-26)
 
-- Video frames show drug and doctor names (Jascayd, trazodone, Dr. Chen).
-  Confirm these are test data.
-- The end card inside the video says "BastCare, Free on iPhone". The site
-  copy elsewhere says "Free to download" with the two-hour allowance.
+- The drug and doctor names in the video frames (Jascayd, trazodone,
+  Dr. Chen) are test data.
+- "Free to download" is the approved wording. The end card was re-rendered to
+  say it, replacing "Free on iPhone", and both cuts were re-encoded.
+- Replacing the home-page CareTeam screenshot was approved. It is back in the
+  card now because the video moved to the hero.
