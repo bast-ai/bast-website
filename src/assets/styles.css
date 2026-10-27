@@ -1473,6 +1473,58 @@ h1 span {
   background: #fff;
 }
 
+/* Center slot: the BastCare promo poster, linking to the video on /bastcare/. */
+.offering-summary-gallery:has(.offering-promo) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);
+}
+
+.offering-promo-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(5, 30, 46, 0.14);
+  border-radius: clamp(18px, 3vw, 30px);
+  background: #fdfdfd;
+  box-shadow: 0 28px 56px rgba(8, 37, 55, 0.2), 0 6px 14px rgba(8, 37, 55, 0.12);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.offering-promo-link:hover,
+.offering-promo-link:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 34px 64px rgba(8, 37, 55, 0.24), 0 8px 18px rgba(8, 37, 55, 0.14);
+}
+
+.offering-promo-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.offering-promo-play {
+  position: absolute;
+  bottom: 3.5%;
+  left: 50%;
+  width: clamp(22px, 3.2vw, 44px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(0, 144, 204, 0.16), 0 8px 18px rgba(8, 37, 55, 0.22);
+  transform: translateX(-50%);
+}
+
+.offering-promo-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 34%;
+  height: 38%;
+  translate: 12% 0;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
 .offering-summary-gallery figcaption {
   max-width: 20ch;
   margin: 0.7rem auto 0;
@@ -2742,6 +2794,32 @@ h1 span {
 }
 
 .bastcare-hero-walkthrough figcaption .panel-label {
+  display: block;
+  margin-bottom: var(--bast-space-2);
+}
+
+/* Promo video: square on desktop, portrait at 900px and below. The video
+   files are drop-in swappable; the background matches the video's own
+   white-to-blue gradient so any letterboxing disappears. */
+@media (min-width: 901px) {
+  .bastcare-marketing-hero:has(.bastcare-hero-promo) {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+    align-items: center;
+  }
+}
+
+.bastcare-hero-promo {
+  width: min(100%, 500px);
+}
+
+.bastcare-hero-promo video {
+  aspect-ratio: 1 / 1;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #fdfdfd, #eaeff5);
+  object-fit: contain;
+}
+
+.bastcare-hero-promo figcaption .panel-label {
   display: block;
   margin-bottom: var(--bast-space-2);
 }
@@ -4190,6 +4268,10 @@ h1 span {
     align-items: center;
   }
 
+  .bastcare-hero-promo video {
+    aspect-ratio: 9 / 16;
+  }
+
   .bastcare-layout {
     grid-template-columns: 1fr;
   }
@@ -4318,6 +4400,10 @@ h1 span {
   .bastcare-release-video {
     width: min(84vw, 310px);
     justify-self: center;
+  }
+
+  .bastcare-hero-promo {
+    width: min(100%, 400px);
   }
 
   .bastcare-hero-device::before {
