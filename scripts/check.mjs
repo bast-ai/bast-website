@@ -947,6 +947,7 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   }
 }
 
+const byIdEarly = (doc, id) => doc.studies.find((s) => s.id === id) || {};
 // /evidence/ (draft, decision 2026-10-28): noindex, unlisted, soft-gated,
 // no tracking, and the public data file carries no internal notes.
 {
@@ -972,21 +973,27 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
   assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
   if (evidence.studies.length !== 43) throw new Error(`Expected 43 evidence studies; found ${evidence.studies.length}`);
-  const allowed = ["id", "thesis", "title", "finding", "source", "year", "designAndSize", "studyType", "strength", "direction", "caveats", "url"];
+  const allowed = ["id", "thesis", "title", "finding", "source", "year", "designAndSize", "studyType", "sampleSize", "strength", "direction", "caveats", "url"];
   for (const study of evidence.studies) {
     for (const key of Object.keys(study)) {
       if (!allowed.includes(key)) throw new Error(`Unexpected evidence field ${key} on ${study.id} (internal notes stay out of this repo)`);
     }
     if (!/^https:\/\//.test(study.url)) throw new Error(`Evidence ${study.id} needs an https source link`);
   }
+  for (const study of evidence.studies) {
+    if (typeof study.studyType !== "string" || typeof study.sampleSize !== "string" || !study.studyType || !study.sampleSize) {
+      throw new Error(`Evidence ${study.id} needs a study type and sample size (use "Not verified" when unknown)`);
+    }
+  }
+  if (byIdEarly(evidence, "B1").studyType !== "Vendor report") throw new Error("Kansas pilot must stay labelled as a vendor report");
   if (!evidence.studies.some((s) => s.direction === "Complicates")) throw new Error("Counter-evidence missing from evidence library");
   const publicEvidence = evidenceHtml + JSON.stringify(evidence);
-  for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i]) {
+  for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i, /40% higher quality/i, /43% vs 17%/]) {
     if (banned.test(publicEvidence)) throw new Error(`evidence library contains banned wording: ${banned}`);
   }
   // Preview numbers must match the library data.
   const byId = Object.fromEntries(evidence.studies.map((s) => [s.id, s]));
-  for (const [id, numbers] of [["A1", ["94.9%", "34.5%"]], ["A19", ["48%", "17%"]], ["A5", ["19 percentage points"]], ["B2", ["557 days", "28.3%"]], ["B8", ["25% at 90 days"]]]) {
+  for (const [id, numbers] of [["A1", ["94.9%", "34.5%"]], ["A19", ["48%", "17%", "127%"]], ["A5", ["19 percentage points", "84.5%", "70.6%", "12.2%", "25.1%"]], ["B2", ["557 days", "28.3%"]], ["B8", ["25% at 90 days"]]]) {
     assertIncludes(evidenceHtml, `id="${id}"`, `evidence preview card ${id}`);
     for (const n of numbers) {
       assertIncludes(byId[id].finding, n, `${id} data number ${n}`);

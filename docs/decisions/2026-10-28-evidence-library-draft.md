@@ -11,10 +11,12 @@ behind a name-and-email form (a soft gate, not a login).
 
 Data lives in `src/evidence/library.json`, copied verbatim from the Bast
 research canvas "Bast AI evidence library: explainability, caregiving, who
-pays" (checked October 28, 2026). `studyType` is a filter grouping derived from
-the verbatim `designAndSize` text. The canvas's internal notes ("how Beth can
-use it") and its pricing-experiment ideas are not in this repo, because the
-repo is public.
+pays" (checked and updated October 28, 2026), including the canvas's own
+study type and sample size fields; sizes the source agent could not confirm say
+"Not verified". One deliberate edit: A5's caveat drops the 2023 working paper's
+superseded quality figures, which are banned from the page. The canvas's
+internal notes ("how Beth can use it") and its pricing-experiment ideas are not
+in this repo, because the repo is public.
 
 ## Draft guardrails
 
@@ -51,3 +53,12 @@ repo is public.
 `CLAUDE.md` says unpublished drafts live in the private `bast-ai/ai-workspace`
 repo. This draft is in the public repo at Beth's request so it can be reviewed
 as a pull request; the branch and data file are publicly visible on GitHub.
+
+## Update 2026-10-28 (source corrections)
+
+Re-synced from the corrected canvas: Bastani (A19) exam result and caveat, the
+A2 caveat, BCG (A5) now cites Organization Science 37(2):403-423 (March 2026,
+DOI 10.1287/orsc.2025.21838) with the 84.5% vs 60%/70.6% outside-frontier
+figures, B6 as a systematic review, B9's site-randomized VA trial, and B1's
+121 enrolled / 109 analyzed. `check.mjs` now requires a study type and size on
+every entry and bans the working paper's "40% higher quality" and "43% vs 17%".

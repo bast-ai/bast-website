@@ -65,6 +65,7 @@
     const details = el("dl", {}, [
       el("dt", { text: "Study" }), el("dd", { text: study.designAndSize }),
       el("dt", { text: "Type" }), el("dd", { text: study.studyType }),
+      el("dt", { text: "Size" }), el("dd", { text: study.sampleSize }),
     ]);
     return el("li", { class: "card evlib-card", id: study.id }, [
       kicker,
