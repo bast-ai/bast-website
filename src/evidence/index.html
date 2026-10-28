@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence library (draft) - Bast AI</title>
+<meta name="description" content="Published research on explainable AI, caregiving, and who pays for caregiver support, with sources, strength ratings, caveats, and the studies that cut against us.">
+<!-- DRAFT (decision 2026-10-28): hard-coded noindex, not in the sitemap, the
+     primary nav, the footer, or llms.txt until Beth approves going public.
+     A hard-coded robots tag also keeps the build from adding share tags. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/evidence.css">
+<!-- No analytics, cookies, storage, or third-party scripts on this page
+     (decision 2026-10-28). Privacy and analytics need Beth's sign-off. -->
+<script src="/assets/evidence.js" defer></script>
+</head>
+<body class="evlib-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="/assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/platform/">Platform</a>
+    <a href="/bastcare/">BastCare</a>
+    <a href="/demos/">Demos</a>
+    <a class="nav-cta" href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="frame-article evlib-article">
+  <p class="evlib-draft-banner" role="note"><strong>Draft for review.</strong> This page is not linked from the site and is not indexed.</p>
+
+  <header class="frame-head">
+    <p class="eyebrow">Evidence library</p>
+    <h1>The research behind how we build.</h1>
+    <p class="lede">If we ask AI to show its work, we should show ours. This library collects published research on three questions: whether AI that shows its work keeps people thinking instead of handing their judgment over, whether easing the load on caregivers and care workers helps patients, and who pays for caregiver support.</p>
+    <p class="lede">Every entry links to its source and says how strong the evidence is and what it can&rsquo;t tell you. We kept the studies that cut against us. The point of AI is to augment the people in the room, and that starts with being honest about what the evidence does and doesn&rsquo;t show.</p>
+    <p class="frame-meta">Last updated <time datetime="2026-10-28">October 28, 2026</time> &middot; Refreshed weekly &middot; <span data-evidence-count>43</span> studies</p>
+  </header>
+
+  <section aria-labelledby="preview-title">
+    <h2 id="preview-title">Five of the strongest findings</h2>
+    <p>Each of these comes from a randomized study or a meta-analysis. Read the caveat before you quote the number.</p>
+    <ol class="evlib-preview">
+      <li class="card evlib-card" id="A1">
+        <p class="card-kicker">Explainability &middot; Strong evidence &middot; Supports</p>
+        <h3>LLMs alone vs people using LLMs</h3>
+        <p class="evlib-finding">Tested alone, LLMs named the relevant condition in 94.9% of cases. Members of the public using the same LLMs got there in fewer than 34.5% of cases, no better than a control group using their usual sources.</p>
+        <p class="evlib-source"><a class="text-link" href="https://doi.org/10.1038/s41591-025-04074-y" rel="noopener">Bean et al., <i>Nature Medicine</i>, 2026</a> &middot; Randomized, preregistered study of 1,298 UK adults</p>
+        <p class="evlib-caveat"><strong>Caveat:</strong> Written scenarios, not real patients, and members of the public, not clinicians. It tests a person working with the AI, not a hospital rollout.</p>
+      </li>
+      <li class="card evlib-card" id="A19">
+        <p class="card-kicker">Explainability &middot; Strong evidence &middot; Supports</p>
+        <h3>AI tutors with and without guardrails</h3>
+        <p class="evlib-finding">High school math students with plain GPT-4 did 48% better in practice but 17% worse on a later exam without AI than students who never had it. A tutor version with guardrails largely avoided that harm.</p>
+        <p class="evlib-source"><a class="text-link" href="https://pubmed.ncbi.nlm.nih.gov/40560616/" rel="noopener">Bastani et al., <i>PNAS</i>, 2025</a> &middot; Randomized field experiment with nearly 1,000 students</p>
+        <p class="evlib-caveat"><strong>Caveat:</strong> Education, not healthcare, in one country and one subject.</p>
+      </li>
+      <li class="card evlib-card" id="A5">
+        <p class="card-kicker">Explainability &middot; Strong evidence &middot; Supports</p>
+        <h3>The &ldquo;jagged frontier&rdquo;</h3>
+        <p class="evlib-finding">On a task just outside the AI&rsquo;s abilities, BCG consultants using GPT-4 were 19 percentage points less likely to get it right. On tasks inside its abilities, they did 12.2% more tasks, 25.1% faster.</p>
+        <p class="evlib-source"><a class="text-link" href="https://mitsloan.mit.edu/sites/default/files/2023-10/SSRN-id4573321.pdf" rel="noopener">Dell&rsquo;Acqua et al., Harvard Business School working paper 24-013, 2023</a> &middot; Preregistered randomized field experiment with 758 consultants</p>
+        <p class="evlib-caveat"><strong>Caveat:</strong> Consulting tasks, GPT-4 in 2023, one firm. Quality was graded by people.</p>
+      </li>
+      <li class="card evlib-card" id="B2">
+        <p class="card-kicker">Caregiving &middot; Strong evidence &middot; Supports</p>
+        <h3>NYU Caregiver Intervention</h3>
+        <p class="evlib-finding">Counseling and support for spouse caregivers of people with Alzheimer&rsquo;s delayed nursing-home placement by a model-predicted median of 557 days and cut the placement rate by 28.3%.</p>
+        <p class="evlib-source"><a class="text-link" href="https://pubmed.ncbi.nlm.nih.gov/17101889/" rel="noopener">Mittelman et al., <i>Neurology</i>, 2006</a> &middot; Randomized controlled trial with 406 spouse caregivers</p>
+        <p class="evlib-caveat"><strong>Caveat:</strong> Volunteer spouse caregivers in one New York program, and 557 days is a model-predicted median.</p>
+      </li>
+      <li class="card evlib-card" id="B8">
+        <p class="card-kicker">Caregiving &middot; Strong evidence &middot; Supports</p>
+        <h3>Caregivers in discharge planning</h3>
+        <p class="evlib-finding">Bringing family caregivers into discharge planning cut readmissions by 25% at 90 days and 24% at 180 days.</p>
+        <p class="evlib-source"><a class="text-link" href="https://pubmed.ncbi.nlm.nih.gov/28369687/" rel="noopener">Rodakowski et al., <i>Journal of the American Geriatrics Society</i>, 2017</a> &middot; Meta-analysis of 15 studies (11 with readmission data)</p>
+        <p class="evlib-caveat"><strong>Caveat:</strong> The interventions varied a lot between studies.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="library-title" class="evlib-library-section">
+    <h2 id="library-title">The full library</h2>
+    <p>All <span data-evidence-count>43</span> studies, including the ones that complicate our view, with filters by question, direction, strength, and study type.</p>
+
+    <div class="evlib-gate" data-evidence-gate>
+      <p class="form-lead">Tell us who you are to open the library. No login, no password.</p>
+      <form class="contact-form evlib-gate-form" data-evidence-gate-form novalidate>
+        <div class="field">
+          <label for="evidence-name">Name</label>
+          <input id="evidence-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="evidence-email">Email</label>
+          <input id="evidence-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field-full form-footer">
+          <button class="button button-primary" type="submit">Open the library</button>
+          <p class="form-note" data-evidence-gate-status role="status" aria-live="polite"></p>
+        </div>
+        <p class="field-full form-note evlib-draft-note">Draft: this form doesn&rsquo;t send or save your details anywhere yet. Where submissions go is still to be decided.</p>
+      </form>
+    </div>
+
+    <div class="evlib-library" data-evidence-library hidden>
+      <div class="evlib-filters" role="search" aria-label="Filter the evidence library">
+        <div class="evlib-filter evlib-filter-search">
+          <label for="evidence-q">Search</label>
+          <input id="evidence-q" type="search" placeholder="Author, topic, number&hellip;" data-filter="q">
+        </div>
+        <div class="evlib-filter">
+          <label for="evidence-thesis">Question</label>
+          <select id="evidence-thesis" data-filter="thesis"><option value="">All</option></select>
+        </div>
+        <div class="evlib-filter">
+          <label for="evidence-direction">Direction</label>
+          <select id="evidence-direction" data-filter="direction"><option value="">All</option></select>
+        </div>
+        <div class="evlib-filter">
+          <label for="evidence-strength">Strength</label>
+          <select id="evidence-strength" data-filter="strength"><option value="">All</option></select>
+        </div>
+        <div class="evlib-filter">
+          <label for="evidence-type">Study type</label>
+          <select id="evidence-type" data-filter="studyType"><option value="">All</option></select>
+        </div>
+      </div>
+      <p class="evlib-count" data-evidence-results role="status" aria-live="polite"></p>
+      <ul class="evlib-list" data-evidence-list></ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="read-title">
+    <h2 id="read-title">How to read this</h2>
+    <ul>
+      <li><strong>Strong</strong> means a randomized trial, a randomized experiment, or a meta-analysis of trials. <strong>Moderate</strong> means a cohort, reader study, quasi-experiment, or review of observational studies. <strong>Limited</strong> means a survey, qualitative study, narrative review, or self-report. <strong>Policy facts</strong> show who pays, not whether something works.</li>
+      <li><strong>Supports</strong> backs the idea. <strong>Complicates</strong> cuts against it or limits it. <strong>Mixed</strong> has both. <strong>Context</strong> gives background numbers.</li>
+      <li>A study that finds a link doesn&rsquo;t prove one thing caused the other. Many of these were done in labs, on written cases, or outside healthcare, and say so in their caveats.</li>
+      <li>The Kansas Zemplee pilot is a preliminary vendor report: it isn&rsquo;t peer-reviewed and has no control group.</li>
+      <li>Every number was checked against the published abstract, full text, or official page. If you find an error, email <a href="mailto:community@bast.ai">community@bast.ai</a>.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+</body>
+</html>

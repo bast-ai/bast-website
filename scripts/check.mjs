@@ -81,6 +81,10 @@ const requiredFiles = [
   "frames/index.html",
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
+  "evidence/index.html",
+  "evidence/library.json",
+  "assets/evidence.css",
+  "assets/evidence.js",
 ];
 
 const forbidden = [
@@ -940,6 +944,55 @@ assertIncludes(bastcarePrivacy, '<a class="text-link" href="/bastcare/privacy-fa
 for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcarePrivacy, "privacy policy"]]) {
   for (const banned of [/\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i]) {
     if (banned.test(contents)) throw new Error(`${label} contains banned wording: ${banned}`);
+  }
+}
+
+// /evidence/ (draft, decision 2026-10-28): noindex, unlisted, soft-gated,
+// no tracking, and the public data file carries no internal notes.
+{
+  const evidenceHtml = await readFile(path.join(distDir, "evidence/index.html"), "utf8");
+  const evidenceJs = await readFile(path.join(distDir, "assets/evidence.js"), "utf8");
+  const evidence = JSON.parse(await readFile(path.join(distDir, "evidence/library.json"), "utf8"));
+  assertIncludes(evidenceHtml, '<meta name="robots" content="noindex, nofollow">', "evidence draft noindex");
+  // (/platform/evidence/ is a different, public page.)
+  if (/(?<!\/platform)\/evidence\//.test(sitemapXml)) throw new Error("Draft evidence library in sitemap");
+  if (/(?<!\/platform)\/evidence\//.test(llmsTxt)) throw new Error("Draft evidence library in llms.txt");
+  for (const [contents, label] of [[indexHtml, "home"], [platformHtml, "platform"], [bastcareHome, "BastCare"], [faqHtml, "FAQ"], [evidenceHtml, "evidence"]]) {
+    assertExcludes(extractPrimaryNav(contents, label), 'href="/evidence/"', `evidence library in primary nav on ${label}`);
+  }
+  for (const [contents, label] of [[evidenceHtml, "evidence page"], [evidenceJs, "evidence script"]]) {
+    for (const banned of ["analytics-consent", "googletagmanager", "gtag(", "bastTrack", "document.cookie", "localStorage", "sessionStorage", "sendBeacon", "formspree", "hubspot", "mailchimp", "XMLHttpRequest"]) {
+      assertExcludes(contents, banned, `tracking or storage on draft ${label}: ${banned}`);
+    }
+  }
+  if ((evidenceJs.match(/fetch\(/g) || []).length !== 1) throw new Error("evidence script must make exactly one fetch (the library data)");
+  assertIncludes(evidenceJs, 'fetch("/evidence/library.json"', "evidence library same-origin data fetch");
+  assertIncludes(evidenceHtml, "Last updated", "evidence last-updated date");
+  assertIncludes(evidenceHtml, "Refreshed weekly", "evidence weekly refresh note");
+  assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
+  assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
+  if (evidence.studies.length !== 43) throw new Error(`Expected 43 evidence studies; found ${evidence.studies.length}`);
+  const allowed = ["id", "thesis", "title", "finding", "source", "year", "designAndSize", "studyType", "strength", "direction", "caveats", "url"];
+  for (const study of evidence.studies) {
+    for (const key of Object.keys(study)) {
+      if (!allowed.includes(key)) throw new Error(`Unexpected evidence field ${key} on ${study.id} (internal notes stay out of this repo)`);
+    }
+    if (!/^https:\/\//.test(study.url)) throw new Error(`Evidence ${study.id} needs an https source link`);
+  }
+  if (!evidence.studies.some((s) => s.direction === "Complicates")) throw new Error("Counter-evidence missing from evidence library");
+  const publicEvidence = evidenceHtml + JSON.stringify(evidence);
+  for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i]) {
+    if (banned.test(publicEvidence)) throw new Error(`evidence library contains banned wording: ${banned}`);
+  }
+  // Preview numbers must match the library data.
+  const byId = Object.fromEntries(evidence.studies.map((s) => [s.id, s]));
+  for (const [id, numbers] of [["A1", ["94.9%", "34.5%"]], ["A19", ["48%", "17%"]], ["A5", ["19 percentage points"]], ["B2", ["557 days", "28.3%"]], ["B8", ["25% at 90 days"]]]) {
+    assertIncludes(evidenceHtml, `id="${id}"`, `evidence preview card ${id}`);
+    for (const n of numbers) {
+      assertIncludes(byId[id].finding, n, `${id} data number ${n}`);
+      assertIncludes(evidenceHtml, n, `${id} preview number ${n}`);
+    }
+    assertIncludes(evidenceHtml, `href="${byId[id].url}"`, `${id} preview source link`);
   }
 }
 

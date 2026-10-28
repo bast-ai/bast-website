@@ -1,0 +1,163 @@
+/* Evidence library (draft, decision 2026-10-28). Builds on styles.css:
+   .frame-article, .card, .contact-form, .button, .text-link. */
+.evlib-article {
+  max-width: 1040px;
+}
+
+.evlib-draft-banner {
+  margin: 0 0 24px;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius);
+  background: var(--card-face);
+  color: var(--warn);
+  font-size: var(--fs-body-sm);
+}
+
+.evlib-preview,
+.evlib-list {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.evlib-preview {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.evlib-preview .evlib-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.evlib-card h3 {
+  margin-top: 0.6rem;
+}
+
+.frame-article .evlib-card p {
+  font-size: var(--fs-body-sm);
+  line-height: 1.55;
+  margin: 0 0 0.7rem;
+}
+
+.frame-article .evlib-card .evlib-finding {
+  color: var(--ink);
+  font-size: var(--fs-body);
+}
+
+.frame-article .evlib-card .evlib-caveat {
+  margin-bottom: 0;
+}
+
+.evlib-card .card-kicker {
+  line-height: 1.5;
+}
+
+.evlib-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: var(--warn);
+  letter-spacing: 0.04em;
+}
+
+.evlib-card dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.35rem 0.9rem;
+  margin: 0 0 0.7rem;
+  font-size: var(--fs-body-sm);
+}
+
+.evlib-card dt {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+}
+
+.evlib-card dd {
+  margin: 0;
+  color: var(--quiet);
+}
+
+.evlib-gate {
+  margin-top: 1.6rem;
+}
+
+.evlib-gate .contact-form {
+  margin-top: 0;
+}
+
+.evlib-filters {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 1.6rem;
+}
+
+.evlib-filter {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.evlib-filter label {
+  color: var(--ink);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+}
+
+.evlib-filter input,
+.evlib-filter select {
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  color: var(--ink);
+  width: 100%;
+  min-height: 44px;
+  background: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--neu-inset);
+  padding: 0.55rem 0.75rem;
+}
+
+.evlib-filter input:focus-visible,
+.evlib-filter select:focus-visible {
+  outline: 3px solid #0078a8;
+  outline-offset: 2px;
+}
+
+.frame-article .evlib-count {
+  margin: 1.2rem 0 0;
+  font-size: var(--fs-caption);
+  color: var(--quieter);
+}
+
+@media (max-width: 860px) {
+  .evlib-preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evlib-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .evlib-filter-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .evlib-filters,
+  .evlib-gate .contact-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evlib-card dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evlib-card dd {
+    margin-bottom: 0.4rem;
+  }
+}
