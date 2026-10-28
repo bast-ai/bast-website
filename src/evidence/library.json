@@ -4,7 +4,7 @@
   "status": "draft",
   "lastUpdated": "2026-10-28",
   "refresh": "weekly",
-  "source": "Copied verbatim from the Bast research canvas 'Bast AI evidence library: explainability, caregiving, who pays' (checked and updated October 28, 2026), including its study type and sample size fields. One deliberate edit: A5's caveat drops the working paper's superseded quality figures. Internal usage notes and internal planning sections are intentionally not in this public repo.",
+  "source": "Copied verbatim from the Bast research canvas 'Bast AI evidence library: explainability, caregiving, who pays' (checked and updated October 28, 2026), including its study type and sample size fields. Internal usage notes and internal planning sections are intentionally not in this public repo.",
   "theses": {
     "A": {
       "short": "Explainability",
@@ -105,7 +105,7 @@
       "sampleSize": "758 consultants",
       "strength": "Strong",
       "direction": "Supports",
-      "caveats": "Consulting tasks, GPT-4 in 2023, one firm. Quality was graded by people. Only one task outside the frontier. The published version reports quality gains that vary by model specification.",
+      "caveats": "Consulting tasks, GPT-4 in 2023, one firm. Quality was graded by people. Only one task outside the frontier.",
       "url": "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf"
     },
     {
@@ -307,7 +307,7 @@
       "id": "A19",
       "thesis": "A",
       "title": "AI tutors with and without guardrails",
-      "finding": "Students with plain GPT-4 (GPT Base) scored 48% higher on practice problems but 17% lower on a later exam without AI than students who never had it. A tutor version with guardrails (GPT Tutor) raised practice scores 127%; on the exam its students were statistically indistinguishable from the no-AI group (point estimate -0.004 vs -0.054 for GPT Base, on a 0-1 scale).",
+      "finding": "Students with plain GPT-4 scored 48% higher on practice problems but 17% lower on a later exam without AI than students who never had it. Students with the guardrailed tutor scored 127% higher in practice, and on the exam they were statistically indistinguishable from students who never had AI.",
       "source": "Bastani et al., PNAS",
       "year": 2025,
       "designAndSize": "Randomized field experiment; nearly 1,000 high school math students",

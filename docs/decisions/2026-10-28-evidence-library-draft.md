@@ -13,8 +13,7 @@ Data lives in `src/evidence/library.json`, copied verbatim from the Bast
 research canvas "Bast AI evidence library: explainability, caregiving, who
 pays" (checked and updated October 28, 2026), including the canvas's own
 study type and sample size fields; sizes the source agent could not confirm say
-"Not verified". One deliberate edit: A5's caveat drops the 2023 working paper's
-superseded quality figures, which are banned from the page. The canvas's
+"Not verified". The data matches the canvas field for field. The canvas's
 internal notes ("how Beth can use it") and its pricing-experiment ideas are not
 in this repo, because the repo is public.
 
