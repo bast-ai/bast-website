@@ -3668,14 +3668,23 @@ h1 span {
 
 .compare-section {
   scroll-margin-top: var(--bast-space-8);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.compare-section h2 {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
 }
 
 .compare-section > p:not(.panel-label) {
   max-width: 62ch;
   margin: 0 0 var(--bast-space-6);
-  color: var(--quiet);
-  font-size: var(--fs-body-lg);
-  line-height: 1.55;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
 }
 
 .compare-sr {
@@ -3691,55 +3700,61 @@ h1 span {
 }
 
 .compare-table-wrap {
+  max-width: 100%;
   border-radius: var(--bast-radius-large);
   background: var(--paper);
   box-shadow: var(--neu-raise);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .compare-table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-size: var(--fs-body-sm);
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
 }
 
 .compare-table th,
 .compare-table td {
-  padding: var(--bast-space-5);
+  padding: 1.5rem 1.25rem;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--line-subtle);
+  color: var(--ink);
+  font-weight: var(--fw-medium);
   line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
 .compare-table thead th {
   background: var(--card-face);
-  color: var(--quieter);
-  font-size: var(--fs-label);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .compare-table thead th:last-child {
-  color: var(--accent-text);
   background: rgba(0, 144, 204, 0.1);
 }
 
 .compare-table tbody th {
-  width: 28%;
-  color: var(--ink);
-  font-size: var(--fs-body);
-  font-weight: var(--fw-semibold);
+  width: 30%;
+  font-size: 1.125rem;
 }
 
 .compare-table td {
-  width: 36%;
-  color: var(--quiet);
+  width: 35%;
+  font-size: 1.125rem;
 }
 
 .compare-table td:last-child {
-  color: var(--ink);
   background: rgba(0, 144, 204, 0.07);
 }
 
@@ -3807,15 +3822,12 @@ h1 span {
     content: attr(data-label);
     display: block;
     margin-bottom: var(--bast-space-2);
-    color: var(--quieter);
-    font-size: var(--fs-label);
-    font-weight: var(--fw-semibold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .compare-table td:last-child::before {
-    color: var(--accent-text);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: none;
   }
 }
 
