@@ -3682,7 +3682,7 @@ h1 span {
   max-width: 62ch;
   margin: 0 0 var(--bast-space-6);
   color: var(--ink);
-  font-size: 1.125rem;
+  font-size: 25px;
   font-weight: var(--fw-medium);
   line-height: 1.5;
 }
@@ -3713,14 +3713,14 @@ h1 span {
   table-layout: fixed;
   border-collapse: collapse;
   color: var(--ink);
-  font-size: 1.125rem;
+  font-size: 25px;
   font-weight: var(--fw-medium);
   line-height: 1.5;
 }
 
 .compare-table th,
 .compare-table td {
-  padding: 1.5rem 1.25rem;
+  padding: 34px 28px;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--line-subtle);
@@ -3734,7 +3734,7 @@ h1 span {
 .compare-table thead th {
   background: var(--card-face);
   color: var(--ink);
-  font-size: 1rem;
+  font-size: 22px;
   font-weight: var(--fw-medium);
   letter-spacing: 0;
   text-transform: none;
@@ -3745,13 +3745,13 @@ h1 span {
 }
 
 .compare-table tbody th {
-  width: 30%;
-  font-size: 1.125rem;
+  width: 24%;
+  font-size: 25px;
 }
 
 .compare-table td {
-  width: 35%;
-  font-size: 1.125rem;
+  width: 38%;
+  font-size: 25px;
 }
 
 .compare-table td:last-child {
@@ -3821,9 +3821,9 @@ h1 span {
   .compare-table td::before {
     content: attr(data-label);
     display: block;
-    margin-bottom: var(--bast-space-2);
+    margin-bottom: 12px;
     color: var(--ink);
-    font-size: 1rem;
+    font-size: 22px;
     font-weight: var(--fw-medium);
     letter-spacing: 0;
     line-height: 1.5;
