@@ -3747,6 +3747,7 @@ h1 span {
 .compare-table tbody th {
   width: 24%;
   font-size: 25px;
+  font-weight: 700;
 }
 
 .compare-table td {
