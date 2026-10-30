@@ -49,3 +49,23 @@ keep what the doctor said." on `/pilot/` (h1 and `og:title`) and on the
 one-pager PDF (headline only, set at 19 pt so it fits the same box; QR, layout
 and other copy unchanged). The home page hero carries the same line beside a
 "Start a BastCare pilot" link to `/pilot/`.
+
+Update 2026-10-30 (pilot privacy line and title): On `/pilot/` only, the
+"Private by design" paragraph is now: "Audio is deleted once the transcript is
+saved. BastCare asks for consent before recording. With each person's consent,
+transcripts are kept in your organization's own secure database, so your team
+can learn from them. Summaries belong to the user. Your organization owns its
+data." Beth Rudden's title on that page is "CEO & Chair".
+
+That sentence says BastCare asks for consent before recording. Do not extend
+it to say recording requires consent, waits for consent, or starts only after
+consent or agreement. The ask is not an enforcement gate.
+
+`src/assets/bastcare-pilot-one-pager.pdf` is unchanged. It still carries the
+older privacy line ("Audio is deleted once the summary is saved. Bast's
+servers don't save the transcript. Summaries belong to the user. Your
+organization owns its data.") and "Founder + CEO". There is no separate
+flyer source in this repo. Consumer privacy pages are unchanged. The private
+claims ledger in `bast-ai/ai-workspace` was not reachable from the environment
+that made this edit (GitHub returned 403), so this note records the requested
+public wording and the limit above.

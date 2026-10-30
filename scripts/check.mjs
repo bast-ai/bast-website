@@ -894,8 +894,10 @@ for (const file of files) {
 
 // /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
 // the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
-// counts, Craig Hospital claims, or source-tracing claims; privacy wording
-// matches the one-pager PDF verbatim.
+// counts, Craig Hospital claims, or source-tracing claims. The 2026-10-30 privacy
+// line below is the page copy. The one-pager PDF still has the older line and stays
+// unchanged. The consent sentence says BastCare asks before recording; do not
+// extend it to say recording requires, waits for, or starts only after consent.
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
 const pilotBookHref = 'href="https://bookings.cloud.microsoft/book/MeetwithBethRudden@bast.ai/?ismsaljsauthenabled"';
 assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
@@ -909,7 +911,9 @@ assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot 
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
-assertIncludes(pilotHtml, "<p>Audio is deleted once the summary is saved. Bast&rsquo;s servers don&rsquo;t save the transcript. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording matches the one-pager PDF");
+assertIncludes(pilotHtml, "<p>Audio is deleted once the transcript is saved. BastCare asks for consent before recording. With each person&rsquo;s consent, transcripts are kept in your organization&rsquo;s own secure database, so your team can learn from them. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording");
+assertIncludes(pilotHtml, "CEO &amp; Chair", "pilot Beth Rudden title");
+assertExcludes(pilotHtml, "Founder + CEO", "old Beth Rudden title on the pilot page");
 assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
