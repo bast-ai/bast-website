@@ -3646,6 +3646,7 @@ h1 span {
 }
 
 .plain-language h2,
+.compare-section h2,
 .section-heading h2,
 .support-contact h2,
 .delete-steps > h2,
@@ -3663,6 +3664,159 @@ h1 span {
   color: var(--ink);
   font-size: var(--fs-body-lg);
   line-height: 1.65;
+}
+
+.compare-section {
+  scroll-margin-top: var(--bast-space-8);
+}
+
+.compare-section > p:not(.panel-label) {
+  max-width: 62ch;
+  margin: 0 0 var(--bast-space-6);
+  color: var(--quiet);
+  font-size: var(--fs-body-lg);
+  line-height: 1.55;
+}
+
+.compare-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.compare-table-wrap {
+  border-radius: var(--bast-radius-large);
+  background: var(--paper);
+  box-shadow: var(--neu-raise);
+  overflow: hidden;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-body-sm);
+}
+
+.compare-table th,
+.compare-table td {
+  padding: var(--bast-space-5);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-subtle);
+  line-height: 1.5;
+}
+
+.compare-table thead th {
+  background: var(--card-face);
+  color: var(--quieter);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compare-table thead th:last-child {
+  color: var(--accent-text);
+  background: rgba(0, 144, 204, 0.1);
+}
+
+.compare-table tbody th {
+  width: 28%;
+  color: var(--ink);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+}
+
+.compare-table td {
+  width: 36%;
+  color: var(--quiet);
+}
+
+.compare-table td:last-child {
+  color: var(--ink);
+  background: rgba(0, 144, 204, 0.07);
+}
+
+.compare-table tr:last-child th,
+.compare-table tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 660px) {
+  .compare-table-wrap {
+    overflow: visible;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .compare-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .compare-table,
+  .compare-table tbody,
+  .compare-table tr,
+  .compare-table th,
+  .compare-table td {
+    display: block;
+    width: auto;
+  }
+
+  .compare-table tr {
+    margin-bottom: var(--bast-space-4);
+    border-radius: var(--bast-radius-default);
+    background: var(--paper);
+    box-shadow: var(--neu-raise-sm);
+    overflow: hidden;
+  }
+
+  .compare-table tbody th,
+  .compare-table td {
+    border-bottom: 1px solid var(--line-subtle);
+  }
+
+  .compare-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .compare-table tbody th,
+  .compare-table td {
+    width: auto;
+  }
+
+  .compare-table tbody th {
+    background: var(--card-face);
+  }
+
+  .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: var(--bast-space-2);
+    color: var(--quieter);
+    font-size: var(--fs-label);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .compare-table td:last-child::before {
+    color: var(--accent-text);
+  }
 }
 
 .bastcare-layout {
