@@ -18,6 +18,9 @@ client-side gate. That file is not part of this page.
 
 - The page lives at `/evidence/`. The intro and five preview findings are
   public. The full library loads only after the confirmation token.
+- Above the filters, the unlocked library shows one line, "Updated <date>",
+  taken from the file's `lastUpdated` field. If that field is missing, the
+  line is omitted. The file's title, status, source, and schema are not shown.
 - On load the page reads `t`, removes it from the address bar, sends
   `no-referrer`, and does not store the token in the browser.
 - The form posts `{email, name?, website, updates}` to `POST /signup`.

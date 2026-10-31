@@ -258,20 +258,11 @@
   function renderMeta() {
     if (!meta) return;
     meta.replaceChildren();
-    const heading = asText(libraryData.title);
-    if (heading) meta.append(el("p", { class: "evlib-library-title", text: heading }));
-    const rows = [
-      ["Status", asText(libraryData.status)],
-      ["Updated", formatUpdated(libraryData.lastUpdated)],
-      ["Source", readable(libraryData.source)],
-      ["Schema", asText(libraryData.schemaVersion)],
-    ].filter(([, value]) => value);
-    if (!rows.length) return;
-    const details = el("dl", { class: "evlib-meta" });
-    for (const [label, value] of rows) {
-      details.append(el("dt", { text: label }), el("dd", { text: value }));
+    // The file's title, status, source, and schema are internal. Show the date only.
+    const updated = formatUpdated(libraryData.lastUpdated);
+    if (updated) {
+      meta.append(el("p", { class: "evlib-updated", text: `Updated ${updated}` }));
     }
-    meta.append(details);
     const note = el("p", {
       class: "evlib-keep",
       text: "This page does not save the confirmation link. To open the library again later, use the email, or sign up for a new link.",

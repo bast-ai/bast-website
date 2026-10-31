@@ -992,6 +992,13 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertExcludes(evidenceHtml, "fetch(", "fetch in evidence HTML");
   assertExcludes(evidenceHtml, "library.json", "public library file on the evidence page");
   assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
+  assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
+  assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
+  assertIncludes(evidenceJs, "This page does not save the confirmation link.", "confirmation-link note stays on the unlocked library");
+  assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
+  assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
+  assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
+  assertExcludes(evidenceJs, "libraryData.schemaVersion", "library schema is not shown");
   if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 1) {
     throw new Error("evidence script must call fetch exactly once");
   }
