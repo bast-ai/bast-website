@@ -37,6 +37,7 @@ body.evlib-page .evlib-count,
 body.evlib-page .evlib-card dt,
 body.evlib-page .evlib-card dd,
 body.evlib-page .evlib-badge,
+body.evlib-page .evlib-updated,
 body.evlib-page .evlib-meta,
 body.evlib-page .text-link,
 body.evlib-page input,
@@ -178,15 +179,13 @@ body.evlib-page .evlib-meta dd {
 
 body.evlib-page .evlib-source,
 body.evlib-page .evlib-finding,
-body.evlib-page .evlib-library-title,
+body.evlib-page .evlib-updated,
 body.evlib-page .evlib-keep {
   overflow-wrap: anywhere;
 }
 
-body.evlib-page .evlib-library-title {
+body.evlib-page .evlib-updated {
   margin: 0 0 0.7rem;
-  font-size: 1.25rem;
-  font-weight: 500;
 }
 
 body.evlib-page .evlib-keep {
