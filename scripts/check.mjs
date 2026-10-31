@@ -81,6 +81,9 @@ const requiredFiles = [
   "frames/index.html",
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
+  "evidence/index.html",
+  "assets/evidence.css",
+  "assets/evidence.js",
 ];
 
 const forbidden = [
@@ -200,8 +203,12 @@ const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-c
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
 const platformCss = await readFile(path.join(distDir, "assets/platform.css"), "utf8");
+const evidenceHtml = await readFile(path.join(distDir, "evidence/index.html"), "utf8");
+const evidenceJs = await readFile(path.join(distDir, "assets/evidence.js"), "utf8");
+const evidenceCss = await readFile(path.join(distDir, "assets/evidence.css"), "utf8");
 assertBalancedCssBlocks(siteCss, "site stylesheet");
 assertBalancedCssBlocks(platformCss, "platform stylesheet");
+assertBalancedCssBlocks(evidenceCss, "evidence stylesheet");
 assertIncludes(siteCss, ".outcome-stat .case-badge", "readable homepage case-study badge override");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
@@ -240,6 +247,7 @@ for (const [contents, label] of [
   [platformHtml, "platform"],
   [bastcareHome, "BastCare"],
   [bastcarePrivacy, "BastCare privacy"],
+  [evidenceHtml, "evidence"],
 ]) {
   const primaryNav = extractPrimaryNav(contents, label);
   const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
@@ -250,6 +258,7 @@ for (const [contents, label] of [
   assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
   assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
   assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
+  assertExcludes(primaryNav, 'href="/evidence/"', `evidence library in primary nav on ${label} page`);
   for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory"]) {
     assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
   }
@@ -530,7 +539,11 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
   assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
+  if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
+  assertIncludes(bastcareColumn[1], 'href="/evidence/"', `evidence library in BastCare footer on ${label} page`);
 }
+assertIncludes(bastcareHome, 'href="/evidence/">Read the evidence library</a>', "evidence library link on the BastCare page");
 
 const approvedVisitPrivacyCopy = "When you request a summary, BastCare masks configured names in a separate copy of your transcript and sends it securely through Bast to an AI provider for processing.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
@@ -940,6 +953,106 @@ assertIncludes(bastcarePrivacy, '<a class="text-link" href="/bastcare/privacy-fa
 for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcarePrivacy, "privacy policy"]]) {
   for (const banned of [/\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i]) {
     if (banned.test(contents)) throw new Error(`${label} contains banned wording: ${banned}`);
+  }
+}
+
+// /evidence/ (Beth, 2026-10-31): public preview, confirmed-token library,
+// no published library file, one sign-up origin, no Brevo API host or key.
+{
+  const evidenceSiteUrl = process.env.SITE_URL || "https://www.bast.ai";
+  const evidenceSiteEnv = process.env.SITE_ENV || "local";
+  const evidenceRobots = process.env.ROBOTS_META || (evidenceSiteEnv === "production" ? "index, follow" : "noindex, nofollow");
+  assertIncludes(sitemapXml, `${evidenceSiteUrl}/evidence/</loc>`, "evidence library sitemap route");
+  assertIncludes(llmsTxt, `${evidenceSiteUrl}/evidence/`, "evidence library in llms.txt");
+  assertIncludes(evidenceHtml, `<meta name="robots" content="${evidenceRobots}">`, "evidence robots follow the build setting");
+  if ((evidenceHtml.match(/<meta name="robots"/g) || []).length !== 1) {
+    throw new Error("evidence page must have exactly one robots meta");
+  }
+  assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
+  assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
+  assertIncludes(evidenceHtml, "Last updated", "evidence last-updated date");
+  assertIncludes(evidenceHtml, "Refreshed weekly", "evidence weekly refresh note");
+  assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
+  assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
+  assertIncludes(evidenceHtml, "Send me Bast updates", "updates checkbox label");
+  assertIncludes(evidenceHtml, 'name="website"', "honeypot field");
+  assertIncludes(evidenceHtml, 'class="evlib-hp"', "honeypot hidden from people");
+  assertIncludes(evidenceJs, "updates", "updates flag in the sign-up body");
+  assertIncludes(evidenceJs, "history.replaceState", "confirmation code removed from the address bar");
+  assertIncludes(evidenceJs, 'referrerPolicy: "no-referrer"', "sign-up fetch sends no referrer");
+  assertIncludes(evidenceJs, "Authorization", "library request sends the confirmation code");
+  assertIncludes(evidenceJs, "This link expired", "expired-link message");
+  assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
+  assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
+  assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
+  const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
+  if (!updatesInput) throw new Error("Missing updates checkbox");
+  if (/\bchecked\b/.test(updatesInput[0])) throw new Error("updates checkbox must be unticked by default");
+  assertExcludes(evidenceHtml, "fetch(", "fetch in evidence HTML");
+  assertExcludes(evidenceHtml, "library.json", "public library file on the evidence page");
+  assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
+  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 1) {
+    throw new Error("evidence script must call fetch exactly once");
+  }
+  const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];
+  const evidenceOrigins = new Set(evidenceUrls.map((url) => {
+    try { return new URL(url).origin; } catch { return "invalid"; }
+  }));
+  if (evidenceOrigins.size !== 1 || !evidenceOrigins.has("https://forms.aws.bast.ai")) {
+    throw new Error(`evidence script must use exactly one fetch origin https://forms.aws.bast.ai; found ${[...evidenceOrigins].join(", ") || "none"}`);
+  }
+  const previewIds = new Set(["A1", "A19", "A5", "B2", "B8"]);
+  const foundIds = new Set();
+  for (const match of `${evidenceHtml}\n${evidenceJs}\n${evidenceCss}`.matchAll(/\b([A-C]\d+)\b/g)) {
+    foundIds.add(match[1]);
+  }
+  for (const id of foundIds) {
+    if (!previewIds.has(id)) throw new Error(`Study id ${id} is outside the five public previews`);
+  }
+  for (const id of previewIds) {
+    assertIncludes(evidenceHtml, `id="${id}"`, `evidence preview card ${id}`);
+  }
+  const previews = [
+    ["A1", ["94.9%", "34.5%"], ["https://doi.org/10.1038/s41591-025-04074-y"]],
+    ["A19", ["48%", "17%", "127%"], ["https://pubmed.ncbi.nlm.nih.gov/40560616/"]],
+    ["A5", ["19 percentage points", "84.5%", "70.6%", "12.2%", "25.1%"], [
+      "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf",
+      "https://doi.org/10.1287/orsc.2025.21838",
+    ]],
+    ["B2", ["557 days", "28.3%"], ["https://pubmed.ncbi.nlm.nih.gov/17101889/"]],
+    ["B8", ["25% at 90 days"], ["https://pubmed.ncbi.nlm.nih.gov/28369687/"]],
+  ];
+  for (const [id, numbers, links] of previews) {
+    for (const number of numbers) assertIncludes(evidenceHtml, number, `${id} preview number ${number}`);
+    for (const link of links) assertIncludes(evidenceHtml, `href="${link}"`, `${id} preview source link`);
+  }
+  for (const [contents, label] of [[evidenceHtml, "evidence page"], [evidenceJs, "evidence script"]]) {
+    for (const banned of ["analytics-consent", "googletagmanager", "gtag(", "bastTrack", "document.cookie", "localStorage", "sessionStorage", "sendBeacon", "formspree", "hubspot", "mailchimp", "XMLHttpRequest"]) {
+      assertExcludes(contents, banned, `tracking or storage on ${label}: ${banned}`);
+    }
+  }
+  const evidenceCopy = `${evidenceHtml}\n${evidenceJs}\n${evidenceCss}`;
+  for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i, /40% higher quality/i, /43% vs 17%/]) {
+    if (banned.test(evidenceCopy)) throw new Error(`evidence library contains banned wording: ${banned}`);
+  }
+  function assertNoSecrets(contents, label) {
+    if (/api\.brevo\.com|api\.sendinblue\.com/i.test(contents)) {
+      throw new Error(`Brevo API host in ${label}`);
+    }
+    if (/xkeysib-[A-Za-z0-9]|xsmtpsib-[A-Za-z0-9]/i.test(contents)) {
+      throw new Error(`key-shaped string in ${label}`);
+    }
+    if (/\b(?:api[_-]?key|client[_-]?secret|secret[_-]?key)\b\s*[:=]\s*['"][A-Za-z0-9+/_=-]{12,}/i.test(contents)) {
+      throw new Error(`key-shaped string in ${label}`);
+    }
+  }
+  for (const file of files) {
+    if (path.basename(file) === "library.json") {
+      throw new Error(`dist must not contain library.json (${path.relative(distDir, file)})`);
+    }
+    if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
+    assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }
 }
 

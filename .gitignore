@@ -1,5 +1,7 @@
 dist/
 output/
+# The full evidence library is private. The page fetches it after confirmation.
+src/evidence/library.json
 node_modules/
 tmp/
 .DS_Store

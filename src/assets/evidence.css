@@ -1,0 +1,326 @@
+/* Evidence library. Builds on styles.css. Body copy, labels, and fine
+   print stay at least 18px in --ink so the page stays readable. */
+body.evlib-page {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+body.evlib-page [hidden] {
+  display: none !important;
+}
+
+body.evlib-page .evlib-article {
+  max-width: 1040px;
+}
+
+body.evlib-page .site-nav,
+body.evlib-page .site-nav a,
+body.evlib-page .footer-nav a,
+body.evlib-page .footer-head,
+body.evlib-page .footer-brand p,
+body.evlib-page .footer-bottom,
+body.evlib-page .footer-bottom span,
+body.evlib-page .eyebrow,
+body.evlib-page .frame-meta,
+body.evlib-page .card-kicker,
+body.evlib-page .card p,
+body.evlib-page .frame-article p,
+body.evlib-page .frame-article li,
+body.evlib-page .form-note,
+body.evlib-page .contact-form label,
+body.evlib-page .evlib-optional,
+body.evlib-page .evlib-filter label,
+body.evlib-page .evlib-count,
+body.evlib-page .evlib-card dt,
+body.evlib-page .evlib-card dd,
+body.evlib-page .evlib-badge,
+body.evlib-page .evlib-meta,
+body.evlib-page .text-link,
+body.evlib-page input,
+body.evlib-page select {
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+body.evlib-page .frame-article .lede {
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+body.evlib-page .frame-article .frame-head h1,
+body.evlib-page .frame-article h2,
+body.evlib-page .evlib-card h3,
+body.evlib-page .eyebrow,
+body.evlib-page .card-kicker,
+body.evlib-page .footer-head,
+body.evlib-page .contact-form label,
+body.evlib-page .evlib-filter label,
+body.evlib-page .evlib-card dt,
+body.evlib-page .button {
+  font-weight: 500;
+}
+
+body.evlib-page .frame-article .frame-head h1 {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+body.evlib-page .frame-article h2 {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+body.evlib-page .evlib-card h3 {
+  margin-top: 0.6rem;
+  color: var(--ink);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+body.evlib-page .frame-article .evlib-card .evlib-finding {
+  color: var(--ink);
+  font-size: 1.1875rem;
+  font-weight: 500;
+}
+
+body.evlib-page .frame-article p strong,
+body.evlib-page .frame-article li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+body.evlib-page a {
+  color: var(--ink);
+}
+
+body.evlib-page .text-link,
+body.evlib-page .footer-nav a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+}
+
+body.evlib-page .site-nav a {
+  text-decoration: none;
+}
+
+body.evlib-page .button-primary {
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  min-height: 52px;
+}
+
+body.evlib-page .evlib-preview,
+body.evlib-page .evlib-list {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+body.evlib-page .evlib-preview {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.evlib-page .evlib-preview .evlib-card:first-child {
+  grid-column: 1 / -1;
+}
+
+body.evlib-page .frame-article .evlib-card p {
+  margin: 0 0 0.7rem;
+}
+
+body.evlib-page .frame-article .evlib-card .evlib-caveat {
+  margin-bottom: 0;
+}
+
+body.evlib-page .evlib-card .card-kicker {
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+body.evlib-page .evlib-badge {
+  display: inline-block;
+  margin: 0.45rem 0 0;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: var(--ink);
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 600;
+}
+
+body.evlib-page .evlib-card dl,
+body.evlib-page .evlib-meta {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.4rem 0.9rem;
+  margin: 0 0 0.7rem;
+}
+
+body.evlib-page .evlib-card dd,
+body.evlib-page .evlib-meta dd {
+  margin: 0;
+}
+
+body.evlib-page .evlib-source,
+body.evlib-page .evlib-finding,
+body.evlib-page .evlib-library-title,
+body.evlib-page .evlib-keep {
+  overflow-wrap: anywhere;
+}
+
+body.evlib-page .evlib-library-title {
+  margin: 0 0 0.7rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+body.evlib-page .evlib-keep {
+  margin: 0.2rem 0 0;
+}
+
+body.evlib-page .evlib-gate {
+  margin-top: 1.6rem;
+}
+
+body.evlib-page .evlib-gate .contact-form {
+  margin-top: 0;
+}
+
+body.evlib-page .contact-form input,
+body.evlib-page .evlib-filter input,
+body.evlib-page .evlib-filter select {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--ink);
+  min-height: 52px;
+  background: var(--paper);
+}
+
+body.evlib-page .contact-form input::placeholder,
+body.evlib-page .evlib-filter input::placeholder {
+  color: var(--ink);
+  opacity: 1;
+  font-weight: 400;
+}
+
+body.evlib-page .form-note.is-error {
+  color: #991b1b;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+body.evlib-page .form-note.is-success {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+body.evlib-page .evlib-choice label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+body.evlib-page .evlib-choice input {
+  width: 1.35rem;
+  height: 1.35rem;
+  min-height: 1.35rem;
+  margin-top: 0.2rem;
+  padding: 0;
+  flex: 0 0 auto;
+  accent-color: var(--ink);
+  box-shadow: none;
+}
+
+body.evlib-page .evlib-choice .form-note {
+  margin: 0.35rem 0 0;
+}
+
+body.evlib-page .evlib-hp {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+body.evlib-page .evlib-hp input {
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+body.evlib-page .evlib-filters {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 1.6rem;
+}
+
+body.evlib-page .evlib-filter {
+  display: grid;
+  gap: 0.35rem;
+}
+
+body.evlib-page .evlib-filter input:focus-visible,
+body.evlib-page .evlib-filter select:focus-visible,
+body.evlib-page .contact-form input:focus-visible {
+  outline: 3px solid #0078a8;
+  outline-offset: 2px;
+}
+
+body.evlib-page .frame-article .evlib-count {
+  margin: 1.2rem 0 0;
+}
+
+@media (max-width: 860px) {
+  body.evlib-page .evlib-preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.evlib-page .evlib-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.evlib-page .evlib-filter-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  body.evlib-page .evlib-filters,
+  body.evlib-page .evlib-gate .contact-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.evlib-page .evlib-card dl,
+  body.evlib-page .evlib-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.evlib-page .evlib-card dd,
+  body.evlib-page .evlib-meta dd {
+    margin-bottom: 0.45rem;
+  }
+}
