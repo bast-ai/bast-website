@@ -22,7 +22,19 @@
   ]
 }
 </script><link rel="stylesheet" href="/assets/styles.css"><script>window.BAST_GA_MEASUREMENT_ID="__GA_MEASUREMENT_ID__";window.BAST_SITE_ENV="__SITE_ENV__";</script><script src="/assets/analytics-consent.js" defer></script></head>
-<body class="bastcare-site"><a class="skip-link" href="#main">Skip to content</a><header class="site-header bastcare-header"><a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a><nav class="site-nav bastcare-nav" aria-label="Primary"><a href="/platform/">Platform</a><a aria-current="page" href="/bastcare/">BastCare</a><a href="/evidence/">Evidence</a><a href="/demos/">Demos</a><a class="nav-cta" href="/#contact">Contact</a></nav></header>
+<body class="bastcare-site"><a class="skip-link" href="#main">Skip to content</a><header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="/assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a aria-current="page" href="/bastcare/">BastCare</a>
+    <a href="/pilot/">For care teams</a>
+    <a href="/evidence/">Evidence library</a>
+    <a href="/platform/">Platform</a>
+    <a href="/about/">About</a>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6789669565" data-app-store-placement="site-header">Download BastCare</a>
+  </nav>
+</header>
 <main class="bastcare-page architecture-page" id="main">
 <section class="bastcare-hero"><p class="eyebrow">BastCare solution architecture</p><h1>Small by design. Patient-controlled by default.</h1><p class="lede">This public view explains the people, components, data boundaries, decisions, functional requirements, and quality requirements behind BastCare.</p><div class="policy-meta"><span>Architecture snapshot</span><span>September 19, 2026</span></div><div class="architecture-download"><div><strong>Take the architecture with you.</strong><p>Download the public six-page system context, visit lifecycle, CareTeam sharing, deletion, and accountability view.</p></div><a class="button button-primary" href="/bastcare/architecture/bastcare-solution-architecture.pdf" download data-resource="bastcare-solution-architecture">Download PDF</a></div></section>
 
@@ -39,5 +51,63 @@
 <section class="requirements" aria-labelledby="fr-title"><div><p class="panel-label">Functional requirements</p><h2 id="fr-title">What the product must do</h2><ol><li>Ask for a cloud-processing choice, and ask for consent before recording.</li><li>Keep the original transcript protected on-device and remove audio after a summary is saved successfully.</li><li>Let the patient view or download the transcript and regenerate a summary from it.</li><li>Keep regeneration as a preview until the patient chooses Use this summary.</li><li>Let the patient preview, share, change, and revoke from My Visits.</li><li>Delete a visit with its transcript and summary; delete account-linked server and local app data when the account is deleted.</li></ol></div><div><p class="panel-label">Non-functional requirements</p><h2>How it must behave</h2><dl><dt>Privacy</dt><dd>No server persistence or logging of visit content.</dd><dt>Security</dt><dd>Account isolation, secure connections, protected keys, and encrypted sharing.</dd><dt>Reliability</dt><dd>Try Again without silent loss; server success before audio deletion.</dd><dt>Accessibility</dt><dd>VoiceOver, Dynamic Type, text-first actions, visible focus, and no color-only meaning.</dd><dt>Auditability</dt><dd>De-identified usage and content-free events without retaining a deleted identity.</dd><dt>Performance</dt><dd>Immediate feedback; network waits never freeze navigation.</dd></dl></div></section>
 
 </main>
-<footer class="site-footer bastcare-footer"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a><p>BastCare helps patients and caregivers keep and share visit summaries on their terms.</p></div><nav class="footer-nav" aria-label="BastCare footer"><div class="footer-col"><p class="footer-head">BastCare</p><a href="/bastcare/">Overview</a><a href="/evidence/">Evidence library</a><a href="/bastcare/privacy/">Privacy</a><a href="/bastcare/privacy-faq/">Privacy Q&amp;A</a><a href="/bastcare/processors/">Processors</a><a href="/bastcare/support/">Support</a><a href="/bastcare/terms/">Terms</a></div><div class="footer-col"><p class="footer-head">Your account</p><a href="/bastcare/delete-account/">Delete account</a><a href="/bastcare/architecture/">How it works</a></div><div class="footer-col"><p class="footer-head">Bast</p><a href="/">Bast.ai</a><a href="/privacy.html">Website privacy</a><a href="mailto:community@bast.ai">Contact</a></div></nav></div><div class="footer-bottom"><span>&copy; 2026 Bast, Inc. BastCare is not a medical device.</span><button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences&&window.bastOpenConsentPreferences()">Cookie preferences</button></div></footer>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
+      <p>Explainable healthcare AI. Answers point back to a source you can check.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <p class="footer-head">BastCare</p>
+        <a href="https://apps.apple.com/app/id6789669565">Download on the App Store</a>
+        <a href="/bastcare/architecture/">How BastCare works</a>
+        <a href="/bastcare/support/">Support</a>
+        <a href="/bastcare/privacy/">Privacy</a>
+        <a href="/bastcare/privacy-faq/">Privacy Q&amp;A</a>
+        <a href="/bastcare/terms/">Terms</a>
+        <a href="/bastcare/delete-account/">Delete account</a>
+        <a href="/bastcare/processors/">Processors</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Care teams</p>
+        <a href="/pilot/">Start a pilot</a>
+        <a href="/evidence/">Evidence library</a>
+        <a href="/assets/bastcare-pilot-one-pager.pdf" download>Pilot one-pager (PDF)</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Platform</p>
+        <a href="/platform/">Overview</a>
+        <a href="/platform/architecture/">Architecture</a>
+        <a href="/platform/delivery/">Agent OS</a>
+        <a href="/platform/evidence/">Claims and proof</a>
+        <a href="/demos/">Demos</a>
+        <a href="/frames/">Reliability frames</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/about/">About</a>
+        <a href="/about/#team">Team</a>
+        <a href="/manifesto/">Manifesto</a>
+        <a href="/principles.html">Principles from nature</a>
+        <a href="/investors.html">Investors</a>
+        <a href="/faq/">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Stay in touch</p>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Newsletter</a>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@Bast_CAT22" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:community@bast.ai">community@bast.ai</a>
+        <a href="tel:+13037176099">Text 303-717-6099</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI. BastCare is not a medical device.</span>
+    <a href="/privacy.html">Website privacy and cookies</a>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
+</footer>
 </body></html>

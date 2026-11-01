@@ -26,7 +26,18 @@ body.pilot { margin: 0; background: var(--paper); color: var(--ink); font: 400 1
 
 main, .pilot-footer { max-width: 40rem; margin: 0 auto; }
 .pilot-hero { background: var(--ink); color: #fff; padding: 1.75rem 1.25rem 1.5rem; }
+.pilot-audience { margin: 0 0 .65rem; color: var(--accent-light); font-size: 1.125rem; font-weight: 600; letter-spacing: .04em; line-height: 1.35; text-transform: uppercase; }
 .pilot-hero h1 { margin: 0 0 .75rem; font-size: clamp(2rem, 8.4vw, 2.75rem); line-height: 1.12; font-weight: 700; letter-spacing: -.01em; }
+.pilot .site-header { width: min(1080px, calc(100% - 2rem)); background: #fff; }
+.pilot .site-footer { width: min(1080px, calc(100% - 2rem)); }
+.pilot .site-nav a,
+.pilot .footer-nav a,
+.pilot .footer-brand p,
+.pilot .footer-bottom,
+.pilot .footer-bottom a,
+.pilot .footer-link-btn { color: var(--ink); }
+.pilot .site-nav .nav-cta,
+.pilot .site-nav .nav-cta:hover { color: #fff; }
 .pilot-hero em { font-style: normal; color: var(--accent-light); }
 .pilot-sub { margin: 0 0 1.25rem; font-size: 1.1875rem; color: #e3edf2; }
 

@@ -890,9 +890,9 @@ h1 span {
 }
 
 .footer-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .footer-brand .brand {
@@ -909,8 +909,8 @@ h1 span {
 
 .footer-nav {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.5rem 1.25rem;
 }
 
 .footer-col {
@@ -949,6 +949,12 @@ h1 span {
   border-top: 1px solid var(--line-subtle);
   color: var(--quieter);
   font-size: var(--fs-caption);
+}
+
+.footer-bottom a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .footer-link-btn {
@@ -2462,8 +2468,11 @@ h1 span {
   }
 
   .footer-top {
-    grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .footer-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2556,7 +2565,7 @@ h1 span {
   }
 
   .footer-nav {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
@@ -5195,7 +5204,26 @@ h1 span {
 }
 
 .site-nav .nav-cta {
-  color: var(--accent-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-left: 0.25rem;
+  padding: 0.4rem 0.9rem;
+  border-bottom: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.site-nav .nav-cta:hover,
+.site-nav .nav-cta:focus-visible {
+  border-bottom-color: transparent;
+  background: var(--accent-text);
+  color: #fff;
 }
 
 .home-page {
@@ -5456,8 +5484,9 @@ h1 span {
   .site-header,
   .home-page .site-header {
     width: min(100% - 32px, var(--max));
-    align-items: center;
-    flex-direction: row;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.85rem;
   }
 
   .bastcare-header {
@@ -5465,8 +5494,8 @@ h1 span {
   }
 
   .site-nav {
-    width: auto;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .bastcare-nav {
@@ -5537,3 +5566,156 @@ h1 span {
 .manifesto-entry h2 a { text-decoration: none; }
 .manifesto-entry h2 a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
 .manifesto-entry .section-heading > a { color: var(--accent-text); text-underline-offset: 0.2em; }
+
+/* Home story: one idea per section, type sized for a 70-year-old reader. */
+.home-page .hero.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 420px);
+  grid-template-areas: "lead promo";
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  min-height: 0;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.home-page .hero.home-hero .hero-lead {
+  grid-area: lead;
+  min-width: 0;
+}
+
+.home-page .hero.home-hero .hero-promo {
+  grid-area: promo;
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+  justify-self: end;
+}
+
+.home-page .hero.home-hero h1 {
+  max-width: 14em;
+  margin: 0 0 1rem;
+  font-size: clamp(2.25rem, 4vw, 3.35rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.home-page .home-hero .lede {
+  max-width: 38rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.home-page .home-hero .hero-actions {
+  align-items: center;
+}
+
+.home-page .home-hero .button-primary {
+  max-width: 22rem;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+}
+
+.home-rating {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.home-helps .offering-summary-gallery,
+.home-helps .offering-summary-gallery figure,
+.home-helps .offering-summary-gallery figure:first-child,
+.home-helps .offering-summary-gallery figure:nth-child(2),
+.home-helps .offering-summary-gallery figure:last-child {
+  transform: none;
+}
+
+.home-helps .offering-summary-gallery {
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+.home-helps .offering-summary-gallery figcaption {
+  display: block;
+  max-width: 22ch;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.home-helps-cta {
+  margin: 1.75rem 0 0;
+}
+
+.home-dvc {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+}
+
+.home-dvc h3,
+.home-proof h2,
+.home-care-teams h2,
+.home-rd h2,
+.home-newsletter h2,
+.home-helps h2 {
+  font-weight: 600;
+}
+
+.platform-site .questions {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.platform-site .questions li {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.platform-site .card h3,
+.platform-site .mode-panels h3,
+.platform-site .ownership-list strong {
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .home-page .hero.home-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas: "lead" "promo";
+  }
+
+  .home-page .hero.home-hero .hero-promo {
+    justify-self: center;
+    width: min(100%, 280px);
+  }
+
+  .home-page .hero.home-hero h1 {
+    max-width: 16em;
+    font-size: clamp(2.15rem, 8vw, 2.8rem);
+  }
+
+  .home-helps .offering-summary-gallery {
+    grid-template-columns: 1fr;
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-page .home-hero h1 {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+  }
+
+  .home-helps .offering-summary-gallery figcaption {
+    display: block;
+  }
+}
