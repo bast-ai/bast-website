@@ -568,7 +568,10 @@ for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]
   assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
-assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
+assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
+assertExcludes(bastcareHome, "recorded hours", "BastCare hour limit");
+assertExcludes(bastcareHome, "No card required", "BastCare payment prompt");
+assertExcludes(bastcareHome, "BastCare Plus", "BastCare Plus on the product page");
 assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");
 assertIncludes(bastcareHome, "How this summary was made", "BastCare source view");
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
@@ -670,11 +673,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
   assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
-assertIncludes(bastcareTerms, "BastCare is free to download and includes the first two recorded hours", "current included-hours terms");
-// BastCare Plus is paused (Beth, 2026-10-13; 1.0.12 release notes).
-const plusPaused = "BastCare Plus is paused for now while we improve subscriptions";
-assertIncludes(faqHtmlForPlus, plusPaused, "FAQ BastCare Plus pause");
-assertIncludes(bastcareTerms, plusPaused, "terms BastCare Plus pause");
+assertIncludes(bastcareTerms, "<h2>7. Availability</h2>", "BastCare availability heading");
+assertIncludes(bastcareTerms, "BastCare is free to download.", "BastCare terms download line");
+assertExcludes(bastcareTerms, "BastCare Plus", "BastCare Plus in the terms");
+assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
+assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -911,6 +914,10 @@ for (const file of files) {
   }
   const rel = path.relative(distDir, file);
   if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
+  if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
+      /\bBastCare Plus\b|\bsubscription\b|in-app purchase|recorded hours|priceCurrency|No card required/i.test(contents)) {
+    throw new Error(`BastCare pricing wording in ${rel}`);
+  }
   if ([".html", ".txt"].includes(path.extname(file))) {
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
   }
