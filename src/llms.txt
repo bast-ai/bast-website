@@ -22,8 +22,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
-- [About](__SITE_URL__/about/): Bast's story, a sourced timeline, principles from Janine M. Benyus, and the manifesto opening.
-- [Team](__SITE_URL__/team/): Beth Rudden (CEO) and Thanh Lam (CTO), with a wider team of contributors.
+- [About](__SITE_URL__/about/): Bast's story, a sourced timeline, principles from Janine M. Benyus, Dave Snowden's Cynefin framework, and the manifesto opening. Beth Rudden (CEO) and Thanh Lam (CTO) are on this page, with a wider team of contributors: __SITE_URL__/about/#team.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
 - [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.

@@ -4,14 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About - Bast AI</title>
-<meta name="description" content="Bast's story: why Bast exists, dated milestones, principles from Janine M. Benyus, and the manifesto opening.">
+<meta name="description" content="Bast's story: dated milestones, principles from Janine M. Benyus and Dave Snowden, and the people who build Bast.">
 <meta name="robots" content="__ROBOTS_META__">
 <link rel="icon" href="/assets/bast-logo.svg" type="image/svg+xml">
 <link rel="canonical" href="__SITE_URL__/about/">
 <meta property="og:title" content="About - Bast AI">
-<meta property="og:description" content="Why Bast exists, the milestones we can date, principles from nature, and the manifesto.">
+<meta property="og:description" content="Why Bast exists, the milestones we can date, Cynefin and principles from nature, and the team.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="__SITE_URL__/about/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "__SITE_URL__/#organization",
+      "name": "Bast AI",
+      "legalName": "Bast, Inc.",
+      "url": "__SITE_URL__/"
+    },
+    {
+      "@type": "Person",
+      "@id": "__SITE_URL__/about/#beth-rudden",
+      "name": "Beth Rudden",
+      "jobTitle": "CEO",
+      "url": "https://bethrudden.ai/",
+      "worksFor": { "@id": "__SITE_URL__/#organization" },
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Data Strategy", "Explainable AI", "AI Governance"],
+      "sameAs": [
+        "https://linkedin.com/in/brudden",
+        "https://bethrudden.ai/",
+        "https://bethrudden.ai/cv.html"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "__SITE_URL__/about/#thanh-lam",
+      "name": "Thanh Lam",
+      "jobTitle": "CTO",
+      "worksFor": { "@id": "__SITE_URL__/#organization" },
+      "knowsAbout": ["AI architecture", "source-grounded AI", "AI explainability systems", "AI verification layers", "conversational AI design", "AI guardrails"],
+      "sameAs": [
+        "https://www.linkedin.com/in/thanh-lam-8441022a5/"
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="/assets/styles.css">
 <script>
   window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
@@ -83,6 +122,20 @@
     <p><a href="/principles.html">Read the principles from nature</a></p>
   </section>
 
+  <section class="section-plain" id="cynefin" aria-labelledby="cynefin-title">
+    <h2 id="cynefin-title">Cynefin, and different ways of knowing.</h2>
+    <p>Dave Snowden’s <a href="https://thecynefin.co/">Cynefin framework</a> sorts a situation by how cause and effect can be known. Each domain calls for a different way of knowing and acting.</p>
+    <ul class="about-principles">
+      <li><strong>Clear.</strong> Cause and effect are visible. Sense the facts, place them in a known category, and follow an established practice.</li>
+      <li><strong>Complicated.</strong> Cause and effect take expertise to uncover. Sense, analyze, and respond. Several sound answers can exist.</li>
+      <li><strong>Complex.</strong> Cause and effect show themselves in hindsight. Probe, sense what happens, and respond. The practice emerges from the probe.</li>
+      <li><strong>Chaotic.</strong> Cause and effect cannot be found in time. Act to create stability, sense the effect, and respond.</li>
+    </ul>
+    <p>Confusion, also called disorder, sits at the center. It is the state of not yet knowing which domain applies.</p>
+    <p>A way of acting that fits one domain does not fit another.</p>
+    <p>Bast’s <a href="/principles.html">principles page</a> connects Bast’s approach to Dave Snowden’s insistence that action must fit the nature of the situation.</p>
+  </section>
+
   <section class="section-plain" aria-labelledby="manifesto-excerpt-title">
     <h2 id="manifesto-excerpt-title">The manifesto.</h2>
     <blockquote>
@@ -91,10 +144,34 @@
     <p><a href="/manifesto/">Read the manifesto</a></p>
   </section>
 
-  <section class="section-plain" aria-labelledby="about-team-title">
+  <section class="section-plain" id="team" aria-labelledby="about-team-title">
     <h2 id="about-team-title">The team.</h2>
-    <p>Beth Rudden, CEO, and Thanh Lam, CTO, lead Bast with a wider team of contributors.</p>
-    <p><a href="/team/">Meet them on the team page</a></p>
+    <div class="card-grid card-grid-2 team-grid">
+      <article class="card" id="beth-rudden">
+        <p class="card-kicker">CEO</p>
+        <h3>Beth Rudden</h3>
+        <p>Beth founded Bast to build trusted, explainable AI infrastructure: AI grounded in approved knowledge that can show, for every answer, exactly which source it drew from.</p>
+        <p class="team-links">
+          <a href="https://bethrudden.ai/" target="_blank" rel="noopener">bethrudden.ai</a> &middot;
+          <a href="https://linkedin.com/in/brudden" target="_blank" rel="noopener">LinkedIn</a> &middot;
+          <a href="mailto:beth@bast.ai">beth@bast.ai</a>
+        </p>
+      </article>
+      <article class="card" id="thanh-lam">
+        <p class="card-kicker">CTO</p>
+        <h3>Thanh Lam</h3>
+        <p>Thanh leads the architecture of Bast's verification layer — the system that sits between an organization's approved knowledge and the model's output, checking scope and source grounding before any answer ships.</p>
+        <p class="team-links">
+          <a href="https://www.linkedin.com/in/thanh-lam-8441022a5/" target="_blank" rel="noopener">LinkedIn</a>
+        </p>
+      </article>
+    </div>
+    <p>Beth and Thanh work with a wider team of contributors.</p>
+    <!-- To name a contributor, add a list here:
+    <ul class="contributor-list">
+      <li>Name</li>
+    </ul>
+    -->
   </section>
 
   <section class="section-plain about-cta" aria-labelledby="about-next-title">
@@ -126,7 +203,7 @@
         <p class="footer-head">Company</p>
         <a href="/manifesto/">Manifesto</a>
         <a href="/principles.html">Operating Principles</a>
-        <a href="/team/">Team</a>
+        <a href="/about/#team">Team</a>
         <a href="/about/">About</a>
         <a href="/faq/">FAQ</a>
         <a href="/#contact">Contact</a>
