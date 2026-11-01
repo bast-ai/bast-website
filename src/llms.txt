@@ -14,6 +14,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
+- [Evidence Register](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries.
 - [Evidence library](__SITE_URL__/evidence/): Published research on explainable AI, caregiving, and who pays for caregiver support. Five findings are on the page, each with its source and caveat. The full library opens after an email confirmation.
 - [Demos](__SITE_URL__/demos/): Demo videos (admin console, knowledge manager, end-user view, healthcare ontology), the BastCare captioned walkthrough, and the ten-minute demo guide. The Lucid Therapeutics demo is a pilot of Bast applied to Lucid Therapeutics' patient information.
 - [Bast Demo Guide](__SITE_URL__/platform/demo/): Ten-minute path from CFO outcomes through BastCare to architecture and evidence.
@@ -21,7 +22,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
-- [About](__SITE_URL__/#about): Beth Rudden (CEO & Chair) and Thanh Lam (CTO) — the people behind Bast.
+- [Team](__SITE_URL__/team/): Beth Rudden (CEO & Chair) and Thanh Lam (CTO) — the people behind Bast.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
 - [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.

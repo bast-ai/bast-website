@@ -10,10 +10,10 @@ Beth approved one cleanup of the public site:
 
 - BastCare asks for consent before recording. The app does not enforce consent, and public copy does not say recording waits for agreement.
 - The home contact form is described as a Web3Forms delivery to Bast's inbox, with the visitor's email app as the fallback.
-- Craig Hospital comes off the manifesto. `bast-narrative.pdf` is no longer published. The Bob Beth retelling PDF stays in the repo because it has no editable source; the manifesto no longer links to it.
+- Craig Hospital stays. Beth later confirmed the Bast AI platform pilot there. The manifesto names that pilot and says BastCare did not exist then. `bast-narrative.pdf` stays published. The manifesto links the Bob Beth retelling PDF.
 - Say "free to download." Buttons say "Download BastCare."
-- `/platform/evidence/` redirects to `/evidence/`. `/team/` redirects to `/#about`.
-- About on the home page names Beth Rudden, CEO & Chair, and Thanh Lam, CTO.
+- `/team/` stays, with Beth Rudden as CEO & Chair and Thanh Lam as CTO. The home page also has a short About section that links to `/team/`.
+- `/platform/evidence/` stays as the claim register. `/evidence/` stays in the main nav.
 - Body, card, caption, and label text is at least 18px, in near-black, with heading weight 600 or heavier.
 - `/evidence/` is in the main nav and the company footer.
 

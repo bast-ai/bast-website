@@ -49,6 +49,7 @@ const requiredFiles = [
   "assets/bastcare/media/bastcare-promo-poster.jpg",
   "assets/data/bastcare-metrics.json",
   "assets/data/bastcare-reviews.json",
+  "assets/bast-narrative.pdf",
   "assets/bast-narrative-cover.png",
   "advisory/index.html",
   ".nojekyll",
@@ -239,7 +240,7 @@ const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
 assertExcludes(investorsHtml, "bast-ai-healthcare-teaser", "retired healthcare teaser reference");
 assertExcludes(investorsHtml, "Download teaser", "retired teaser download");
 assertIncludes(investorsHtml, 'href="/evidence/"', "investor evidence-library link");
-assertExcludes(investorsHtml, 'href="/platform/evidence/"', "retired evidence-register link on investors");
+assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
 for (const [contents, label] of [
@@ -417,7 +418,7 @@ assertIncludes(platformHtml, "People stay in charge.", "human accountability ben
 assertIncludes(platformHtml, "The platform in the palm of your hand", "BastCare product proof");
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
 assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architecture diligence link");
-assertExcludes(platformHtml, 'href="/platform/evidence/"', "retired evidence-register link on platform");
+assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
 assertExcludes(platformHtml, "The architecture is the business case.", "architecture-led marketing copy");
 assertExcludes(platformHtml, "Commit history helps us find change", "commit-history marketing copy");
 assertExcludes(platformHtml, "detect-remediate-verify-rollback", "recovery-loop marketing copy");
@@ -426,21 +427,21 @@ assertExcludes(platformHtml, 'class="maturity ', "maturity taxonomy on primary P
 for (const [contents, label] of [
   [platformArchitectureHtml, "architecture"],
   [platformDeliveryHtml, "delivery"],
+  [platformEvidenceHtml, "evidence"],
   [platformDemoHtml, "demo"],
 ]) {
   assertIncludes(contents, 'class="evidence-nav"', `${label} evidence navigation`);
   assertIncludes(contents, 'href="/platform/architecture/"', `${label} architecture link`);
   assertIncludes(contents, 'href="/platform/delivery/"', `${label} delivery link`);
+  assertIncludes(contents, 'href="/platform/evidence/"', `${label} evidence link`);
   assertIncludes(contents, 'href="/platform/demo/"', `${label} demo link`);
-  assertExcludes(contents, 'href="/platform/evidence/"', `${label} retired evidence-register link`);
 }
-assertIncludes(platformEvidenceHtml, '<meta name="robots" content="noindex, nofollow">', "evidence-register stub noindex");
-assertIncludes(platformEvidenceHtml, 'http-equiv="refresh" content="0; url=/evidence/"', "evidence-register stub redirect");
-assertIncludes(platformEvidenceHtml, 'href="__SITE_URL__/evidence/"'.replace("__SITE_URL__", process.env.SITE_URL || "https://www.bast.ai") , "evidence-register canonical");
 assertIncludes(platformArchitectureHtml, "one microservice per agent remains a direction", "bounded agent microservice language");
 assertIncludes(platformArchitectureHtml, "BastCare on the new AWS path", "current BastCare delivery path");
 assertIncludes(platformArchitectureHtml, "Retire the remaining Duplo estate", "bounded Duplo transition language");
 assertIncludes(platformArchitectureHtml, "detect, remediate within bounds, verify recovery", "self-healing definition");
+assertIncludes(platformEvidenceHtml, "BAST-AGENT-001", "evidence claim identifier");
+assertIncludes(platformEvidenceHtml, "Review needed", "publication review state");
 assertIncludes(platformDemoHtml, "Too broad without bounded comparative evidence", "quality comparison boundary");
 assertIncludes(siteJs, 'window.bastTrack("lead_submit_success", leadParams)', "successful lead tracking");
 assertIncludes(siteJs, 'window.bastTrack("generate_lead", leadParams)', "confirmed lead tracking");
@@ -727,13 +728,13 @@ if (demoCardCount !== 5 || pilotLabelCount !== 1) {
   throw new Error(`Expected five demos with only Lucid labeled Pilot; found ${demoCardCount} demos and ${pilotLabelCount} labels`);
 }
 
-for (const route of ["architecture", "delivery", "demo"]) {
+for (const route of ["architecture", "delivery", "evidence", "demo"]) {
   assertIncludes(sitemapXml, `/platform/${route}/</loc>`, `Platform ${route} sitemap route`);
 }
-assertExcludes(sitemapXml, "/platform/evidence/", "retired evidence-register sitemap route");
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of [
   "faq/",
+  "team/",
   "frames/",
   "frames/claim-level-source-grounding/",
   "frames/zero-tolerance-ai-output-architecture/",
@@ -767,12 +768,13 @@ assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
 assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
-assertIncludes(teamHtml, 'http-equiv="refresh" content="0; url=/#about"', "team stub redirect");
-assertIncludes(teamHtml, '<meta name="robots" content="noindex, nofollow">', "team stub noindex");
+assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
+assertIncludes(teamHtml, '"Person"', "team Person structured data");
+assertIncludes(teamHtml, "CEO &amp; Chair", "Beth Rudden title on the team page");
 assertIncludes(indexHtml, 'id="about"', "homepage about section");
+assertIncludes(indexHtml, 'href="/team/"', "homepage link to the team page");
 assertIncludes(indexHtml, "CEO &amp; Chair", "Beth Rudden title on the homepage");
-assertIncludes(indexHtml, "Thanh Lam", "Thanh Lam on the homepage");
-assertExcludes(sitemapXml, "/team/", "retired team sitemap route");
+assertIncludes(indexHtml, 'href="/platform/"', "homepage platform link");
 assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
 assertIncludes(bastcareHome, '"operatingSystem": "iOS"', "BastCare SoftwareApplication schema");
@@ -885,13 +887,8 @@ for (const file of files) {
   }
   if ([".html", ".txt"].includes(path.extname(file))) {
     const rel = path.relative(distDir, file);
-    if (/Craig Hospital/i.test(contents)) throw new Error(`Craig Hospital claim in ${rel}`);
     if (/\bfree iPhone app\b/i.test(contents)) throw new Error(`free iPhone app wording in ${rel}`);
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
-    if (contents.includes('href="/platform/evidence/"') || contents.includes('href="/team/"')) {
-      throw new Error(`Retired route linked from ${rel}`);
-    }
-    if (contents.includes("assets/bast-narrative.pdf")) throw new Error(`Narrative PDF still linked from ${rel}`);
   }
   if (path.extname(file) === ".html") {
     for (const match of contents.matchAll(/href=["']([^"']+)["']/g)) {
