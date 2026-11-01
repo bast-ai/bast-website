@@ -735,6 +735,7 @@ assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of [
   "faq/",
   "team/",
+  "about/",
   "frames/",
   "frames/claim-level-source-grounding/",
   "frames/zero-tolerance-ai-output-architecture/",
@@ -770,10 +771,14 @@ assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disa
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
 assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
 assertIncludes(teamHtml, '"Person"', "team Person structured data");
-assertIncludes(teamHtml, "CEO &amp; Chair", "Beth Rudden title on the team page");
+assertIncludes(teamHtml, '<p class="card-kicker">CEO</p>', "Beth Rudden title on the team page");
+assertIncludes(teamHtml, 'href="/about/"', "team page link to the story");
+assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team page");
 assertIncludes(indexHtml, 'id="about"', "homepage about section");
 assertIncludes(indexHtml, 'href="/team/"', "homepage link to the team page");
-assertIncludes(indexHtml, "CEO &amp; Chair", "Beth Rudden title on the homepage");
+assertIncludes(indexHtml, 'href="/about/"', "homepage link to the story");
+assertIncludes(indexHtml, '"jobTitle": "CEO"', "Beth Rudden title on the homepage");
+assertExcludes(indexHtml, "CEO &amp; Chair", "retired Chair title on the homepage");
 assertIncludes(indexHtml, 'href="/platform/"', "homepage platform link");
 assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
