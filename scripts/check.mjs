@@ -872,7 +872,7 @@ for (const file of files) {
     throw new Error(`Empty file: ${path.relative(root, file)}`);
   }
 
-  if (![".html", ".js", ".css", ".xml", ".txt"].includes(path.extname(file))) {
+  if (![".html", ".js", ".css", ".xml", ".txt", ".json"].includes(path.extname(file))) {
     continue;
   }
 
@@ -885,9 +885,9 @@ for (const file of files) {
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
   }
+  const rel = path.relative(distDir, file);
+  if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
   if ([".html", ".txt"].includes(path.extname(file))) {
-    const rel = path.relative(distDir, file);
-    if (/\bfree iPhone app\b/i.test(contents)) throw new Error(`free iPhone app wording in ${rel}`);
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
   }
   if (path.extname(file) === ".html") {
