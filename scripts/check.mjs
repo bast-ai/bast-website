@@ -78,6 +78,7 @@ const requiredFiles = [
   "llms.txt",
   "faq/index.html",
   "team/index.html",
+  "about/index.html",
   "frames/index.html",
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
@@ -567,7 +568,10 @@ for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]
   assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
-assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
+assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
+assertExcludes(bastcareHome, "recorded hours", "BastCare hour limit");
+assertExcludes(bastcareHome, "No card required", "BastCare payment prompt");
+assertExcludes(bastcareHome, "BastCare Plus", "BastCare Plus on the product page");
 assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");
 assertIncludes(bastcareHome, "How this summary was made", "BastCare source view");
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
@@ -669,11 +673,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
   assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
-assertIncludes(bastcareTerms, "BastCare is free to download and includes the first two recorded hours", "current included-hours terms");
-// BastCare Plus is paused (Beth, 2026-10-13; 1.0.12 release notes).
-const plusPaused = "BastCare Plus is paused for now while we improve subscriptions";
-assertIncludes(faqHtmlForPlus, plusPaused, "FAQ BastCare Plus pause");
-assertIncludes(bastcareTerms, plusPaused, "terms BastCare Plus pause");
+assertIncludes(bastcareTerms, "<h2>7. Availability</h2>", "BastCare availability heading");
+assertIncludes(bastcareTerms, "BastCare is free to download.", "BastCare terms download line");
+assertExcludes(bastcareTerms, "BastCare Plus", "BastCare Plus in the terms");
+assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
+assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -734,7 +738,7 @@ for (const route of ["architecture", "delivery", "evidence", "demo"]) {
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of [
   "faq/",
-  "team/",
+  "about/",
   "frames/",
   "frames/claim-level-source-grounding/",
   "frames/zero-tolerance-ai-output-architecture/",
@@ -768,12 +772,32 @@ assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
 assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
-assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
-assertIncludes(teamHtml, '"Person"', "team Person structured data");
-assertIncludes(teamHtml, "CEO &amp; Chair", "Beth Rudden title on the team page");
+assertExcludes(sitemapXml, "/team/</loc>", "retired team URL stays out of the sitemap");
+assertIncludes(teamHtml, 'content="noindex, nofollow"', "team stub stays out of the index");
+assertIncludes(teamHtml, 'content="0; url=/about/#team"', "team stub redirects to the about team section");
+assertIncludes(teamHtml, 'href="/about/#team"', "team stub link to the about team section");
+assertExcludes(teamHtml, '"Person"', "team stub has no person schema");
+assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team stub");
+const aboutHtml = await readFile(path.join(distDir, "about/index.html"), "utf8");
+assertIncludes(aboutHtml, 'id="team"', "about page team section");
+assertIncludes(aboutHtml, '<p class="card-kicker">CEO</p>', "Beth Rudden title on the about page");
+assertIncludes(aboutHtml, "Thanh Lam", "about page CTO");
+assertIncludes(aboutHtml, "wider team of contributors", "about page contributor line");
+assertIncludes(aboutHtml, "Dave Snowden", "about page Cynefin attribution");
+assertIncludes(aboutHtml, "Confusion, also called disorder", "about page Cynefin center");
+assertIncludes(aboutHtml, "action must fit the nature of the situation", "about page use of Cynefin");
+assertIncludes(aboutHtml, '"Person"', "about page person schema");
+assertIncludes(aboutHtml, '"jobTitle": "CEO"', "Beth Rudden title in about schema");
+assertExcludes(aboutHtml, "CEO &amp; Chair", "retired Chair title on the about page");
+assertExcludes(aboutHtml, 'href="/team/"', "about page does not link to the team stub");
 assertIncludes(indexHtml, 'id="about"', "homepage about section");
-assertIncludes(indexHtml, 'href="/team/"', "homepage link to the team page");
-assertIncludes(indexHtml, "CEO &amp; Chair", "Beth Rudden title on the homepage");
+assertIncludes(indexHtml, 'href="/about/#team"', "homepage link to the team section");
+assertIncludes(indexHtml, 'href="/about/"', "homepage link to the story");
+assertExcludes(indexHtml, 'href="/team/"', "homepage does not link to the team stub");
+assertIncludes(indexHtml, '"jobTitle": "CEO"', "Beth Rudden title on the homepage");
+assertExcludes(indexHtml, "CEO &amp; Chair", "retired Chair title on the homepage");
+assertIncludes(llmsTxt, "/about/", "llms.txt About entry");
+assertExcludes(llmsTxt, "/team/", "llms.txt does not list the retired team URL");
 assertIncludes(indexHtml, 'href="/platform/"', "homepage platform link");
 assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
@@ -885,8 +909,15 @@ for (const file of files) {
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
   }
+  if (path.extname(file) === ".html" && contents.includes('href="/team/"')) {
+    throw new Error(`Link to retired /team/ page in ${path.relative(root, file)}`);
+  }
   const rel = path.relative(distDir, file);
   if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
+  if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
+      /\bBastCare Plus\b|\bsubscription\b|in-app purchase|recorded hours|priceCurrency|No card required/i.test(contents)) {
+    throw new Error(`BastCare pricing wording in ${rel}`);
+  }
   if ([".html", ".txt"].includes(path.extname(file))) {
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
   }

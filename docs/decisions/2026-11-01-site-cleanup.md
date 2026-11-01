@@ -9,10 +9,12 @@ Status: Approved for this pull request
 Beth approved one cleanup of the public site:
 
 - BastCare asks for consent before recording. The app does not enforce consent, and public copy does not say recording waits for agreement.
-- The home contact form is described as a Web3Forms delivery to Bast's inbox, with the visitor's email app as the fallback.
+- The home contact form stays on Web3Forms. The privacy policy names Web3Forms (Web3Creative) and links its privacy policy. The form endpoint stays `https://api.web3forms.com/submit` until a later pull request, after a Brevo-backed contact endpoint is deployed.
+- In-app purchases are on hold. Public pages, `llms.txt`, the FAQ, and structured data do not describe BastCare Plus, subscriptions, included hours, or a price.
 - Craig Hospital stays. Beth later confirmed the Bast AI platform pilot there. The manifesto names that pilot and says BastCare did not exist then. `bast-narrative.pdf` stays published. The manifesto links the Bob Beth retelling PDF.
 - Say "free to download." Buttons say "Download BastCare."
-- `/team/` stays, with Beth Rudden as CEO & Chair and Thanh Lam as CTO. The home page also has a short About section that links to `/team/`.
+- `/about/` is the story page. It includes the team: Beth Rudden is CEO, Thanh Lam is CTO, and a line names a wider team of contributors without listing them. `/team/` is a noindex redirect to `/about/#team` and is not in the sitemap. The home About section, the footer Team link, and the footer About link point at `/about/` or `/about/#team`. The footer has no individual names.
+- The About page describes Dave Snowden's Cynefin framework (clear, complicated, complex, chaotic, with confusion or disorder at the center). The domain descriptions are a general account of the framework. The one Bast sentence restates the principles page: action must fit the nature of the situation. That sentence is waiting on Beth's approval.
 - `/platform/evidence/` stays as the claim register. `/evidence/` stays in the main nav.
 - Body, card, caption, and label text is at least 18px, in near-black, with heading weight 600 or heavier.
 - `/evidence/` is in the main nav and the company footer.

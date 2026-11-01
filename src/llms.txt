@@ -22,9 +22,9 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
-- [Team](__SITE_URL__/team/): Beth Rudden (CEO & Chair) and Thanh Lam (CTO) — the people behind Bast.
+- [About](__SITE_URL__/about/): Bast's story, a sourced timeline, principles from Janine M. Benyus, Dave Snowden's Cynefin framework, and the manifesto opening. Beth Rudden (CEO) and Thanh Lam (CTO) are on this page, with a wider team of contributors: __SITE_URL__/about/#team.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
-- [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
+- [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
 - [Investors](__SITE_URL__/investors.html): The business case and evidence behind Bast's accountable AI infrastructure.
 
@@ -39,12 +39,12 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 ## Products & Offerings
 
 - [Bast Platform](__SITE_URL__/platform/): Governed infrastructure plus Bast Agent OS, the human-and-machine operating model behind stable AI products.
-- [BastCare](__SITE_URL__/bastcare/): Free to download. Every feature is included for the first two recorded hours. Download: https://apps.apple.com/app/id6789669565
+- [BastCare](__SITE_URL__/bastcare/): Free to download. Download: https://apps.apple.com/app/id6789669565
 
 ## Company Facts
 
 - Legal entity: Bast, Inc., Denver, CO. Brand name: Bast AI.
-- Founded and led by Beth Rudden (CEO & Chair); Thanh Lam is CTO.
+- Founded and led by Beth Rudden (CEO); Thanh Lam is CTO.
 - 5 patents filed covering answer control, trace, and accountable AI runtime.
 - Awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the Colorado Office of Economic Development and International Trade (OEDIT), announced May 16, 2024.
 - Bast AI is not affiliated with Vast.ai (a GPU cloud marketplace).
