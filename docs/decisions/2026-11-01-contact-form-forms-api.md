@@ -22,7 +22,8 @@ host is `https://dev-forms.aws.bast.ai`.
   updates".
 - Web3Forms, its access key, and the email-app fallback are removed.
   `scripts/check.mjs` fails if `web3forms` appears anywhere under `src/`.
-- `/privacy.html` says contact messages are delivered by Bast's own server
-  through Brevo (Sendinblue SAS) by email to Bast. If the person ticks the
-  updates box, their name and email are kept in Brevo to send Bast updates,
-  and they can unsubscribe at any time.
+- `/privacy.html` says contact form messages go from Bast's own server to
+  Bast's inbox by email, sent through Brevo (Sendinblue SAS) under Brevo's
+  privacy policy. If the visitor ticks the "Send me Bast updates" box, their
+  name and email are kept in Brevo so Bast can send updates, and they can
+  unsubscribe at any time.

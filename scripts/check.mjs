@@ -1081,8 +1081,8 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertIncludes(evidenceJs, "This link expired", "expired-link message");
   assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
-  assertIncludes(privacyHtml, 'Contact form messages are delivered by Bast\'s own server through Brevo (Sendinblue SAS) by email to Bast, under Brevo\'s <a href="https://www.brevo.com/legal/privacypolicy/">privacy policy</a>.', "contact form privacy sentence");
-  assertIncludes(privacyHtml, "If the person ticks the updates box, their name and email are kept in Brevo to send Bast updates, and they can unsubscribe at any time.", "contact updates privacy sentence");
+  assertIncludes(privacyHtml, 'Contact form messages go from Bast\'s own server to Bast\'s inbox by email, sent through Brevo (Sendinblue SAS) under <a href="https://www.brevo.com/legal/privacypolicy/">Brevo\'s privacy policy</a>.', "contact form privacy sentence");
+  assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
   assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
   assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
   assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
