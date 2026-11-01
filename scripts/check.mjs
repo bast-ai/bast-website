@@ -555,14 +555,15 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-const bastcareVersionTag = `BastCare <span data-bastcare-version>${bastcareReviews.app.version}</span> · Now available`;
-assertIncludes(bastcareHome, bastcareVersionTag, "BastCare App Store version in release hero");
-assertIncludes(indexHtml, bastcareVersionTag, "BastCare App Store version on Bast home");
-assertIncludes(bastcareHome, `<title>BastCare ${bastcareReviews.app.version} - Be in the room</title>`, "BastCare versioned page title");
-assertIncludes(bastcareHome, `"softwareVersion": "${bastcareReviews.app.version}"`, "BastCare structured-data version");
-assertIncludes(bastcareHome, "data-bastcare-release-notes-version=", "hand-approved BastCare release notes marker");
+assertIncludes(bastcareHome, "BastCare · Now available", "BastCare hero without a version number");
+assertIncludes(indexHtml, "BastCare · Now available", "BastCare kicker without a version number on Bast home");
+assertIncludes(bastcareHome, "<title>BastCare - Be in the room</title>", "BastCare page title without a version number");
+assertIncludes(bastcareHome, "What&rsquo;s new in BastCare", "BastCare release notes eyebrow");
+assertExcludes(bastcareHome, "softwareVersion", "BastCare structured data omits a version");
+assertExcludes(bastcareHome, "data-bastcare-version", "BastCare page does not print the App Store version");
+assertExcludes(bastcareHome, "data-bastcare-release-notes-version", "BastCare release notes omit a version marker");
+assertExcludes(indexHtml, "data-bastcare-version", "home page does not print the App Store version");
 for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]]) {
-  assertExcludes(contents, "1.0.10", `hardcoded BastCare 1.0.10 on ${label} page`);
   assertExcludes(contents, 'alt="BastCare 1.0.', `version-specific screenshot alt text on ${label} page`);
   assertExcludes(contents, 'alt="BastCare Build ', `build-specific screenshot alt text on ${label} page`);
   assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
@@ -779,6 +780,25 @@ assertIncludes(teamHtml, 'href="/about/#team"', "team stub link to the about tea
 assertExcludes(teamHtml, '"Person"', "team stub has no person schema");
 assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team stub");
 const aboutHtml = await readFile(path.join(distDir, "about/index.html"), "utf8");
+assertIncludes(aboutHtml, "How Bast got here.", "about page timeline heading");
+assertIncludes(aboutHtml, "October 2022", "about page incorporation year");
+assertIncludes(aboutHtml, "Bast AI is incorporated.", "about page incorporation");
+assertIncludes(aboutHtml, "Client pilots and the infrastructure build.", "about page 2023");
+assertIncludes(aboutHtml, "33 Python libraries, 13 APIs, and 19 pipelines", "about page developer tools");
+assertIncludes(aboutHtml, "Lurie Children's", "about page Lurie Children's");
+assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
+assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
+assertIncludes(aboutHtml, "nursing attrition was down 12%", "about page Maryville result");
+assertIncludes(aboutHtml, "BastCare did not exist then.", "about page Craig pilot is the platform");
+assertIncludes(aboutHtml, "2 of 5 patents were accepted.", "about page patents");
+assertIncludes(aboutHtml, "BastCare alpha released.", "about page BastCare alpha");
+assertIncludes(aboutHtml, "31 October 2026", "about page evidence library date");
+assertIncludes(aboutHtml, 'href="/evidence/"', "about page evidence library link");
+assertIncludes(aboutHtml, 'href="/pilot/"', "about page care-team pilots");
+assertExcludes(aboutHtml, "Milestones we can date", "retired timeline heading");
+assertExcludes(aboutHtml, "4 October 2022", "retired formation anniversary date");
+assertExcludes(aboutHtml, "MSU Denver", "MSU Denver stays off the timeline");
+assertExcludes(aboutHtml, "Metropolitan University", "Metropolitan University stays off the timeline");
 assertIncludes(aboutHtml, 'id="team"', "about page team section");
 assertIncludes(aboutHtml, '<p class="card-kicker">CEO</p>', "Beth Rudden title on the about page");
 assertIncludes(aboutHtml, "Thanh Lam", "about page CTO");
@@ -917,6 +937,9 @@ for (const file of files) {
   if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
       /\bBastCare Plus\b|\bsubscription\b|in-app purchase|recorded hours|priceCurrency|No card required/i.test(contents)) {
     throw new Error(`BastCare pricing wording in ${rel}`);
+  }
+  if ([".html", ".txt"].includes(path.extname(file)) && /\b1\.0\.\d+\b/.test(contents)) {
+    throw new Error(`BastCare version number in site copy: ${rel}`);
   }
   if ([".html", ".txt"].includes(path.extname(file))) {
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);

@@ -285,7 +285,7 @@
 
     const meta = document.createElement("p");
     meta.className = "bastcare-review-meta";
-    meta.textContent = "Verified App Store review · Version " + review.version;
+    meta.textContent = "Verified App Store review";
 
     card.append(headingGroup, quote, meta);
     return card;
@@ -354,7 +354,7 @@
 
   function initBastCareReviews() {
     const sections = Array.from(document.querySelectorAll("[data-bastcare-reviews]"));
-    const ratingOutputs = document.querySelectorAll("[data-bastcare-rating-average], [data-bastcare-rating-count], [data-bastcare-version]");
+    const ratingOutputs = document.querySelectorAll("[data-bastcare-rating-average], [data-bastcare-rating-count]");
     if (!sections.length && !ratingOutputs.length) return;
 
     fetch("/assets/data/bastcare-reviews.json", { cache: "no-store" })
@@ -368,11 +368,6 @@
         const countLabel = ratingCountLabel(reviewDocument.rating.count);
         const writtenLabel = writtenReviewCountLabel(reviewDocument.rating.writtenReviewCount);
 
-        // The build injects the version too; this only matters if Apple ships
-        // a release between deploys. Release notes are never set from Apple.
-        document.querySelectorAll("[data-bastcare-version]").forEach((output) => {
-          output.textContent = reviewDocument.app.version;
-        });
         document.querySelectorAll("[data-bastcare-rating-average]").forEach((output) => {
           output.textContent = average;
         });
