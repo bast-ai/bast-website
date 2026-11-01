@@ -239,6 +239,7 @@ const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
 
 assertExcludes(investorsHtml, "bast-ai-healthcare-teaser", "retired healthcare teaser reference");
 assertExcludes(investorsHtml, "Download teaser", "retired teaser download");
+assertIncludes(investorsHtml, 'href="/evidence/"', "investor evidence-library link");
 assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
@@ -251,14 +252,14 @@ for (const [contents, label] of [
 ]) {
   const primaryNav = extractPrimaryNav(contents, label);
   const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
-  if (primaryLinkCount !== 4) {
-    throw new Error(`Expected exactly four primary links on ${label} page; found ${primaryLinkCount}`);
+  if (primaryLinkCount !== 5) {
+    throw new Error(`Expected exactly five primary links on ${label} page; found ${primaryLinkCount}`);
   }
   assertIncludes(primaryNav, 'href="/demos/"', `Demos primary link on ${label} page`);
   assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
   assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
+  assertIncludes(primaryNav, 'href="/evidence/"', `evidence library in primary nav on ${label} page`);
   assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
-  assertExcludes(primaryNav, 'href="/evidence/"', `evidence library in primary nav on ${label} page`);
   for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory"]) {
     assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
   }
@@ -769,6 +770,11 @@ assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disa
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
 assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
 assertIncludes(teamHtml, '"Person"', "team Person structured data");
+assertIncludes(teamHtml, "CEO &amp; Chair", "Beth Rudden title on the team page");
+assertIncludes(indexHtml, 'id="about"', "homepage about section");
+assertIncludes(indexHtml, 'href="/team/"', "homepage link to the team page");
+assertIncludes(indexHtml, "CEO &amp; Chair", "Beth Rudden title on the homepage");
+assertIncludes(indexHtml, 'href="/platform/"', "homepage platform link");
 assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
 assertIncludes(bastcareHome, '"operatingSystem": "iOS"', "BastCare SoftwareApplication schema");
@@ -866,7 +872,7 @@ for (const file of files) {
     throw new Error(`Empty file: ${path.relative(root, file)}`);
   }
 
-  if (![".html", ".js", ".css", ".xml", ".txt"].includes(path.extname(file))) {
+  if (![".html", ".js", ".css", ".xml", ".txt", ".json"].includes(path.extname(file))) {
     continue;
   }
 
@@ -878,6 +884,11 @@ for (const file of files) {
   }
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
+  }
+  const rel = path.relative(distDir, file);
+  if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
+  if ([".html", ".txt"].includes(path.extname(file))) {
+    if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
   }
   if (path.extname(file) === ".html") {
     for (const match of contents.matchAll(/href=["']([^"']+)["']/g)) {
@@ -984,7 +995,12 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertIncludes(evidenceJs, "This link expired", "expired-link message");
   assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
-  assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "The home contact form sends the visitor's name, email, and message through Web3Forms, a form delivery service, to Bast's inbox.", "contact form privacy sentence");
+assertIncludes(privacyHtml, 'Web3Forms (Web3Creative) handles that delivery under its own <a href="https://web3forms.com/privacy">privacy policy</a>.', "Web3Forms operator and privacy policy");
+assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
+assertIncludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
+assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
+assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
   if (!updatesInput) throw new Error("Missing updates checkbox");

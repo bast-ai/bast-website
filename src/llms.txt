@@ -22,9 +22,9 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
-- [Team](__SITE_URL__/team/): Beth Rudden (CEO) and Thanh Lam (CTO) — the people behind Bast.
+- [Team](__SITE_URL__/team/): Beth Rudden (CEO & Chair) and Thanh Lam (CTO) — the people behind Bast.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
-- [BastCare](__SITE_URL__/bastcare/): Free iPhone app for patients and caregivers — stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
+- [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Every feature is included for the first two recorded hours. Not a medical device.
 - [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
 - [Investors](__SITE_URL__/investors.html): The business case and evidence behind Bast's accountable AI infrastructure.
 
@@ -33,18 +33,18 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - AI hallucination prevention: Bast limits what the model can say — answers come only from approved knowledge, and Bast refuses when nothing supports a reply.
 - AI guardrail software: a verification layer positioned between the model and the output, checking scope and source grounding before answers go live.
 - Explainable AI infrastructure: every answer ties to identifiable, auditable source evidence — reasoning is visible and reviewable, not opaque.
-- Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance; BastCare brings plain-language, consent-first visit summaries to patients and caregivers.
+- Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance. BastCare asks for consent before recording and brings plain-language visit summaries to patients and caregivers.
 - Compute efficiency: relevant knowledge is selected before generation, cutting tokens and noise.
 
 ## Products & Offerings
 
 - [Bast Platform](__SITE_URL__/platform/): Governed infrastructure plus Bast Agent OS, the human-and-machine operating model behind stable AI products.
-- [BastCare](__SITE_URL__/bastcare/): Free iPhone app — every feature included for the first two recorded hours. Download: https://apps.apple.com/app/id6789669565
+- [BastCare](__SITE_URL__/bastcare/): Free to download. Every feature is included for the first two recorded hours. Download: https://apps.apple.com/app/id6789669565
 
 ## Company Facts
 
 - Legal entity: Bast, Inc., Denver, CO. Brand name: Bast AI.
-- Founded and led by Beth Rudden (CEO); Thanh Lam is CTO.
+- Founded and led by Beth Rudden (CEO & Chair); Thanh Lam is CTO.
 - 5 patents filed covering answer control, trace, and accountable AI runtime.
 - Awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the Colorado Office of Economic Development and International Trade (OEDIT), announced May 16, 2024.
 - Bast AI is not affiliated with Vast.ai (a GPU cloud marketplace).

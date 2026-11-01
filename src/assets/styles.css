@@ -57,8 +57,8 @@
   --paper: #dde3e9;
   --surface: #f5f7fa;
   --card-face: #e6ebf0;
-  --quiet: rgba(13, 41, 53, 0.72);
-  --quieter: #4d616a; /* 5.02:1 on --paper; AA-safe for small text */
+  --quiet: #0d2935;
+  --quieter: #0d2935;
   --line: rgba(13, 41, 53, 0.15);
   --line-subtle: rgba(13, 41, 53, 0.08);
 
@@ -77,19 +77,19 @@
        display/h2 -> thin (200), the elegant high-impact voice
        h3         -> light (300), large statements
        title      -> medium (500), functional card/component headings
-       eyebrow    -> semibold (600), 19px slate, orients the reader
-       label      -> semibold (600), 12px accent, tags things
-       body*      -> regular (400) */
+       eyebrow    -> semibold (600), 19px, orients the reader
+       label      -> semibold (600), 18px, tags things
+       body*      -> regular (400), 18px minimum */
   --fs-display: clamp(2.6rem, 5.6vw, 4.25rem);
   --fs-h2: clamp(2rem, 4.2vw, 3rem);
   --fs-h3: clamp(1.6rem, 2.7vw, 2.05rem);
   --fs-title: 1.1875rem;   /* 19px - card & component headings */
   --fs-eyebrow: 1.1875rem; /* 19px - section eyebrows / kickers */
-  --fs-label: 0.75rem;     /* 12px - micro-labels, tags, footer heads */
-  --fs-body-lg: clamp(1.0625rem, 1.5vw, 1.1875rem); /* lede / intros */
-  --fs-body: 1rem;         /* 16px - body, lists, nav, controls */
-  --fs-body-sm: 0.9375rem; /* 15px - card copy, secondary links */
-  --fs-caption: 0.8125rem; /* 13px - helper notes */
+  --fs-label: 1.125rem;    /* 18px - labels, tags, footer heads */
+  --fs-body-lg: clamp(1.125rem, 1.5vw, 1.25rem); /* lede / intros */
+  --fs-body: 1.125rem;     /* 18px - body, lists, nav, controls */
+  --fs-body-sm: 1.125rem;  /* 18px - card copy, secondary links */
+  --fs-caption: 1.125rem;  /* 18px - helper notes */
 
   --fw-thin: 200;
   --fw-light: 300;
@@ -131,6 +131,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-display);
+  font-size: var(--fs-body);
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -196,7 +197,7 @@ button:focus-visible {
   font-size: clamp(1.05rem, 1.7vw, 1.2rem);
 }
 
-/* Display headings: thin Estedad, tight tracking */
+/* Display headings: semibold, tight tracking */
 h1,
 h2,
 h3 {
@@ -239,7 +240,7 @@ p {
   align-items: center;
   flex-wrap: wrap;
   gap: 22px;
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
 }
@@ -283,7 +284,7 @@ p {
   color: var(--ink);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.12;
   margin: 0.4em 0;
@@ -295,8 +296,8 @@ p {
   gap: 0.35rem;
   align-items: baseline;
   margin: 0 0 1.1rem;
-  color: var(--quiet);
-  font-size: 1rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   font-weight: 500;
 }
 
@@ -325,7 +326,7 @@ p {
 
 h1 {
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   margin-bottom: 0.32em;
 }
@@ -356,7 +357,7 @@ h1 span {
 
 .lede {
   max-width: 36rem;
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body-lg);
   line-height: 1.5;
 }
@@ -450,8 +451,8 @@ h1 span {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  color: var(--quieter);
-  font-size: 0.84rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   margin-bottom: 1rem;
 }
 
@@ -472,15 +473,15 @@ h1 span {
 .featured-outcome h2,
 .metric-outcome h2 {
   font-size: 1.42rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.14;
   margin: 0 0 0.7rem;
 }
 
 .featured-outcome p,
 .metric-outcome p {
-  color: var(--quiet);
-  font-size: 0.96rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   margin-bottom: 0;
 }
 
@@ -495,7 +496,7 @@ h1 span {
 
 .featured-outcome-proof span {
   color: var(--accent-text);
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -511,7 +512,7 @@ h1 span {
 .metric-outcome strong {
   display: block;
   font-size: 2.5rem;
-  font-weight: 200;
+  font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: 0.4rem;
@@ -549,9 +550,9 @@ h1 span {
 }
 
 .metric-outcome span {
-  color: var(--quieter);
+  color: var(--ink);
   display: block;
-  font-size: 0.92rem;
+  font-size: 1.125rem;
   line-height: 1.3;
 }
 
@@ -570,7 +571,7 @@ h1 span {
 .section h2 {
   max-width: 20ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
   margin: 0.5rem 0 1rem;
 }
@@ -644,7 +645,7 @@ h1 span {
 
 .mode-panels h3 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.08;
   margin: 0.6rem 0 1rem;
 }
@@ -663,7 +664,7 @@ h1 span {
 .demos-page h1 {
   max-width: 20ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
   margin: 0.5rem 0 1rem;
 }
@@ -742,7 +743,7 @@ h1 span {
 .demo-player-empty h3 {
   max-width: 12ch;
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.02;
   margin: 0;
 }
@@ -977,7 +978,7 @@ h1 span {
 .not-found h1 {
   max-width: 14ch;
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .privacy-page h2 {
@@ -1033,7 +1034,7 @@ h1 span {
 .investor-hero h1 {
   max-width: 12ch;
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .investor-note {
@@ -1083,7 +1084,7 @@ h1 span {
 .evidence-preview strong {
   max-width: 11ch;
   font-size: clamp(2rem, 4vw, 3.75rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -1306,13 +1307,13 @@ h1 span {
 
 .card h3 {
   font-size: var(--fs-title);
-  font-weight: var(--fw-medium);
+  font-weight: 600;
   line-height: 1.16;
   margin: 0.7rem 0 0.5rem;
 }
 
 .card p {
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body-sm);
   margin: 0;
 }
@@ -1417,7 +1418,7 @@ h1 span {
   margin-bottom: 0.2rem;
   color: var(--accent-text);
   font-size: clamp(2.8rem, 6vw, 5.5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   letter-spacing: -0.055em;
 }
 
@@ -1639,7 +1640,7 @@ h1 span {
   max-width: 17ch;
   margin: 1.35rem 0 0.9rem;
   font-size: clamp(1.5rem, 2.3vw, 2rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.08;
 }
 
@@ -1647,7 +1648,7 @@ h1 span {
 .offering-card.offering-card-platform h3 {
   max-width: 14ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.035em;
 }
@@ -1735,8 +1736,8 @@ h1 span {
 
 .case-sector {
   margin: 2.6rem 0 0;
-  color: var(--quiet);
-  font-size: 0.82rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1794,7 +1795,7 @@ h1 span {
 .nature-hero h1 {
   max-width: 12ch;
   font-size: clamp(2.9rem, 6vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.0;
   margin: 0.35rem 0 1.2rem;
 }
@@ -1952,7 +1953,7 @@ h1 span {
 .nature-card h3 {
   max-width: 15ch;
   font-size: clamp(1.55rem, 2.5vw, 2rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.06;
   margin: auto 0 0.8rem;
 }
@@ -1999,7 +2000,7 @@ h1 span {
   margin: 0 0 1rem;
   color: var(--ink);
   font-size: clamp(1.55rem, 3vw, 2.25rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -2025,7 +2026,7 @@ h1 span {
   margin: 1.5rem 0 1rem;
   color: var(--ink);
   font-size: clamp(1.35rem, 2.5vw, 1.8rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -2094,7 +2095,7 @@ h1 span {
 .emergence-result strong {
   margin-top: 1.25rem;
   font-size: clamp(2rem, 5vw, 3.6rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .emergence-result p {
@@ -2648,7 +2649,7 @@ h1 span {
   max-width: 15ch;
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
 }
 
@@ -2836,7 +2837,7 @@ h1 span {
   max-width: 17ch;
   margin: var(--bast-space-3) 0 0;
   font-size: clamp(2.4rem, 6vw, 5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -2936,7 +2937,7 @@ h1 span {
   margin: var(--bast-space-3) 0;
   color: #fff;
   font-size: clamp(1.7rem, 3vw, 2.5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.08;
 }
 
@@ -2970,7 +2971,7 @@ h1 span {
 .bastcare-release-notes h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-4);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -2995,7 +2996,7 @@ h1 span {
   max-width: 12ch;
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: clamp(2.4rem, 6vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -3066,7 +3067,7 @@ h1 span {
   margin: var(--bast-space-3) 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -3107,7 +3108,7 @@ h1 span {
 .bastcare-iteration-metrics dd {
   margin: 0 0 var(--bast-space-4);
   font-size: clamp(2.2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.045em;
 }
@@ -3203,7 +3204,7 @@ h1 span {
   color: var(--ink);
   font-family: var(--font-display);
   font-size: clamp(2rem, 4.5vw, 3.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.02em;
 }
@@ -3417,7 +3418,7 @@ h1 span {
   margin: 0 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(2.35rem, 6vw, 5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.04em;
 }
@@ -3461,7 +3462,7 @@ h1 span {
 .bastcare-review-seal span {
   color: #fff;
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
 }
 
@@ -3507,7 +3508,7 @@ h1 span {
   margin: 0 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.04em;
 }
@@ -3541,7 +3542,7 @@ h1 span {
   max-width: 18ch;
   margin: var(--bast-space-2) 0 var(--bast-space-4);
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.04em;
 }
@@ -3622,7 +3623,7 @@ h1 span {
   max-width: 28ch;
   margin: var(--bast-space-3) 0;
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.12;
 }
 
@@ -3655,7 +3656,7 @@ h1 span {
 .support-safe h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -3891,7 +3892,7 @@ h1 span {
   margin-bottom: var(--bast-space-4);
   color: var(--ink);
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -4001,7 +4002,7 @@ h1 span {
 .processor-boundary h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -4677,7 +4678,7 @@ h1 span {
 
 .frame-article .frame-head h1 {
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   margin: 10px 0 12px;
 }
 
@@ -4700,7 +4701,7 @@ h1 span {
 
 .frame-meta .frame-id {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
+  font-size: 1.125rem;
 }
 
 .frame-article section {
@@ -4709,7 +4710,7 @@ h1 span {
 
 .frame-article h2 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   margin: 0 0 16px;
 }
 
@@ -4798,7 +4799,7 @@ h1 span {
 }
 
 .frame-permalink code {
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   background: var(--card-face);
   padding: 2px 8px;
   border-radius: 6px;
@@ -4833,7 +4834,7 @@ h1 span {
 
 .team-grid .card h2 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   margin: 4px 0 10px;
 }
 
@@ -4865,7 +4866,7 @@ h1 span {
   margin: var(--bast-space-3) 0 0;
   color: #fff;
   font-size: clamp(2.4rem, 5vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
 }
 
@@ -4919,7 +4920,7 @@ h1 span {
 .bastcare-rating-row strong {
   color: #fff;
   font-size: clamp(2.4rem, 5vw, 4.2rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.9;
   letter-spacing: -0.04em;
 }
@@ -5140,8 +5141,8 @@ h1 span {
   --paper: #fafbfc;
   --surface: #ffffff;
   --card-face: #ffffff;
-  --quiet: #52636c;
-  --quieter: #5f6f77; /* 5.03:1 on home paper; AA-safe for small text */
+  --quiet: #172d37;
+  --quieter: #172d37;
   --line: #d7dde1;
   --line-subtle: #e8ecef;
   --accent-text: #087aa5;
@@ -5177,7 +5178,8 @@ h1 span {
 
 .home-page .hero .lede {
   max-width: 34rem;
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--ink);
+  font-size: clamp(1.125rem, 1.6vw, 1.25rem);
   line-height: 1.58;
 }
 
@@ -5200,9 +5202,9 @@ h1 span {
 .home-page .questions li {
   max-width: 20ch;
   margin: 0;
-  color: var(--quiet);
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 600;
   line-height: 1.32;
   letter-spacing: -0.015em;
 }
@@ -5453,7 +5455,7 @@ h1 span {
 
   .site-nav {
     gap: 0.9rem;
-    font-size: 0.82rem;
+    font-size: 1.125rem;
   }
 
   .home-page .hero h1 {
