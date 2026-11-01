@@ -999,6 +999,8 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
   assertIncludes(privacyHtml, "The home contact form sends the visitor's name, email, and message through Web3Forms, a form delivery service, to Bast's inbox.", "contact form privacy sentence");
+assertIncludes(privacyHtml, 'Web3Forms (Web3Creative) handles that delivery under its own <a href="https://web3forms.com/privacy">privacy policy</a>.', "Web3Forms operator and privacy policy");
+assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
 assertIncludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
 assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
 assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
