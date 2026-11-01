@@ -14,7 +14,9 @@ Beth approved one cleanup of the public site:
 - Craig Hospital stays. Beth later confirmed the Bast AI platform pilot there. The manifesto names that pilot and says BastCare did not exist then. `bast-narrative.pdf` stays published. The manifesto links the Bob Beth retelling PDF.
 - Say "free to download." Buttons say "Download BastCare."
 - `/about/` is the story page. It includes the team: Beth Rudden is CEO, Thanh Lam is CTO, and a line names a wider team of contributors without listing them. `/team/` is a noindex redirect to `/about/#team` and is not in the sitemap. The home About section, the footer Team link, and the footer About link point at `/about/` or `/about/#team`. The footer has no individual names.
-- The About page describes Dave Snowden's Cynefin framework (clear, complicated, complex, chaotic, with confusion or disorder at the center). The domain descriptions are a general account of the framework. The one Bast sentence restates the principles page: action must fit the nature of the situation. That sentence is waiting on Beth's approval.
+- The About page describes Dave Snowden's Cynefin framework (clear, complicated, complex, chaotic, with confusion or disorder at the center). Beth approved that section as written.
+- The About timeline is Beth's account: incorporation in October 2022, client pilots in 2023, commercialized developer tools and production client work in 2024, the Craig Hospital platform pilot and platform commercialization in 2025, the BastCare alpha in August 2026, the evidence library on 31 October 2026, and BastCare pilots for care teams in November 2026. MSU Denver is not on the timeline.
+- Public pages do not print a BastCare version number. Ratings still come from the App Store snapshot. The snapshot keeps its version field for the review queue.
 - `/platform/evidence/` stays as the claim register. `/evidence/` stays in the main nav.
 - Body, card, caption, and label text is at least 18px, in near-black, with heading weight 600 or heavier.
 - `/evidence/` is in the main nav and the company footer.
