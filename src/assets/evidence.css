@@ -66,12 +66,12 @@ body.evlib-page .contact-form label,
 body.evlib-page .evlib-filter label,
 body.evlib-page .evlib-card dt,
 body.evlib-page .button {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 body.evlib-page .frame-article .frame-head h1 {
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.15;
 }
 

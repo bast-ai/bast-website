@@ -21,7 +21,7 @@ body.pilot { margin: 0; background: var(--paper); color: var(--ink); font: 400 1
 
 .pilot-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .875rem 1.25rem; background: #fff; border-bottom: 1px solid var(--line); }
 .pilot-bar img { display: block; height: 34px; width: auto; }
-.pilot-bar p { margin: 0; text-align: right; font-weight: 700; font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1.3; }
+.pilot-bar p { margin: 0; text-align: right; font-weight: 700; font-size: 1.125rem; letter-spacing: .04em; text-transform: uppercase; line-height: 1.3; }
 .pilot-bar span { display: block; color: var(--accent-text); font-weight: 600; letter-spacing: .04em; }
 
 main, .pilot-footer { max-width: 40rem; margin: 0 auto; }
@@ -47,12 +47,12 @@ main, .pilot-footer { max-width: 40rem; margin: 0 auto; }
 .pilot-steps li { counter-increment: step; }
 .pilot-steps li::before { content: counter(step); position: absolute; left: 0; width: 2rem; height: 2rem; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 1rem; }
 
-.pilot-kicker { margin: 0 0 .5rem; font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); }
+.pilot-kicker { margin: 0 0 .5rem; font-size: 1.125rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-text); }
 .pilot-research { border-left: 6px solid var(--accent-text); }
 .pilot-stat { margin: 0; font-size: 3.5rem; line-height: 1; font-weight: 700; color: var(--accent-text); }
 .pilot-stat-text { margin: .5rem 0; font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
 .pilot-note { margin: 0 0 .75rem; color: var(--ink-soft); }
-.pilot-cite { margin: 0; font-size: .9375rem; color: var(--ink-soft); }
+.pilot-cite { margin: 0; font-size: 1.125rem; color: var(--ink); }
 .pilot-private { background: #e8f3f8; }
 .pilot-private p { margin: 0 0 .75rem; }
 .pilot-private p:last-child { margin: 0; }
@@ -63,7 +63,7 @@ main, .pilot-footer { max-width: 40rem; margin: 0 auto; }
 .pilot-footer p { margin: 0 0 .5rem; }
 .pilot-footer a { color: #fff; display: inline-block; padding: .5rem .125rem; font-weight: 600; }
 .pilot-footer span { color: #8aa3ad; margin: 0 .25rem; }
-.pilot-legal { margin-top: 1rem !important; font-size: .875rem; color: #c4d3da; }
+.pilot-legal { margin-top: 1rem !important; font-size: 1.125rem; color: #f5f7fa; }
 .pilot-legal button { font: inherit; color: #fff; background: none; border: 0; text-decoration: underline; padding: .5rem; min-height: 2.75rem; cursor: pointer; }
 
 @media (min-width: 48rem) {
