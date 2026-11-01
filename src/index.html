@@ -122,8 +122,6 @@
 <script>
   window.BAST_GA_MEASUREMENT_ID = "__GA_MEASUREMENT_ID__";
   window.BAST_SITE_ENV = "__SITE_ENV__";
-  window.BAST_CONTACT_ENDPOINT = "https://api.web3forms.com/submit";
-  window.BAST_CONTACT_ACCESS_KEY = "659b6a4e-5529-4924-8010-33076aed72c7";
 </script>
 <script src="assets/analytics-consent.js" defer></script>
 <script src="assets/site.js" defer></script>
@@ -521,6 +519,10 @@
 
     <p class="panel-label form-lead">Rather type it out?</p>
     <form class="contact-form" aria-labelledby="contact-title" novalidate data-contact-form>
+      <div class="contact-hp" aria-hidden="true">
+        <label for="cf-website">Website</label>
+        <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" autocapitalize="off" spellcheck="false" aria-hidden="true" value="">
+      </div>
       <div class="field">
         <label for="cf-name">Name</label>
         <input id="cf-name" name="name" type="text" autocomplete="name" required>
@@ -533,9 +535,16 @@
         <label for="cf-message">Your question, or what you're working on</label>
         <textarea id="cf-message" name="message" rows="4" placeholder="Say hi, ask a question, or tell us what your AI has to answer for." required></textarea>
       </div>
+      <div class="field field-full contact-choice">
+        <label for="cf-updates">
+          <input id="cf-updates" name="updates" type="checkbox">
+          Send me Bast updates
+        </label>
+        <p class="form-note" id="cf-updates-hint">Optional. Leave this unticked and we email your message without adding you to Bast updates.</p>
+      </div>
       <div class="field-full form-footer">
         <button class="button button-primary" type="submit">Send it over</button>
-        <p class="form-note" data-form-status aria-live="polite">We read every one.</p>
+        <p class="form-note" data-form-status role="status" aria-live="polite">We read every one.</p>
       </div>
     </form>
 
