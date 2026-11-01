@@ -5437,6 +5437,66 @@ h1 span {
   box-shadow: none;
 }
 
+.home-page .contact-form .contact-hp {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.home-page .contact-form .contact-hp input {
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.home-page .contact-form .contact-choice label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.home-page .contact-form .contact-choice input {
+  width: 1.35rem;
+  height: 1.35rem;
+  min-height: 1.35rem;
+  margin-top: 0.2rem;
+  padding: 0;
+  flex: 0 0 auto;
+  accent-color: var(--ink);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-page .contact-form .contact-choice .form-note {
+  margin: 0.35rem 0 0;
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.home-page .contact-form .form-note.is-success,
+.home-page .contact-form .form-note.is-error {
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.home-page .contact-form .form-note.is-error {
+  color: #991b1b;
+}
+
 .home-page .mode-tabs button[aria-selected="true"] {
   border-color: var(--accent-text);
   box-shadow: none;
