@@ -785,7 +785,7 @@ assertIncludes(aboutHtml, "October 2022", "about page incorporation year");
 assertIncludes(aboutHtml, "Bast AI is incorporated.", "about page incorporation");
 assertIncludes(aboutHtml, "Client pilots and the infrastructure build.", "about page 2023");
 assertIncludes(aboutHtml, "33 Python libraries, 13 APIs, and 19 pipelines", "about page developer tools");
-assertIncludes(aboutHtml, "Lurie Children's", "about page Lurie Children's");
+assertIncludes(aboutHtml, "Lurie Cancer Center", "about page Lurie Cancer Center");
 assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
 assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
 assertIncludes(aboutHtml, "nursing attrition was down 12%", "about page Maryville result");
@@ -940,6 +940,9 @@ for (const file of files) {
   }
   if ([".html", ".txt"].includes(path.extname(file)) && /\b1\.0\.\d+\b/.test(contents)) {
     throw new Error(`BastCare version number in site copy: ${rel}`);
+  }
+  if (contents.includes("Lurie Children")) {
+    throw new Error(`retired Lurie Children's name in ${rel}`);
   }
   if ([".html", ".txt"].includes(path.extname(file))) {
     if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
