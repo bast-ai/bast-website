@@ -31,6 +31,8 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
     steps:
