@@ -253,14 +253,6 @@
       validReviews;
   }
 
-  function ratingCountLabel(count) {
-    return count.toLocaleString("en-US") + " " + (count === 1 ? "rating" : "ratings");
-  }
-
-  function writtenReviewCountLabel(count) {
-    return count.toLocaleString("en-US") + " written " + (count === 1 ? "review" : "reviews");
-  }
-
   function createBastCareReviewCard(review, index, total) {
     const card = document.createElement("article");
     card.className = "bastcare-review-card";
@@ -365,20 +357,12 @@
       .then((reviewDocument) => {
         if (!validBastCareReviewSnapshot(reviewDocument)) throw new Error("Invalid review snapshot");
         const average = reviewDocument.rating.average.toFixed(1);
-        const countLabel = ratingCountLabel(reviewDocument.rating.count);
-        const writtenLabel = writtenReviewCountLabel(reviewDocument.rating.writtenReviewCount);
 
         document.querySelectorAll("[data-bastcare-rating-average]").forEach((output) => {
           output.textContent = average;
         });
-        document.querySelectorAll("[data-bastcare-rating-count]").forEach((output) => {
-          output.textContent = countLabel;
-        });
-        document.querySelectorAll("[data-bastcare-written-review-count]").forEach((output) => {
-          output.textContent = writtenLabel;
-        });
         document.querySelectorAll("[data-bastcare-rating-line]").forEach((line) => {
-          line.setAttribute("aria-label", average + " out of 5 stars from " + countLabel + " on the App Store");
+          line.setAttribute("aria-label", average + " on the App Store");
         });
         document.querySelectorAll("[data-bastcare-review-source]").forEach((link) => {
           link.href = reviewDocument.app.appStoreUrl;

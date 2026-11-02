@@ -427,7 +427,7 @@ assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architectu
 assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
 assertIncludes(platformHtml, "Claims and proof", "platform evidence register label");
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
-assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
+assertIncludes(platformHtml, "Fewer tokens than standard RAG", "platform token claim");
 assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
 assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
 assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
@@ -594,7 +594,8 @@ assertExcludes(indexHtml, "data-bastcare-version", "home page does not print the
 for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]]) {
   assertExcludes(contents, 'alt="BastCare 1.0.', `version-specific screenshot alt text on ${label} page`);
   assertExcludes(contents, 'alt="BastCare Build ', `build-specific screenshot alt text on ${label} page`);
-  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
+  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} on the App Store`, `build-time BastCare rating on ${label} page`);
+  assertExcludes(contents, `${bastcareReviews.rating.count} ratings`, `visible rating count on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
 assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
@@ -663,8 +664,10 @@ assertIncludes(bastcareHome, "Verified Australian App Store review", "featured A
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "Verified App Store review", "BastCare review source attribution");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.count} ratings`, "BastCare App Store rating count fallback");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count fallback");
+assertExcludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count stays off the page");
+assertIncludes(siteJs, 'average + " on the App Store"', "App Store rating label without a count");
+assertExcludes(siteJs, "ratingCountLabel", "rating-count label helper");
+assertExcludes(siteJs, "written reviews", "written-review count label");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
@@ -1175,6 +1178,95 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
     if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }
+}
+
+// Marketing confidence: visible rating counts and hedge words in built HTML
+// text (including titles, descriptions, alt text, and labels) and llms.txt.
+// JSON-LD stays out of this scan so ratingCount can remain there.
+const marketingAllowlist = JSON.parse(await readFile(path.join(root, "scripts/marketing-allowlist.json"), "utf8"));
+const hedgePatterns = [
+  ["just", /\bjust\b/gi],
+  ["only", /\bonly\b/gi],
+  ["small", /\bsmall\b/gi],
+  ["early", /\bearly\b/gi],
+  ["first", /\bfirst\b/gi],
+  ["still", /\bstill\b/gi],
+  ["so far", /\bso far\b/gi],
+  ["hope", /\bhope\b/gi],
+  ["for now", /\bfor now\b/gi],
+  ["currently", /\bcurrently\b/gi],
+  ["temporarily", /\btemporarily\b/gi],
+  ["coming soon", /\bcoming soon\b/gi],
+  ["positioned for", /\bpositioned for\b/gi],
+];
+const ratingCountPatterns = [
+  ["from N ratings", /from\s+\d+\s+ratings?\b/gi],
+  ["N ratings", /\b\d+\s+ratings?\b/gi],
+];
+
+function decodePublicText(value) {
+  return value
+    .replace(/&rsquo;|&#8217;|&rsquo;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&#\d+;|&[a-z]+;/gi, " ");
+}
+
+function publicCopyText(html) {
+  const bits = [];
+  for (const tag of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const name = tag[0].match(/(?:name|property)="([^"]*)"/i)?.[1] || "";
+    const content = tag[0].match(/content="([^"]*)"/i)?.[1] || "";
+    if (["description", "og:description", "twitter:description"].includes(name)) bits.push(content);
+  }
+  const title = html.match(/<title>([^<]*)<\/title>/i);
+  if (title) bits.push(title[1]);
+  for (const attr of html.matchAll(/\b(?:alt|aria-label)="([^"]*)"/gi)) bits.push(attr[1]);
+  const body = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ");
+  bits.push(body);
+  return decodePublicText(bits.join("\n")).replace(/\s+/g, " ");
+}
+
+function allowlistCovers(rel, text, index, length) {
+  return marketingAllowlist.some((entry) => {
+    if (entry.file !== rel) return false;
+    let from = 0;
+    while (from <= text.length) {
+      const at = text.indexOf(entry.phrase, from);
+      if (at === -1) return false;
+      const end = at + entry.phrase.length;
+      if (index >= at && index + length <= end) return true;
+      from = at + 1;
+    }
+    return false;
+  });
+}
+
+const confidenceFailures = [];
+for (const file of files) {
+  const ext = path.extname(file);
+  if (ext !== ".html" && path.basename(file) !== "llms.txt") continue;
+  const rel = path.relative(distDir, file);
+  const raw = await readFile(file, "utf8");
+  const text = ext === ".txt" ? raw.replace(/\s+/g, " ") : publicCopyText(raw);
+  const patterns = [
+    ...hedgePatterns.map(([label, re]) => [label, re]),
+    ...ratingCountPatterns,
+  ];
+  for (const [label, re] of patterns) {
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(text))) {
+      if (allowlistCovers(rel, text, match.index, match[0].length)) continue;
+      const snippet = text.slice(Math.max(0, match.index - 40), match.index + match[0].length + 40).trim();
+      confidenceFailures.push(`${rel}: ${label} in "${snippet}"`);
+    }
+  }
+}
+if (confidenceFailures.length) {
+  throw new Error(`Marketing confidence check failed:\n${confidenceFailures.slice(0, 30).join("\n")}`);
 }
 
 console.log("Static site checks passed");
