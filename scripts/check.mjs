@@ -427,7 +427,9 @@ assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architectu
 assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
 assertIncludes(platformHtml, "Claims and proof", "platform evidence register label");
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
-assertIncludes(platformHtml, "Fewer tokens than standard RAG", "platform token claim");
+assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
+assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
+assertIncludes(indexHtml, "2 of 5 patents accepted", "home patents figure");
 assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
 assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
 assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
