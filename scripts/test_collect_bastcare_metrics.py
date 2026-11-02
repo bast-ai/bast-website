@@ -165,6 +165,75 @@ class MetricsCollectorTests(unittest.TestCase):
         self.assertEqual(seen, {"key": "cron-secret", "timeout": 20})
         self.assertEqual(document, VERIFIED_RESPONSE)
 
+    def test_publishable_snapshot_accepts_an_equal_or_higher_count(self):
+        self.assertEqual(
+            MODULE.require_publishable_snapshot(VERIFIED_RESPONSE, 29)["metrics"][
+                "successfulSummaries"
+            ],
+            29,
+        )
+        payload = json.loads(json.dumps(VERIFIED_RESPONSE))
+        payload["metrics"]["successfulSummaries"] = 30
+        payload["metrics"]["summariesWithTokenUsage"] = 30
+        self.assertEqual(
+            MODULE.require_publishable_snapshot(payload, 29)["metrics"][
+                "successfulSummaries"
+            ],
+            30,
+        )
+
+    def test_publishable_snapshot_rejects_a_lower_summary_count(self):
+        with self.assertRaisesRegex(ValueError, "lower than the committed value 30"):
+            MODULE.require_publishable_snapshot(VERIFIED_RESPONSE, 30)
+
+    def test_publishable_snapshot_rejects_bad_shape_and_values(self):
+        extra = json.loads(json.dumps(VERIFIED_RESPONSE))
+        extra["authSubject"] = "must-not-appear"
+        with self.assertRaisesRegex(ValueError, "schemaVersion, generatedAt, period"):
+            MODULE.require_publishable_snapshot(extra, 1)
+
+        wrong_version = json.loads(json.dumps(VERIFIED_RESPONSE))
+        wrong_version["schemaVersion"] = 2
+        with self.assertRaisesRegex(ValueError, "schemaVersion must be 1"):
+            MODULE.require_publishable_snapshot(wrong_version, 1)
+
+        boolean_version = json.loads(json.dumps(VERIFIED_RESPONSE))
+        boolean_version["schemaVersion"] = True
+        with self.assertRaisesRegex(ValueError, "schemaVersion must be 1"):
+            MODULE.require_publishable_snapshot(boolean_version, 1)
+
+        negative = json.loads(json.dumps(VERIFIED_RESPONSE))
+        negative["metrics"]["inputTokens"] = -1
+        with self.assertRaisesRegex(ValueError, "inputTokens must be an integer >= 0"):
+            MODULE.require_publishable_snapshot(negative, 1)
+
+        boolean = json.loads(json.dumps(VERIFIED_RESPONSE))
+        boolean["metrics"]["outputTokens"] = True
+        with self.assertRaisesRegex(ValueError, "outputTokens must be an integer >= 0"):
+            MODULE.require_publishable_snapshot(boolean, 1)
+
+    def test_committed_public_file_is_publishable(self):
+        path = Path(__file__).resolve().parents[1] / "src/assets/data/bastcare-metrics.json"
+        document = json.loads(path.read_text(encoding="utf-8"))
+        validated = MODULE.require_publishable_snapshot(
+            document, document["metrics"]["successfulSummaries"]
+        )
+        self.assertEqual(
+            path.read_text(encoding="utf-8"),
+            json.dumps(validated, indent=2, sort_keys=True) + "\n",
+        )
+
+    def test_written_snapshot_matches_canonical_json(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "bastcare-metrics.json"
+            MODULE._write_atomic(path, dict(VERIFIED_RESPONSE))
+            written = path.read_text(encoding="utf-8")
+        self.assertEqual(
+            written, json.dumps(VERIFIED_RESPONSE, indent=2, sort_keys=True) + "\n"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
