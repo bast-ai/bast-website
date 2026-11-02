@@ -186,6 +186,19 @@ function extractPrimaryNav(contents, label) {
   return match[1];
 }
 
+async function assertNoWeb3FormsInSrc() {
+  const srcDir = path.join(root, "src");
+  const files = await collectFiles(srcDir);
+  for (const file of files) {
+    const contents = await readFile(file);
+    if (contents.toString("latin1").toLowerCase().includes("web3forms")) {
+      throw new Error(`web3forms found in ${path.relative(root, file)}`);
+    }
+  }
+}
+
+await assertNoWeb3FormsInSrc();
+
 for (const file of requiredFiles) {
   await exists(file);
 }
@@ -372,6 +385,25 @@ for (const { needle, label } of requiredHomepageSnippets) {
 }
 for (const { needle, label } of replacedHomepageSnippets) {
   assertExcludes(indexHtml, needle, label);
+}
+
+assertIncludes(indexHtml, 'name="website"', "home contact honeypot");
+assertIncludes(indexHtml, 'class="contact-hp"', "home contact honeypot hidden from people");
+assertIncludes(indexHtml, 'tabindex="-1"', "home contact honeypot tabindex");
+assertIncludes(indexHtml, 'autocomplete="off"', "home contact honeypot autocomplete");
+assertIncludes(indexHtml, 'aria-hidden="true"', "home contact honeypot aria-hidden");
+assertIncludes(indexHtml, "Send me Bast updates", "home contact updates checkbox");
+assertIncludes(siteJs, 'const FORMS_ORIGIN = "https://forms.aws.bast.ai"', "home contact uses the Bast forms API");
+assertIncludes(siteJs, "${FORMS_ORIGIN}/contact", "home contact posts to /contact");
+assertIncludes(siteJs, 'referrerPolicy: "no-referrer"', "home contact fetch sends no referrer");
+assertIncludes(siteJs, "updates: Boolean(updates && updates.checked)", "home contact updates flag");
+assertExcludes(siteJs, "composeMailto", "home contact mailto fallback");
+assertExcludes(siteJs, "BAST_CONTACT", "home contact Web3Forms config");
+assertExcludes(indexHtml, "BAST_CONTACT", "home contact Web3Forms config in the page");
+{
+  const contactUpdates = indexHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
+  if (!contactUpdates) throw new Error("Missing home contact updates checkbox");
+  if (/\bchecked\b/.test(contactUpdates[0])) throw new Error("home contact updates checkbox must be unticked by default");
 }
 
 for (const [contents, label] of [
@@ -1052,11 +1084,11 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   assertIncludes(evidenceJs, "This link expired", "expired-link message");
   assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
-  assertIncludes(privacyHtml, "The home contact form sends the visitor's name, email, and message through Web3Forms, a form delivery service, to Bast's inbox.", "contact form privacy sentence");
-assertIncludes(privacyHtml, 'Web3Forms (Web3Creative) handles that delivery under its own <a href="https://web3forms.com/privacy">privacy policy</a>.', "Web3Forms operator and privacy policy");
-assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
-assertIncludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
-assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
+  assertIncludes(privacyHtml, 'Contact form messages go from Bast\'s own server to Bast\'s inbox by email, sent through Brevo (Sendinblue SAS) under <a href="https://www.brevo.com/legal/privacypolicy/">Brevo\'s privacy policy</a>.', "contact form privacy sentence");
+  assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
+  assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
+  assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
+  assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
 assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);

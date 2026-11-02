@@ -61,31 +61,40 @@
     if (kind) el.classList.add("is-" + kind);
   }
 
-  function composeMailto(data) {
-    const subject = "Build with Bast - " + (data.organization || data.name || "inquiry");
-    const body =
-      "Name: " + data.name + "\n" +
-      "Email: " + data.email + "\n" +
-      "Organization: " + (data.organization || "-") + "\n\n" +
-      data.message;
-    window.location.href =
-      "mailto:community@bast.ai?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-  }
-
   function handleContactForm() {
     const form = document.querySelector("[data-contact-form]");
     if (!form) return;
 
+    const FORMS_ORIGIN = "https://forms.aws.bast.ai";
+    const SUCCESS_FALLBACK = "Thanks, we have your message.";
+    const ERROR_FALLBACK = "We couldn't send that. Please wait a moment and try again.";
     const status = form.querySelector("[data-form-status]");
-    const endpoint = (window.BAST_CONTACT_ENDPOINT || "").trim();
-    const field = (name) => form.elements.namedItem(name);
 
-    form.addEventListener("submit", function(event) {
+    function fieldValue(name) {
+      const field = form.elements.namedItem(name);
+      return field && "value" in field ? field.value : "";
+    }
+
+    function safeMessage(body, fallback) {
+      const message = body && typeof body.message === "string" ? body.message.trim() : "";
+      if (message && message.length <= 240 && !message.includes("<")) return message;
+      return fallback;
+    }
+
+    async function readBody(response) {
+      try {
+        return await response.json();
+      } catch {
+        return null;
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       let firstInvalid = null;
       form.querySelectorAll("input, textarea").forEach((control) => {
+        if (control.name === "website" || control.type === "checkbox") return;
         const invalid = !control.checkValidity();
         control.setAttribute("aria-invalid", invalid ? "true" : "false");
         if (invalid && !firstInvalid) firstInvalid = control;
@@ -97,14 +106,13 @@
         return;
       }
 
-      const data = {
-        access_key: window.BAST_CONTACT_ACCESS_KEY || "",
-        subject: "bast.ai contact: " + field("name").value.trim(),
-        from_name: "Bast AI website",
-        botcheck: "",
-        name: field("name").value.trim(),
-        email: field("email").value.trim(),
-        message: field("message").value.trim()
+      const updates = form.elements.namedItem("updates");
+      const body = {
+        name: fieldValue("name").trim(),
+        email: fieldValue("email").trim(),
+        message: fieldValue("message").trim(),
+        website: fieldValue("website"),
+        updates: Boolean(updates && updates.checked),
       };
 
       if (typeof window.bastTrack === "function") {
@@ -114,46 +122,39 @@
         });
       }
 
-      if (!endpoint) {
-        if (typeof window.bastTrack === "function") {
-          window.bastTrack("lead_email_open", {
-            form_id: "contact",
-            page_path: window.location.pathname
-          });
-        }
-        setFormStatus(status, "Opening your email app to finish sending…", null);
-        composeMailto(data);
-        return;
-      }
-
+      const submit = form.querySelector("[type='submit']");
+      if (submit) submit.disabled = true;
       setFormStatus(status, "Sending…", null);
-      fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      }).then((response) => {
-        if (!response.ok) throw new Error("Request failed");
-        if (typeof window.bastTrack === "function") {
-          const leadParams = {
-            method: "contact_form",
-            form_id: "contact",
-            page_path: window.location.pathname
-          };
-          window.bastTrack("generate_lead", leadParams);
-          window.bastTrack("lead_submit_success", leadParams);
+      try {
+        const response = await fetch(`${FORMS_ORIGIN}/contact`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(body),
+          credentials: "omit",
+          cache: "no-store",
+          referrerPolicy: "no-referrer",
+        });
+        const payload = await readBody(response);
+        if (response.ok && payload && payload.ok === true) {
+          if (typeof window.bastTrack === "function") {
+            const leadParams = {
+              method: "contact_form",
+              form_id: "contact",
+              page_path: window.location.pathname
+            };
+            window.bastTrack("generate_lead", leadParams);
+            window.bastTrack("lead_submit_success", leadParams);
+          }
+          form.reset();
+          setFormStatus(status, safeMessage(payload, SUCCESS_FALLBACK), "success");
+          return;
         }
-        form.reset();
-        setFormStatus(status, "Thanks - we'll be in touch shortly.", "success");
-      }).catch(() => {
-        if (typeof window.bastTrack === "function") {
-          window.bastTrack("lead_email_fallback", {
-            form_id: "contact",
-            page_path: window.location.pathname
-          });
-        }
-        setFormStatus(status, "Opening your email app to send instead…", null);
-        composeMailto(data);
-      });
+        setFormStatus(status, safeMessage(payload, ERROR_FALLBACK), "error");
+      } catch {
+        setFormStatus(status, ERROR_FALLBACK, "error");
+      } finally {
+        if (submit) submit.disabled = false;
+      }
     });
   }
 
