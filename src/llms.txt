@@ -2,7 +2,7 @@
 
 > Explainable healthcare AI infrastructure: every answer is grounded in approved knowledge, ontology, and source evidence — traced, checked, or refused before it reaches the user.
 
-Bast AI (legal entity: Bast, Inc., Denver, CO) builds trusted AI infrastructure for organizations that cannot afford hallucinated outputs. Bast sits between an organization's knowledge and the model's output, functioning as a verification layer that shows its work: before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply. Bast serves high-stakes domains — healthcare first — where AI accuracy is a patient-safety or professional-liability requirement.
+Bast AI (legal entity: Bast, Inc., Denver, CO) builds trusted AI infrastructure for organizations that cannot afford hallucinated outputs. Bast sits between an organization's knowledge and the model's output, functioning as a verification layer that shows its work: before any answer ships, it checks scope, pulls approved sources, and refuses when nothing supports a reply. Bast serves healthcare, where AI accuracy is a patient-safety or professional-liability requirement.
 
 ## Why Bast AI
 
@@ -10,28 +10,28 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Key Pages
 
-- [Bast AI Homepage](__SITE_URL__/): Positioning, how the control layer works, demos, and contact — the primary page for AI hallucination prevention and AI guardrail queries.
+- [Bast AI Homepage](__SITE_URL__/): BastCare for patients and caregivers, pilots for care teams and health systems, and the path to the platform.
 - [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
-- [Evidence Register](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries.
+- [Claims and proof](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries. The research library is a different page: /evidence/.
 - [Evidence library](__SITE_URL__/evidence/): Published research on explainable AI, caregiving, and who pays for caregiver support. Five findings are on the page, each with its source and caveat. The full library opens after an email confirmation.
 - [Demos](__SITE_URL__/demos/): Demo videos (admin console, knowledge manager, end-user view, healthcare ontology), the BastCare captioned walkthrough, and the ten-minute demo guide. The Lucid Therapeutics demo is a pilot of Bast applied to Lucid Therapeutics' patient information.
 - [Bast Demo Guide](__SITE_URL__/platform/demo/): Ten-minute path from CFO outcomes through BastCare to architecture and evidence.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.
-- [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why only output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
+- [Zero-Tolerance AI Output Architecture](__SITE_URL__/frames/zero-tolerance-ai-output-architecture/): Design principle for clinical, legal, and regulatory AI — three architectural tiers, why output interception meets a zero-tolerance threshold, and the measurable thresholds to test it.
 - [AI Reliability Frames](__SITE_URL__/frames/): Index of Bast's citable reference pages on AI output verification.
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
 - [About](__SITE_URL__/about/): Bast's story, a sourced timeline, principles from Janine M. Benyus, Dave Snowden's Cynefin framework, and the manifesto opening. Beth Rudden (CEO) and Thanh Lam (CTO) are on this page, with a wider team of contributors: __SITE_URL__/about/#team.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
 - [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. BastCare asks for consent before recording. Stay present during the visit, then return to a plain-language summary, its source words, and the family you choose. Not a medical device.
-- [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed temporarily, what is deleted.
+- [How BastCare Works](__SITE_URL__/bastcare/architecture/): Plain-language architecture of BastCare's privacy boundaries — what stays on the iPhone, what is processed to make the summary, and what is deleted.
 - [Investors](__SITE_URL__/investors.html): The business case and evidence behind Bast's accountable AI infrastructure.
 
 ## Focus Areas
 
-- AI hallucination prevention: Bast limits what the model can say — answers come only from approved knowledge, and Bast refuses when nothing supports a reply.
-- AI guardrail software: a verification layer positioned between the model and the output, checking scope and source grounding before answers go live.
+- AI hallucination prevention: Bast limits what the model can say — answers come from approved knowledge, and Bast refuses when nothing supports a reply.
+- AI guardrail software: a verification layer between the model and the output, checking scope and source grounding before answers go live.
 - Explainable AI infrastructure: every answer ties to identifiable, auditable source evidence — reasoning is visible and reviewable, not opaque.
 - Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance. BastCare asks for consent before recording and brings plain-language visit summaries to patients and caregivers.
 - Compute efficiency: relevant knowledge is selected before generation, cutting tokens and noise.

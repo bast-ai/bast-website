@@ -257,6 +257,27 @@ assertIncludes(investorsHtml, 'href="/evidence/"', "investor evidence-library li
 assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
+function assertGlobalHeader(contents, label) {
+  const primaryNav = extractPrimaryNav(contents, label);
+  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
+  if (primaryLinkCount !== 6) {
+    throw new Error(`Expected exactly six primary links on ${label} page; found ${primaryLinkCount}`);
+  }
+  for (const [href, text] of [
+    ["/bastcare/", "BastCare"],
+    ["/pilot/", "For care teams"],
+    ["/evidence/", "Evidence library"],
+    ["/platform/", "Platform"],
+    ["/about/", "About"],
+    ["https://apps.apple.com/app/id6789669565", "Download BastCare"],
+  ]) {
+    assertIncludes(primaryNav, `href="${href}"`, `${text} primary link on ${label} page`);
+    assertIncludes(primaryNav, text, `${text} primary label on ${label} page`);
+  }
+  for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory", "Contact", ">Demos<"]) {
+    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
+  }
+}
 for (const [contents, label] of [
   [indexHtml, "home"],
   [platformHtml, "platform"],
@@ -264,19 +285,7 @@ for (const [contents, label] of [
   [bastcarePrivacy, "BastCare privacy"],
   [evidenceHtml, "evidence"],
 ]) {
-  const primaryNav = extractPrimaryNav(contents, label);
-  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
-  if (primaryLinkCount !== 5) {
-    throw new Error(`Expected exactly five primary links on ${label} page; found ${primaryLinkCount}`);
-  }
-  assertIncludes(primaryNav, 'href="/demos/"', `Demos primary link on ${label} page`);
-  assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
-  assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
-  assertIncludes(primaryNav, 'href="/evidence/"', `evidence library in primary nav on ${label} page`);
-  assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
-  for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory"]) {
-    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
-  }
+  assertGlobalHeader(contents, label);
 }
 
 const requiredHomepageSnippets = [
@@ -285,20 +294,16 @@ const requiredHomepageSnippets = [
     needle: "sms:3037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
   },
   {
-    label: "Lucid Therapeutics demo video",
-    needle: 'data-video-id="SjxGRh3G1JI"',
+    label: "homepage contact form",
+    needle: 'data-contact-form',
   },
   {
-    label: "health and medicine demo video",
-    needle: 'data-video-id="b2l16nkB0f8"',
+    label: "homepage contact name field",
+    needle: 'id="cf-name"',
   },
   {
-    label: "ontology demo video",
-    needle: 'data-video-id="Sa-uNxoRjos"',
-  },
-  {
-    label: "operating principles page link",
-    needle: 'href="principles.html"',
+    label: "principles from nature link",
+    needle: 'href="/principles.html"',
   },
   {
     label: "BastCare summary gallery",
@@ -309,40 +314,40 @@ const requiredHomepageSnippets = [
     needle: "summary-build-51.jpg",
   },
   {
-    label: "Build 51 CareTeam homepage screen",
-    needle: "careteam-build-51.jpg",
+    label: "homepage source-words screen",
+    needle: "export-1-0-9.jpg",
   },
   {
     label: "Build 51 sharing preview homepage screen",
     needle: "share-preview-build-51.jpg",
   },
   {
-    label: "homepage Bast Platform interaction-log product view",
-    needle: "/assets/platform/admin-interaction-log.jpg",
-  },
-  {
-    label: "homepage Bast Platform analytics product view",
-    needle: "/assets/platform/admin-usage-analytics.jpg",
-  },
-  {
-    label: "homepage Bast Platform demos action",
-    needle: 'class="button button-primary" href="#demos">Watch the demos</a>',
-  },
-  {
-    label: "homepage Bast Platform copy panel",
-    needle: 'class="offering-platform-copy"',
-  },
-  {
     label: "dedicated Bast Platform homepage link",
     needle: 'href="/platform/"',
   },
   {
-    label: "homepage BastCare growth counter",
-    needle: 'data-bastcare-metrics-context="growth"',
-  },
-  {
     label: "homepage BastCare App Store action",
     needle: 'data-app-store-placement="bast-home-offering"',
+  },
+  {
+    label: "homepage download wording",
+    needle: "free to download on iPhone",
+  },
+  {
+    label: "homepage consent wording",
+    needle: "asks for consent before it records",
+  },
+  {
+    label: "homepage Lurie Cancer Center",
+    needle: "Lurie Cancer Center at Northwestern",
+  },
+  {
+    label: "homepage DVC card",
+    needle: "Offline-ready medical guidance that shows its source.",
+  },
+  {
+    label: "homepage newsletter Substack link",
+    needle: 'href="https://bastai.substack.com"',
   },
 ];
 const replacedHomepageSnippets = [
@@ -452,6 +457,23 @@ assertIncludes(platformHtml, "The platform in the palm of your hand", "BastCare 
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
 assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architecture diligence link");
 assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
+assertIncludes(platformHtml, "Claims and proof", "platform evidence register label");
+assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
+assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
+assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
+assertIncludes(indexHtml, "2 of 5 patents accepted", "home patents figure");
+assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
+assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
+assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
+assertIncludes(platformHtml, "/assets/platform/admin-usage-analytics.jpg", "platform analytics view");
+assertIncludes(platformHtml, "offering-platform-copy", "platform console copy");
+assertIncludes(platformHtml, 'href="/demos/">Watch the demos</a>', "platform demos link");
+assertExcludes(platformHtml, "sexiest", "retired DVC wording on the platform page");
+assertExcludes(platformHtml, "Small local models", "retired principles teaser on the platform page");
+assertExcludes(indexHtml, "sexiest", "retired DVC wording on the home page");
+assertExcludes(indexHtml, "first semester", "retired Maryville timing on the home page");
+assertExcludes(indexHtml, "Small local models", "retired principles teaser on the home page");
+assertExcludes(indexHtml, 'data-video-id="SjxGRh3G1JI"', "home page no longer embeds the demos");
 assertExcludes(platformHtml, "The architecture is the business case.", "architecture-led marketing copy");
 assertExcludes(platformHtml, "Commit history helps us find change", "commit-history marketing copy");
 assertExcludes(platformHtml, "detect-remediate-verify-rollback", "recovery-loop marketing copy");
@@ -575,7 +597,15 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
   const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
   if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
-  assertIncludes(bastcareColumn[1], 'href="/evidence/"', `evidence library in BastCare footer on ${label} page`);
+  assertIncludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
+  const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
+  if (!footerNav) throw new Error(`Missing footer navigation on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/evidence/"', `evidence library in footer on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/frames/"', `reliability frames in footer on ${label} page`);
+  assertIncludes(footerNav[0], "Claims and proof", `claims label in footer on ${label} page`);
+  assertIncludes(footerNav[0], "Principles from nature", `principles label in footer on ${label} page`);
+  assertExcludes(footerNav[0], "Operating Principles", `old principles label in footer on ${label} page`);
+  assertExcludes(footerNav[0], ">How it works<", `ambiguous how-it-works label in footer on ${label} page`);
 }
 assertIncludes(bastcareHome, 'href="/evidence/">Read the evidence library</a>', "evidence library link on the BastCare page");
 
@@ -598,7 +628,8 @@ assertExcludes(indexHtml, "data-bastcare-version", "home page does not print the
 for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]]) {
   assertExcludes(contents, 'alt="BastCare 1.0.', `version-specific screenshot alt text on ${label} page`);
   assertExcludes(contents, 'alt="BastCare Build ', `build-specific screenshot alt text on ${label} page`);
-  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
+  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} on the App Store`, `build-time BastCare rating on ${label} page`);
+  assertExcludes(contents, `${bastcareReviews.rating.count} ratings`, `visible rating count on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
 assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
@@ -627,13 +658,15 @@ if ((bastcareHome.match(/<video\b/g) || []).length !== 1) {
   }
 }
 // The same promo autoplays in the home hero (2026-10-26), with the same
-// responsive sources and a link to /bastcare/.
+// responsive sources. The hero has one download button; /bastcare/ is the
+// next section.
 if ((indexHtml.match(/<video\b/g) || []).length !== 1) {
   throw new Error("Expected exactly one video on the home page");
 }
 {
-  const homeVideo = indexHtml.match(/<section class="hero hero-with-promo"[\s\S]*?<figure class="hero-promo">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-promo-square\.mp4" type="video\/mp4" media="\(min-width: 901px\)">\s*<source src="\/assets\/bastcare\/media\/bastcare-promo\.mp4" type="video\/mp4">[\s\S]*?<\/video>\s*<figcaption><a href="\/bastcare\/">[\s\S]*?<\/figure>\s*<\/section>/);
-  if (!homeVideo) throw new Error("Missing BastCare promo video (square + portrait sources, /bastcare/ link) in the home hero");
+  const homeVideo = indexHtml.match(/<section class="hero home-hero"[\s\S]*?<figure class="hero-promo">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-promo-square\.mp4" type="video\/mp4" media="\(min-width: 901px\)">\s*<source src="\/assets\/bastcare\/media\/bastcare-promo\.mp4" type="video\/mp4">/);
+  if (!homeVideo) throw new Error("Missing BastCare promo video (square + portrait sources) in the home hero");
+  assertIncludes(indexHtml, 'href="/bastcare/"', "home page BastCare link");
   for (const attribute of ["autoplay", "muted", "loop", "playsinline", "controls", "data-reduced-motion-pause", 'poster="/assets/bastcare/media/bastcare-promo-poster.jpg"']) {
     assertIncludes(homeVideo[1], attribute, `home hero promo ${attribute}`);
   }
@@ -665,8 +698,10 @@ assertIncludes(bastcareHome, "Verified Australian App Store review", "featured A
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "Verified App Store review", "BastCare review source attribution");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.count} ratings`, "BastCare App Store rating count fallback");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count fallback");
+assertExcludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count stays off the page");
+assertIncludes(siteJs, 'average + " on the App Store"', "App Store rating label without a count");
+assertExcludes(siteJs, "ratingCountLabel", "rating-count label helper");
+assertExcludes(siteJs, "written reviews", "written-review count label");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
@@ -737,6 +772,7 @@ assertIncludes(sitemapXml, "/demos/</loc>", "Demos sitemap route");
 
 // Demos page (decision 2026-10-12): one top-nav home for every demo; Lucid labeled Pilot.
 const demosHtml = await readFile(path.join(distDir, "demos/index.html"), "utf8");
+assertGlobalHeader(demosHtml, "demos");
 for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
   assertIncludes(demosHtml, `data-video-id="${videoId}"`, `demos page video ${videoId}`);
 }
@@ -744,14 +780,14 @@ assertIncludes(demosHtml, "data-demo-player", "demos page click-to-load player")
 assertIncludes(demosHtml, 'src="/assets/site.js?v=', "demos page player behavior");
 assertIncludes(demosHtml, 'href="/platform/demo/"', "demos page demo-guide link");
 assertIncludes(demosHtml, 'href="/assets/bastcare/media/bastcare-walkthrough-captioned.mp4"', "demos page BastCare captioned walkthrough link");
-assertIncludes(demosHtml, 'aria-current="page" href="/demos/"', "demos page current navigation");
+assertIncludes(demosHtml, 'href="/demos/"', "demos page link to itself");
 assertIncludes(indexHtml, 'href="/demos/"', "homepage link to the demos page");
-for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
-  assertIncludes(contents, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', `Pilot label on ${label} Lucid demo`);
-  assertIncludes(contents, "A pilot of Bast applied to Lucid Therapeutics&rsquo; patient information", `Lucid pilot wording on ${label} page`);
-  assertExcludes(contents, "pilot usage analytics", `superseded Lucid analytics wording on ${label} page`);
-  assertExcludes(contents, "production analytics", `production claim on ${label} demos`);
-}
+assertIncludes(demosHtml, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', "Pilot label on demos Lucid demo");
+assertIncludes(demosHtml, "A pilot of Bast applied to Lucid Therapeutics&rsquo; patient information", "Lucid pilot wording on demos page");
+assertExcludes(demosHtml, "pilot usage analytics", "superseded Lucid analytics wording on demos page");
+assertExcludes(demosHtml, "production analytics", "production claim on demos page");
+assertExcludes(indexHtml, "pilot usage analytics", "superseded Lucid analytics wording on home page");
+assertExcludes(indexHtml, "production analytics", "production claim on home demos");
 // Beth, 2026-10-12: the Pilot tag and card text carry the pilot status; no
 // louder page-level "not a production deployment" note.
 for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
@@ -812,6 +848,7 @@ assertIncludes(teamHtml, 'href="/about/#team"', "team stub link to the about tea
 assertExcludes(teamHtml, '"Person"', "team stub has no person schema");
 assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team stub");
 const aboutHtml = await readFile(path.join(distDir, "about/index.html"), "utf8");
+assertGlobalHeader(aboutHtml, "about");
 assertIncludes(aboutHtml, "How Bast got here.", "about page timeline heading");
 assertIncludes(aboutHtml, "October 2022", "about page incorporation year");
 assertIncludes(aboutHtml, "Bast AI is incorporated.", "about page incorporation");
@@ -1010,6 +1047,15 @@ for (const file of files) {
 // counts, Craig Hospital claims, or source-tracing claims; privacy wording
 // matches the one-pager PDF verbatim.
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
+assertGlobalHeader(pilotHtml, "pilot");
+assertIncludes(pilotHtml, "For care teams and health systems", "pilot audience");
+assertExcludes(pilotHtml, "healthcare nonprofit", "retired pilot audience");
+const notFoundHtml = await readFile(path.join(distDir, "404.html"), "utf8");
+assertIncludes(notFoundHtml, 'href="/assets/styles.css?v=', "absolute 404 stylesheet");
+assertIncludes(notFoundHtml, 'src="/assets/analytics-consent.js?v=', "absolute 404 analytics script");
+assertIncludes(notFoundHtml, 'src="/assets/bast-logo.svg"', "absolute 404 logo");
+assertExcludes(notFoundHtml, 'href="assets/', "relative 404 asset link");
+assertExcludes(notFoundHtml, 'src="assets/', "relative 404 asset script");
 const pilotBookHref = 'href="https://bookings.cloud.microsoft/book/MeetwithBethRudden@bast.ai/?ismsaljsauthenabled"';
 assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
 const pilotHeroCta = pilotHtml.indexOf(`<a class="pilot-cta" ${pilotBookHref}>Book a 30-minute call</a>`);
@@ -1166,6 +1212,95 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
     if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }
+}
+
+// Marketing confidence: visible rating counts and hedge words in built HTML
+// text (including titles, descriptions, alt text, and labels) and llms.txt.
+// JSON-LD stays out of this scan so ratingCount can remain there.
+const marketingAllowlist = JSON.parse(await readFile(path.join(root, "scripts/marketing-allowlist.json"), "utf8"));
+const hedgePatterns = [
+  ["just", /\bjust\b/gi],
+  ["only", /\bonly\b/gi],
+  ["small", /\bsmall\b/gi],
+  ["early", /\bearly\b/gi],
+  ["first", /\bfirst\b/gi],
+  ["still", /\bstill\b/gi],
+  ["so far", /\bso far\b/gi],
+  ["hope", /\bhope\b/gi],
+  ["for now", /\bfor now\b/gi],
+  ["currently", /\bcurrently\b/gi],
+  ["temporarily", /\btemporarily\b/gi],
+  ["coming soon", /\bcoming soon\b/gi],
+  ["positioned for", /\bpositioned for\b/gi],
+];
+const ratingCountPatterns = [
+  ["from N ratings", /from\s+\d+\s+ratings?\b/gi],
+  ["N ratings", /\b\d+\s+ratings?\b/gi],
+];
+
+function decodePublicText(value) {
+  return value
+    .replace(/&rsquo;|&#8217;|&rsquo;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&#\d+;|&[a-z]+;/gi, " ");
+}
+
+function publicCopyText(html) {
+  const bits = [];
+  for (const tag of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const name = tag[0].match(/(?:name|property)="([^"]*)"/i)?.[1] || "";
+    const content = tag[0].match(/content="([^"]*)"/i)?.[1] || "";
+    if (["description", "og:description", "twitter:description"].includes(name)) bits.push(content);
+  }
+  const title = html.match(/<title>([^<]*)<\/title>/i);
+  if (title) bits.push(title[1]);
+  for (const attr of html.matchAll(/\b(?:alt|aria-label)="([^"]*)"/gi)) bits.push(attr[1]);
+  const body = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ");
+  bits.push(body);
+  return decodePublicText(bits.join("\n")).replace(/\s+/g, " ");
+}
+
+function allowlistCovers(rel, text, index, length) {
+  return marketingAllowlist.some((entry) => {
+    if (entry.file !== rel) return false;
+    let from = 0;
+    while (from <= text.length) {
+      const at = text.indexOf(entry.phrase, from);
+      if (at === -1) return false;
+      const end = at + entry.phrase.length;
+      if (index >= at && index + length <= end) return true;
+      from = at + 1;
+    }
+    return false;
+  });
+}
+
+const confidenceFailures = [];
+for (const file of files) {
+  const ext = path.extname(file);
+  if (ext !== ".html" && path.basename(file) !== "llms.txt") continue;
+  const rel = path.relative(distDir, file);
+  const raw = await readFile(file, "utf8");
+  const text = ext === ".txt" ? raw.replace(/\s+/g, " ") : publicCopyText(raw);
+  const patterns = [
+    ...hedgePatterns.map(([label, re]) => [label, re]),
+    ...ratingCountPatterns,
+  ];
+  for (const [label, re] of patterns) {
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(text))) {
+      if (allowlistCovers(rel, text, match.index, match[0].length)) continue;
+      const snippet = text.slice(Math.max(0, match.index - 40), match.index + match[0].length + 40).trim();
+      confidenceFailures.push(`${rel}: ${label} in "${snippet}"`);
+    }
+  }
+}
+if (confidenceFailures.length) {
+  throw new Error(`Marketing confidence check failed:\n${confidenceFailures.slice(0, 30).join("\n")}`);
 }
 
 console.log("Static site checks passed");

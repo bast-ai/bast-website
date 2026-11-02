@@ -38,14 +38,17 @@
 </head>
 <body class="platform-site">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header platform-header">
-  <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
-  <nav class="site-nav platform-nav" aria-label="Primary">
-    <a aria-current="page" href="/platform/">Platform</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Bast home">
+    <img src="/assets/bast-logo.svg" alt="Bast">
+  </a>
+  <nav class="site-nav" aria-label="Primary">
     <a href="/bastcare/">BastCare</a>
-    <a href="/evidence/">Evidence</a>
-    <a href="/demos/">Demos</a>
-    <a class="nav-cta" href="/#contact">Contact</a>
+    <a href="/pilot/">For care teams</a>
+    <a href="/evidence/">Evidence library</a>
+    <a aria-current="page" href="/platform/">Platform</a>
+    <a href="/about/">About</a>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6789669565" data-app-store-placement="site-header">Download BastCare</a>
   </nav>
 </header>
 
@@ -97,6 +100,145 @@
     </div>
   </section>
 
+  <section class="platform-section" aria-labelledby="infra-title">
+    <div class="platform-section-heading">
+      <p class="eyebrow">Infrastructure</p>
+      <h2 id="infra-title">Here. It's called Bast.</h2>
+      <p>Bast is explainable healthcare AI infrastructure. An answer can be traced, checked, or refused, because it is grounded in an ontology built from approved knowledge and source material.</p>
+    </div>
+    <ul class="questions" aria-label="Questions Bast answers">
+      <li>Where is AI that <strong>doesn't hallucinate?</strong></li>
+      <li>Where is AI that I can <strong>build myself?</strong></li>
+      <li>Where is AI that <strong>shows its work?</strong></li>
+    </ul>
+  </section>
+
+  <section class="platform-section" id="how" aria-labelledby="how-title">
+    <div class="interaction">
+      <div class="section-heading">
+        <p class="section-kicker">The shift</p>
+        <h2 id="how-title">Instead of asking the model to be honest, limit what it can say.</h2>
+        <p>Bast sits between your knowledge and the model's output. Before an answer ships, it checks scope, pulls approved sources, and refuses when nothing supports a reply.</p>
+      </div>
+      <div class="mode-tabs" role="tablist" aria-label="Bast proof modes">
+        <button id="tab-answer" role="tab" type="button" aria-selected="true" aria-controls="panel-answer" data-mode="answer">Answer</button>
+        <button id="tab-refuse" role="tab" type="button" aria-selected="false" aria-controls="panel-refuse" data-mode="refuse">Refuse</button>
+        <button id="tab-trace" role="tab" type="button" aria-selected="false" aria-controls="panel-trace" data-mode="trace">Trace</button>
+      </div>
+      <div class="mode-panels">
+        <article id="panel-answer" role="tabpanel" aria-labelledby="tab-answer" data-panel="answer">
+          <p class="panel-label">Supported question</p>
+          <h3>Answers come from approved knowledge.</h3>
+          <p>The model sees what passed the checks. Answers are written for the person asking, grounded in your own sources.</p>
+        </article>
+        <article id="panel-refuse" role="tabpanel" aria-labelledby="tab-refuse" data-panel="refuse" hidden>
+          <p class="panel-label">Unsupported question</p>
+          <h3>A clean no is better than a confident guess.</h3>
+          <p>If nothing supports an answer, Bast refuses before the model guesses.</p>
+        </article>
+        <article id="panel-trace" role="tabpanel" aria-labelledby="tab-trace" data-panel="trace" hidden>
+          <p class="panel-label">Institutional trace</p>
+          <h3>The route is inspectable.</h3>
+          <p>See the sources, scores, and path behind an answer. People get clarity. You get accountability.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="platform-section" id="technology" aria-labelledby="tech-title">
+    <div class="platform-section-heading">
+      <p class="eyebrow">How it's built</p>
+      <h2 id="tech-title">Multiple AI technologies, one deployable solution.</h2>
+    </div>
+    <div class="card-grid card-grid-3">
+      <article class="card">
+        <p class="card-kicker">Data pipeline</p>
+        <h3>Raw data becomes structured knowledge.</h3>
+        <p>Turn raw source material into a knowledge base the system can reason over.</p>
+      </article>
+      <article class="card">
+        <p class="card-kicker">Natural-language understanding</p>
+        <h3>Grounded meaning, controlled vocabulary.</h3>
+        <p>Language is read against your own terms, not a generic guess.</p>
+      </article>
+      <article class="card">
+        <p class="card-kicker">Knowledge graphs</p>
+        <h3>Traceable, context-aware relationships.</h3>
+        <p>Answers follow explicit relationships, so the route stays inspectable.</p>
+      </article>
+      <article class="card">
+        <p class="card-kicker">Model Context Protocol</p>
+        <h3>Standardized context, cleanly injected.</h3>
+        <p>Built on MCP, so the right context reaches the model and nothing else does.</p>
+      </article>
+      <article class="card">
+        <p class="card-kicker">Hybrid intelligence</p>
+        <h3>Neural and symbolic reasoning together.</h3>
+        <p>Model fluency plus symbolic control, for answers that hold up.</p>
+      </article>
+      <article class="card">
+        <p class="card-kicker">Explainable UI layer</p>
+        <h3>Human-readable outputs.</h3>
+        <p>Responses people can read, check, and act on with confidence.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="platform-section" id="compute" aria-labelledby="compute-title">
+    <div class="platform-section-heading">
+      <p class="eyebrow">Compute control</p>
+      <p class="outcome-stat"><strong>70&ndash;85%</strong> <span>fewer tokens than standard RAG</span></p>
+      <h2 id="compute-title">Fewer tokens, because you control what the model sees.</h2>
+      <p>Bast controls what reaches the model, so the path is deterministic and the input stays yours. An answer can arrive as 8th-grade English, Vietnamese, or an analogy.</p>
+      <p><a class="card-link" href="/assets/bast-compute-reduction-2pager.pdf" download data-pdf-download data-resource="Compute reduction 2-pager">Get the technical 2-pager (PDF) <span aria-hidden="true">&rarr;</span></a></p>
+    </div>
+  </section>
+
+  <section class="platform-section" aria-labelledby="console-title">
+    <div class="platform-section-heading offering-platform-copy">
+      <p class="eyebrow">The console</p>
+      <h2 id="console-title">Questions and answers, kept.</h2>
+      <p>Persistent interaction history, with analytics for the people operating the system.</p>
+      <p><a class="button button-primary" href="/demos/">Watch the demos</a></p>
+    </div>
+    <figure class="offering-platform-product">
+      <div class="platform-product-stage">
+        <div class="platform-desktop-frame platform-desktop-frame-primary">
+          <div class="platform-desktop-toolbar" aria-hidden="true">
+            <span class="platform-window-controls"><i></i><i></i><i></i></span>
+            <span class="platform-window-title">Bast Platform · Interaction History</span>
+          </div>
+          <div class="platform-desktop-screen">
+            <img src="/assets/platform/admin-interaction-log.jpg" width="1600" height="1327" loading="lazy" alt="Bast Platform admin dashboard showing a persistent, inspectable history of questions, responses, model routes, confidence scores, timestamps, and review flags">
+          </div>
+        </div>
+        <div class="platform-desktop-frame platform-desktop-frame-secondary">
+          <div class="platform-desktop-toolbar" aria-hidden="true">
+            <span class="platform-window-controls"><i></i><i></i><i></i></span>
+            <span class="platform-window-title">Bast Platform · System Analytics</span>
+          </div>
+          <div class="platform-desktop-screen">
+            <img src="/assets/platform/admin-usage-analytics.jpg" width="1600" height="959" loading="lazy" alt="Bast Platform Usage Analytics dashboard showing topic distribution and model breakdown across recorded interactions">
+          </div>
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <section class="platform-section" id="ownership" aria-labelledby="own-title">
+    <div class="platform-section-heading">
+      <p class="eyebrow">Your control</p>
+      <h2 id="own-title">Your data, your decisions, your control.</h2>
+    </div>
+    <ul class="ownership-list">
+      <li><strong>Your IP stays yours.</strong> Your knowledge does not train someone else's model.</li>
+      <li><strong>Auditable.</strong> An answer can be reconstructed from its source, version, and route.</li>
+      <li><strong>Traceable.</strong> Provenance follows the response, from context to source page.</li>
+      <li><strong>Governed.</strong> Scope and eligibility are enforced before generation.</li>
+      <li><strong>Deployable your way.</strong> Hosted, private cloud, or fully on premises.</li>
+    </ul>
+  </section>
+
   <section class="platform-cta" aria-labelledby="platform-cta-title">
     <div>
       <p class="eyebrow">Bring us the human problem</p>
@@ -111,26 +253,69 @@
     <nav aria-label="Platform diligence links">
       <a href="/platform/architecture/">Architecture</a>
       <a href="/platform/delivery/">Agent OS</a>
-      <a href="/platform/evidence/">Evidence</a>
+      <a href="/platform/evidence/">Claims and proof</a>
     </nav>
   </aside>
 </main>
 
-<footer class="site-footer platform-footer">
+<footer class="site-footer">
   <div class="footer-top">
     <div class="footer-brand">
       <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
-      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+      <p>Explainable healthcare AI. Answers point back to a source you can check.</p>
     </div>
     <nav class="footer-nav" aria-label="Footer">
-      <div class="footer-col"><p class="footer-head">Product</p><a href="/platform/">Bast Platform</a><a href="/bastcare/">BastCare</a><a href="/evidence/">Evidence</a><a href="/demos/">Demos</a></div>
-      <div class="footer-col"><p class="footer-head">Company</p>
-        <a href="/manifesto/">Manifesto</a><a href="/principles.html">Operating Principles</a><a href="/about/#team">Team</a>
-        <a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/#contact">Contact</a></div>
-      <div class="footer-col"><p class="footer-head">Connect</p><a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a><a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a><a href="mailto:community@bast.ai">community@bast.ai</a></div>
+      <div class="footer-col">
+        <p class="footer-head">BastCare</p>
+        <a href="https://apps.apple.com/app/id6789669565">Download on the App Store</a>
+        <a href="/bastcare/architecture/">How BastCare works</a>
+        <a href="/bastcare/support/">Support</a>
+        <a href="/bastcare/privacy/">Privacy</a>
+        <a href="/bastcare/privacy-faq/">Privacy Q&amp;A</a>
+        <a href="/bastcare/terms/">Terms</a>
+        <a href="/bastcare/delete-account/">Delete account</a>
+        <a href="/bastcare/processors/">Processors</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Care teams</p>
+        <a href="/pilot/">Start a pilot</a>
+        <a href="/evidence/">Evidence library</a>
+        <a href="/assets/bastcare-pilot-one-pager.pdf" download>Pilot one-pager (PDF)</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Platform</p>
+        <a href="/platform/">Overview</a>
+        <a href="/platform/architecture/">Architecture</a>
+        <a href="/platform/delivery/">Agent OS</a>
+        <a href="/platform/evidence/">Claims and proof</a>
+        <a href="/demos/">Demos</a>
+        <a href="/frames/">Reliability frames</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Company</p>
+        <a href="/about/">About</a>
+        <a href="/about/#team">Team</a>
+        <a href="/manifesto/">Manifesto</a>
+        <a href="/principles.html">Principles from nature</a>
+        <a href="/investors.html">Investors</a>
+        <a href="/faq/">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Stay in touch</p>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Newsletter</a>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@Bast_CAT22" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:community@bast.ai">community@bast.ai</a>
+        <a href="tel:+13037176099">Text 303-717-6099</a>
+      </div>
     </nav>
   </div>
-  <div class="footer-bottom"><span>&copy; 2026 Bast AI &middot; Explainable by construction.</span><button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button></div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bast AI. BastCare is not a medical device.</span>
+    <a href="/privacy.html">Website privacy and cookies</a>
+    <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
+  </div>
 </footer>
 </body>
 </html>

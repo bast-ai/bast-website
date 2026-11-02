@@ -249,7 +249,7 @@
     const limit = 300;
     const shown = matched.slice(0, limit);
     list.replaceChildren(...shown.map(card));
-    const extra = matched.length > shown.length ? ` First ${shown.length} are on this page.` : "";
+    const extra = matched.length > shown.length ? ` Showing ${shown.length} on this page.` : "";
     results.textContent = matched.length
       ? `Showing ${shown.length} of ${studies.length} studies.${extra}`
       : `Showing 0 of ${studies.length} studies.`;
@@ -379,13 +379,13 @@
         return;
       }
       if (!response.ok) {
-        setStatus("We couldn't send that just now. Please wait a moment and try again.", "error");
+        setStatus("We couldn't send that. Please wait a moment and try again.", "error");
         return;
       }
       const payload = await readBody(response);
       setStatus(safeMessage(payload, CONFIRM_MESSAGE), "success");
     } catch {
-      setStatus("We couldn't send that just now. Please wait a moment and try again.", "error");
+      setStatus("We couldn't send that. Please wait a moment and try again.", "error");
     } finally {
       if (submit) submit.disabled = false;
     }
