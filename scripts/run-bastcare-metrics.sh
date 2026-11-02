@@ -1,5 +1,8 @@
 #!/bin/sh
-# Cron-safe wrapper for the aggregate-only BastCare metrics collector.
+# Manual wrapper for the aggregate-only BastCare metrics collector.
+#
+# Production refresh is .github/workflows/bastcare-metrics.yml, hourly at
+# minute 17. Turn off the old laptop/Duplo cron that invoked this script.
 # Operating notes live in the private bast-ai/ai-workspace repo
 # (website/bastcare-public-metrics.md).
 #
