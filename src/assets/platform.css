@@ -44,7 +44,7 @@
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.025em;
 }
@@ -110,7 +110,7 @@
 .platform-control-layer > p {
   margin: 0;
   color: #87e8fa;
-  font-size: 0.72rem;
+  font-size: 1.125rem;
   font-weight: var(--fw-semibold);
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -215,7 +215,7 @@
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.025em;
 }
@@ -367,7 +367,7 @@
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.025em;
 }
@@ -387,7 +387,7 @@
 }
 
 .platform-trust-card .eyebrow { color: #87e8fa; }
-.platform-trust-card h2 { max-width: 13ch; margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.4rem); font-weight: var(--fw-thin); line-height: 1.05; }
+.platform-trust-card h2 { max-width: 13ch; margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 600; line-height: 1.05; }
 .platform-trust-card > p:not(.eyebrow) { margin: 0; color: rgba(255, 255, 255, 0.72); line-height: 1.65; }
 .platform-trust-card ul { display: grid; gap: 0; margin: 0.5rem 0 0; padding: 0; list-style: none; }
 .platform-trust-card li { display: grid; gap: 0.25rem; border-top: 1px solid rgba(255, 255, 255, 0.15); padding: 1rem 0; }
@@ -421,7 +421,7 @@
   border-radius: 999px;
   padding: 0.62rem 0.88rem;
   color: var(--platform-ink-soft);
-  font-size: 0.88rem;
+  font-size: 1.125rem;
   font-weight: var(--fw-semibold);
   text-decoration: none;
 }
@@ -445,7 +445,7 @@
   color: var(--platform-navy);
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.03em;
 }
@@ -469,12 +469,12 @@
 .outcome-ledger span,
 .evidence-label {
   color: #87e8fa;
-  font-size: 0.76rem;
+  font-size: 1.125rem;
   font-weight: var(--fw-semibold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.evidence-promise strong { font-family: var(--font-display); font-size: clamp(1.55rem, 3vw, 2.4rem); font-weight: var(--fw-thin); line-height: 1.12; }
+.evidence-promise strong { font-family: var(--font-display); font-size: clamp(1.55rem, 3vw, 2.4rem); font-weight: 600; line-height: 1.12; }
 .evidence-promise span { color: rgba(255, 255, 255, 0.68); line-height: 1.6; }
 
 .outcome-ledger { display: grid; border-top: 1px solid rgba(7, 30, 45, 0.14); }
@@ -501,7 +501,7 @@
 .maturity-grid div,
 .evidence-card { border: 1px solid rgba(7, 30, 45, 0.11); border-radius: 20px; padding: 1.3rem; background: rgba(255, 255, 255, 0.7); }
 .maturity-grid dd { margin: 1rem 0 0; color: var(--platform-ink-soft); }
-.maturity { display: inline-flex; border-radius: 999px; padding: 0.35rem 0.62rem; font-size: 0.72rem; font-weight: var(--fw-semibold); letter-spacing: 0.08em; text-transform: uppercase; }
+.maturity { display: inline-flex; border-radius: 999px; padding: 0.35rem 0.62rem; font-size: 1.125rem; font-weight: var(--fw-semibold); letter-spacing: 0.04em; text-transform: uppercase; }
 .maturity-live { color: #075c46; background: #d9f3e8; }
 .maturity-validated { color: #075c7c; background: #d9eff7; }
 .maturity-pilot { color: #704b00; background: #fff0c7; }
@@ -509,7 +509,7 @@
 .maturity-review { color: #6d4850; background: #f6e5e8; }
 
 .bastcare-proof { grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr); align-items: end; border-top: 1px solid rgba(7, 30, 45, 0.14); border-bottom: 1px solid rgba(7, 30, 45, 0.14); padding: clamp(2rem, 6vw, 4rem) 0; }
-.bastcare-proof h2 { max-width: 22ch; margin: 0.7rem 0 1rem; color: var(--platform-navy); font-family: var(--font-display); font-size: var(--fs-h2); font-weight: var(--fw-thin); }
+.bastcare-proof h2 { max-width: 22ch; margin: 0.7rem 0 1rem; color: var(--platform-navy); font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 600; }
 .bastcare-proof p:last-child { max-width: 67ch; color: var(--platform-ink-soft); }
 .bastcare-proof-actions { display: grid; gap: 0.75rem; }
 
@@ -533,7 +533,7 @@
 .evidence-table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.56); }
 .evidence-table th,
 .evidence-table td { border-bottom: 1px solid rgba(7, 30, 45, 0.12); padding: 1rem; text-align: left; vertical-align: top; }
-.evidence-table th { color: var(--platform-navy); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.evidence-table th { color: var(--platform-navy); font-size: 1.125rem; letter-spacing: 0.04em; text-transform: uppercase; }
 
 .demo-timeline { counter-reset: demo; display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
 .demo-timeline li { counter-increment: demo; display: grid; grid-template-columns: 110px minmax(0, 1fr) minmax(260px, 0.7fr); gap: 1.5rem; border-bottom: 1px solid rgba(7, 30, 45, 0.13); padding: 1.5rem 0; }
@@ -587,7 +587,7 @@
 
   .platform-marketing-copy h1 { max-width: none; font-size: clamp(3.25rem, 15vw, 4.35rem); }
 
-  .platform-marketing-copy .eyebrow { max-width: 100%; font-size: 0.72rem; letter-spacing: 0.11em; }
+  .platform-marketing-copy .eyebrow { max-width: 100%; font-size: 1.125rem; letter-spacing: 0.06em; }
 
   .platform-principles { grid-template-columns: 1fr; }
 

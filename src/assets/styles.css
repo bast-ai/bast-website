@@ -57,8 +57,8 @@
   --paper: #dde3e9;
   --surface: #f5f7fa;
   --card-face: #e6ebf0;
-  --quiet: rgba(13, 41, 53, 0.72);
-  --quieter: #4d616a; /* 5.02:1 on --paper; AA-safe for small text */
+  --quiet: #0d2935;
+  --quieter: #0d2935;
   --line: rgba(13, 41, 53, 0.15);
   --line-subtle: rgba(13, 41, 53, 0.08);
 
@@ -77,19 +77,19 @@
        display/h2 -> thin (200), the elegant high-impact voice
        h3         -> light (300), large statements
        title      -> medium (500), functional card/component headings
-       eyebrow    -> semibold (600), 19px slate, orients the reader
-       label      -> semibold (600), 12px accent, tags things
-       body*      -> regular (400) */
+       eyebrow    -> semibold (600), 19px, orients the reader
+       label      -> semibold (600), 18px, tags things
+       body*      -> regular (400), 18px minimum */
   --fs-display: clamp(2.6rem, 5.6vw, 4.25rem);
   --fs-h2: clamp(2rem, 4.2vw, 3rem);
   --fs-h3: clamp(1.6rem, 2.7vw, 2.05rem);
   --fs-title: 1.1875rem;   /* 19px - card & component headings */
   --fs-eyebrow: 1.1875rem; /* 19px - section eyebrows / kickers */
-  --fs-label: 0.75rem;     /* 12px - micro-labels, tags, footer heads */
-  --fs-body-lg: clamp(1.0625rem, 1.5vw, 1.1875rem); /* lede / intros */
-  --fs-body: 1rem;         /* 16px - body, lists, nav, controls */
-  --fs-body-sm: 0.9375rem; /* 15px - card copy, secondary links */
-  --fs-caption: 0.8125rem; /* 13px - helper notes */
+  --fs-label: 1.125rem;    /* 18px - labels, tags, footer heads */
+  --fs-body-lg: clamp(1.125rem, 1.5vw, 1.25rem); /* lede / intros */
+  --fs-body: 1.125rem;     /* 18px - body, lists, nav, controls */
+  --fs-body-sm: 1.125rem;  /* 18px - card copy, secondary links */
+  --fs-caption: 1.125rem;  /* 18px - helper notes */
 
   --fw-thin: 200;
   --fw-light: 300;
@@ -131,6 +131,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-display);
+  font-size: var(--fs-body);
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -196,7 +197,7 @@ button:focus-visible {
   font-size: clamp(1.05rem, 1.7vw, 1.2rem);
 }
 
-/* Display headings: thin Estedad, tight tracking */
+/* Display headings: semibold, tight tracking */
 h1,
 h2,
 h3 {
@@ -239,7 +240,7 @@ p {
   align-items: center;
   flex-wrap: wrap;
   gap: 22px;
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
 }
@@ -283,7 +284,7 @@ p {
   color: var(--ink);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.12;
   margin: 0.4em 0;
@@ -295,8 +296,8 @@ p {
   gap: 0.35rem;
   align-items: baseline;
   margin: 0 0 1.1rem;
-  color: var(--quiet);
-  font-size: 1rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   font-weight: 500;
 }
 
@@ -325,7 +326,7 @@ p {
 
 h1 {
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   margin-bottom: 0.32em;
 }
@@ -356,7 +357,7 @@ h1 span {
 
 .lede {
   max-width: 36rem;
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body-lg);
   line-height: 1.5;
 }
@@ -450,8 +451,8 @@ h1 span {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  color: var(--quieter);
-  font-size: 0.84rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   margin-bottom: 1rem;
 }
 
@@ -472,15 +473,15 @@ h1 span {
 .featured-outcome h2,
 .metric-outcome h2 {
   font-size: 1.42rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.14;
   margin: 0 0 0.7rem;
 }
 
 .featured-outcome p,
 .metric-outcome p {
-  color: var(--quiet);
-  font-size: 0.96rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   margin-bottom: 0;
 }
 
@@ -495,7 +496,7 @@ h1 span {
 
 .featured-outcome-proof span {
   color: var(--accent-text);
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -511,7 +512,7 @@ h1 span {
 .metric-outcome strong {
   display: block;
   font-size: 2.5rem;
-  font-weight: 200;
+  font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: 0.4rem;
@@ -549,9 +550,9 @@ h1 span {
 }
 
 .metric-outcome span {
-  color: var(--quieter);
+  color: var(--ink);
   display: block;
-  font-size: 0.92rem;
+  font-size: 1.125rem;
   line-height: 1.3;
 }
 
@@ -570,7 +571,7 @@ h1 span {
 .section h2 {
   max-width: 20ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
   margin: 0.5rem 0 1rem;
 }
@@ -644,7 +645,7 @@ h1 span {
 
 .mode-panels h3 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.08;
   margin: 0.6rem 0 1rem;
 }
@@ -663,7 +664,7 @@ h1 span {
 .demos-page h1 {
   max-width: 20ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
   margin: 0.5rem 0 1rem;
 }
@@ -742,7 +743,7 @@ h1 span {
 .demo-player-empty h3 {
   max-width: 12ch;
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.02;
   margin: 0;
 }
@@ -889,9 +890,9 @@ h1 span {
 }
 
 .footer-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .footer-brand .brand {
@@ -908,8 +909,8 @@ h1 span {
 
 .footer-nav {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.5rem 1.25rem;
 }
 
 .footer-col {
@@ -950,6 +951,12 @@ h1 span {
   font-size: var(--fs-caption);
 }
 
+.footer-bottom a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .footer-link-btn {
   padding: 0;
   border: none;
@@ -977,7 +984,7 @@ h1 span {
 .not-found h1 {
   max-width: 14ch;
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .privacy-page h2 {
@@ -1033,7 +1040,7 @@ h1 span {
 .investor-hero h1 {
   max-width: 12ch;
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .investor-note {
@@ -1083,7 +1090,7 @@ h1 span {
 .evidence-preview strong {
   max-width: 11ch;
   font-size: clamp(2rem, 4vw, 3.75rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -1306,13 +1313,13 @@ h1 span {
 
 .card h3 {
   font-size: var(--fs-title);
-  font-weight: var(--fw-medium);
+  font-weight: 600;
   line-height: 1.16;
   margin: 0.7rem 0 0.5rem;
 }
 
 .card p {
-  color: var(--quiet);
+  color: var(--ink);
   font-size: var(--fs-body-sm);
   margin: 0;
 }
@@ -1417,7 +1424,7 @@ h1 span {
   margin-bottom: 0.2rem;
   color: var(--accent-text);
   font-size: clamp(2.8rem, 6vw, 5.5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   letter-spacing: -0.055em;
 }
 
@@ -1639,7 +1646,7 @@ h1 span {
   max-width: 17ch;
   margin: 1.35rem 0 0.9rem;
   font-size: clamp(1.5rem, 2.3vw, 2rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.08;
 }
 
@@ -1647,7 +1654,7 @@ h1 span {
 .offering-card.offering-card-platform h3 {
   max-width: 14ch;
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.035em;
 }
@@ -1735,8 +1742,8 @@ h1 span {
 
 .case-sector {
   margin: 2.6rem 0 0;
-  color: var(--quiet);
-  font-size: 0.82rem;
+  color: var(--ink);
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1794,7 +1801,7 @@ h1 span {
 .nature-hero h1 {
   max-width: 12ch;
   font-size: clamp(2.9rem, 6vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.0;
   margin: 0.35rem 0 1.2rem;
 }
@@ -1952,7 +1959,7 @@ h1 span {
 .nature-card h3 {
   max-width: 15ch;
   font-size: clamp(1.55rem, 2.5vw, 2rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.06;
   margin: auto 0 0.8rem;
 }
@@ -1999,7 +2006,7 @@ h1 span {
   margin: 0 0 1rem;
   color: var(--ink);
   font-size: clamp(1.55rem, 3vw, 2.25rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -2025,7 +2032,7 @@ h1 span {
   margin: 1.5rem 0 1rem;
   color: var(--ink);
   font-size: clamp(1.35rem, 2.5vw, 1.8rem);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -2094,7 +2101,7 @@ h1 span {
 .emergence-result strong {
   margin-top: 1.25rem;
   font-size: clamp(2rem, 5vw, 3.6rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
 }
 
 .emergence-result p {
@@ -2461,8 +2468,11 @@ h1 span {
   }
 
   .footer-top {
-    grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .footer-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2555,7 +2565,7 @@ h1 span {
   }
 
   .footer-nav {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
@@ -2648,7 +2658,7 @@ h1 span {
   max-width: 15ch;
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-display);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
 }
 
@@ -2836,7 +2846,7 @@ h1 span {
   max-width: 17ch;
   margin: var(--bast-space-3) 0 0;
   font-size: clamp(2.4rem, 6vw, 5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -2936,7 +2946,7 @@ h1 span {
   margin: var(--bast-space-3) 0;
   color: #fff;
   font-size: clamp(1.7rem, 3vw, 2.5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.08;
 }
 
@@ -2970,7 +2980,7 @@ h1 span {
 .bastcare-release-notes h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-4);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -2995,7 +3005,7 @@ h1 span {
   max-width: 12ch;
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: clamp(2.4rem, 6vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -3066,7 +3076,7 @@ h1 span {
   margin: var(--bast-space-3) 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.05;
 }
 
@@ -3107,7 +3117,7 @@ h1 span {
 .bastcare-iteration-metrics dd {
   margin: 0 0 var(--bast-space-4);
   font-size: clamp(2.2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.045em;
 }
@@ -3203,7 +3213,7 @@ h1 span {
   color: var(--ink);
   font-family: var(--font-display);
   font-size: clamp(2rem, 4.5vw, 3.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.02em;
 }
@@ -3417,7 +3427,7 @@ h1 span {
   margin: 0 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(2.35rem, 6vw, 5rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.04em;
 }
@@ -3461,7 +3471,7 @@ h1 span {
 .bastcare-review-seal span {
   color: #fff;
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
 }
 
@@ -3507,7 +3517,7 @@ h1 span {
   margin: 0 0 var(--bast-space-4);
   color: #fff;
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.04em;
 }
@@ -3541,7 +3551,7 @@ h1 span {
   max-width: 18ch;
   margin: var(--bast-space-2) 0 var(--bast-space-4);
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.04em;
 }
@@ -3622,7 +3632,7 @@ h1 span {
   max-width: 28ch;
   margin: var(--bast-space-3) 0;
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.12;
 }
 
@@ -3646,6 +3656,7 @@ h1 span {
 }
 
 .plain-language h2,
+.compare-section h2,
 .section-heading h2,
 .support-contact h2,
 .delete-steps > h2,
@@ -3654,7 +3665,7 @@ h1 span {
 .support-safe h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -3663,6 +3674,172 @@ h1 span {
   color: var(--ink);
   font-size: var(--fs-body-lg);
   line-height: 1.65;
+}
+
+.compare-section {
+  scroll-margin-top: var(--bast-space-8);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.compare-section h2 {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+}
+
+.compare-section > p:not(.panel-label) {
+  max-width: 62ch;
+  margin: 0 0 var(--bast-space-6);
+  color: var(--ink);
+  font-size: 25px;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+}
+
+.compare-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.compare-table-wrap {
+  max-width: 100%;
+  border-radius: var(--bast-radius-large);
+  background: var(--paper);
+  box-shadow: var(--neu-raise);
+  overflow: visible;
+}
+
+.compare-table {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: 25px;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 34px 28px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-subtle);
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+}
+
+.compare-table thead th {
+  background: var(--card-face);
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.compare-table thead th:last-child {
+  background: rgba(0, 144, 204, 0.1);
+}
+
+.compare-table tbody th {
+  width: 24%;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.compare-table td {
+  width: 38%;
+  font-size: 25px;
+}
+
+.compare-table td:last-child {
+  background: rgba(0, 144, 204, 0.07);
+}
+
+.compare-table tr:last-child th,
+.compare-table tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 660px) {
+  .compare-table-wrap {
+    overflow: visible;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .compare-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .compare-table,
+  .compare-table tbody,
+  .compare-table tr,
+  .compare-table th,
+  .compare-table td {
+    display: block;
+    width: auto;
+  }
+
+  .compare-table tr {
+    margin-bottom: var(--bast-space-4);
+    border-radius: var(--bast-radius-default);
+    background: var(--paper);
+    box-shadow: var(--neu-raise-sm);
+    overflow: hidden;
+  }
+
+  .compare-table tbody th,
+  .compare-table td {
+    border-bottom: 1px solid var(--line-subtle);
+  }
+
+  .compare-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .compare-table tbody th,
+  .compare-table td {
+    width: auto;
+  }
+
+  .compare-table tbody th {
+    background: var(--card-face);
+  }
+
+  .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: var(--fw-medium);
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: none;
+  }
 }
 
 .bastcare-layout {
@@ -3724,7 +3901,7 @@ h1 span {
   margin-bottom: var(--bast-space-4);
   color: var(--ink);
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -3834,7 +4011,7 @@ h1 span {
 .processor-boundary h2 {
   margin: var(--bast-space-3) 0 var(--bast-space-5);
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -4510,7 +4687,7 @@ h1 span {
 
 .frame-article .frame-head h1 {
   font-size: var(--fs-h2);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   margin: 10px 0 12px;
 }
 
@@ -4533,7 +4710,7 @@ h1 span {
 
 .frame-meta .frame-id {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
+  font-size: 1.125rem;
 }
 
 .frame-article section {
@@ -4542,7 +4719,7 @@ h1 span {
 
 .frame-article h2 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   margin: 0 0 16px;
 }
 
@@ -4631,7 +4808,7 @@ h1 span {
 }
 
 .frame-permalink code {
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   background: var(--card-face);
   padding: 2px 8px;
   border-radius: 6px;
@@ -4666,12 +4843,74 @@ h1 span {
 
 .team-grid .card h2 {
   font-size: var(--fs-h3);
-  font-weight: var(--fw-light);
+  font-weight: 600;
   margin: 4px 0 10px;
 }
 
 .team-links {
   font-size: var(--fs-body-sm);
+}
+
+.about-timeline {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+
+.about-timeline li {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: 1rem 1.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.about-timeline time {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.about-timeline h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.about-timeline p,
+.about-principles,
+.about-page blockquote p {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--ink);
+}
+
+.about-principles {
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+}
+
+.about-principles li {
+  margin: 0.6rem 0;
+}
+
+.about-page blockquote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.about-cta .hero-actions {
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .about-timeline li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
 }
 
 .team-links a {
@@ -4698,7 +4937,7 @@ h1 span {
   margin: var(--bast-space-3) 0 0;
   color: #fff;
   font-size: clamp(2.4rem, 5vw, 4.8rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.98;
 }
 
@@ -4752,7 +4991,7 @@ h1 span {
 .bastcare-rating-row strong {
   color: #fff;
   font-size: clamp(2.4rem, 5vw, 4.2rem);
-  font-weight: var(--fw-thin);
+  font-weight: 600;
   line-height: 0.9;
   letter-spacing: -0.04em;
 }
@@ -4965,7 +5204,26 @@ h1 span {
 }
 
 .site-nav .nav-cta {
-  color: var(--accent-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-left: 0.25rem;
+  padding: 0.4rem 0.9rem;
+  border-bottom: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.site-nav .nav-cta:hover,
+.site-nav .nav-cta:focus-visible {
+  border-bottom-color: transparent;
+  background: var(--accent-text);
+  color: #fff;
 }
 
 .home-page {
@@ -4973,8 +5231,8 @@ h1 span {
   --paper: #fafbfc;
   --surface: #ffffff;
   --card-face: #ffffff;
-  --quiet: #52636c;
-  --quieter: #5f6f77; /* 5.03:1 on home paper; AA-safe for small text */
+  --quiet: #172d37;
+  --quieter: #172d37;
   --line: #d7dde1;
   --line-subtle: #e8ecef;
   --accent-text: #087aa5;
@@ -5010,7 +5268,8 @@ h1 span {
 
 .home-page .hero .lede {
   max-width: 34rem;
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--ink);
+  font-size: clamp(1.125rem, 1.6vw, 1.25rem);
   line-height: 1.58;
 }
 
@@ -5033,9 +5292,9 @@ h1 span {
 .home-page .questions li {
   max-width: 20ch;
   margin: 0;
-  color: var(--quiet);
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 600;
   line-height: 1.32;
   letter-spacing: -0.015em;
 }
@@ -5206,6 +5465,66 @@ h1 span {
   box-shadow: none;
 }
 
+.home-page .contact-form .contact-hp {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.home-page .contact-form .contact-hp input {
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.home-page .contact-form .contact-choice label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.home-page .contact-form .contact-choice input {
+  width: 1.35rem;
+  height: 1.35rem;
+  min-height: 1.35rem;
+  margin-top: 0.2rem;
+  padding: 0;
+  flex: 0 0 auto;
+  accent-color: var(--ink);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-page .contact-form .contact-choice .form-note {
+  margin: 0.35rem 0 0;
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.home-page .contact-form .form-note.is-success,
+.home-page .contact-form .form-note.is-error {
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.home-page .contact-form .form-note.is-error {
+  color: #991b1b;
+}
+
 .home-page .mode-tabs button[aria-selected="true"] {
   border-color: var(--accent-text);
   box-shadow: none;
@@ -5225,8 +5544,9 @@ h1 span {
   .site-header,
   .home-page .site-header {
     width: min(100% - 32px, var(--max));
-    align-items: center;
-    flex-direction: row;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.85rem;
   }
 
   .bastcare-header {
@@ -5234,8 +5554,8 @@ h1 span {
   }
 
   .site-nav {
-    width: auto;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .bastcare-nav {
@@ -5286,7 +5606,7 @@ h1 span {
 
   .site-nav {
     gap: 0.9rem;
-    font-size: 0.82rem;
+    font-size: 1.125rem;
   }
 
   .home-page .hero h1 {
@@ -5306,3 +5626,156 @@ h1 span {
 .manifesto-entry h2 a { text-decoration: none; }
 .manifesto-entry h2 a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
 .manifesto-entry .section-heading > a { color: var(--accent-text); text-underline-offset: 0.2em; }
+
+/* Home story: one idea per section, type sized for a 70-year-old reader. */
+.home-page .hero.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 420px);
+  grid-template-areas: "lead promo";
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  min-height: 0;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.home-page .hero.home-hero .hero-lead {
+  grid-area: lead;
+  min-width: 0;
+}
+
+.home-page .hero.home-hero .hero-promo {
+  grid-area: promo;
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+  justify-self: end;
+}
+
+.home-page .hero.home-hero h1 {
+  max-width: 14em;
+  margin: 0 0 1rem;
+  font-size: clamp(2.25rem, 4vw, 3.35rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.home-page .home-hero .lede {
+  max-width: 38rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.home-page .home-hero .hero-actions {
+  align-items: center;
+}
+
+.home-page .home-hero .button-primary {
+  max-width: 22rem;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+}
+
+.home-rating {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.home-helps .offering-summary-gallery,
+.home-helps .offering-summary-gallery figure,
+.home-helps .offering-summary-gallery figure:first-child,
+.home-helps .offering-summary-gallery figure:nth-child(2),
+.home-helps .offering-summary-gallery figure:last-child {
+  transform: none;
+}
+
+.home-helps .offering-summary-gallery {
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+.home-helps .offering-summary-gallery figcaption {
+  display: block;
+  max-width: 22ch;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.home-helps-cta {
+  margin: 1.75rem 0 0;
+}
+
+.home-dvc {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+}
+
+.home-dvc h3,
+.home-proof h2,
+.home-care-teams h2,
+.home-rd h2,
+.home-newsletter h2,
+.home-helps h2 {
+  font-weight: 600;
+}
+
+.platform-site .questions {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.platform-site .questions li {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.platform-site .card h3,
+.platform-site .mode-panels h3,
+.platform-site .ownership-list strong {
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .home-page .hero.home-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas: "lead" "promo";
+  }
+
+  .home-page .hero.home-hero .hero-promo {
+    justify-self: center;
+    width: min(100%, 280px);
+  }
+
+  .home-page .hero.home-hero h1 {
+    max-width: 16em;
+    font-size: clamp(2.15rem, 8vw, 2.8rem);
+  }
+
+  .home-helps .offering-summary-gallery {
+    grid-template-columns: 1fr;
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-page .home-hero h1 {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+  }
+
+  .home-helps .offering-summary-gallery figcaption {
+    display: block;
+  }
+}

@@ -10,8 +10,9 @@ never appears on bast.ai until Beth approves it.
 --queue mode (scheduled review-queue workflow): add reviews Apple lists that
 are not yet approved, pending, or rejected to pending.json, record the App
 Store version seen, and write a Markdown summary for the pull request body.
-It flags when the approved release-notes copy on /bastcare/ is for an older
-version. It never edits approved.json or page copy.
+It flags when /bastcare/ still carries a release-notes version marker for an
+older App Store version. Pages that omit the marker do not print a version.
+It never edits approved.json or page copy.
 
 Visitors load only the resulting same-origin JSON file, so viewing the Bast
 website does not disclose their IP address or browser details to Apple.
@@ -284,11 +285,10 @@ def update_queue(
         )
         summary.append("")
         summary.append(
-            "Version text on bast.ai updates automatically on the next deploy. "
-            "Release notes do not."
+            "Public pages do not print the App Store version. Release notes stay as written."
         )
         summary.append("")
-    if notes_version != app["version"]:
+    if notes_version and notes_version != app["version"]:
         summary.append(
             f"**Release notes need review:** /bastcare/ shows approved notes for "
             f"{notes_version or 'no version'}, but the App Store is on {app['version']}. "

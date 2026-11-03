@@ -1,4 +1,5 @@
 import { access, readFile, readdir, stat } from "node:fs/promises";
+import { inflateSync } from "node:zlib";
 import path from "node:path";
 
 const root = process.cwd();
@@ -78,9 +79,13 @@ const requiredFiles = [
   "llms.txt",
   "faq/index.html",
   "team/index.html",
+  "about/index.html",
   "frames/index.html",
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
+  "evidence/index.html",
+  "assets/evidence.css",
+  "assets/evidence.js",
 ];
 
 const forbidden = [
@@ -182,6 +187,19 @@ function extractPrimaryNav(contents, label) {
   return match[1];
 }
 
+async function assertNoWeb3FormsInSrc() {
+  const srcDir = path.join(root, "src");
+  const files = await collectFiles(srcDir);
+  for (const file of files) {
+    const contents = await readFile(file);
+    if (contents.toString("latin1").toLowerCase().includes("web3forms")) {
+      throw new Error(`web3forms found in ${path.relative(root, file)}`);
+    }
+  }
+}
+
+await assertNoWeb3FormsInSrc();
+
 for (const file of requiredFiles) {
   await exists(file);
 }
@@ -200,8 +218,12 @@ const analyticsConsentJs = await readFile(path.join(distDir, "assets/analytics-c
 const siteJs = await readFile(path.join(distDir, "assets/site.js"), "utf8");
 const siteCss = await readFile(path.join(distDir, "assets/styles.css"), "utf8");
 const platformCss = await readFile(path.join(distDir, "assets/platform.css"), "utf8");
+const evidenceHtml = await readFile(path.join(distDir, "evidence/index.html"), "utf8");
+const evidenceJs = await readFile(path.join(distDir, "assets/evidence.js"), "utf8");
+const evidenceCss = await readFile(path.join(distDir, "assets/evidence.css"), "utf8");
 assertBalancedCssBlocks(siteCss, "site stylesheet");
 assertBalancedCssBlocks(platformCss, "platform stylesheet");
+assertBalancedCssBlocks(evidenceCss, "evidence stylesheet");
 assertIncludes(siteCss, ".outcome-stat .case-badge", "readable homepage case-study badge override");
 const bastcareMetrics = JSON.parse(await readFile(
   path.join(distDir, "assets/data/bastcare-metrics.json"), "utf8"));
@@ -232,27 +254,39 @@ const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
 
 assertExcludes(investorsHtml, "bast-ai-healthcare-teaser", "retired healthcare teaser reference");
 assertExcludes(investorsHtml, "Download teaser", "retired teaser download");
+assertIncludes(investorsHtml, 'href="/evidence/"', "investor evidence-library link");
 assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
+function assertGlobalHeader(contents, label) {
+  const primaryNav = extractPrimaryNav(contents, label);
+  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
+  if (primaryLinkCount !== 6) {
+    throw new Error(`Expected exactly six primary links on ${label} page; found ${primaryLinkCount}`);
+  }
+  for (const [href, text] of [
+    ["/bastcare/", "BastCare"],
+    ["/pilot/", "For care teams"],
+    ["/evidence/", "Evidence library"],
+    ["/platform/", "Platform"],
+    ["/about/", "About"],
+    ["https://apps.apple.com/app/id6789669565", "Download BastCare"],
+  ]) {
+    assertIncludes(primaryNav, `href="${href}"`, `${text} primary link on ${label} page`);
+    assertIncludes(primaryNav, text, `${text} primary label on ${label} page`);
+  }
+  for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory", "Contact", ">Demos<"]) {
+    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
+  }
+}
 for (const [contents, label] of [
   [indexHtml, "home"],
   [platformHtml, "platform"],
   [bastcareHome, "BastCare"],
   [bastcarePrivacy, "BastCare privacy"],
+  [evidenceHtml, "evidence"],
 ]) {
-  const primaryNav = extractPrimaryNav(contents, label);
-  const primaryLinkCount = (primaryNav.match(/<a\b/g) || []).length;
-  if (primaryLinkCount !== 4) {
-    throw new Error(`Expected exactly four primary links on ${label} page; found ${primaryLinkCount}`);
-  }
-  assertIncludes(primaryNav, 'href="/demos/"', `Demos primary link on ${label} page`);
-  assertIncludes(primaryNav, 'href="/platform/"', `Platform primary link on ${label} page`);
-  assertIncludes(primaryNav, 'href="/bastcare/"', `BastCare primary link on ${label} page`);
-  assertIncludes(primaryNav, "Contact", `Contact primary link on ${label} page`);
-  for (const legacyLabel of ["How it works", "Offerings", "Principles", "Investors", "Advisory"]) {
-    assertExcludes(primaryNav, legacyLabel, `${legacyLabel} primary link on ${label} page`);
-  }
+  assertGlobalHeader(contents, label);
 }
 
 const requiredHomepageSnippets = [
@@ -261,20 +295,16 @@ const requiredHomepageSnippets = [
     needle: "sms:3037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
   },
   {
-    label: "Lucid Therapeutics demo video",
-    needle: 'data-video-id="SjxGRh3G1JI"',
+    label: "homepage contact form",
+    needle: 'data-contact-form',
   },
   {
-    label: "health and medicine demo video",
-    needle: 'data-video-id="b2l16nkB0f8"',
+    label: "homepage contact name field",
+    needle: 'id="cf-name"',
   },
   {
-    label: "ontology demo video",
-    needle: 'data-video-id="Sa-uNxoRjos"',
-  },
-  {
-    label: "operating principles page link",
-    needle: 'href="principles.html"',
+    label: "principles from nature link",
+    needle: 'href="/principles.html"',
   },
   {
     label: "BastCare summary gallery",
@@ -285,40 +315,40 @@ const requiredHomepageSnippets = [
     needle: "summary-build-51.jpg",
   },
   {
-    label: "Build 51 CareTeam homepage screen",
-    needle: "careteam-build-51.jpg",
+    label: "homepage source-words screen",
+    needle: "export-1-0-9.jpg",
   },
   {
     label: "Build 51 sharing preview homepage screen",
     needle: "share-preview-build-51.jpg",
   },
   {
-    label: "homepage Bast Platform interaction-log product view",
-    needle: "/assets/platform/admin-interaction-log.jpg",
-  },
-  {
-    label: "homepage Bast Platform analytics product view",
-    needle: "/assets/platform/admin-usage-analytics.jpg",
-  },
-  {
-    label: "homepage Bast Platform demos action",
-    needle: 'class="button button-primary" href="#demos">Watch the demos</a>',
-  },
-  {
-    label: "homepage Bast Platform copy panel",
-    needle: 'class="offering-platform-copy"',
-  },
-  {
     label: "dedicated Bast Platform homepage link",
     needle: 'href="/platform/"',
   },
   {
-    label: "homepage BastCare growth counter",
-    needle: 'data-bastcare-metrics-context="growth"',
-  },
-  {
     label: "homepage BastCare App Store action",
     needle: 'data-app-store-placement="bast-home-offering"',
+  },
+  {
+    label: "homepage download wording",
+    needle: "free to download on iPhone",
+  },
+  {
+    label: "homepage consent wording",
+    needle: "asks for consent before it records",
+  },
+  {
+    label: "homepage Lurie Cancer Center",
+    needle: "Lurie Cancer Center at Northwestern",
+  },
+  {
+    label: "homepage DVC card",
+    needle: "Offline-ready medical guidance that shows its source.",
+  },
+  {
+    label: "homepage newsletter Substack link",
+    needle: 'href="https://bastai.substack.com"',
   },
 ];
 const replacedHomepageSnippets = [
@@ -361,6 +391,25 @@ for (const { needle, label } of requiredHomepageSnippets) {
 }
 for (const { needle, label } of replacedHomepageSnippets) {
   assertExcludes(indexHtml, needle, label);
+}
+
+assertIncludes(indexHtml, 'name="website"', "home contact honeypot");
+assertIncludes(indexHtml, 'class="contact-hp"', "home contact honeypot hidden from people");
+assertIncludes(indexHtml, 'tabindex="-1"', "home contact honeypot tabindex");
+assertIncludes(indexHtml, 'autocomplete="off"', "home contact honeypot autocomplete");
+assertIncludes(indexHtml, 'aria-hidden="true"', "home contact honeypot aria-hidden");
+assertIncludes(indexHtml, "Send me Bast updates", "home contact updates checkbox");
+assertIncludes(siteJs, 'const FORMS_ORIGIN = "https://forms.aws.bast.ai"', "home contact uses the Bast forms API");
+assertIncludes(siteJs, "${FORMS_ORIGIN}/contact", "home contact posts to /contact");
+assertIncludes(siteJs, 'referrerPolicy: "no-referrer"', "home contact fetch sends no referrer");
+assertIncludes(siteJs, "updates: Boolean(updates && updates.checked)", "home contact updates flag");
+assertExcludes(siteJs, "composeMailto", "home contact mailto fallback");
+assertExcludes(siteJs, "BAST_CONTACT", "home contact Web3Forms config");
+assertExcludes(indexHtml, "BAST_CONTACT", "home contact Web3Forms config in the page");
+{
+  const contactUpdates = indexHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
+  if (!contactUpdates) throw new Error("Missing home contact updates checkbox");
+  if (/\bchecked\b/.test(contactUpdates[0])) throw new Error("home contact updates checkbox must be unticked by default");
 }
 
 for (const [contents, label] of [
@@ -409,6 +458,23 @@ assertIncludes(platformHtml, "The platform in the palm of your hand", "BastCare 
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
 assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architecture diligence link");
 assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
+assertIncludes(platformHtml, "Claims and proof", "platform evidence register label");
+assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
+assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
+assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
+assertIncludes(indexHtml, "2 of 5 patents accepted", "home patents figure");
+assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
+assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
+assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
+assertIncludes(platformHtml, "/assets/platform/admin-usage-analytics.jpg", "platform analytics view");
+assertIncludes(platformHtml, "offering-platform-copy", "platform console copy");
+assertIncludes(platformHtml, 'href="/demos/">Watch the demos</a>', "platform demos link");
+assertExcludes(platformHtml, "sexiest", "retired DVC wording on the platform page");
+assertExcludes(platformHtml, "Small local models", "retired principles teaser on the platform page");
+assertExcludes(indexHtml, "sexiest", "retired DVC wording on the home page");
+assertExcludes(indexHtml, "first semester", "retired Maryville timing on the home page");
+assertExcludes(indexHtml, "Small local models", "retired principles teaser on the home page");
+assertExcludes(indexHtml, 'data-video-id="SjxGRh3G1JI"', "home page no longer embeds the demos");
 assertExcludes(platformHtml, "The architecture is the business case.", "architecture-led marketing copy");
 assertExcludes(platformHtml, "Commit history helps us find change", "commit-history marketing copy");
 assertExcludes(platformHtml, "detect-remediate-verify-rollback", "recovery-loop marketing copy");
@@ -530,7 +596,19 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
   assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
   assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
+  if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
+  assertIncludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
+  const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
+  if (!footerNav) throw new Error(`Missing footer navigation on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/evidence/"', `evidence library in footer on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/frames/"', `reliability frames in footer on ${label} page`);
+  assertIncludes(footerNav[0], "Claims and proof", `claims label in footer on ${label} page`);
+  assertIncludes(footerNav[0], "Principles from nature", `principles label in footer on ${label} page`);
+  assertExcludes(footerNav[0], "Operating Principles", `old principles label in footer on ${label} page`);
+  assertExcludes(footerNav[0], ">How it works<", `ambiguous how-it-works label in footer on ${label} page`);
 }
+assertIncludes(bastcareHome, 'href="/evidence/">Read the evidence library</a>', "evidence library link on the BastCare page");
 
 const approvedVisitPrivacyCopy = "When you request a summary, BastCare masks configured names in a separate copy of your transcript and sends it securely through Bast to an AI provider for processing.";
 assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
@@ -540,20 +618,25 @@ assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare beha
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
 assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
-const bastcareVersionTag = `BastCare <span data-bastcare-version>${bastcareReviews.app.version}</span> · Now available`;
-assertIncludes(bastcareHome, bastcareVersionTag, "BastCare App Store version in release hero");
-assertIncludes(indexHtml, bastcareVersionTag, "BastCare App Store version on Bast home");
-assertIncludes(bastcareHome, `<title>BastCare ${bastcareReviews.app.version} - Be in the room</title>`, "BastCare versioned page title");
-assertIncludes(bastcareHome, `"softwareVersion": "${bastcareReviews.app.version}"`, "BastCare structured-data version");
-assertIncludes(bastcareHome, "data-bastcare-release-notes-version=", "hand-approved BastCare release notes marker");
+assertIncludes(bastcareHome, "BastCare · Now available", "BastCare hero without a version number");
+assertIncludes(indexHtml, "BastCare · Now available", "BastCare kicker without a version number on Bast home");
+assertIncludes(bastcareHome, "<title>BastCare - Be in the room</title>", "BastCare page title without a version number");
+assertIncludes(bastcareHome, "What&rsquo;s new in BastCare", "BastCare release notes eyebrow");
+assertExcludes(bastcareHome, "softwareVersion", "BastCare structured data omits a version");
+assertExcludes(bastcareHome, "data-bastcare-version", "BastCare page does not print the App Store version");
+assertExcludes(bastcareHome, "data-bastcare-release-notes-version", "BastCare release notes omit a version marker");
+assertExcludes(indexHtml, "data-bastcare-version", "home page does not print the App Store version");
 for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]]) {
-  assertExcludes(contents, "1.0.10", `hardcoded BastCare 1.0.10 on ${label} page`);
   assertExcludes(contents, 'alt="BastCare 1.0.', `version-specific screenshot alt text on ${label} page`);
   assertExcludes(contents, 'alt="BastCare Build ', `build-specific screenshot alt text on ${label} page`);
-  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} out of 5 stars from`, `build-time BastCare rating on ${label} page`);
+  assertIncludes(contents, `${bastcareReviews.rating.average.toFixed(1)} on the App Store`, `build-time BastCare rating on ${label} page`);
+  assertExcludes(contents, `${bastcareReviews.rating.count} ratings`, `visible rating count on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
-assertIncludes(bastcareHome, "Use every feature for your first two hours of recorded visits", "BastCare free-use offer");
+assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
+assertExcludes(bastcareHome, "recorded hours", "BastCare hour limit");
+assertExcludes(bastcareHome, "No card required", "BastCare payment prompt");
+assertExcludes(bastcareHome, "BastCare Plus", "BastCare Plus on the product page");
 assertIncludes(bastcareHome, "See where a key point came from.", "BastCare source-lineage story");
 assertIncludes(bastcareHome, "How this summary was made", "BastCare source view");
 assertIncludes(bastcareHome, "Simplified Chinese", "BastCare summary language list");
@@ -576,13 +659,15 @@ if ((bastcareHome.match(/<video\b/g) || []).length !== 1) {
   }
 }
 // The same promo autoplays in the home hero (2026-10-26), with the same
-// responsive sources and a link to /bastcare/.
+// responsive sources. The hero has one download button; /bastcare/ is the
+// next section.
 if ((indexHtml.match(/<video\b/g) || []).length !== 1) {
   throw new Error("Expected exactly one video on the home page");
 }
 {
-  const homeVideo = indexHtml.match(/<section class="hero hero-with-promo"[\s\S]*?<figure class="hero-promo">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-promo-square\.mp4" type="video\/mp4" media="\(min-width: 901px\)">\s*<source src="\/assets\/bastcare\/media\/bastcare-promo\.mp4" type="video\/mp4">[\s\S]*?<\/video>\s*<figcaption><a href="\/bastcare\/">[\s\S]*?<\/figure>\s*<\/section>/);
-  if (!homeVideo) throw new Error("Missing BastCare promo video (square + portrait sources, /bastcare/ link) in the home hero");
+  const homeVideo = indexHtml.match(/<section class="hero home-hero"[\s\S]*?<figure class="hero-promo">\s*<video ([^>]*)>\s*<source src="\/assets\/bastcare\/media\/bastcare-promo-square\.mp4" type="video\/mp4" media="\(min-width: 901px\)">\s*<source src="\/assets\/bastcare\/media\/bastcare-promo\.mp4" type="video\/mp4">/);
+  if (!homeVideo) throw new Error("Missing BastCare promo video (square + portrait sources) in the home hero");
+  assertIncludes(indexHtml, 'href="/bastcare/"', "home page BastCare link");
   for (const attribute of ["autoplay", "muted", "loop", "playsinline", "controls", "data-reduced-motion-pause", 'poster="/assets/bastcare/media/bastcare-promo-poster.jpg"']) {
     assertIncludes(homeVideo[1], attribute, `home hero promo ${attribute}`);
   }
@@ -614,8 +699,10 @@ assertIncludes(bastcareHome, "Verified Australian App Store review", "featured A
 assertIncludes(bastcareHome, "Privacy and trust - so needed", "latest verified review fallback");
 assertIncludes(bastcareHome, "Loved the ease and accuracy", "BastCare verified review quote");
 assertIncludes(bastcareHome, "Verified App Store review", "BastCare review source attribution");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.count} ratings`, "BastCare App Store rating count fallback");
-assertIncludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count fallback");
+assertExcludes(bastcareHome, `${bastcareReviews.rating.writtenReviewCount} written reviews`, "BastCare written review count stays off the page");
+assertIncludes(siteJs, 'average + " on the App Store"', "App Store rating label without a count");
+assertExcludes(siteJs, "ratingCountLabel", "rating-count label helper");
+assertExcludes(siteJs, "written reviews", "written-review count label");
 assertIncludes(bastcareHome, "data-review-track", "BastCare App Store review carousel");
 assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate proof metrics");
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
@@ -655,11 +742,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
   assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
 }
 assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
-assertIncludes(bastcareTerms, "BastCare is free to download and includes the first two recorded hours", "current included-hours terms");
-// BastCare Plus is paused (Beth, 2026-10-13; 1.0.12 release notes).
-const plusPaused = "BastCare Plus is paused for now while we improve subscriptions";
-assertIncludes(faqHtmlForPlus, plusPaused, "FAQ BastCare Plus pause");
-assertIncludes(bastcareTerms, plusPaused, "terms BastCare Plus pause");
+assertIncludes(bastcareTerms, "<h2>7. Availability</h2>", "BastCare availability heading");
+assertIncludes(bastcareTerms, "BastCare is free to download.", "BastCare terms download line");
+assertExcludes(bastcareTerms, "BastCare Plus", "BastCare Plus in the terms");
+assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
+assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -686,6 +773,7 @@ assertIncludes(sitemapXml, "/demos/</loc>", "Demos sitemap route");
 
 // Demos page (decision 2026-10-12): one top-nav home for every demo; Lucid labeled Pilot.
 const demosHtml = await readFile(path.join(distDir, "demos/index.html"), "utf8");
+assertGlobalHeader(demosHtml, "demos");
 for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
   assertIncludes(demosHtml, `data-video-id="${videoId}"`, `demos page video ${videoId}`);
 }
@@ -693,14 +781,14 @@ assertIncludes(demosHtml, "data-demo-player", "demos page click-to-load player")
 assertIncludes(demosHtml, 'src="/assets/site.js?v=', "demos page player behavior");
 assertIncludes(demosHtml, 'href="/platform/demo/"', "demos page demo-guide link");
 assertIncludes(demosHtml, 'href="/assets/bastcare/media/bastcare-walkthrough-captioned.mp4"', "demos page BastCare captioned walkthrough link");
-assertIncludes(demosHtml, 'aria-current="page" href="/demos/"', "demos page current navigation");
+assertIncludes(demosHtml, 'href="/demos/"', "demos page link to itself");
 assertIncludes(indexHtml, 'href="/demos/"', "homepage link to the demos page");
-for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
-  assertIncludes(contents, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', `Pilot label on ${label} Lucid demo`);
-  assertIncludes(contents, "A pilot of Bast applied to Lucid Therapeutics&rsquo; patient information", `Lucid pilot wording on ${label} page`);
-  assertExcludes(contents, "pilot usage analytics", `superseded Lucid analytics wording on ${label} page`);
-  assertExcludes(contents, "production analytics", `production claim on ${label} demos`);
-}
+assertIncludes(demosHtml, '<span class="demo-pilot-label">Pilot</span> Lucid Therapeutics', "Pilot label on demos Lucid demo");
+assertIncludes(demosHtml, "A pilot of Bast applied to Lucid Therapeutics&rsquo; patient information", "Lucid pilot wording on demos page");
+assertExcludes(demosHtml, "pilot usage analytics", "superseded Lucid analytics wording on demos page");
+assertExcludes(demosHtml, "production analytics", "production claim on demos page");
+assertExcludes(indexHtml, "pilot usage analytics", "superseded Lucid analytics wording on home page");
+assertExcludes(indexHtml, "production analytics", "production claim on home demos");
 // Beth, 2026-10-12: the Pilot tag and card text carry the pilot status; no
 // louder page-level "not a production deployment" note.
 for (const [contents, label] of [[demosHtml, "demos"], [indexHtml, "home"]]) {
@@ -720,7 +808,7 @@ for (const route of ["architecture", "delivery", "evidence", "demo"]) {
 assertIncludes(sitemapXml, "/bastcare/</loc>", "BastCare home sitemap route");
 for (const route of [
   "faq/",
-  "team/",
+  "about/",
   "frames/",
   "frames/claim-level-source-grounding/",
   "frames/zero-tolerance-ai-output-architecture/",
@@ -754,8 +842,53 @@ assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
 assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disambiguation question");
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
-assertIncludes(teamHtml, "Thanh Lam", "team page CTO bio");
-assertIncludes(teamHtml, '"Person"', "team Person structured data");
+assertExcludes(sitemapXml, "/team/</loc>", "retired team URL stays out of the sitemap");
+assertIncludes(teamHtml, 'content="noindex, nofollow"', "team stub stays out of the index");
+assertIncludes(teamHtml, 'content="0; url=/about/#team"', "team stub redirects to the about team section");
+assertIncludes(teamHtml, 'href="/about/#team"', "team stub link to the about team section");
+assertExcludes(teamHtml, '"Person"', "team stub has no person schema");
+assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team stub");
+const aboutHtml = await readFile(path.join(distDir, "about/index.html"), "utf8");
+assertGlobalHeader(aboutHtml, "about");
+assertIncludes(aboutHtml, "How Bast got here.", "about page timeline heading");
+assertIncludes(aboutHtml, "October 2022", "about page incorporation year");
+assertIncludes(aboutHtml, "Bast AI is incorporated.", "about page incorporation");
+assertIncludes(aboutHtml, "Client pilots and the infrastructure build.", "about page 2023");
+assertIncludes(aboutHtml, "33 Python libraries, 13 APIs, and 19 pipelines", "about page developer tools");
+assertIncludes(aboutHtml, "Lurie Cancer Center", "about page Lurie Cancer Center");
+assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
+assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
+assertIncludes(aboutHtml, "nursing attrition was down 12%", "about page Maryville result");
+assertIncludes(aboutHtml, "BastCare did not exist then.", "about page Craig pilot is the platform");
+assertIncludes(aboutHtml, "2 of 5 patents were accepted.", "about page patents");
+assertIncludes(aboutHtml, "BastCare alpha released.", "about page BastCare alpha");
+assertIncludes(aboutHtml, "31 October 2026", "about page evidence library date");
+assertIncludes(aboutHtml, 'href="/evidence/"', "about page evidence library link");
+assertIncludes(aboutHtml, 'href="/pilot/"', "about page care-team pilots");
+assertExcludes(aboutHtml, "Milestones we can date", "retired timeline heading");
+assertExcludes(aboutHtml, "4 October 2022", "retired formation anniversary date");
+assertExcludes(aboutHtml, "MSU Denver", "MSU Denver stays off the timeline");
+assertExcludes(aboutHtml, "Metropolitan University", "Metropolitan University stays off the timeline");
+assertIncludes(aboutHtml, 'id="team"', "about page team section");
+assertIncludes(aboutHtml, '<p class="card-kicker">CEO</p>', "Beth Rudden title on the about page");
+assertIncludes(aboutHtml, "Thanh Lam", "about page CTO");
+assertIncludes(aboutHtml, "wider team of contributors", "about page contributor line");
+assertIncludes(aboutHtml, "Dave Snowden", "about page Cynefin attribution");
+assertIncludes(aboutHtml, "Confusion, also called disorder", "about page Cynefin center");
+assertIncludes(aboutHtml, "action must fit the nature of the situation", "about page use of Cynefin");
+assertIncludes(aboutHtml, '"Person"', "about page person schema");
+assertIncludes(aboutHtml, '"jobTitle": "CEO"', "Beth Rudden title in about schema");
+assertExcludes(aboutHtml, "CEO &amp; Chair", "retired Chair title on the about page");
+assertExcludes(aboutHtml, 'href="/team/"', "about page does not link to the team stub");
+assertIncludes(indexHtml, 'id="about"', "homepage about section");
+assertIncludes(indexHtml, 'href="/about/#team"', "homepage link to the team section");
+assertIncludes(indexHtml, 'href="/about/"', "homepage link to the story");
+assertExcludes(indexHtml, 'href="/team/"', "homepage does not link to the team stub");
+assertIncludes(indexHtml, '"jobTitle": "CEO"', "Beth Rudden title on the homepage");
+assertExcludes(indexHtml, "CEO &amp; Chair", "retired Chair title on the homepage");
+assertIncludes(llmsTxt, "/about/", "llms.txt About entry");
+assertExcludes(llmsTxt, "/team/", "llms.txt does not list the retired team URL");
+assertIncludes(indexHtml, 'href="/platform/"', "homepage platform link");
 assertIncludes(frameHtml, '"DefinedTerm"', "frame DefinedTerm structured data");
 assertIncludes(frameHtml, "Claim-Level Source Grounding", "frame page title copy");
 assertIncludes(bastcareHome, '"operatingSystem": "iOS"', "BastCare SoftwareApplication schema");
@@ -853,7 +986,7 @@ for (const file of files) {
     throw new Error(`Empty file: ${path.relative(root, file)}`);
   }
 
-  if (![".html", ".js", ".css", ".xml", ".txt"].includes(path.extname(file))) {
+  if (![".html", ".js", ".css", ".xml", ".txt", ".json"].includes(path.extname(file))) {
     continue;
   }
 
@@ -865,6 +998,24 @@ for (const file of files) {
   }
   if (path.extname(file) === ".html" && contents.includes('href="index.html')) {
     throw new Error(`Legacy index.html link found in ${path.relative(root, file)}`);
+  }
+  if (path.extname(file) === ".html" && contents.includes('href="/team/"')) {
+    throw new Error(`Link to retired /team/ page in ${path.relative(root, file)}`);
+  }
+  const rel = path.relative(distDir, file);
+  if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
+  if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
+      /\bBastCare Plus\b|\bsubscription\b|in-app purchase|recorded hours|priceCurrency|No card required/i.test(contents)) {
+    throw new Error(`BastCare pricing wording in ${rel}`);
+  }
+  if ([".html", ".txt"].includes(path.extname(file)) && /\b1\.0\.\d+\b/.test(contents)) {
+    throw new Error(`BastCare version number in site copy: ${rel}`);
+  }
+  if (contents.includes("Lurie Children")) {
+    throw new Error(`retired Lurie Children's name in ${rel}`);
+  }
+  if ([".html", ".txt"].includes(path.extname(file))) {
+    if (/Recording starts once|everyone agrees/i.test(contents)) throw new Error(`recording-gate wording in ${rel}`);
   }
   if (path.extname(file) === ".html") {
     for (const match of contents.matchAll(/href=["']([^"']+)["']/g)) {
@@ -894,11 +1045,42 @@ for (const file of files) {
 
 // /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
 // the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
-// counts, Craig Hospital claims, or source-tracing claims. The 2026-10-30 privacy
-// line below is the page copy. The one-pager PDF still has the older line and stays
-// unchanged. The consent sentence says BastCare asks before recording; do not
-// extend it to say recording requires, waits for, or starts only after consent.
+// counts, Craig Hospital claims, or source-tracing claims. The 2026-11-03 privacy
+// line below is the page copy and the one-pager PDF copy. It says BastCare asks
+// before recording; do not extend it to say recording requires, waits for, or
+// starts only after consent. No pilot agreement or BAA claim.
+function pdfShownText(buffer) {
+  const chunks = [buffer];
+  const source = buffer.toString("latin1");
+  for (const match of source.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)) {
+    try {
+      chunks.push(inflateSync(Buffer.from(match[1], "latin1")));
+    } catch {
+      // Image and other non-Flate streams are skipped.
+    }
+  }
+  const parts = [];
+  for (const chunk of chunks) {
+    const text = chunk.toString("latin1");
+    for (const hex of text.matchAll(/<([0-9A-Fa-f\s]+)>/g)) {
+      const compact = hex[1].replace(/\s+/g, "");
+      if (compact.length < 8 || compact.length % 2 !== 0) continue;
+      const decoded = Buffer.from(compact, "hex").toString("latin1");
+      if (/[A-Za-z]{4}/.test(decoded)) parts.push(decoded);
+    }
+  }
+  return parts.join(" ").replace(/\s+/g, " ").replace(/[’‘]/g, "'");
+}
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
+assertGlobalHeader(pilotHtml, "pilot");
+assertIncludes(pilotHtml, "For care teams and health systems", "pilot audience");
+assertExcludes(pilotHtml, "healthcare nonprofit", "retired pilot audience");
+const notFoundHtml = await readFile(path.join(distDir, "404.html"), "utf8");
+assertIncludes(notFoundHtml, 'href="/assets/styles.css?v=', "absolute 404 stylesheet");
+assertIncludes(notFoundHtml, 'src="/assets/analytics-consent.js?v=', "absolute 404 analytics script");
+assertIncludes(notFoundHtml, 'src="/assets/bast-logo.svg"', "absolute 404 logo");
+assertExcludes(notFoundHtml, 'href="assets/', "relative 404 asset link");
+assertExcludes(notFoundHtml, 'src="assets/', "relative 404 asset script");
 const pilotBookHref = 'href="https://bookings.cloud.microsoft/book/MeetwithBethRudden@bast.ai/?ismsaljsauthenabled"';
 assertIncludes(pilotHtml, '<section id="book" class="pilot-hero"', "pilot #book hero anchor");
 const pilotHeroCta = pilotHtml.indexOf(`<a class="pilot-cta" ${pilotBookHref}>Book a 30-minute call</a>`);
@@ -911,9 +1093,18 @@ assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot 
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
-assertIncludes(pilotHtml, "<p>Audio is deleted once the transcript is saved. BastCare asks for consent before recording. With each person&rsquo;s consent, transcripts are kept in your organization&rsquo;s own secure database, so your team can learn from them. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording");
-assertIncludes(pilotHtml, "CEO &amp; Chair", "pilot Beth Rudden title");
-assertExcludes(pilotHtml, "Founder + CEO", "old Beth Rudden title on the pilot page");
+const pilotPrivacy = "Audio is deleted once the transcript is saved. BastCare asks for consent before recording. Participants choose with a toggle whether to keep their transcripts in your organization's own secure database, so your team can learn from them. Summaries belong to the user. Your organization owns its data.";
+assertIncludes(pilotHtml, `<p>${pilotPrivacy.replaceAll("'", "&rsquo;")}</p>`, "pilot privacy wording");
+assertIncludes(pilotHtml, '<a href="/bastcare/privacy/">BastCare app privacy policy</a>', "pilot app privacy policy link");
+assertExcludes(pilotHtml, "Privacy policy</a>", "old pilot privacy link label");
+assertExcludes(pilotHtml, "servers don&rsquo;t save the transcript", "retired pilot transcript claim");
+assertExcludes(pilotHtml, "servers don't save the transcript", "retired pilot transcript claim");
+assertExcludes(pilotHtml, "pilot agreement", "pilot agreement claim");
+assertExcludes(pilotHtml, "BAA", "BAA claim");
+const pilotPdfText = pdfShownText(await readFile(path.join(distDir, "assets/bastcare-pilot-one-pager.pdf")));
+assertIncludes(pilotPdfText, pilotPrivacy, "one-pager privacy wording");
+assertExcludes(pilotPdfText, "servers don't save the transcript", "retired one-pager transcript claim");
+assertExcludes(pilotPdfText, "summary is saved", "retired one-pager audio claim");
 assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
@@ -945,6 +1136,207 @@ for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcareP
   for (const banned of [/\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i]) {
     if (banned.test(contents)) throw new Error(`${label} contains banned wording: ${banned}`);
   }
+}
+
+// /evidence/ (Beth, 2026-10-31): public preview, confirmed-token library,
+// no published library file, one sign-up origin, no Brevo API host or key.
+{
+  const evidenceSiteUrl = process.env.SITE_URL || "https://www.bast.ai";
+  const evidenceSiteEnv = process.env.SITE_ENV || "local";
+  const evidenceRobots = process.env.ROBOTS_META || (evidenceSiteEnv === "production" ? "index, follow" : "noindex, nofollow");
+  assertIncludes(sitemapXml, `${evidenceSiteUrl}/evidence/</loc>`, "evidence library sitemap route");
+  assertIncludes(llmsTxt, `${evidenceSiteUrl}/evidence/`, "evidence library in llms.txt");
+  assertIncludes(evidenceHtml, `<meta name="robots" content="${evidenceRobots}">`, "evidence robots follow the build setting");
+  if ((evidenceHtml.match(/<meta name="robots"/g) || []).length !== 1) {
+    throw new Error("evidence page must have exactly one robots meta");
+  }
+  assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
+  assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
+  assertIncludes(evidenceHtml, "Last updated", "evidence last-updated date");
+  assertIncludes(evidenceHtml, "Refreshed weekly", "evidence weekly refresh note");
+  assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
+  assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
+  assertIncludes(evidenceHtml, "Send me Bast updates", "updates checkbox label");
+  assertIncludes(evidenceHtml, 'name="website"', "honeypot field");
+  assertIncludes(evidenceHtml, 'class="evlib-hp"', "honeypot hidden from people");
+  assertIncludes(evidenceJs, "updates", "updates flag in the sign-up body");
+  assertIncludes(evidenceJs, "history.replaceState", "confirmation code removed from the address bar");
+  assertIncludes(evidenceJs, 'referrerPolicy: "no-referrer"', "sign-up fetch sends no referrer");
+  assertIncludes(evidenceJs, "Authorization", "library request sends the confirmation code");
+  assertIncludes(evidenceJs, "This link expired", "expired-link message");
+  assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
+  assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
+  assertIncludes(privacyHtml, 'Contact form messages go from Bast\'s own server to Bast\'s inbox by email, sent through Brevo (Sendinblue SAS) under <a href="https://www.brevo.com/legal/privacypolicy/">Brevo\'s privacy policy</a>.', "contact form privacy sentence");
+  assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
+  assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
+  assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
+  assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
+assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
+  const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
+  if (!updatesInput) throw new Error("Missing updates checkbox");
+  if (/\bchecked\b/.test(updatesInput[0])) throw new Error("updates checkbox must be unticked by default");
+  assertExcludes(evidenceHtml, "fetch(", "fetch in evidence HTML");
+  assertExcludes(evidenceHtml, "library.json", "public library file on the evidence page");
+  assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
+  assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
+  assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
+  assertIncludes(evidenceJs, "This page does not save the confirmation link.", "confirmation-link note stays on the unlocked library");
+  assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
+  assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
+  assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
+  assertExcludes(evidenceJs, "libraryData.schemaVersion", "library schema is not shown");
+  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 1) {
+    throw new Error("evidence script must call fetch exactly once");
+  }
+  const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];
+  const evidenceOrigins = new Set(evidenceUrls.map((url) => {
+    try { return new URL(url).origin; } catch { return "invalid"; }
+  }));
+  if (evidenceOrigins.size !== 1 || !evidenceOrigins.has("https://forms.aws.bast.ai")) {
+    throw new Error(`evidence script must use exactly one fetch origin https://forms.aws.bast.ai; found ${[...evidenceOrigins].join(", ") || "none"}`);
+  }
+  const previewIds = new Set(["A1", "A19", "A5", "B2", "B8"]);
+  const foundIds = new Set();
+  for (const match of `${evidenceHtml}\n${evidenceJs}\n${evidenceCss}`.matchAll(/\b([A-C]\d+)\b/g)) {
+    foundIds.add(match[1]);
+  }
+  for (const id of foundIds) {
+    if (!previewIds.has(id)) throw new Error(`Study id ${id} is outside the five public previews`);
+  }
+  for (const id of previewIds) {
+    assertIncludes(evidenceHtml, `id="${id}"`, `evidence preview card ${id}`);
+  }
+  const previews = [
+    ["A1", ["94.9%", "34.5%"], ["https://doi.org/10.1038/s41591-025-04074-y"]],
+    ["A19", ["48%", "17%", "127%"], ["https://pubmed.ncbi.nlm.nih.gov/40560616/"]],
+    ["A5", ["19 percentage points", "84.5%", "70.6%", "12.2%", "25.1%"], [
+      "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf",
+      "https://doi.org/10.1287/orsc.2025.21838",
+    ]],
+    ["B2", ["557 days", "28.3%"], ["https://pubmed.ncbi.nlm.nih.gov/17101889/"]],
+    ["B8", ["25% at 90 days"], ["https://pubmed.ncbi.nlm.nih.gov/28369687/"]],
+  ];
+  for (const [id, numbers, links] of previews) {
+    for (const number of numbers) assertIncludes(evidenceHtml, number, `${id} preview number ${number}`);
+    for (const link of links) assertIncludes(evidenceHtml, `href="${link}"`, `${id} preview source link`);
+  }
+  for (const [contents, label] of [[evidenceHtml, "evidence page"], [evidenceJs, "evidence script"]]) {
+    for (const banned of ["analytics-consent", "googletagmanager", "gtag(", "bastTrack", "document.cookie", "localStorage", "sessionStorage", "sendBeacon", "formspree", "hubspot", "mailchimp", "XMLHttpRequest"]) {
+      assertExcludes(contents, banned, `tracking or storage on ${label}: ${banned}`);
+    }
+  }
+  const evidenceCopy = `${evidenceHtml}\n${evidenceJs}\n${evidenceCss}`;
+  for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i, /40% higher quality/i, /43% vs 17%/]) {
+    if (banned.test(evidenceCopy)) throw new Error(`evidence library contains banned wording: ${banned}`);
+  }
+  function assertNoSecrets(contents, label) {
+    if (/api\.brevo\.com|api\.sendinblue\.com/i.test(contents)) {
+      throw new Error(`Brevo API host in ${label}`);
+    }
+    if (/xkeysib-[A-Za-z0-9]|xsmtpsib-[A-Za-z0-9]/i.test(contents)) {
+      throw new Error(`key-shaped string in ${label}`);
+    }
+    if (/\b(?:api[_-]?key|client[_-]?secret|secret[_-]?key)\b\s*[:=]\s*['"][A-Za-z0-9+/_=-]{12,}/i.test(contents)) {
+      throw new Error(`key-shaped string in ${label}`);
+    }
+  }
+  for (const file of files) {
+    if (path.basename(file) === "library.json") {
+      throw new Error(`dist must not contain library.json (${path.relative(distDir, file)})`);
+    }
+    if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
+    assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
+  }
+}
+
+// Marketing confidence: visible rating counts and hedge words in built HTML
+// text (including titles, descriptions, alt text, and labels) and llms.txt.
+// JSON-LD stays out of this scan so ratingCount can remain there.
+const marketingAllowlist = JSON.parse(await readFile(path.join(root, "scripts/marketing-allowlist.json"), "utf8"));
+const hedgePatterns = [
+  ["just", /\bjust\b/gi],
+  ["only", /\bonly\b/gi],
+  ["small", /\bsmall\b/gi],
+  ["early", /\bearly\b/gi],
+  ["first", /\bfirst\b/gi],
+  ["still", /\bstill\b/gi],
+  ["so far", /\bso far\b/gi],
+  ["hope", /\bhope\b/gi],
+  ["for now", /\bfor now\b/gi],
+  ["currently", /\bcurrently\b/gi],
+  ["temporarily", /\btemporarily\b/gi],
+  ["coming soon", /\bcoming soon\b/gi],
+  ["positioned for", /\bpositioned for\b/gi],
+];
+const ratingCountPatterns = [
+  ["from N ratings", /from\s+\d+\s+ratings?\b/gi],
+  ["N ratings", /\b\d+\s+ratings?\b/gi],
+];
+
+function decodePublicText(value) {
+  return value
+    .replace(/&rsquo;|&#8217;|&rsquo;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&#\d+;|&[a-z]+;/gi, " ");
+}
+
+function publicCopyText(html) {
+  const bits = [];
+  for (const tag of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const name = tag[0].match(/(?:name|property)="([^"]*)"/i)?.[1] || "";
+    const content = tag[0].match(/content="([^"]*)"/i)?.[1] || "";
+    if (["description", "og:description", "twitter:description"].includes(name)) bits.push(content);
+  }
+  const title = html.match(/<title>([^<]*)<\/title>/i);
+  if (title) bits.push(title[1]);
+  for (const attr of html.matchAll(/\b(?:alt|aria-label)="([^"]*)"/gi)) bits.push(attr[1]);
+  const body = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ");
+  bits.push(body);
+  return decodePublicText(bits.join("\n")).replace(/\s+/g, " ");
+}
+
+function allowlistCovers(rel, text, index, length) {
+  return marketingAllowlist.some((entry) => {
+    if (entry.file !== rel) return false;
+    let from = 0;
+    while (from <= text.length) {
+      const at = text.indexOf(entry.phrase, from);
+      if (at === -1) return false;
+      const end = at + entry.phrase.length;
+      if (index >= at && index + length <= end) return true;
+      from = at + 1;
+    }
+    return false;
+  });
+}
+
+const confidenceFailures = [];
+for (const file of files) {
+  const ext = path.extname(file);
+  if (ext !== ".html" && path.basename(file) !== "llms.txt") continue;
+  const rel = path.relative(distDir, file);
+  const raw = await readFile(file, "utf8");
+  const text = ext === ".txt" ? raw.replace(/\s+/g, " ") : publicCopyText(raw);
+  const patterns = [
+    ...hedgePatterns.map(([label, re]) => [label, re]),
+    ...ratingCountPatterns,
+  ];
+  for (const [label, re] of patterns) {
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(text))) {
+      if (allowlistCovers(rel, text, match.index, match[0].length)) continue;
+      const snippet = text.slice(Math.max(0, match.index - 40), match.index + match[0].length + 40).trim();
+      confidenceFailures.push(`${rel}: ${label} in "${snippet}"`);
+    }
+  }
+}
+if (confidenceFailures.length) {
+  throw new Error(`Marketing confidence check failed:\n${confidenceFailures.slice(0, 30).join("\n")}`);
 }
 
 console.log("Static site checks passed");

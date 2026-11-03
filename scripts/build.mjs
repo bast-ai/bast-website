@@ -17,9 +17,9 @@ const assetVersion = (
   Date.now().toString(36)
 ).replace(/[^a-zA-Z0-9._-]/g, "").slice(0, 12) || "local";
 
-// BastCare App Store facts come from the snapshot the deploy job refreshes
-// from Apple just before this build (scripts/collect-bastcare-reviews.py), so
-// no-JS readers and crawlers see the current version and rating in the HTML.
+// BastCare App Store ratings come from the snapshot the deploy job refreshes
+// from Apple just before this build (scripts/collect-bastcare-reviews.py).
+// The snapshot version stays available to the review queue and is not printed.
 const bastcareSnapshot = JSON.parse(
   await readFile(path.join(srcDir, "assets/data/bastcare-reviews.json"), "utf8"),
 );
@@ -37,7 +37,6 @@ const countLabel = (count, singular, plural) =>
   `${count.toLocaleString("en-US")} ${count === 1 ? singular : plural}`;
 
 const replacements = new Map([
-  ["__BASTCARE_VERSION__", bastcareVersion],
   ["__BASTCARE_RATING_AVERAGE__", bastcareRating.average.toFixed(1)],
   ["__BASTCARE_RATING_COUNT_LABEL__", countLabel(bastcareRating.count, "rating", "ratings")],
   ["__BASTCARE_WRITTEN_REVIEW_COUNT_LABEL__",
