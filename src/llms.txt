@@ -45,7 +45,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 - Legal entity: Bast, Inc., Denver, CO. Brand name: Bast AI.
 - Founded and led by Beth Rudden (CEO); Thanh Lam is CTO.
-- 5 patents filed covering answer control, trace, and accountable AI runtime.
+- 5 patents covering answer control, trace, and accountable AI runtime.
 - Awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the Colorado Office of Economic Development and International Trade (OEDIT), announced May 16, 2024.
 - Bast AI is not affiliated with Vast.ai (a GPU cloud marketplace).
 
