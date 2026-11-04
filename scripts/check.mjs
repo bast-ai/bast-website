@@ -1,4 +1,5 @@
 import { access, readFile, readdir, stat } from "node:fs/promises";
+import { inflateSync } from "node:zlib";
 import path from "node:path";
 
 const root = process.cwd();
@@ -1044,8 +1045,32 @@ for (const file of files) {
 
 // /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
 // the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
-// counts, Craig Hospital claims, or source-tracing claims; privacy wording
-// matches the one-pager PDF verbatim.
+// counts, Craig Hospital claims, or source-tracing claims. The 2026-11-03 privacy
+// line below is the page copy and the one-pager PDF copy. It says BastCare asks
+// before recording; do not extend it to say recording requires, waits for, or
+// starts only after consent. No pilot agreement or BAA claim.
+function pdfShownText(buffer) {
+  const chunks = [buffer];
+  const source = buffer.toString("latin1");
+  for (const match of source.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)) {
+    try {
+      chunks.push(inflateSync(Buffer.from(match[1], "latin1")));
+    } catch {
+      // Image and other non-Flate streams are skipped.
+    }
+  }
+  const parts = [];
+  for (const chunk of chunks) {
+    const text = chunk.toString("latin1");
+    for (const hex of text.matchAll(/<([0-9A-Fa-f\s]+)>/g)) {
+      const compact = hex[1].replace(/\s+/g, "");
+      if (compact.length < 8 || compact.length % 2 !== 0) continue;
+      const decoded = Buffer.from(compact, "hex").toString("latin1");
+      if (/[A-Za-z]{4}/.test(decoded)) parts.push(decoded);
+    }
+  }
+  return parts.join(" ").replace(/\s+/g, " ").replace(/[’‘]/g, "'");
+}
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
 assertGlobalHeader(pilotHtml, "pilot");
 assertIncludes(pilotHtml, "For care teams and health systems", "pilot audience");
@@ -1068,7 +1093,18 @@ assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot 
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
-assertIncludes(pilotHtml, "<p>Audio is deleted once the summary is saved. Bast&rsquo;s servers don&rsquo;t save the transcript. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording matches the one-pager PDF");
+const pilotPrivacy = "Audio is deleted once the transcript is saved. BastCare asks for consent before recording. Participants choose with a toggle whether to keep their transcripts in your organization's own secure database, so your team can learn from them. Summaries belong to the user. Your organization owns its data.";
+assertIncludes(pilotHtml, `<p>${pilotPrivacy.replaceAll("'", "&rsquo;")}</p>`, "pilot privacy wording");
+assertIncludes(pilotHtml, '<a href="/bastcare/privacy/">BastCare app privacy policy</a>', "pilot app privacy policy link");
+assertExcludes(pilotHtml, "Privacy policy</a>", "old pilot privacy link label");
+assertExcludes(pilotHtml, "servers don&rsquo;t save the transcript", "retired pilot transcript claim");
+assertExcludes(pilotHtml, "servers don't save the transcript", "retired pilot transcript claim");
+assertExcludes(pilotHtml, "pilot agreement", "pilot agreement claim");
+assertExcludes(pilotHtml, "BAA", "BAA claim");
+const pilotPdfText = pdfShownText(await readFile(path.join(distDir, "assets/bastcare-pilot-one-pager.pdf")));
+assertIncludes(pilotPdfText, pilotPrivacy, "one-pager privacy wording");
+assertExcludes(pilotPdfText, "servers don't save the transcript", "retired one-pager transcript claim");
+assertExcludes(pilotPdfText, "summary is saved", "retired one-pager audio claim");
 assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
