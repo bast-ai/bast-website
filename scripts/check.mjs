@@ -263,14 +263,15 @@ function assertGlobalHeader(contents, label) {
   if (primaryLinkCount !== 6) {
     throw new Error(`Expected exactly six primary links on ${label} page; found ${primaryLinkCount}`);
   }
-  for (const [href, text] of [
+  const NAV_LINKS = [
     ["/bastcare/", "BastCare"],
-    ["/pilot/", "For care teams"],
+    ["/pilot/", "Founding partners"],
     ["/evidence/", "Evidence library"],
     ["/platform/", "Platform"],
     ["/about/", "About"],
     ["https://apps.apple.com/us/app/id6789669565?eventid=6830210433", "Download BastCare"],
-  ]) {
+  ];
+  for (const [href, text] of NAV_LINKS) {
     assertIncludes(primaryNav, `href="${href}"`, `${text} primary link on ${label} page`);
     assertIncludes(primaryNav, text, `${text} primary label on ${label} page`);
   }
@@ -1228,6 +1229,17 @@ for (const file of files) {
         throw new Error(`${hasMedicalFooter ? "Unexpected" : "Missing"} medical-device footer line in ${rel}`);
       }
     }
+    if (contents.includes('class="footer-nav"')) {
+      if (!contents.includes('<p class="footer-head">Founding partners</p>')) {
+        throw new Error(`Missing Founding partners footer column in ${rel}`);
+      }
+      if (!contents.includes('href="/pilot/#book">Start here</a>')) {
+        throw new Error(`Missing Start here footer link in ${rel}`);
+      }
+      if (contents.includes('<p class="footer-head">Care teams</p>') || contents.includes("Pilot one-pager (PDF)")) {
+        throw new Error(`Retired care-teams footer label in ${rel}`);
+      }
+    }
   }
   if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
   if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
@@ -1269,13 +1281,22 @@ for (const file of files) {
   }
 }
 
-// /pilot/ (2026-10-22): QR-code page for nonprofit pilots. The booking CTA is
-// the first action (#book, the QR target, is the hero that holds it); no prices, pilot length, license
-// counts, Craig Hospital claims, or source-tracing claims; privacy wording
-// matches the one-pager PDF verbatim.
+// /pilot/ (2026-11-04): founding-partners teaser. QR still lands on #book.
+// The page answers why this differs from the chart, and what vault analysis
+// returns. No prices, seat or week counts, Craig Hospital claims, or the
+// words trace, traces, traced, or tracing. The consumer audio-deleted line
+// stays on /bastcare/privacy/.
 const pilotHtml = await readFile(path.join(distDir, "pilot/index.html"), "utf8");
 assertGlobalHeader(pilotHtml, "pilot");
-assertIncludes(pilotHtml, "For care teams and health systems", "pilot audience");
+{
+  const audience = pilotHtml.match(/class="pilot-audience">([\s\S]*?)<\/p>/);
+  if (!audience) throw new Error("missing pilot audience");
+  const audienceText = audience[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (audienceText !== "Founding partners (hospitals, clinics and senior living)") {
+    throw new Error(`pilot audience is "${audienceText}"`);
+  }
+}
+assertExcludes(pilotHtml, "For care teams and health systems", "retired pilot audience");
 assertExcludes(pilotHtml, "healthcare nonprofit", "retired pilot audience");
 const notFoundHtml = await readFile(path.join(distDir, "404.html"), "utf8");
 assertIncludes(notFoundHtml, 'href="/assets/styles.css?v=', "absolute 404 stylesheet");
@@ -1291,11 +1312,30 @@ if (pilotHeroCta < pilotHtml.indexOf('id="book"') || pilotHeroCta > pilotHtml.in
 }
 if (pilotHtml.split(pilotBookHref).length - 1 < 2) throw new Error("pilot page needs a repeated booking CTA");
 assertIncludes(pilotHtml, `href="${bastcareEventUrl}"`, "pilot App Store link");
-assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot one-pager download");
+assertExcludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot page does not feature the one-pager");
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
-assertIncludes(pilotHtml, "<p>Audio is deleted once the summary is saved. Bast&rsquo;s servers don&rsquo;t save the transcript. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording matches the one-pager PDF");
+assertExcludes(pilotHtml, "Audio is deleted once the summary is saved.", "consumer privacy line stays off the pilot page");
+assertIncludes(pilotHtml, "Why this is different from the chart", "chart-vs-transcripts section");
+assertIncludes(pilotHtml, "My mom told her doctor five times she didn", "Beth chart quote");
+assertIncludes(pilotHtml, "<cite>Beth Rudden</cite>", "Beth attribution");
+assertIncludes(pilotHtml, "Unasked questions", "unasked-questions point");
+assertIncludes(pilotHtml, "One relative carries it", "one-relative point");
+assertIncludes(pilotHtml, "The chart records the care team", "chart-version point");
+assertIncludes(pilotHtml, "What you get from vault analysis", "vault analysis section");
+assertIncludes(pilotHtml, "opts in to share", "consent step");
+assertIncludes(pilotHtml, "stays on their phone", "phone-stays step");
+assertIncludes(pilotHtml, "under a BAA", "vault BAA step");
+assertIncludes(pilotHtml, "with your permission", "permission step");
+assertIncludes(pilotHtml, "What people ask for most", "report: asks");
+assertIncludes(pilotHtml, "Where follow-up breaks", "report: follow-up");
+assertIncludes(pilotHtml, "What families carry at home", "report: home");
+assertIncludes(pilotHtml, "your team can act on", "report: act");
+assertIncludes(pilotHtml, "map to the words spoken", "report maps to spoken words");
+assertIncludes(pilotHtml, "Your EHR tells you what was charted. The transcripts tell you what was said.", "vault closer");
+assertIncludes(pilotHtml, 'href="/bastcare/privacy/"', "pilot links to the privacy policy");
+assertIncludes(pilotHtml, ">Start here</h2>", "pilot end heading");
 assertExcludes(pilotHtml, "303-717-6099", "pilot phone number");
 assertExcludes(pilotHtml, "tel:+13037176099", "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
