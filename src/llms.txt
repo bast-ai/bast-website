@@ -10,7 +10,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Key Pages
 
-- [Bast AI Homepage](__SITE_URL__/): BastCare for patients and caregivers, pilots for care teams and health systems, and the path to the platform.
+- [Bast AI Homepage](__SITE_URL__/): BastCare for patients and caregivers, client stories, and the platform at a glance.
 - [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
@@ -51,8 +51,7 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Contact & Social
 
-- Contact: beth@bast.ai (Beth Rudden, CEO)
-- Text: +1 303-717-6099
+- Contact: beth@bast.ai (Beth Rudden, CEO). The homepage has a contact form.
 - [LinkedIn](https://www.linkedin.com/company/bast-ai/)
 - [Crunchbase](https://www.crunchbase.com/organization/bast-ai)
 - [GitHub](https://github.com/bast-ai)
