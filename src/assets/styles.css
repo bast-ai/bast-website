@@ -4959,6 +4959,66 @@ h1 span {
   border-left: 3px solid var(--accent);
 }
 
+.about-manifesto h1 {
+  max-width: 12ch;
+  margin: 0.45rem 0 1rem;
+  font-size: clamp(2.7rem, 6.5vw, 4.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.about-manifesto .lede {
+  max-width: 38rem;
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+.about-manifesto .hero-actions {
+  margin: 1.35rem 0 1.75rem;
+}
+
+.about-manifesto .manifesto-art {
+  margin-bottom: 0;
+}
+
+.knowledge-principles {
+  list-style: none;
+  margin: 1.75rem 0 1.25rem;
+  padding: 0;
+  counter-reset: knowledge;
+}
+
+.knowledge-principles li {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0.75rem 1rem;
+  margin: 0;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.knowledge-principles li::before {
+  counter-increment: knowledge;
+  content: counter(knowledge, decimal-leading-zero);
+  color: var(--accent-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding-top: 0.2rem;
+}
+
+.knowledge-principles h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.28;
+}
+
+.knowledge-principles p {
+  margin: 0;
+}
+
 .about-cta .hero-actions {
   margin-top: 1rem;
 }
