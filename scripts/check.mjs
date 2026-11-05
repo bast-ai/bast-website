@@ -461,7 +461,8 @@ assertIncludes(platformHtml, "Claims and proof", "platform evidence register lab
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
 assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
 assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
-assertIncludes(indexHtml, "2 of 5 patents accepted", "home patents figure");
+assertIncludes(indexHtml, "and 5 patents.", "home patents figure");
+assertExcludes(indexHtml, "2 of 5", "retired 2 of 5 patent count on the home page");
 assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
 assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
 assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
@@ -859,7 +860,17 @@ assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
 assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
 assertIncludes(aboutHtml, "nursing attrition was down 12%", "about page Maryville result");
 assertIncludes(aboutHtml, "BastCare did not exist then.", "about page Craig pilot is the platform");
-assertIncludes(aboutHtml, "2 of 5 patents were accepted.", "about page patents");
+assertIncludes(aboutHtml, "Bast has 5 patents.", "about page patents");
+assertExcludes(aboutHtml, "2 of 5", "retired 2 of 5 patent count on the about page");
+assertIncludes(faqHtml, "Bast has 5 patents.", "FAQ patents answer");
+assertExcludes(faqHtml, "patents filed", "FAQ patent filing qualifier");
+assertExcludes(faqHtml, "2 of 5", "retired 2 of 5 patent count in the FAQ");
+assertIncludes(llmsTxt, "- 5 patents covering", "llms.txt patents fact");
+assertExcludes(llmsTxt, "patents filed", "llms.txt patent filing qualifier");
+assertExcludes(llmsTxt, "2 of 5", "retired 2 of 5 patent count in llms.txt");
+assertIncludes(investorsHtml, ">5 patents<", "investors patents figure");
+assertExcludes(investorsHtml, "2 of 5", "retired 2 of 5 patent count on the investors page");
+assertExcludes(investorsHtml, "is filed", "investors patent filing qualifier");
 assertIncludes(aboutHtml, "BastCare alpha released.", "about page BastCare alpha");
 assertIncludes(aboutHtml, "31 October 2026", "about page evidence library date");
 assertIncludes(aboutHtml, 'href="/evidence/"', "about page evidence library link");
@@ -983,6 +994,21 @@ for (const file of files) {
   const { size } = await stat(file);
   if (size === 0) {
     throw new Error(`Empty file: ${path.relative(root, file)}`);
+  }
+
+  // Patent count (Beth Rudden, 2026-11-03): "5 patents", with no granted,
+  // accepted, issued, pending, or filed count. "Review 2 of 5" is the
+  // BastCare carousel position, not a patent claim.
+  const patentExt = path.extname(file).toLowerCase();
+  if ([".html", ".js", ".css", ".xml", ".txt", ".json", ".pdf", ".md"].includes(patentExt)) {
+    const patentText = (await readFile(file)).toString("latin1").replaceAll("Review 2 of 5", "Review");
+    if (patentText.includes("2 of 5")) {
+      throw new Error(`Unexpected "2 of 5" in ${path.relative(root, file)}`);
+    }
+    const patentQualifier = patentText.match(/\bpatents?\s+(?:were\s+)?(?:filed|accepted|granted|issued|pending)\b/i);
+    if (patentQualifier) {
+      throw new Error(`Unexpected patent qualifier "${patentQualifier[0]}" in ${path.relative(root, file)}`);
+    }
   }
 
   if (![".html", ".js", ".css", ".xml", ".txt", ".json"].includes(path.extname(file))) {
