@@ -42,6 +42,13 @@ shows production totals.
 - Turn off the old laptop/Duplo cron. `scripts/run-bastcare-metrics.sh`
   remains for a manual run. The env file stays outside this repository.
 
+## Update (2026-11-05)
+
+Cadence is now four times a day, and this workflow no longer dispatches
+Deploy. The bot identity and the rule against weakening branch protection are
+unchanged. See
+[2026-11-05-actions-cadence.md](./2026-11-05-actions-cadence.md).
+
 ## What this does not change
 
 - The public URL and the JSON shape.

@@ -39,15 +39,16 @@ Do not reuse the Beth Rudden site measurement id (`G-FL8JCB0PXZ`);
 
 `src/assets/data/bastcare-metrics.json` is served at
 `https://www.bast.ai/assets/data/bastcare-metrics.json`.
-`.github/workflows/bastcare-metrics.yml` refreshes it hourly at minute 17
-from production CareLoop and commits the file when the totals change. The
-API key is the repository secret `BASTCARE_METRICS_API_KEY`. It is not stored
-in this repo.
+`.github/workflows/bastcare-metrics.yml` refreshes it four times a day
+(`0 */6 * * *`) from production CareLoop and commits the file when the totals
+change. The API key is the repository secret `BASTCARE_METRICS_API_KEY`. It is
+not stored in this repo. The job does not dispatch Deploy.
 
-A push from that job does not start Deploy to GitHub Pages by itself, because
-pushes made with `GITHUB_TOKEN` do not trigger other workflows. After a
-commit, the metrics workflow dispatches this deploy workflow on `main`.
+A push made with `GITHUB_TOKEN` does not start other workflows, and this job
+still uses that token. `deploy.yml` publishes Pages on a push to `main` from
+any other token, and on manual `workflow_dispatch`. There is no scheduled
+Deploy. The metrics file reaches www.bast.ai on the next one of those runs.
 
 Turn off the old laptop/Duplo cron that ran `scripts/run-bastcare-metrics.sh`.
 That script remains for a manual run. See
-[decisions/2026-11-02-bastcare-metrics-github-actions.md](./decisions/2026-11-02-bastcare-metrics-github-actions.md).
+[decisions/2026-11-05-actions-cadence.md](./decisions/2026-11-05-actions-cadence.md).
