@@ -32,6 +32,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # The next step merges main, which writes a commit. Identity must be
+      # set before that, and before the later queue commit.
+      - name: Set the Actions committer identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Start from the open queue branch, if any
         run: |
           if git ls-remote --exit-code --heads origin "$QUEUE_BRANCH" >/dev/null; then
@@ -56,7 +63,7 @@ jobs:
             exit 0
           fi
           git config user.name "github-actions[bot]"
-          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/bastcare-reviews/pending.json
           git diff --cached --quiet || git commit -m "chore: queue new BastCare App Store reviews for approval"
           git push origin "HEAD:$QUEUE_BRANCH"
