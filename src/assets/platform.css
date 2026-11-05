@@ -204,6 +204,14 @@
   gap: clamp(2rem, 5vw, 4rem);
 }
 
+.platform-glance .hero-actions {
+  margin-top: 0.25rem;
+}
+
+.platform-glance .glance-wrap {
+  margin-top: 0;
+}
+
 .platform-section-heading {
   max-width: 780px;
 }

@@ -316,8 +316,12 @@ const requiredHomepageSnippets = [
     needle: 'href="/evidence/">Read the evidence library</a>',
   },
   {
-    label: "homepage platform glance",
-    needle: "Platform at a glance",
+    label: "homepage console",
+    needle: "Questions and answers, kept.",
+  },
+  {
+    label: "homepage MCP heading",
+    needle: "Agents and tools run on Bast.",
   },
   {
     label: "dedicated Bast Platform homepage link",
@@ -437,6 +441,14 @@ const replacedHomepageSnippets = [
     label: "homepage Text us action",
     needle: "Text us",
   },
+  {
+    label: "homepage platform glance moved to the platform page",
+    needle: "Platform at a glance",
+  },
+  {
+    label: "homepage squished MCP line",
+    needle: "Agents call tools over MCP.",
+  },
 ];
 
 for (const { needle, label } of requiredHomepageSnippets) {
@@ -516,13 +528,21 @@ assertExcludes(platformHtml, "Claims and proof", "claims label on the platform o
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
 assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
 assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
-assertIncludes(indexHtml, "Bast has 5 patents.", "home patents figure");
+assertIncludes(platformHtml, "Bast has 5 patents.", "platform patents figure");
+assertExcludes(indexHtml, "Bast has 5 patents.", "patents line moved with the glance section");
 assertExcludes(indexHtml, "2 of 5", "retired 2 of 5 patent count on the home page");
+assertExcludes(platformHtml, "2 of 5", "retired 2 of 5 patent count on the platform page");
 assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
 assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
-assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "platform interaction-log view");
-assertIncludes(platformHtml, "/assets/platform/admin-usage-analytics.jpg", "platform analytics view");
-assertIncludes(platformHtml, "offering-platform-copy", "platform console copy");
+assertIncludes(indexHtml, "/assets/platform/admin-interaction-log.jpg", "homepage interaction-log view");
+assertIncludes(indexHtml, "/assets/platform/admin-usage-analytics.jpg", "homepage analytics view");
+assertExcludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "console left the platform page");
+assertExcludes(platformHtml, "/assets/platform/admin-usage-analytics.jpg", "console analytics left the platform page");
+assertExcludes(platformHtml, "Questions and answers, kept.", "console heading left the platform page");
+assertIncludes(indexHtml, 'href="/platform/delivery/"', "homepage Agent OS card");
+assertIncludes(indexHtml, 'href="/platform/evidence/"', "homepage claims card");
+assertIncludes(indexHtml, 'href="/frames/">Open the frames', "homepage reliability card");
+assertIncludes(indexHtml, "Agents and tools run on Bast.", "homepage MCP heading");
 assertIncludes(platformHtml, 'href="/demos/">Watch the demos</a>', "platform demos link");
 {
   const demosAt = platformHtml.indexOf('id="platform-demos"');
@@ -984,11 +1004,22 @@ assertIncludes(aboutHtml, "70+ Python packages, 15+ APIs, and 19 pipelines", "ab
 assertExcludes(aboutHtml, "33 Python libraries", "retired Python library count on the about page");
 assertExcludes(indexHtml, "33 Python libraries", "retired Python library count on the homepage");
 assertIncludes(
+  platformHtml,
+  "BastCare is the application families use. Bast is the horizontal platform organizations run. Bast has 5 patents.",
+  "platform glance intro",
+);
+assertExcludes(
   indexHtml,
   "BastCare is the application families use. Bast is the horizontal platform organizations run. Bast has 5 patents.",
-  "homepage platform intro",
+  "glance intro left the homepage",
 );
-assertIncludes(indexHtml, "Agents call tools over MCP.", "MCP line without a count");
+assertIncludes(
+  indexHtml,
+  "Bast is the platform. Agents and tools connect over MCP, with context, scope, and the route back to the source on every call.",
+  "homepage MCP description",
+);
+assertExcludes(indexHtml, "Agents call tools over MCP.", "squished MCP line on the homepage");
+assertExcludes(platformHtml, "Agents call tools over MCP.", "squished MCP line on the platform page");
 const glanceRows = [
   ["API Services", "15+", "CAT, Cat-Runtime, Platform, Security, Analytics, Org-Services"],
   ["AI Models", "13", "Intent, QA, Context, Greeting, Early Exit, OpenAI Assistant"],
@@ -1000,35 +1031,37 @@ const glanceRows = [
   ["Automated Tests", "3,500+", "Tests across the platform"],
 ];
 for (const [category, count, highlights] of glanceRows) {
-  const match = indexHtml.match(
+  const match = platformHtml.match(
     new RegExp(`<th scope="row">${category}</th>\\s*<td>([^<]*)</td>\\s*<td>([^<]*)</td>`),
   );
   const foundCount = match?.[1]?.trim();
   const foundHighlights = match?.[2]?.trim();
   if (foundCount !== count || foundHighlights !== highlights) {
     throw new Error(
-      `homepage platform table: expected ${category} at ${count} (${highlights}), found ${foundCount ?? "no row"} (${foundHighlights ?? "no highlights"})`,
+      `platform glance table: expected ${category} at ${count} (${highlights}), found ${foundCount ?? "no row"} (${foundHighlights ?? "no highlights"})`,
     );
   }
 }
-const packagesRow = indexHtml.match(/<th scope="row">Python Packages<\/th>\s*<td>[^<]*<\/td>\s*<td>([^<]*)<\/td>/);
+const packagesRow = platformHtml.match(/<th scope="row">Python Packages<\/th>\s*<td>[^<]*<\/td>\s*<td>([^<]*)<\/td>/);
 if (packagesRow && /\b(26|33)\b/.test(packagesRow[1])) {
-  throw new Error("homepage Python packages row shows a core-library count");
+  throw new Error("platform glance Python packages row shows a core-library count");
 }
 function retiredGlanceCount(category, count) {
   return new RegExp(`${category}[\\s\\S]{0,180}?<td>\\s*${count}\\s*</td>`, "i");
 }
-if (retiredGlanceCount("Core Libraries", "33").test(indexHtml)) {
-  throw new Error("homepage platform table brought back Core Libraries counted at 33");
+for (const [page, label] of [[platformHtml, "platform"], [indexHtml, "homepage"]]) {
+  if (retiredGlanceCount("Core Libraries", "33").test(page)) {
+    throw new Error(`${label} platform table brought back Core Libraries counted at 33`);
+  }
+  if (retiredGlanceCount("Core Libraries", "26").test(page)) {
+    throw new Error(`${label} platform table brought back Core Libraries counted at 26`);
+  }
+  if (retiredGlanceCount("MCP Servers", "3").test(page)) {
+    throw new Error(`${label} platform table brought back MCP Servers counted at 3`);
+  }
+  assertExcludes(page, ">Core Libraries<", `Core Libraries row on the ${label} table`);
+  assertExcludes(page, ">MCP Servers<", `MCP Servers row on the ${label} table`);
 }
-if (retiredGlanceCount("Core Libraries", "26").test(indexHtml)) {
-  throw new Error("homepage platform table brought back Core Libraries counted at 26");
-}
-if (retiredGlanceCount("MCP Servers", "3").test(indexHtml)) {
-  throw new Error("homepage platform table brought back MCP Servers counted at 3");
-}
-assertExcludes(indexHtml, ">Core Libraries<", "Core Libraries row on the homepage table");
-assertExcludes(indexHtml, ">MCP Servers<", "MCP Servers row on the homepage table");
 assertIncludes(aboutHtml, "Lurie Cancer Center", "about page Lurie Cancer Center");
 assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
 assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
@@ -1089,7 +1122,8 @@ assertExcludes(aboutHtml, '"Person"', "about page has no person schema for a tea
 assertExcludes(aboutHtml, '"jobTitle": "CEO"', "about page schema does not list a team title");
 assertExcludes(aboutHtml, "CEO &amp; Chair", "retired Chair title on the about page");
 assertExcludes(aboutHtml, 'href="/team/"', "about page does not link to the team stub");
-assertIncludes(indexHtml, 'id="about"', "homepage about section");
+assertIncludes(platformHtml, 'id="platform-glance"', "platform glance section");
+assertExcludes(indexHtml, 'id="about"', "homepage about anchor left with the glance section");
 assertExcludes(indexHtml, 'href="/about/#team"', "homepage does not link to a team section");
 assertIncludes(indexHtml, 'href="/about/"', "homepage link to the story");
 assertExcludes(indexHtml, 'href="/team/"', "homepage does not link to the team stub");

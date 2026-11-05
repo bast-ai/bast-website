@@ -5857,7 +5857,7 @@ h1 span {
 
 .home-dvc h3,
 .home-stories h2,
-.home-platform h2,
+.home-console h2,
 .home-newsletter h2,
 .home-helps h2 {
   font-weight: 600;
@@ -5957,9 +5957,95 @@ h1 span {
   font-size: 1.125rem;
 }
 
-.home-platform .hero-actions,
 .home-newsletter .hero-actions {
   margin-top: 1.5rem;
+}
+
+.home-console .section-heading h2 {
+  max-width: 18em;
+}
+
+.home-console .offering-platform-product {
+  margin-top: 0.5rem;
+}
+
+.home-mcp {
+  margin-top: clamp(4.5rem, 9vw, 7rem);
+  padding: clamp(3.25rem, 7vw, 5.5rem) clamp(1.75rem, 4vw, 3.5rem);
+  border-radius: 24px;
+  background: var(--surface);
+}
+
+.home-page .home-mcp h2 {
+  max-width: 11em;
+  margin: 0.7rem 0 1.25rem;
+  font-size: var(--fs-display);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.home-mcp-lede {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+}
+
+.home-mcp-deeper {
+  margin-top: clamp(3.25rem, 6vw, 5rem);
+}
+
+.home-mcp-deeper-title {
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.home-mcp-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.15rem, 2vw, 1.75rem);
+}
+
+.home-mcp-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 18rem;
+  margin: 0;
+  padding: clamp(1.75rem, 2.8vw, 2.5rem);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.home-mcp-card .section-kicker {
+  color: var(--accent-text);
+}
+
+.home-mcp-card h3 {
+  max-width: 14em;
+  margin: 0.9rem 0 0.75rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.05rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.home-mcp-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+.home-mcp-card .card-link {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  font-size: 1.125rem;
 }
 
 .glance-wrap {
@@ -6058,6 +6144,18 @@ h1 span {
 
   .home-stories .story-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-mcp {
+    padding: clamp(2.25rem, 6vw, 3rem) 1.25rem;
+  }
+
+  .home-mcp-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .home-mcp-card {
+    min-height: 0;
   }
 }
 
