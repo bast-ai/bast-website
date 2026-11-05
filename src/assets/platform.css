@@ -525,7 +525,7 @@
 .evidence-wide { grid-column: 1 / -1; }
 
 .evidence-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.7rem; margin: 0; padding: 0; list-style: none; }
-.evidence-flow li { border-top: 3px solid var(--platform-cyan); border-radius: 0 0 14px 14px; padding: 1rem; background: rgba(255, 255, 255, 0.58); }
+.evidence-flow li { border-top: 3px solid var(--platform-cyan); border-radius: 0 0 var(--radius-lg) var(--radius-lg); padding: 1rem; background: rgba(255, 255, 255, 0.58); }
 .evidence-flow strong { display: block; margin-bottom: 0.45rem; color: var(--platform-navy); }
 .evidence-table-wrap { overflow-x: auto; }
 .evidence-table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.56); }

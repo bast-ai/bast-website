@@ -1,10 +1,10 @@
 /*
  * Bast website styles.
  * Tokens and visual language sourced from the Bast design system
- * (@bast/shared-styles, authored by Adam Cutler): Estedad display type,
- * blue-grey neumorphic surfaces, and the #0090cc -> #3c54a1 brand gradient.
- * Fonts are self-hosted (assets/fonts) so the privacy-first site makes no
- * third-party font request.
+ * (@bast/shared-styles, authored by Adam Cutler): Estedad for UI,
+ * IBM Plex Mono for code, blue-grey neumorphic surfaces, and the
+ * #0090cc -> #3c54a1 brand gradient. Fonts are self-hosted (assets/fonts)
+ * so the privacy-first site makes no third-party font request.
  */
 
 /* ---- Estedad (self-hosted, latin subset) ---- */
@@ -51,6 +51,29 @@
   src: url("fonts/estedad-latin-700-normal.woff2") format("woff2");
 }
 
+/* IBM Plex Mono (self-hosted, latin subset, OFL). Weights used for code. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+}
+
 :root {
   /* Brand + surfaces (from @bast/shared-styles light theme) */
   --ink: #0d2935;
@@ -71,6 +94,7 @@
   --grad: linear-gradient(120deg, #0090cc 0%, #3c54a1 100%);
 
   --font-display: "Estedad", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
 
   /* Type scale - one role per size, aligned to the @bast/shared-styles ramp.
      Fit form to function:
@@ -113,6 +137,8 @@
     inset 2px 2px 5px rgba(22, 27, 29, 0.16),
     inset -2px -2px 5px rgba(250, 251, 255, 0.9);
 
+  /* Showcase component radius is 10px. Named steps used here are 8 and 16. */
+  --radius-sm: 8px;
   --radius: 10px;
   --radius-lg: 16px;
   --max: 1120px;
@@ -163,7 +189,7 @@ button:focus-visible {
   background: var(--ink);
   color: #fff;
   padding: 0.65rem 0.9rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .skip-link:focus {
@@ -1778,7 +1804,7 @@ h1 span {
   top: 0.5em;
   width: 0.62rem;
   height: 0.62rem;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   background: var(--grad);
 }
 
@@ -3112,7 +3138,7 @@ h1 span {
 }
 
 .bastcare-lineage-time {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .bastcare-iteration {
@@ -4766,7 +4792,7 @@ h1 span {
 }
 
 .frame-meta .frame-id {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 1.125rem;
 }
 
@@ -4868,7 +4894,7 @@ h1 span {
   font-size: 1.125rem;
   background: var(--card-face);
   padding: 2px 8px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .faq-list {
@@ -5355,8 +5381,6 @@ h1 span {
   --line: #d7dde1;
   --line-subtle: #e8ecef;
   --accent-text: #087aa5;
-  --radius: 6px;
-  --radius-lg: 10px;
   --max: 1080px;
   --neu-raise: 0 1px 2px rgba(13, 41, 53, 0.05), 0 14px 36px rgba(13, 41, 53, 0.07);
   --neu-raise-sm: 0 1px 2px rgba(13, 41, 53, 0.05), 0 8px 24px rgba(13, 41, 53, 0.055);
@@ -5850,7 +5874,7 @@ h1 span {
   flex-direction: column;
   margin: 0;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: #f7f9fb;
   color: var(--ink);
   box-shadow: var(--neu-raise);
@@ -5940,7 +5964,7 @@ h1 span {
 .glance-wrap {
   margin-top: 1.5rem;
   overflow-x: auto;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: #fff;
   box-shadow: var(--neu-raise-sm);
 }
