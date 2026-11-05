@@ -52,8 +52,9 @@ GA_MEASUREMENT_ID=G-0D3N068YJH pnpm build
 - `.github/workflows/pr-ci.yml` runs the full site and BastCare metrics checks on every pull request to `main`.
 - `.github/workflows/deploy.yml` refreshes BastCare's public App Store review
   snapshot, builds the static site with `pnpm verify`, and publishes `dist/`.
-- It runs on push to `main`, on manual request, and daily so public rating and
-  written-review counts stay current without browser-side calls to Apple.
+- It runs on push to `main` and on manual request. The App Store refresh is
+  best-effort: if Apple's feed fails, the build keeps the last committed
+  snapshot and Pages still publishes. Counts stay off the browser.
 - `www.bast.ai` points at Pages via GoDaddy DNS; `src/CNAME` pins the domain.
 
 Set the `GA_MEASUREMENT_ID` repository variable before the production deploy.

@@ -59,3 +59,11 @@ record is missing.
   pending or rejected text appears in built pages, if an id is both approved and
   pending/rejected, or if "1.0.10" or a versioned screenshot alt returns.
 - The collector rejects non-numeric versions before they can reach HTML.
+
+## Update (2026-11-05)
+
+Deploy no longer runs on a daily cron. Apple facts refresh when Deploy runs
+(push to `main`, or manual `workflow_dispatch`). A failed Apple fetch does not
+fail that job; the build keeps the last committed snapshot. The review-queue
+schedule above is unchanged. See
+[2026-11-05-actions-cadence.md](./2026-11-05-actions-cadence.md).

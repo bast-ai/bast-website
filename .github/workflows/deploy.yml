@@ -8,8 +8,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  schedule:
-    - cron: "17 15 * * *"
 
 # Least-privilege token: read the repo, write Pages, mint the OIDC token
 # actions/deploy-pages needs.
@@ -40,8 +38,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # Soft-fail. A bad Apple feed must not block Pages. The build keeps
+      # the last committed snapshot (the collector writes only after validation).
       - name: Refresh BastCare App Store ratings and reviews
-        run: python3 scripts/collect-bastcare-reviews.py
+        run: |
+          if ! python3 scripts/collect-bastcare-reviews.py; then
+            echo "::warning title=App Store refresh::Refresh failed. Deploy continues with the last committed snapshot."
+          fi
 
       # pnpm verify = build + check. Production env: Bast GA id, indexable.
       # GA_MEASUREMENT_ID can come from a repo variable; otherwise this uses

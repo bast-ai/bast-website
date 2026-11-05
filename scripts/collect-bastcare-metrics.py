@@ -5,8 +5,8 @@ The CareLoop API performs the aggregate against its existing request ledger.
 This website-side job receives only six approved totals and never has MongoDB
 credentials or access to individual documents.
 
-Scheduled publishing is `.github/workflows/bastcare-metrics.yml` (hourly, at
-minute 17). It writes `src/assets/data/bastcare-metrics.json`, served at
+Scheduled publishing is `.github/workflows/bastcare-metrics.yml` (four times
+a day, `0 */6 * * *`). It writes `src/assets/data/bastcare-metrics.json`, served at
 https://www.bast.ai/assets/data/bastcare-metrics.json. Turn off the old
 laptop/Duplo cron that ran `scripts/run-bastcare-metrics.sh`. That wrapper
 remains for a manual run with an env file kept outside this repository.

@@ -1,20 +1,22 @@
 name: BastCare public metrics
 
-# Hourly refresh of the public aggregate served at
+# Refresh the public aggregate four times a day, served at
 # https://www.bast.ai/assets/data/bastcare-metrics.json
 # (src/assets/data/bastcare-metrics.json, schemaVersion 1).
 #
-# A push made with GITHUB_TOKEN does not start other workflows, so after a
-# commit this workflow dispatches Deploy to GitHub Pages. main was not
-# branch-protected when this shipped. If a later rule rejects the bot push,
-# do not weaken it. See
-# docs/decisions/2026-11-02-bastcare-metrics-github-actions.md.
+# When the totals change, this workflow commits and pushes that file to main
+# as github-actions[bot], then dispatches Deploy and waits for it. A push made
+# with GITHUB_TOKEN does not start other workflows, so that push alone does
+# not publish Pages. The explicit dispatch is the live-site path for a
+# metrics-only commit. Push and dispatch together are intentional, not a
+# second cascade. If a later rule rejects the bot push, do not weaken it. See
+# docs/decisions/2026-11-05-actions-cadence.md.
 #
 # Turn off the old laptop/Duplo cron. This workflow replaces it.
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 # Read-only default. Each job replaces this with only the scope it needs.
