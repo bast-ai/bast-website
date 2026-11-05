@@ -290,10 +290,6 @@ for (const [contents, label] of [
 
 const requiredHomepageSnippets = [
   {
-    label: "mobile SMS link",
-    needle: "sms:3037176099?&body=Hi%20Bast%2C%20I%27d%20like%20to%20connect",
-  },
-  {
     label: "homepage contact form",
     needle: 'data-contact-form',
   },
@@ -310,16 +306,24 @@ const requiredHomepageSnippets = [
     needle: 'class="offering-summary-gallery"',
   },
   {
-    label: "Build 51 visit summary homepage screen",
-    needle: "summary-build-51.jpg",
+    label: "homepage defined-terms screen",
+    needle: "translate-1-0-9.jpg",
   },
   {
-    label: "homepage source-words screen",
-    needle: "export-1-0-9.jpg",
+    label: "homepage sharing-settings screen",
+    needle: "sharing-settings-build-51.jpg",
   },
   {
-    label: "Build 51 sharing preview homepage screen",
-    needle: "share-preview-build-51.jpg",
+    label: "homepage CareTeam screen",
+    needle: "careteam-build-51.jpg",
+  },
+  {
+    label: "homepage evidence library action",
+    needle: 'href="/evidence/">Read the evidence library</a>',
+  },
+  {
+    label: "homepage platform glance",
+    needle: "Platform at a glance",
   },
   {
     label: "dedicated Bast Platform homepage link",
@@ -382,6 +386,62 @@ const replacedHomepageSnippets = [
   {
     label: "old homepage Platform control-path diagram",
     needle: 'class="platform-system-figure offering-platform-figure"',
+  },
+  {
+    label: "homepage narrative summary screen",
+    needle: "summary-build-51.jpg",
+  },
+  {
+    label: "homepage export screen",
+    needle: "export-1-0-9.jpg",
+  },
+  {
+    label: "homepage share-preview screen",
+    needle: "share-preview-build-51.jpg",
+  },
+  {
+    label: "homepage fictional-visit caption",
+    needle: "fictional visit",
+  },
+  {
+    label: "homepage paid R&D headline",
+    needle: "Years of paid",
+  },
+  {
+    label: "homepage paid R&D wording",
+    needle: "paid R&D",
+  },
+  {
+    label: "homepage paid R&D entity",
+    needle: "paid R&amp;D",
+  },
+  {
+    label: "homepage medical-device line",
+    needle: "BastCare is not a medical device",
+  },
+  {
+    label: "homepage client-funded wording",
+    needle: "clients have funded",
+  },
+  {
+    label: "homepage proof section id",
+    needle: 'id="proof"',
+  },
+  {
+    label: "homepage proof class",
+    needle: "home-proof",
+  },
+  {
+    label: "homepage proof eyebrow",
+    needle: ">Proof<",
+  },
+  {
+    label: "homepage pilot section",
+    needle: "Start a pilot",
+  },
+  {
+    label: "homepage Text us action",
+    needle: "Text us",
   },
 ];
 
@@ -461,7 +521,7 @@ assertIncludes(platformHtml, "Claims and proof", "platform evidence register lab
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
 assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
 assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
-assertIncludes(indexHtml, "and 5 patents.", "home patents figure");
+assertIncludes(indexHtml, "Bast has 5 patents.", "home patents figure");
 assertExcludes(indexHtml, "2 of 5", "retired 2 of 5 patent count on the home page");
 assertIncludes(platformHtml, 'data-mode="refuse"', "platform refuse mode");
 assertIncludes(platformHtml, 'id="technology"', "platform technology stack");
@@ -595,7 +655,10 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, 'href="/bastcare/delete-account/"', `deletion link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
   assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
-  assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  const medicalPostureRequired = new Set(["home", "privacy", "support", "terms"]);
+  if (medicalPostureRequired.has(label)) {
+    assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  }
   const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
   if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
   assertIncludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
@@ -1028,6 +1091,32 @@ for (const file of files) {
     throw new Error(`Link to retired /team/ page in ${path.relative(root, file)}`);
   }
   const rel = path.relative(distDir, file);
+  for (const needle of ["Text us", "303-717-6099", "sms:303", "tel:+13037176099", "3037176099"]) {
+    if (contents.includes(needle)) {
+      throw new Error(`Unexpected "${needle}" in ${rel}`);
+    }
+  }
+  if (rel === "index.html") {
+    for (const needle of ["fictional visit", "Years of paid", "paid R&D", "paid R&amp;D", "BastCare is not a medical device"]) {
+      if (contents.includes(needle)) {
+        throw new Error(`Unexpected homepage wording "${needle}" in ${rel}`);
+      }
+    }
+  }
+  if (path.extname(file) === ".html") {
+    const footerBottom = contents.match(/<div class="footer-bottom">([\s\S]*?)<\/div>/);
+    if (footerBottom) {
+      const hasMedicalFooter = footerBottom[1].includes("BastCare is not a medical device");
+      const medicalFooterAllowed = new Set([
+        "bastcare/terms/index.html",
+        "bastcare/support/index.html",
+        "bastcare/privacy/index.html",
+      ]).has(rel.split(path.sep).join("/"));
+      if (hasMedicalFooter !== medicalFooterAllowed) {
+        throw new Error(`${hasMedicalFooter ? "Unexpected" : "Missing"} medical-device footer line in ${rel}`);
+      }
+    }
+  }
   if (/\bfree(?: iPhone)? app\b/i.test(contents)) throw new Error(`free app wording in ${rel}`);
   if ([".html", ".txt", ".xml", ".json", ".js"].includes(path.extname(file)) &&
       /\bBastCare Plus\b|\bsubscription\b|in-app purchase|recorded hours|priceCurrency|No card required/i.test(contents)) {
@@ -1095,7 +1184,8 @@ assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt 
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
 assertIncludes(pilotHtml, "Levoy K, et al.", "pilot research citation");
 assertIncludes(pilotHtml, "<p>Audio is deleted once the summary is saved. Bast&rsquo;s servers don&rsquo;t save the transcript. Summaries belong to the user. Your organization owns its data.</p>", "pilot privacy wording matches the one-pager PDF");
-assertIncludes(pilotHtml, 'href="tel:+13037176099"', "pilot phone link");
+assertExcludes(pilotHtml, "303-717-6099", "pilot phone number");
+assertExcludes(pilotHtml, "tel:+13037176099", "pilot phone link");
 for (const banned of [/\$\s?\d/, /Craig/i, /\btrac(e|es|ed|ing)\b/i, /\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i, /\b\d+\s*(licenses|seats|weeks|months|days)\b/i, /\b(per|a) (month|year|license|seat)\b/i]) {
   if (banned.test(pilotHtml)) throw new Error(`pilot page contains banned wording: ${banned}`);
 }

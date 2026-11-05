@@ -5699,13 +5699,164 @@ h1 span {
   margin-top: 1.5rem;
 }
 
+.home-stories .home-dvc {
+  max-width: none;
+}
+
 .home-dvc h3,
-.home-proof h2,
-.home-care-teams h2,
-.home-rd h2,
+.home-stories h2,
+.home-platform h2,
 .home-newsletter h2,
 .home-helps h2 {
   font-weight: 600;
+}
+
+.home-stories .story-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f7f9fb;
+  color: var(--ink);
+  box-shadow: var(--neu-raise);
+}
+
+.story-card-band {
+  display: flex;
+  align-items: flex-end;
+  height: 9.5rem;
+  flex: none;
+  padding: 1.15rem 1.4rem;
+}
+
+.story-card-band .story-card-stat,
+.story-card-band .story-card-stat span {
+  margin: 0;
+  color: #fff;
+}
+
+.story-card-band-maryville {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.45), transparent 42%),
+    linear-gradient(120deg, #0090cc 0%, #3c54a1 100%);
+}
+
+.story-card-band-lurie {
+  background:
+    radial-gradient(circle at 12% 84%, rgba(0, 144, 204, 0.55), transparent 46%),
+    linear-gradient(160deg, #0d2935 0%, #1a4d66 100%);
+}
+
+.story-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.35rem 1.4rem 1.5rem;
+  color: var(--ink);
+}
+
+.story-card p.story-card-stat {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(3.4rem, 6vw, 4.75rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.story-card p.story-card-stat span {
+  display: inline-block;
+  margin-left: 0.55rem;
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 600;
+}
+
+.story-card h3,
+.story-card p,
+.story-card .card-kicker {
+  color: var(--ink);
+}
+
+.story-card h3 {
+  max-width: 24em;
+  margin: 0.15rem 0 0.2rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.story-card p {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.45;
+}
+
+.story-card .card-link {
+  color: var(--accent-text);
+  font-size: 1.125rem;
+}
+
+.home-platform .hero-actions,
+.home-newsletter .hero-actions {
+  margin-top: 1.5rem;
+}
+
+.glance-wrap {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--neu-raise-sm);
+}
+
+.glance-table {
+  width: max(100%, 44rem);
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.glance-table th,
+.glance-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  font-size: 1.125rem;
+}
+
+.glance-table thead th {
+  background: #0090cc;
+  color: #fff;
+  font-weight: 600;
+}
+
+.glance-table tbody th,
+.glance-table td {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.glance-table tbody th {
+  font-weight: 600;
+}
+
+.glance-table tbody tr:nth-child(even) {
+  background: #f3f6f9;
+}
+
+.glance-table tbody tr + tr th,
+.glance-table tbody tr + tr td {
+  border-top: 1px solid rgba(13, 41, 53, 0.12);
 }
 
 .platform-site .questions {
@@ -5751,6 +5902,10 @@ h1 span {
   .home-helps .offering-summary-gallery {
     grid-template-columns: 1fr;
     max-width: 22rem;
+  }
+
+  .home-stories .story-grid {
+    grid-template-columns: 1fr;
   }
 }
 

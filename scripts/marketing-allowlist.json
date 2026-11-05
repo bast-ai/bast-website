@@ -353,5 +353,10 @@
     "file": "privacy.html",
     "phrase": "er a visitor chose analytics or necessary-only mode. If analytics are allowed, Google An",
     "reason": "Cookie choice name. Necessary only is the label of the choice that does not load analytics."
+  },
+  {
+    "file": "index.html",
+    "phrase": "Intent, QA, Context, Greeting, Early Exit, OpenAI Assistant",
+    "reason": "Platform inventory name. Early Exit is a model in the platform-at-a-glance table, not a hedge."
   }
 ]
