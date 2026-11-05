@@ -655,7 +655,10 @@ for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, 'href="/bastcare/delete-account/"', `deletion link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
   assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
-  assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  const medicalPostureRequired = new Set(["home", "privacy", "support", "terms"]);
+  if (medicalPostureRequired.has(label)) {
+    assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
+  }
   const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
   if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
   assertIncludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
@@ -1097,6 +1100,20 @@ for (const file of files) {
     for (const needle of ["fictional visit", "Years of paid", "paid R&D", "paid R&amp;D", "BastCare is not a medical device"]) {
       if (contents.includes(needle)) {
         throw new Error(`Unexpected homepage wording "${needle}" in ${rel}`);
+      }
+    }
+  }
+  if (path.extname(file) === ".html") {
+    const footerBottom = contents.match(/<div class="footer-bottom">([\s\S]*?)<\/div>/);
+    if (footerBottom) {
+      const hasMedicalFooter = footerBottom[1].includes("BastCare is not a medical device");
+      const medicalFooterAllowed = new Set([
+        "bastcare/terms/index.html",
+        "bastcare/support/index.html",
+        "bastcare/privacy/index.html",
+      ]).has(rel.split(path.sep).join("/"));
+      if (hasMedicalFooter !== medicalFooterAllowed) {
+        throw new Error(`${hasMedicalFooter ? "Unexpected" : "Missing"} medical-device footer line in ${rel}`);
       }
     }
   }

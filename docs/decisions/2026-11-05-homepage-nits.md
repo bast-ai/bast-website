@@ -14,4 +14,4 @@ Beth marked seven homepage changes on 4 November 2026. This pull request follows
 - The care-team pilot block is off the homepage. The header "For care teams" link and the BastCare page still reach `/pilot/`. Footer "Start a pilot" is removed. Evidence library and the pilot one-pager stay in the footer.
 - "Platform at a glance" replaces the paid-R&D headline. The flat fact stays: Bast has 5 patents.
 - "Follow what we're learning" leads to `/evidence/`. Substack stays as a second action. The contact form replaces texting. The phone number is off the site.
-- "BastCare is not a medical device." is off the homepage footer. Terms, BastCare privacy, and BastCare support still carry it.
+- "BastCare is not a medical device." stays in the footer on Terms, BastCare support, and BastCare privacy. Other page footers, including the homepage, do not carry that line.
