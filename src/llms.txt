@@ -10,8 +10,8 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 
 ## Key Pages
 
-- [Bast AI Homepage](__SITE_URL__/): BastCare for patients and caregivers, client stories, and the platform at a glance.
-- [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with BastCare as the patient-held example.
+- [Bast AI Homepage](__SITE_URL__/): BastCare for patients and caregivers, client stories, the console where questions and answers are kept, and MCP as the way agents and tools run on Bast.
+- [Bast Platform and Agent OS](__SITE_URL__/platform/): Governed AI infrastructure and the human-and-machine operating model behind stable products, with the platform at a glance and BastCare as the patient-held example.
 - [Current and Target Architecture](__SITE_URL__/platform/architecture/): Public-safe deployment units, configured agents, recovery controls, and explicitly labeled target state.
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
 - [Claims and proof](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries. The research library is a different page: /evidence/.
