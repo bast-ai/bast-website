@@ -917,7 +917,55 @@ assertIncludes(aboutHtml, "How Bast got here.", "about page timeline heading");
 assertIncludes(aboutHtml, "October 2022", "about page incorporation year");
 assertIncludes(aboutHtml, "Bast AI is incorporated.", "about page incorporation");
 assertIncludes(aboutHtml, "Client pilots and the infrastructure build.", "about page 2023");
-assertIncludes(aboutHtml, "33 Python libraries, 13 APIs, and 19 pipelines", "about page developer tools");
+assertIncludes(aboutHtml, "70+ Python packages, 15+ APIs, and 19 pipelines", "about page developer tools");
+assertExcludes(aboutHtml, "33 Python libraries", "retired Python library count on the about page");
+assertExcludes(indexHtml, "33 Python libraries", "retired Python library count on the homepage");
+assertIncludes(
+  indexHtml,
+  "BastCare is the application families use. Bast is the horizontal platform organizations run. Bast has 5 patents.",
+  "homepage platform intro",
+);
+assertIncludes(indexHtml, "Agents call tools over MCP.", "MCP line without a count");
+const glanceRows = [
+  ["API Services", "15+", "CAT, Cat-Runtime, Platform, Security, Analytics, Org-Services"],
+  ["AI Models", "13", "Intent, QA, Context, Greeting, Early Exit, OpenAI Assistant"],
+  ["Pipelines", "19", "PDF, MongoDB, OpenAI, Bedrock, Azure Index, Agno, Analytics ETL"],
+  ["Python Packages", "70+", "Power the platform"],
+  ["Agent Configs", "30+", "Ready-to-run agent configurations"],
+  ["Frontend Apps", "7", "Admin UI, BFF, Bast UX, Chat UI, Staff tool, Staff tool BFF, Patient journey"],
+  ["Capability Specs", "175+", "Specifications for platform behavior"],
+  ["Automated Tests", "3,500+", "Tests across the platform"],
+];
+for (const [category, count, highlights] of glanceRows) {
+  const match = indexHtml.match(
+    new RegExp(`<th scope="row">${category}</th>\\s*<td>([^<]*)</td>\\s*<td>([^<]*)</td>`),
+  );
+  const foundCount = match?.[1]?.trim();
+  const foundHighlights = match?.[2]?.trim();
+  if (foundCount !== count || foundHighlights !== highlights) {
+    throw new Error(
+      `homepage platform table: expected ${category} at ${count} (${highlights}), found ${foundCount ?? "no row"} (${foundHighlights ?? "no highlights"})`,
+    );
+  }
+}
+const packagesRow = indexHtml.match(/<th scope="row">Python Packages<\/th>\s*<td>[^<]*<\/td>\s*<td>([^<]*)<\/td>/);
+if (packagesRow && /\b(26|33)\b/.test(packagesRow[1])) {
+  throw new Error("homepage Python packages row shows a core-library count");
+}
+function retiredGlanceCount(category, count) {
+  return new RegExp(`${category}[\\s\\S]{0,180}?<td>\\s*${count}\\s*</td>`, "i");
+}
+if (retiredGlanceCount("Core Libraries", "33").test(indexHtml)) {
+  throw new Error("homepage platform table brought back Core Libraries counted at 33");
+}
+if (retiredGlanceCount("Core Libraries", "26").test(indexHtml)) {
+  throw new Error("homepage platform table brought back Core Libraries counted at 26");
+}
+if (retiredGlanceCount("MCP Servers", "3").test(indexHtml)) {
+  throw new Error("homepage platform table brought back MCP Servers counted at 3");
+}
+assertExcludes(indexHtml, ">Core Libraries<", "Core Libraries row on the homepage table");
+assertExcludes(indexHtml, ">MCP Servers<", "MCP Servers row on the homepage table");
 assertIncludes(aboutHtml, "Lurie Cancer Center", "about page Lurie Cancer Center");
 assertIncludes(aboutHtml, "Medic Copilot", "about page Medic Copilot");
 assertIncludes(aboutHtml, 'href="/assets/bast-maryville-case-study.pdf"', "about page Maryville client story");
