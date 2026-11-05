@@ -100,32 +100,32 @@
     "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
   },
   {
-    "file": "bastcare/privacy-faq/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "your phone until you delete them. We keep only basic technical data that holds no visit",
     "reason": "Privacy Q&A: Bast keeps basic technical data and not visit content."
   },
   {
-    "file": "bastcare/processors/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "Limited jobs. Bast uses outside services only where they have a defined role in providi",
     "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
   },
   {
-    "file": "bastcare/processors/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "ven visit content. Each provider receives only the information needed for its stated job",
     "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
   },
   {
-    "file": "bastcare/processors/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "A library belongs on this processor page only when it sends information to an outside s",
     "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
   },
   {
-    "file": "bastcare/terms/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "r License Agreement. You may use BastCare only where permitted by law and these notices.",
     "reason": "Terms: permission to use BastCare and to process content is limited to what the feature requires and the law allows."
   },
   {
-    "file": "bastcare/terms/index.html",
+    "file": "bastcare/privacy/index.html",
     "phrase": "ou provide. You permit Bast to process it only as needed to provide the feature you requ",
     "reason": "Terms: permission to use BastCare and to process content is limited to what the feature requires and the law allows."
   },

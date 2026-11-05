@@ -269,7 +269,7 @@ function assertGlobalHeader(contents, label) {
     ["/evidence/", "Evidence library"],
     ["/platform/", "Platform"],
     ["/about/", "About"],
-    ["https://apps.apple.com/app/id6789669565", "Download BastCare"],
+    ["https://apps.apple.com/us/app/id6789669565?eventid=6830210433", "Download BastCare"],
   ]) {
     assertIncludes(primaryNav, `href="${href}"`, `${text} primary link on ${label} page`);
     assertIncludes(primaryNav, text, `${text} primary label on ${label} page`);
@@ -626,42 +626,56 @@ assertIncludes(analyticsConsentJs, 'window.bastTrack("app_store_click"', "App St
 assertExcludes(analyticsConsentJs, 'window.bastTrack("generate_lead"', "unconfirmed email lead tracking");
 assertIncludes(appleAssociation, "N9WW75Q3VS.ai.bast.careloop", "BastCare App ID association");
 assertIncludes(appleAssociation, '"/careteam/invite"', "CareTeam invitation path");
-assertIncludes(careteamInvite, 'href="https://apps.apple.com/app/id6789669565"', "BastCare installation link");
+assertIncludes(careteamInvite, 'href="https://apps.apple.com/us/app/id6789669565?eventid=6830210433"', "BastCare installation link");
 assertIncludes(careteamInvite, "After installing, return to the invitation message", "post-install invitation recovery");
 assertIncludes(careteamInvite, 'name="referrer" content="no-referrer"', "invitation referrer protection");
 assertExcludes(careteamInvite, "current TestFlight invitation", "obsolete tester-only installation instructions");
 assertExcludes(careteamInvite, "analytics-consent", "analytics on private invitation fallback");
 assertExcludes(careteamInvite, "location.hash", "invitation token parsing in website fallback");
 
+const bastcareEventUrl = "https://apps.apple.com/us/app/id6789669565?eventid=6830210433";
 const bastcarePages = [
   [bastcareHome, "home"],
   [bastcarePrivacy, "privacy"],
-  [bastcarePrivacyFaq, "privacy Q&A"],
-  [bastcareProcessors, "processors"],
   [bastcareSupport, "support"],
-  [bastcareTerms, "terms"],
   [bastcareDeleteAccount, "delete account"],
   [bastcareArchitecture, "architecture"],
 ];
 const bastcarePublicCopy = bastcarePages.map(([contents]) => contents).join("\n");
+for (const [contents, anchor, label] of [
+  [bastcarePrivacyFaq, "#privacy-qa", "privacy Q&A"],
+  [bastcareTerms, "#terms", "terms"],
+  [bastcareProcessors, "#processors", "processors"],
+]) {
+  assertIncludes(contents, 'content="noindex, nofollow"', `${label} redirect stays out of the index`);
+  assertIncludes(contents, `content="0; url=/bastcare/privacy/${anchor}"`, `${label} redirect`);
+  assertIncludes(contents, `href="/bastcare/privacy/${anchor}"`, `${label} redirect link`);
+  assertExcludes(contents, "How BastCare works", `${label} redirect has no architecture link`);
+}
 for (const [contents, label] of bastcarePages) {
   assertIncludes(contents, "BastCare", `BastCare name on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/"', `BastCare home link on ${label} page`);
-  assertIncludes(contents, 'href="/bastcare/privacy/"', `privacy link on ${label} page`);
-  assertIncludes(contents, 'href="/bastcare/privacy-faq/"', `privacy Q&A link on ${label} page`);
-  assertIncludes(contents, 'href="/bastcare/processors/"', `processors link on ${label} page`);
+  assertIncludes(contents, 'href="/bastcare/privacy/"', `legal page link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/support/"', `support link on ${label} page`);
-  assertIncludes(contents, 'href="/bastcare/terms/"', `terms link on ${label} page`);
   assertIncludes(contents, 'href="/bastcare/delete-account/"', `deletion link on ${label} page`);
-  assertIncludes(contents, 'href="/bastcare/architecture/"', `architecture link on ${label} page`);
   assertIncludes(contents, 'href="#main"', `skip link on ${label} page`);
-  const medicalPostureRequired = new Set(["home", "privacy", "support", "terms"]);
+  assertExcludes(contents, 'href="/bastcare/architecture/"', `public architecture link on ${label} page`);
+  assertExcludes(contents, 'href="/bastcare/privacy-faq/"', `separate privacy Q&A link on ${label} page`);
+  assertExcludes(contents, 'href="/bastcare/terms/"', `separate terms link on ${label} page`);
+  const medicalPostureRequired = new Set(["privacy", "support"]);
   if (medicalPostureRequired.has(label)) {
     assertIncludes(contents, "not a medical device", `medical posture on ${label} page`);
   }
+  if (label === "home") {
+    assertExcludes(contents, "not a medical device", "medical-device line on the BastCare marketing page");
+  }
   const bastcareColumn = contents.match(/<p class="footer-head">BastCare<\/p>([\s\S]*?)<\/div>/);
   if (!bastcareColumn) throw new Error(`Missing BastCare footer column on ${label} page`);
-  assertIncludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
+  assertIncludes(bastcareColumn[1], `href="${bastcareEventUrl}"`, `event install link on ${label} page`);
+  assertIncludes(bastcareColumn[1], ">Legal<", `Legal label on ${label} page`);
+  assertExcludes(bastcareColumn[1], "How BastCare works", `How BastCare works label on ${label} page`);
+  assertExcludes(bastcareColumn[1], "Privacy Q&amp;A", `separate privacy Q&A footer label on ${label} page`);
+  assertExcludes(bastcareColumn[1], ">Processors<", `separate processors footer label on ${label} page`);
   const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
   if (!footerNav) throw new Error(`Missing footer navigation on ${label} page`);
   assertIncludes(footerNav[0], 'href="/evidence/"', `evidence library in footer on ${label} page`);
@@ -674,17 +688,17 @@ for (const [contents, label] of bastcarePages) {
 assertIncludes(bastcareHome, 'href="/evidence/">Read the evidence library</a>', "evidence library link on the BastCare page");
 
 const approvedVisitPrivacyCopy = "When you request a summary, BastCare masks configured names in a separate copy of your transcript and sends it securely through Bast to an AI provider for processing.";
-assertIncludes(bastcareHome, approvedVisitPrivacyCopy, "approved marketing privacy copy");
+assertExcludes(bastcareHome, approvedVisitPrivacyCopy, "processing essay stays off the BastCare marketing page");
 assertIncludes(bastcareHome, 'class="bastcare-page bastcare-home"', "aligned BastCare homepage panels");
 assertIncludes(bastcareHome, 'href="/assets/styles.css?v=', "versioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'src="/assets/site.js?v=', "versioned BastCare behavior");
 assertExcludes(bastcareHome, 'href="/assets/styles.css"', "unversioned BastCare stylesheet");
 assertIncludes(bastcareHome, 'id="bastcare-tour"', "BastCare screenshot walkthrough");
-assertIncludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
+assertExcludes(bastcareHome, "Screens show fictional demonstration names", "BastCare demo-data disclosure");
 assertIncludes(bastcareHome, "BastCare · Now available", "BastCare hero without a version number");
 assertIncludes(indexHtml, "BastCare · Now available", "BastCare kicker without a version number on Bast home");
 assertIncludes(bastcareHome, "<title>BastCare - Be in the room</title>", "BastCare page title without a version number");
-assertIncludes(bastcareHome, "What&rsquo;s new in BastCare", "BastCare release notes eyebrow");
+assertExcludes(bastcareHome, "What&rsquo;s new in BastCare", "BastCare release notes eyebrow");
 assertExcludes(bastcareHome, "softwareVersion", "BastCare structured data omits a version");
 assertExcludes(bastcareHome, "data-bastcare-version", "BastCare page does not print the App Store version");
 assertExcludes(bastcareHome, "data-bastcare-release-notes-version", "BastCare release notes omit a version marker");
@@ -741,7 +755,29 @@ for (const media of ["bastcare-promo.mp4", "bastcare-promo-square.mp4"]) {
   const { size } = await stat(path.join(distDir, "assets/bastcare/media", media));
   if (size > 8 * 1024 * 1024) throw new Error(`Autoplaying ${media} is ${(size / 1048576).toFixed(1)} MB; compress it below 8 MB`);
 }
-assertIncludes(bastcareHome, "seven-language translation", "carousel translation handoff");
+assertIncludes(bastcareHome, "nine-language translation", "carousel translation handoff");
+assertIncludes(bastcareHome, "Filipino", "BastCare Filipino support");
+assertIncludes(bastcareHome, "Japanese", "BastCare Japanese support");
+assertIncludes(bastcareHome, "nine languages", "BastCare nine-language claim");
+assertIncludes(bastcareHome, "explainable AI", "BastCare explainable AI line");
+assertIncludes(bastcareHome, "Sharing nothing is always valid.", "BastCare private-by-choice section");
+for (const banned of [
+  "fictional visit",
+  "Fictional example",
+  "fictional demonstration",
+  "not medical advice",
+  "asks for consent",
+  "consent before recording",
+  "seven languages",
+  "seven-language",
+  "Seven summary languages",
+  "No transcript text is included",
+  "may contain errors",
+  "refreshed home screen",
+  "The refreshed",
+]) {
+  assertExcludes(bastcareHome, banned, `BastCare marketing page: ${banned}`);
+}
 for (const screen of [
   "home-1-0-9.jpg",
   "visits-1-0-9.jpg",
@@ -771,15 +807,18 @@ assertIncludes(bastcareHome, "BastCare summaries created", "BastCare aggregate p
 assertIncludes(bastcareHome, 'data-app-store-placement="hero"', "hero App Store download action");
 assertIncludes(bastcareHome, 'data-app-store-placement="tour"', "tour App Store download action");
 assertIncludes(bastcareHome, 'data-app-store-placement="proof"', "proof App Store download action");
-const bastcareAppStoreLink = 'href="https://apps.apple.com/app/id6789669565"';
+const bastcareAppStoreLink = `href="${bastcareEventUrl}"`;
 if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
-  throw new Error("BastCare App Store link must appear in all three download actions");
+  throw new Error("BastCare event install link must appear in the download actions");
 }
+assertIncludes(siteJs, "Math.floor(value / 1000)", "token counters use integer thousands");
+assertIncludes(siteJs, '+ "k"', "token counters use a k suffix");
+assertExcludes(siteJs, "No transcript text is included", "metrics note drops the transcript disclaimer");
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
-assertIncludes(bastcareHome, 'href="/bastcare/processors/"', "BastCare processing disclosure link");
+assertExcludes(bastcareHome, 'href="/bastcare/processors/"', "processing essay link stays off the BastCare marketing page");
 assertIncludes(bastcarePrivacy, "Each request goes only to the provider selected for that request", "single-provider request boundary");
 for (const provider of ["Anthropic", "OpenAI"]) {
-  assertIncludes(bastcareProcessors, `<p class="processor-name">${provider}</p>`, `${provider} processor disclosure`);
+  assertIncludes(bastcarePrivacy, `<p class="processor-name">${provider}</p>`, `${provider} processor disclosure`);
   assertIncludes(bastcareArchitecture, provider, `${provider} architecture disclosure`);
 }
 assertIncludes(bastcareHome, "Use it to regenerate the summary", "BastCare transcript regeneration message");
@@ -802,12 +841,12 @@ assertIncludes(bastcarePrivacy, "Bast, Inc.", "privacy legal entity");
 assertIncludes(bastcarePrivacy, "3700 Quebec St", "privacy mailing address");
 assertIncludes(bastcarePrivacy, 'href="/bastcare/processors/"', "named processor disclosure link");
 for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Google"]) {
-  assertIncludes(bastcareProcessors, provider, `named BastCare provider: ${provider}`);
+  assertIncludes(bastcarePrivacy, provider, `named BastCare provider: ${provider}`);
 }
-assertIncludes(bastcareProcessors, "Libraries and processors are different lists", "library boundary");
-assertIncludes(bastcareTerms, "<h2>7. Availability</h2>", "BastCare availability heading");
-assertIncludes(bastcareTerms, "BastCare is free to download.", "BastCare terms download line");
-assertExcludes(bastcareTerms, "BastCare Plus", "BastCare Plus in the terms");
+assertIncludes(bastcarePrivacy, "Libraries and processors are different lists", "library boundary");
+assertIncludes(bastcarePrivacy, "<h2>7. Availability</h2>", "BastCare availability heading");
+assertIncludes(bastcarePrivacy, "BastCare is free to download.", "BastCare terms download line");
+assertExcludes(bastcarePrivacy, "BastCare Plus", "BastCare Plus in the terms");
 assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
 assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
@@ -881,8 +920,11 @@ for (const route of [
 for (const route of ["", "healthcare.html", "eu-ai-act.html", "change.html"]) {
   assertExcludes(sitemapXml, `/advisory/${route}`, `Advisory ${route || "home"} sitemap route`);
 }
-for (const route of ["privacy", "privacy-faq", "processors", "support", "terms", "delete-account", "architecture"]) {
+for (const route of ["privacy", "support", "delete-account"]) {
   assertIncludes(sitemapXml, `/bastcare/${route}/`, `BastCare ${route} sitemap route`);
+}
+for (const route of ["privacy-faq", "processors", "terms", "architecture"]) {
+  assertExcludes(sitemapXml, `/bastcare/${route}/`, `retired BastCare ${route} sitemap route`);
 }
 
 // GEO layer: structured data and crawler surfaces (2026-08-28).
@@ -900,6 +942,9 @@ assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
 assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");
+assertIncludes(llmsTxt, "nine languages", "llms.txt BastCare languages");
+assertIncludes(llmsTxt, "eventid=6830210433", "llms.txt event install URL");
+assertExcludes(llmsTxt, "Not a medical device", "llms.txt medical-device marketing line");
 assertIncludes(llmsTxt, "/demos/", "llms.txt Demos entry");
 assertIncludes(llmsTxt, "/frames/claim-level-source-grounding/", "llms.txt frame entry");
 assertIncludes(llmsTxt, "not affiliated with Vast.ai", "llms.txt Vast.ai disambiguation");
@@ -1096,6 +1141,25 @@ for (const file of files) {
       throw new Error(`Unexpected "${needle}" in ${rel}`);
     }
   }
+  if ([".html", ".txt"].includes(path.extname(file))) {
+    if (/seven[- ]languages|seven-language|Seven summary languages/i.test(contents)) {
+      throw new Error(`old seven-languages claim in ${rel}`);
+    }
+    for (const match of contents.matchAll(/https:\/\/apps\.apple\.com\/[^"'\s)<]+/g)) {
+      const url = match[0].replace(/&amp;/g, "&");
+      if (url !== "https://apps.apple.com/us/app/id6789669565?eventid=6830210433") {
+        throw new Error(`App Store URL must be the event install link in ${rel}: ${match[0]}`);
+      }
+    }
+  }
+  if (path.extname(file) === ".html" && rel.split(path.sep).join("/") !== "bastcare/architecture/index.html") {
+    if (contents.includes("/bastcare/architecture/")) {
+      throw new Error(`public BastCare architecture link in ${rel}`);
+    }
+  }
+  if (path.basename(file) === "llms.txt" && contents.includes("/bastcare/architecture/")) {
+    throw new Error("public BastCare architecture link in llms.txt");
+  }
   if (rel === "index.html") {
     for (const needle of ["fictional visit", "Years of paid", "paid R&D", "paid R&amp;D", "BastCare is not a medical device"]) {
       if (contents.includes(needle)) {
@@ -1178,7 +1242,7 @@ if (pilotHeroCta < pilotHtml.indexOf('id="book"') || pilotHeroCta > pilotHtml.in
   throw new Error("pilot booking CTA must sit in the #book hero, before the photo");
 }
 if (pilotHtml.split(pilotBookHref).length - 1 < 2) throw new Error("pilot page needs a repeated booking CTA");
-assertIncludes(pilotHtml, 'href="https://apps.apple.com/app/id6789669565"', "pilot App Store link");
+assertIncludes(pilotHtml, `href="${bastcareEventUrl}"`, "pilot App Store link");
 assertIncludes(pilotHtml, 'href="/assets/bastcare-pilot-one-pager.pdf"', "pilot one-pager download");
 assertIncludes(pilotHtml, 'alt="Beth Rudden with her sister"', "pilot photo alt text");
 assertIncludes(pilotHtml, "Your pilot measures results with the Zarit caregiver survey.", "pilot Zarit measure");
@@ -1194,10 +1258,10 @@ for (const [rel, maxBytes] of [["assets/pilot/beth-and-sister.webp", 250_000], [
   if (size > maxBytes) throw new Error(`${rel} is ${size} bytes; limit ${maxBytes}`);
 }
 
-// /bastcare/privacy-faq/ (Beth, 2026-10-25): approved privacy Q&A copy stays
-// verbatim, the policy links to it, and FAQPage structured data covers it.
+// BastCare legal page keeps the approved privacy Q&A (Beth, 2026-10-25).
+// The old /bastcare/privacy-faq/ URL redirects here.
 for (const approved of [
-  "<h1>Your data. Your call.</h1>",
+  '<h2 id="privacy-qa-title">Your data. Your call.</h2>',
   "Here's how BastCare handles your data, in plain words.",
   "<p>Audio is deleted once the summary is saved. Bast's servers don't save the transcript. Summaries belong to the user. They stay on your phone until you delete them. We keep only basic technical data that holds no visit content.</p>",
   "<p>Yes. BastCare is safe for kids. A child's doctor visit should include an adult.</p>",
@@ -1205,14 +1269,16 @@ for (const approved of [
   '<a href="/bastcare/delete-account/">Delete your account</a> anytime in Settings.',
   'Email <a href="mailto:community@bast.ai">community@bast.ai</a>.',
 ]) {
-  assertIncludes(bastcarePrivacyFaq, approved, `approved privacy Q&A copy: ${approved}`);
+  assertIncludes(bastcarePrivacy, approved, `approved privacy Q&A copy: ${approved}`);
 }
-if ((bastcarePrivacyFaq.match(/class="faq-item"/g) || []).length !== 11) {
+if ((bastcarePrivacy.match(/class="faq-item"/g) || []).length !== 11) {
   throw new Error("privacy Q&A must keep exactly the 11 approved questions");
 }
-assertIncludes(bastcarePrivacyFaq, '"FAQPage"', "privacy Q&A FAQPage structured data");
-assertIncludes(bastcarePrivacy, '<a class="text-link" href="/bastcare/privacy-faq/">Read the privacy Q&amp;A</a>', "policy link to privacy Q&A");
-for (const [contents, label] of [[bastcarePrivacyFaq, "privacy Q&A"], [bastcarePrivacy, "privacy policy"]]) {
+assertIncludes(bastcarePrivacy, '"FAQPage"', "privacy Q&A FAQPage structured data");
+assertIncludes(bastcarePrivacy, 'href="#privacy-qa"', "legal page link to privacy Q&A");
+assertIncludes(bastcarePrivacy, 'id="terms"', "terms section on the legal page");
+assertIncludes(bastcarePrivacy, 'id="processors"', "processors section on the legal page");
+for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   for (const banned of [/\bno audio or transcript\b/i, /\bfree (iPhone )?app\b/i]) {
     if (banned.test(contents)) throw new Error(`${label} contains banned wording: ${banned}`);
   }

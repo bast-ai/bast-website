@@ -395,6 +395,11 @@
       });
   }
 
+  function formatBastCareMetric(name, value) {
+    if (name === "successfulSummaries") return value.toLocaleString("en-US");
+    return Math.floor(value / 1000).toLocaleString("en-US") + "k";
+  }
+
   function initBastCareMetrics() {
     const panels = Array.from(document.querySelectorAll("[data-bastcare-metrics]"));
     if (!panels.length) return;
@@ -423,19 +428,19 @@
         panels.forEach((panel) => {
           displayed.forEach((name) => {
             const output = panel.querySelector(`[data-bastcare-metric="${name}"]`);
-            if (output) output.textContent = metrics[name].toLocaleString("en-US");
+            if (output) output.textContent = formatBastCareMetric(name, metrics[name]);
           });
 
           const note = panel.querySelector("[data-bastcare-metrics-note]");
           const isGrowthCounter = panel.getAttribute("data-bastcare-metrics-context") === "growth";
 
           if (note && isGrowthCounter) {
-            note.textContent = `${updatedDate ? `Refreshed ${updatedDate}. ` : ""}Each successful BastCare summary moves this number.`;
+            note.textContent = `${updatedDate ? `Updated ${updatedDate}. ` : ""}Each successful BastCare summary moves this number.`;
           } else if (note) {
             const updatedLabel = updatedDate ? ` Updated ${updatedDate}.` : "";
             note.textContent = Number.isSafeInteger(coverage) && coverage < metrics.successfulSummaries
-              ? `Token totals cover ${coverage.toLocaleString("en-US")} of ${metrics.successfulSummaries.toLocaleString("en-US")} successful runs.${updatedLabel} No transcript text is included.`
-              : `Every successful summary moves this number.${updatedLabel} No transcript text is included.`;
+              ? `Token totals cover ${coverage.toLocaleString("en-US")} of ${metrics.successfulSummaries.toLocaleString("en-US")} successful runs.${updatedLabel}`
+              : `Every successful summary moves this number.${updatedLabel}`;
           }
 
           panel.hidden = false;
