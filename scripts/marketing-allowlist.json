@@ -358,5 +358,15 @@
     "file": "index.html",
     "phrase": "Intent, QA, Context, Greeting, Early Exit, OpenAI Assistant",
     "reason": "Platform inventory name. Early Exit is a model in the platform-at-a-glance table, not a hedge."
+  },
+  {
+    "file": "about/index.html",
+    "phrase": "Knowledge can only be volunteered; it cannot be conscripted.",
+    "reason": "Dave Snowden’s published principle title, quoted on About. The word is his, not a Bast hedge."
+  },
+  {
+    "file": "about/index.html",
+    "phrase": "We only know what we know when we need to know it.",
+    "reason": "Dave Snowden’s published principle title, quoted on About. The word is his, not a Bast hedge."
   }
 ]

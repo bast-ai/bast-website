@@ -400,10 +400,8 @@
 .platform-principles h3 { margin: 3rem 0 0.8rem; color: var(--platform-navy); font-size: var(--fs-title); font-weight: var(--fw-medium); }
 .platform-principles p { margin: 0; color: var(--platform-ink-soft); }
 
-.platform-depth { display: flex; gap: 1.5rem; align-items: center; justify-content: space-between; border-top: 1px solid rgba(7, 30, 45, 0.14); padding-top: 1.4rem; color: var(--platform-ink-soft); }
-.platform-depth p { margin: 0; }
-.platform-depth nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-.platform-depth a { color: var(--platform-blue); font-weight: var(--fw-semibold); }
+.platform-demos .demo-list-wide { margin-top: 0; }
+.platform-demos .platform-section-heading .button { margin-top: 1.25rem; }
 
 .evidence-portal { gap: clamp(4rem, 9vw, 7rem); }
 
@@ -594,8 +592,6 @@
   .platform-principles article { min-height: 0; }
 
   .platform-principles h3 { margin-top: 2rem; }
-
-  .platform-depth { align-items: flex-start; flex-direction: column; }
 
   .platform-header {
     display: flex;

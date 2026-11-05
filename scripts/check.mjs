@@ -5,7 +5,6 @@ const root = process.cwd();
 const distDir = path.join(root, "dist");
 const requiredFiles = [
   "index.html",
-  "investors.html",
   "principles.html",
   "manifesto/index.html",
   "assets/manifesto.css",
@@ -209,7 +208,6 @@ const platformArchitectureHtml = await readFile(path.join(distDir, "platform/arc
 const platformDeliveryHtml = await readFile(path.join(distDir, "platform/delivery/index.html"), "utf8");
 const platformEvidenceHtml = await readFile(path.join(distDir, "platform/evidence/index.html"), "utf8");
 const platformDemoHtml = await readFile(path.join(distDir, "platform/demo/index.html"), "utf8");
-const investorsHtml = await readFile(path.join(distDir, "investors.html"), "utf8");
 const principlesHtml = await readFile(path.join(distDir, "principles.html"), "utf8");
 const privacyHtml = await readFile(path.join(distDir, "privacy.html"), "utf8");
 const advisoryArchiveStub = await readFile(path.join(distDir, "advisory/index.html"), "utf8");
@@ -250,11 +248,6 @@ const bastcareDeleteAccount = await readFile(
 const bastcareArchitecture = await readFile(
   path.join(distDir, "bastcare/architecture/index.html"), "utf8");
 const sitemapXml = await readFile(path.join(distDir, "sitemap.xml"), "utf8");
-
-assertExcludes(investorsHtml, "bast-ai-healthcare-teaser", "retired healthcare teaser reference");
-assertExcludes(investorsHtml, "Download teaser", "retired teaser download");
-assertIncludes(investorsHtml, 'href="/evidence/"', "investor evidence-library link");
-assertIncludes(investorsHtml, 'href="/platform/evidence/"', "investor evidence-register link");
 
 assertIncludes(indexHtml, '<body class="home-page">', "homepage editorial style scope");
 function assertGlobalHeader(contents, label) {
@@ -474,7 +467,6 @@ assertExcludes(indexHtml, "BAST_CONTACT", "home contact Web3Forms config in the 
 
 for (const [contents, label] of [
   [indexHtml, "home"],
-  [investorsHtml, "investors"],
   [principlesHtml, "principles"],
   [privacyHtml, "privacy"],
 ]) {
@@ -516,9 +508,11 @@ assertIncludes(platformHtml, "Shows where it came from.", "source visibility ben
 assertIncludes(platformHtml, "People stay in charge.", "human accountability benefit");
 assertIncludes(platformHtml, "The platform in the palm of your hand", "BastCare product proof");
 assertIncludes(platformHtml, 'href="/bastcare/"', "Platform BastCare link");
-assertIncludes(platformHtml, 'href="/platform/architecture/"', "quiet architecture diligence link");
-assertIncludes(platformHtml, 'href="/platform/evidence/"', "quiet evidence diligence link");
-assertIncludes(platformHtml, "Claims and proof", "platform evidence register label");
+assertIncludes(platformHtml, 'href="/platform/architecture/"', "architecture link in the platform footer");
+assertExcludes(platformHtml, "Want to go deeper", "platform diligence band");
+assertExcludes(platformHtml, 'href="/platform/evidence/"', "claims link on the platform overview");
+assertExcludes(platformHtml, 'href="/platform/delivery/"', "Agent OS link on the platform overview");
+assertExcludes(platformHtml, "Claims and proof", "claims label on the platform overview");
 assertIncludes(platformHtml, "Here. It's called Bast.", "platform infrastructure hero");
 assertIncludes(platformHtml, "70&ndash;85%", "platform token claim");
 assertIncludes(platformHtml, "fewer tokens than standard RAG", "platform token comparison");
@@ -530,6 +524,20 @@ assertIncludes(platformHtml, "/assets/platform/admin-interaction-log.jpg", "plat
 assertIncludes(platformHtml, "/assets/platform/admin-usage-analytics.jpg", "platform analytics view");
 assertIncludes(platformHtml, "offering-platform-copy", "platform console copy");
 assertIncludes(platformHtml, 'href="/demos/">Watch the demos</a>', "platform demos link");
+{
+  const demosAt = platformHtml.indexOf('id="platform-demos"');
+  const differenceAt = platformHtml.indexOf('id="platform-difference-title"');
+  if (demosAt < 0 || differenceAt < 0 || demosAt > differenceAt) {
+    throw new Error("platform demos must appear before the Bast difference section");
+  }
+  const early = platformHtml.slice(0, differenceAt);
+  for (const videoId of ["SjxGRh3G1JI", "b2l16nkB0f8", "Sa-uNxoRjos"]) {
+    assertIncludes(early, `data-video-id="${videoId}"`, `platform demo ${videoId} before the rest of the page`);
+  }
+  assertIncludes(early, 'href="/demos/"', "platform demos page link near the top");
+  assertIncludes(early, 'href="/assets/bastcare/media/bastcare-walkthrough-captioned.mp4"', "platform BastCare walkthrough near the top");
+  assertIncludes(early, 'href="/platform/demo/"', "platform demo guide near the top");
+}
 assertExcludes(platformHtml, "sexiest", "retired DVC wording on the platform page");
 assertExcludes(platformHtml, "Small local models", "retired principles teaser on the platform page");
 assertExcludes(indexHtml, "sexiest", "retired DVC wording on the home page");
@@ -680,8 +688,16 @@ for (const [contents, label] of bastcarePages) {
   const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
   if (!footerNav) throw new Error(`Missing footer navigation on ${label} page`);
   assertIncludes(footerNav[0], 'href="/evidence/"', `evidence library in footer on ${label} page`);
-  assertIncludes(footerNav[0], 'href="/frames/"', `reliability frames in footer on ${label} page`);
-  assertIncludes(footerNav[0], "Claims and proof", `claims label in footer on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/platform/">Overview</a>', `platform overview in footer on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/platform/architecture/"', `architecture in footer on ${label} page`);
+  assertIncludes(footerNav[0], 'href="/demos/"', `demos in footer on ${label} page`);
+  assertExcludes(footerNav[0], 'href="/frames/"', `reliability frames in footer on ${label} page`);
+  assertExcludes(footerNav[0], "Claims and proof", `claims label in footer on ${label} page`);
+  assertExcludes(footerNav[0], 'href="/platform/delivery/"', `Agent OS in footer on ${label} page`);
+  assertExcludes(footerNav[0], 'href="/about/#team"', `team link in footer on ${label} page`);
+  assertExcludes(footerNav[0], 'href="/investors.html"', `investors link in footer on ${label} page`);
+  assertExcludes(footerNav[0], ">Team<", `team label in footer on ${label} page`);
+  assertExcludes(footerNav[0], ">Investors<", `investors label in footer on ${label} page`);
   assertIncludes(footerNav[0], "Principles from nature", `principles label in footer on ${label} page`);
   assertExcludes(footerNav[0], "Operating Principles", `old principles label in footer on ${label} page`);
   assertExcludes(footerNav[0], ">How it works<", `ambiguous how-it-works label in footer on ${label} page`);
@@ -953,8 +969,9 @@ assertIncludes(faqHtml, "Is Bast AI affiliated with Vast.ai?", "FAQ Vast.ai disa
 assertIncludes(faqHtml, '"FAQPage"', "FAQ structured data");
 assertExcludes(sitemapXml, "/team/</loc>", "retired team URL stays out of the sitemap");
 assertIncludes(teamHtml, 'content="noindex, nofollow"', "team stub stays out of the index");
-assertIncludes(teamHtml, 'content="0; url=/about/#team"', "team stub redirects to the about team section");
-assertIncludes(teamHtml, 'href="/about/#team"', "team stub link to the about team section");
+assertIncludes(teamHtml, 'content="0; url=/about/"', "team stub redirects to about");
+assertIncludes(teamHtml, 'href="/about/">Continue reading here</a>', "team stub link to about");
+assertExcludes(teamHtml, "#team", "team stub does not target a team anchor");
 assertExcludes(teamHtml, '"Person"', "team stub has no person schema");
 assertExcludes(teamHtml, "CEO &amp; Chair", "retired Chair title on the team stub");
 const aboutHtml = await readFile(path.join(distDir, "about/index.html"), "utf8");
@@ -1025,9 +1042,13 @@ assertExcludes(faqHtml, "2 of 5", "retired 2 of 5 patent count in the FAQ");
 assertIncludes(llmsTxt, "- 5 patents covering", "llms.txt patents fact");
 assertExcludes(llmsTxt, "patents filed", "llms.txt patent filing qualifier");
 assertExcludes(llmsTxt, "2 of 5", "retired 2 of 5 patent count in llms.txt");
-assertIncludes(investorsHtml, ">5 patents<", "investors patents figure");
-assertExcludes(investorsHtml, "2 of 5", "retired 2 of 5 patent count on the investors page");
-assertExcludes(investorsHtml, "is filed", "investors patent filing qualifier");
+{
+  let investorsPublished = true;
+  try { await exists("investors.html"); } catch { investorsPublished = false; }
+  if (investorsPublished) throw new Error("investors.html is still published");
+}
+assertExcludes(sitemapXml, "investors.html", "investors page stays out of the sitemap");
+assertExcludes(llmsTxt, "investors.html", "llms.txt does not list the investors page");
 assertIncludes(aboutHtml, "BastCare alpha released.", "about page BastCare alpha");
 assertIncludes(aboutHtml, "31 October 2026", "about page evidence library date");
 assertIncludes(aboutHtml, 'href="/evidence/"', "about page evidence library link");
@@ -1036,19 +1057,40 @@ assertExcludes(aboutHtml, "Milestones we can date", "retired timeline heading");
 assertExcludes(aboutHtml, "4 October 2022", "retired formation anniversary date");
 assertExcludes(aboutHtml, "MSU Denver", "MSU Denver stays off the timeline");
 assertExcludes(aboutHtml, "Metropolitan University", "Metropolitan University stays off the timeline");
-assertIncludes(aboutHtml, 'id="team"', "about page team section");
-assertIncludes(aboutHtml, '<p class="card-kicker">CEO</p>', "Beth Rudden title on the about page");
-assertIncludes(aboutHtml, "Thanh Lam", "about page CTO");
-assertIncludes(aboutHtml, "wider team of contributors", "about page contributor line");
+{
+  const manifestoAt = aboutHtml.indexOf("Data is a belonging of a human experience.");
+  const knowledgeAt = aboutHtml.indexOf('id="knowledge"');
+  const timelineAt = aboutHtml.indexOf("How Bast got here.");
+  if (manifestoAt < 0 || knowledgeAt < 0 || timelineAt < 0 || manifestoAt > knowledgeAt || knowledgeAt > timelineAt) {
+    throw new Error("about page must lead with the manifesto, then the seven knowledge principles");
+  }
+}
+for (const principle of [
+  "Knowledge can only be volunteered; it cannot be conscripted.",
+  "We only know what we know when we need to know it.",
+  "We always know more than we can say, and we will always say more than we can write down.",
+  "In the context of real need few people will withhold their knowledge.",
+  "Everything is fragmented.",
+  "Tolerated failure imprints learning better than success.",
+  "The way we know things is not the way we report we know things.",
+]) {
+  assertIncludes(aboutHtml, principle, `about knowledge principle: ${principle}`);
+}
+assertIncludes(aboutHtml, "https://cynefin.io/wiki/Principles_for_managing_knowledge", "about page Cynefin knowledge principles link");
 assertIncludes(aboutHtml, "Dave Snowden", "about page Cynefin attribution");
-assertIncludes(aboutHtml, "Confusion, also called disorder", "about page Cynefin center");
-assertIncludes(aboutHtml, "action must fit the nature of the situation", "about page use of Cynefin");
-assertIncludes(aboutHtml, '"Person"', "about page person schema");
-assertIncludes(aboutHtml, '"jobTitle": "CEO"', "Beth Rudden title in about schema");
+assertIncludes(aboutHtml, 'href="/manifesto/"', "about page manifesto link");
+assertIncludes(aboutHtml, "/assets/manifesto/data-belonging-periwinkle-organic.png", "about page manifesto artwork");
+assertIncludes(aboutHtml, 'href="/principles.html"', "about page principles from nature link");
+assertExcludes(aboutHtml, 'id="team"', "about page has no team section");
+assertExcludes(aboutHtml, "Thanh Lam", "about page does not feature the team");
+assertExcludes(aboutHtml, "wider team of contributors", "about page contributor line removed with the team section");
+assertExcludes(aboutHtml, "Confusion, also called disorder", "about page Cynefin domain blurb removed");
+assertExcludes(aboutHtml, '"Person"', "about page has no person schema for a team section");
+assertExcludes(aboutHtml, '"jobTitle": "CEO"', "about page schema does not list a team title");
 assertExcludes(aboutHtml, "CEO &amp; Chair", "retired Chair title on the about page");
 assertExcludes(aboutHtml, 'href="/team/"', "about page does not link to the team stub");
 assertIncludes(indexHtml, 'id="about"', "homepage about section");
-assertIncludes(indexHtml, 'href="/about/#team"', "homepage link to the team section");
+assertExcludes(indexHtml, 'href="/about/#team"', "homepage does not link to a team section");
 assertIncludes(indexHtml, 'href="/about/"', "homepage link to the story");
 assertExcludes(indexHtml, 'href="/team/"', "homepage does not link to the team stub");
 assertIncludes(indexHtml, '"jobTitle": "CEO"', "Beth Rudden title on the homepage");
@@ -1572,6 +1614,38 @@ for (const file of files) {
 }
 if (confidenceFailures.length) {
   throw new Error(`Marketing confidence check failed:\n${confidenceFailures.slice(0, 30).join("\n")}`);
+}
+
+// Footer removals (Beth, 2026-11-05): Agent OS, Claims and proof, Reliability
+// frames, Team, and Investors leave the site footer. Overview, Architecture,
+// and Demos stay. Care-teams / founding-partners wording is not asserted here.
+const retiredFooterNeedles = [
+  ['href="/platform/delivery/"', "Agent OS"],
+  ['href="/platform/evidence/"', "Claims and proof"],
+  ['href="/frames/"', "Reliability frames"],
+  ['href="/about/#team"', "Team"],
+  ['href="/investors.html"', "Investors"],
+  [">Team<", "Team label"],
+  [">Investors<", "Investors label"],
+  [">Agent OS<", "Agent OS label"],
+  [">Claims and proof<", "Claims and proof label"],
+  [">Reliability frames<", "Reliability frames label"],
+];
+for (const file of files) {
+  if (path.extname(file) !== ".html") continue;
+  const contents = await readFile(file, "utf8");
+  const rel = path.relative(distDir, file);
+  if (contents.includes('href="/investors.html"')) {
+    throw new Error(`Investors link remains in ${rel}`);
+  }
+  const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
+  if (!footerNav) continue;
+  for (const needle of ['href="/platform/">Overview</a>', 'href="/platform/architecture/"', 'href="/demos/"']) {
+    if (!footerNav[0].includes(needle)) throw new Error(`Missing ${needle} in the footer of ${rel}`);
+  }
+  for (const [needle, label] of retiredFooterNeedles) {
+    if (footerNav[0].includes(needle)) throw new Error(`${label} remains in the footer of ${rel}`);
+  }
 }
 
 console.log("Static site checks passed");
