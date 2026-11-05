@@ -115,6 +115,13 @@ body.evlib-page .site-nav a {
   text-decoration: none;
 }
 
+body.evlib-page .site-nav a.nav-cta,
+body.evlib-page .site-nav a.nav-cta:hover,
+body.evlib-page .site-nav a.nav-cta:focus-visible {
+  color: #fff;
+  font-weight: 600;
+}
+
 body.evlib-page .button-primary {
   color: #fff;
   font-size: 1.125rem;
