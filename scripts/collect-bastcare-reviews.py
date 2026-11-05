@@ -35,7 +35,7 @@ from urllib.request import Request, urlopen
 APP_ID = 6789669565
 BUNDLE_ID = "ai.bast.careloop"
 STOREFRONT = "us"
-APP_STORE_URL = "https://apps.apple.com/us/app/bastcare/id6789669565"
+APP_STORE_URL = "https://apps.apple.com/us/app/id6789669565?eventid=6830210433"
 LOOKUP_URL = f"https://itunes.apple.com/lookup?id={APP_ID}&country={STOREFRONT}"
 REVIEWS_URL = (
     f"https://itunes.apple.com/{STOREFRONT}/rss/customerreviews/"
