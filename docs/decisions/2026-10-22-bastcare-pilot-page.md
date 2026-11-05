@@ -49,3 +49,5 @@ keep what the doctor said." on `/pilot/` (h1 and `og:title`) and on the
 one-pager PDF (headline only, set at 19 pt so it fits the same box; QR, layout
 and other copy unchanged). The home page hero carries the same line beside a
 "Start a BastCare pilot" link to `/pilot/`.
+
+Update 2026-11-04: Beth replaced this one-pager teaser with a founding-partners page. See `2026-11-04-founding-partners-pilot-page.md`. The consumer privacy one-liner is no longer the pilot page body. It stays on `/bastcare/privacy/`.
