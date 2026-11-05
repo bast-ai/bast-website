@@ -96,8 +96,9 @@
   --font-display: "Estedad", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "Courier New", monospace;
 
-  /* Type scale - one role per size, aligned to the @bast/shared-styles ramp.
-     Fit form to function:
+  /* Type scale - one role per size. Marketing display, hero, and body
+     stay at this large size for readability. Prefer a flatter surface
+     before a smaller size. Weights:
        display/h2 -> thin (200), the elegant high-impact voice
        h3         -> light (300), large statements
        title      -> medium (500), functional card/component headings
