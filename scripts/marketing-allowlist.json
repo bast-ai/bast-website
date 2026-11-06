@@ -1,0 +1,372 @@
+[
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "atform temporarily uses a model provider. Only a patient-approved encrypted summary reac",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "d relay · evidence ↘ CareTeam member sees only what was shared Visit flow BastCare asks",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "ount evidence. 04 CareTeam relay Delivers only patient-approved encrypted summary copies",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "as those needs change; each request goes only to the selected provider. Account deletio",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "deletion event BastCare clears the iPhone only after success Design commitments What you",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "irst actions, visible focus, and no color-only meaning. Auditability De-identified usage",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "cessibility VoiceOver, Dynamic Type, text-first actions, visible focus, and no color-only",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "and the Bast platform. The Bast platform temporarily uses a model provider. Only a patient-app",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/architecture/index.html",
+    "phrase": "Selected AI provider Anthropic or OpenAI temporarily turns the requested masked text into a su",
+    "reason": "Privacy architecture: the word is the boundary on what a provider receives, what a CareTeam sees, and when the phone clears."
+  },
+  {
+    "file": "bastcare/delete-account/index.html",
+    "phrase": "unt Delete means delete the account - not just this phone. The process is intentionally",
+    "reason": "Account deletion: deleting the account covers every device, and the phone clears after the server succeeds."
+  },
+  {
+    "file": "bastcare/delete-account/index.html",
+    "phrase": "account-linked data. 4 This iPhone clears Only after server success, BastCare removes th",
+    "reason": "Account deletion: deleting the account covers every device, and the phone clears after the server succeeds."
+  },
+  {
+    "file": "bastcare/index.html",
+    "phrase": "n from Mom about her appointments, it was only as good as… Verified App Store review ★★★",
+    "reason": "Published App Store review text. Customer wording stays as written."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "the workspace, unless you set permissions Only you, unless you choose to share What the",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": ". Sharing: an encrypted copy of a summary only after you choose a CareTeam. Technical re",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "the preview, and choose Use this summary only when you want to replace the current one.",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "hared encrypted content remains available only while the share is active or until accoun",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "account’s local app data. Bast may retain only de-identified aggregate model token count",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "identity, and model-processing providers only for the purposes described here. BastCare",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "resource needs change. Each request goes only to the provider selected for that request",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "included Names and ID numbers are masked first Which AI processes it Often not disclosed",
+    "reason": "Privacy policy: the word is the legal limit on who sees a visit, what Bast retains, and which provider receives a request."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "your phone until you delete them. We keep only basic technical data that holds no visit",
+    "reason": "Privacy Q&A: Bast keeps basic technical data and not visit content."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "Limited jobs. Bast uses outside services only where they have a defined role in providi",
+    "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "ven visit content. Each provider receives only the information needed for its stated job",
+    "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "A library belongs on this processor page only when it sends information to an outside s",
+    "reason": "Processor disclosure: a provider receives the information its job needs, and a library is listed when it sends data out."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "r License Agreement. You may use BastCare only where permitted by law and these notices.",
+    "reason": "Terms: permission to use BastCare and to process content is limited to what the feature requires and the law allows."
+  },
+  {
+    "file": "bastcare/privacy/index.html",
+    "phrase": "ou provide. You permit Bast to process it only as needed to provide the feature you requ",
+    "reason": "Terms: permission to use BastCare and to process content is limited to what the feature requires and the law allows."
+  },
+  {
+    "file": "evidence/index.html",
+    "phrase": "ce Supports The jagged frontier On a task just outside the AI's abilities, BCG consultan",
+    "reason": "Inside the evidence library: a study caveat, or the sign-up line that an unticked box sends the confirmation link and nothing further."
+  },
+  {
+    "file": "evidence/index.html",
+    "phrase": "lting tasks, GPT-4 in 2023, one firm, and only one task outside the frontier. Quality wa",
+    "reason": "Inside the evidence library: a study caveat, or the sign-up line that an unticked box sends the confirmation link and nothing further."
+  },
+  {
+    "file": "evidence/index.html",
+    "phrase": "ates Optional. Leave this unticked and we only email the confirmation link. Email me the",
+    "reason": "Inside the evidence library: a study caveat, or the sign-up line that an unticked box sends the confirmation link and nothing further."
+  },
+  {
+    "file": "faq/index.html",
+    "phrase": "as awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the",
+    "reason": "Official name of the Colorado OEDIT Advanced Industries Early-Stage Capital and Retention Grant."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "utput. Can an AI system refuse to deliver just one unsupported sentence instead of refus",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "ression of a single ungrounded claim, not just overall accuracy rates. Cite This Frame B",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "lucinations. The verification pipeline is only as granular as its decomposition step. A",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "for attribution, the system can suppress only the ungrounded assertion and deliver the",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "l grounding. The verification pipeline is only as granular as its decomposition step. A",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "level grounding system from a vendor that only does topic matching? A genuine claim-leve",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "e — the three architectural tiers and why only output interception meets a zero-toleranc",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "liver a single unsupported sentence while still delivering the rest of a response, or ref",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "partial responses to remain useful while still blocking unverifiable assertions Architec",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "be retrieved and present in context while still failing to support a particular sentence",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/claim-level-source-grounding/index.html",
+    "phrase": "can be retrieved, present in context, and still fail to support a particular sentence the",
+    "reason": "Citable frame definition. The word is the technical distinction, not a marketing hedge."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "e actually prevents hallucinations versus just reducing them? Only Tier 3 — Output Inter",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "every delivered answer is auditable, not just plausible. How does output interception d",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "cannot be traced to an approved source). Only the third tier satisfies a zero-tolerance",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "ust be correctly defined; interception is only as reliable as the source governance upst",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "e contexts; structural enforcement is the only mechanism that converts a probabilistic p",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "wnstream. An output interception layer is only as trustworthy as the corpus of approved",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "hallucinations versus just reducing them? Only Tier 3 — Output Interception — converts h",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "ble link to an approved source — or is it only assumed at input? A vendor that cannot an",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "pported answers in clinical settings? The only architectural approach that structurally",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "he default state is refusal, and delivery only occurs when a positive verification condi",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "on actually is. An interception layer can only refuse answers that lack support in the a",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "Buyers evaluating vendors should ask not only how interception works, but how the appro",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "-purpose LLMs with custom system prompts; early-stage AI pilots No Model can ignore, misi",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "s high factual accuracy on a benchmark is still a probabilistic system. Any non-zero hall",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "s high factual accuracy on a benchmark is still a probabilistic system, meaning any non-z",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "frames/zero-tolerance-ai-output-architecture/index.html",
+    "phrase": "ception, not filtering, because filtering still allows unsupported answers to pass when t",
+    "reason": "Citable frame definition. The word is the technical distinction, including the early-stage pilot tier the frame names."
+  },
+  {
+    "file": "llms.txt",
+    "phrase": "- Awarded a $250,000 Advanced Industries Early-Stage Capital and Retention Grant by the",
+    "reason": "Official name of the Colorado OEDIT Advanced Industries Early-Stage Capital and Retention Grant."
+  },
+  {
+    "file": "manifesto/index.html",
+    "phrase": "longs in how we judge our work. Opening · First published 4 October 2026 , on Bast’s four",
+    "reason": "Publication history. The date is the news of the manifesto opening."
+  },
+  {
+    "file": "platform/evidence/index.html",
+    "phrase": "ase reviewed · Elevated review · Internal only Routine code-derived facts are reviewed a",
+    "reason": "Claim register: publication is internal, and a metric applies to its defined population and window."
+  },
+  {
+    "file": "platform/evidence/index.html",
+    "phrase": "napshot Supports a quantitative statement only for its defined population and measuremen",
+    "reason": "Claim register: publication is internal, and a metric applies to its defined population and window."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "a solar battery. 02 · Energy Nature uses only the energy it needs. Use the fewest usefu",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "y, and for whom it mattered. This is “use only what you need” applied to learning: prese",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "del to contain the world. It emerges from small, transparent systems - fitted to purpose,",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "f butterflies is called a kaleidoscope. A small set of forms becomes a living field of va",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "ial-scale computation. Build intelligence small enough to run locally - even on a device",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "neralization. The kaleidoscope hypothesis Small structures. Recombined into remarkable ra",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "sic structure-containing universe is very small, but it is repeated in all kinds of ways.",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "principles.html",
+    "phrase": "u need” applied to learning: preserve the small pieces that contain structure; do not con",
+    "reason": "Principles from nature, including the Benyus line and the Chollet line the page is required to keep verbatim."
+  },
+  {
+    "file": "privacy.html",
+    "phrase": ", and email inquiry clicks. If \"Necessary only\" is selected, Google Analytics is not loa",
+    "reason": "Cookie choice name. Necessary only is the label of the choice that does not load analytics."
+  },
+  {
+    "file": "privacy.html",
+    "phrase": "er a visitor chose analytics or necessary-only mode. If analytics are allowed, Google An",
+    "reason": "Cookie choice name. Necessary only is the label of the choice that does not load analytics."
+  },
+  {
+    "file": "platform/index.html",
+    "phrase": "Intent, QA, Context, Greeting, Early Exit, OpenAI Assistant",
+    "reason": "Platform inventory name. Early Exit is a model in the platform-at-a-glance table, not a hedge."
+  },
+  {
+    "file": "about/index.html",
+    "phrase": "Knowledge can only be volunteered; it cannot be conscripted.",
+    "reason": "Dave Snowden’s published principle title, quoted on About. The word is his, not a Bast hedge."
+  },
+  {
+    "file": "about/index.html",
+    "phrase": "We only know what we know when we need to know it.",
+    "reason": "Dave Snowden’s published principle title, quoted on About. The word is his, not a Bast hedge."
+  }
+]

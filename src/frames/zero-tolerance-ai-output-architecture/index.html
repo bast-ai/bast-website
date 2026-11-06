@@ -131,11 +131,15 @@
   <a class="brand" href="/" aria-label="Bast home">
     <img src="/assets/bast-logo.svg" alt="Bast">
   </a>
+  <input class="nav-toggle" id="nav-toggle" type="checkbox">
+  <label class="nav-menu-button" for="nav-toggle"><span class="nav-menu-open">Menu</span><span class="nav-menu-close">Close</span></label>
   <nav class="site-nav" aria-label="Primary">
-    <a href="/platform/">Platform</a>
     <a href="/bastcare/">BastCare</a>
-    <a href="/demos/">Demos</a>
-    <a class="nav-cta" href="/#contact">Contact</a>
+    <a href="/pilot/">Founding partners</a>
+    <a href="/evidence/">Evidence library</a>
+    <a href="/platform/">Platform</a>
+    <a href="/about/">About</a>
+    <a class="nav-cta" href="https://apps.apple.com/us/app/id6789669565?eventid=6830210433" data-app-store-placement="site-header">Download BastCare</a>
   </nav>
 </header>
 
@@ -328,7 +332,7 @@
           </tbody>
         </table>
       </div>
-      <p>Bast AI implements Tier 3 output interception as the structural basis of its platform. A verification layer sits between an organization's approved knowledge and the model's output: before any answer ships, it checks scope, pulls only approved sources, and refuses when nothing supports a reply. See how the <a href="/platform/">Bast Platform</a> applies this architecture, or read the companion frame, <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a>, for the sub-response granularity at which interception operates. Bast AI can be reached at <a href="mailto:beth@bast.ai">beth@bast.ai</a> for technical evaluation inquiries.</p>
+      <p>Bast AI implements Tier 3 output interception as the structural basis of its platform. A verification layer sits between an organization's approved knowledge and the model's output: before any answer ships, it checks scope, pulls approved sources, and refuses when nothing supports a reply. See how the <a href="/platform/">Bast Platform</a> applies this architecture, or read the companion frame, <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a>, for the sub-response granularity at which interception operates. Bast AI can be reached at <a href="mailto:beth@bast.ai">beth@bast.ai</a> for technical evaluation inquiries.</p>
     </section>
 
     <section id="answer-kit" aria-labelledby="answers-title">
@@ -391,7 +395,7 @@
 
     <section class="frame-next" aria-label="Related Bast pages">
       <aside class="frame-link">
-        <p>Companion frame: <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a> — the three-stage pipeline that makes Tier 3 interception work at the level of individual claims. Then see <a href="/platform/">the Bast Platform</a>, <a href="/faq/">direct answers in the FAQ</a>, or <a href="/team/">the team behind it</a>.</p>
+        <p>Companion frame: <a href="/frames/claim-level-source-grounding/">Claim-Level Source Grounding</a> — the three-stage pipeline that makes Tier 3 interception work at the level of individual claims. Then see <a href="/platform/">the Bast Platform</a>, <a href="/faq/">direct answers in the FAQ</a>, or <a href="/about/">about Bast</a>.</p>
       </aside>
     </section>
   </article>
@@ -401,41 +405,50 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a class="brand" href="/" aria-label="Bast home"><img src="/assets/bast-logo.svg" alt="Bast"></a>
-      <p>Explainable AI infrastructure. Every answer traces back to a source you can check.</p>
+      <p>Explainable healthcare AI. Answers point back to a source you can check.</p>
     </div>
     <nav class="footer-nav" aria-label="Footer">
       <div class="footer-col">
-        <p class="footer-head">Product</p>
-        <a href="/#how">How it works</a>
-        <a href="/#offerings">Offerings</a>
-        <a href="/bastcare/">BastCare</a>
-        <a href="/#technology">Technology</a>
+        <p class="footer-head">BastCare</p>
+        <a href="https://apps.apple.com/us/app/id6789669565?eventid=6830210433">Download on the App Store</a>
+        <a href="/bastcare/support/">Support</a>
+        <a href="/bastcare/privacy/">Legal</a>
+        <a href="/bastcare/delete-account/">Delete account</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Founding partners</p>
+        <a href="/evidence/">Evidence library</a>
+        <a href="/pilot/#book">Start here</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Platform</p>
+        <a href="/platform/">Overview</a>
+        <a href="/platform/architecture/">Architecture</a>
         <a href="/demos/">Demos</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Company</p>
+        <a href="/about/">About</a>
         <a href="/manifesto/">Manifesto</a>
-        <a href="/#proof">Why Bast</a>
-        <a href="/principles.html">Operating Principles</a>
-        <a href="/team/">Team</a>
+        <a href="/principles.html">Principles from nature</a>
         <a href="/faq/">FAQ</a>
-        <a href="/investors.html">Investors</a>
-        <a href="/#contact">Contact</a>
       </div>
       <div class="footer-col">
-        <p class="footer-head">Connect</p>
-        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
+        <p class="footer-head">Stay in touch</p>
+        <a href="https://bastai.substack.com" target="_blank" rel="noopener">Newsletter</a>
         <a href="https://bastai.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.linkedin.com/company/bast-ai/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.youtube.com/@Bast_CAT22" target="_blank" rel="noopener">YouTube</a>
         <a href="mailto:community@bast.ai">community@bast.ai</a>
-        <a href="/privacy.html">Privacy &amp; cookies</a>
       </div>
     </nav>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 Bast AI &middot; Explainable by construction.</span>
+    <span>&copy; 2026 Bast AI.</span>
+    <a href="/privacy.html">Website privacy and cookies</a>
     <button class="footer-link-btn" type="button" onclick="window.bastOpenConsentPreferences && window.bastOpenConsentPreferences()">Cookie preferences</button>
   </div>
 </footer>
+<script src="/assets/nav.js"></script>
 </body>
 </html>

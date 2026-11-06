@@ -149,6 +149,18 @@ class BastCareReviewCollectorTests(unittest.TestCase):
         self.assertEqual(pending["appStoreVersionSeen"], "1.0.13")
         self.assertIn("1.0.12 → 1.0.13", text)
         self.assertIn("Release notes need review", text)
+        self.assertIn("Public pages do not print the App Store version", text)
+
+    def test_queue_does_not_flag_unversioned_release_notes(self):
+        pending, summary = MODULE.update_queue(
+            lookup_payload(version="1.0.13"),
+            {"feed": {"entry": []}},
+            approved=empty(),
+            pending=empty(appStoreVersionSeen="1.0.13"),
+            rejected=empty(),
+            page_html="<section>What's new in BastCare</section>",
+        )
+        self.assertNotIn("Release notes need review", "\n".join(summary))
 
     def test_truncates_review_excerpt_at_word_boundary(self):
         body = " ".join(f"word{index}" for index in range(30))

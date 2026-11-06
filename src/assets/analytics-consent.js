@@ -136,8 +136,8 @@
       }
       .bast-consent p {
         margin: 0 0 0.85rem;
-        color: rgba(13, 41, 53, 0.72);
-        font-size: 0.9rem;
+        color: #0d2935;
+        font-size: 1.125rem;
         line-height: 1.5;
       }
       .bast-consent-actions {
@@ -155,7 +155,7 @@
         border-radius: 10px;
         border: none;
         font: inherit;
-        font-size: 0.84rem;
+        font-size: 1.125rem;
         font-weight: 600;
         text-decoration: none;
         padding: 0.58rem 1.05rem;
@@ -174,7 +174,7 @@
         box-shadow: 4px 4px 8px rgba(22, 27, 29, 0.2), -4px -4px 8px rgba(250, 251, 255, 1);
       }
       .bast-consent a {
-        color: rgba(13, 41, 53, 0.72);
+        color: #0d2935;
       }
       .bast-consent button:focus-visible,
       .bast-consent a:focus-visible {

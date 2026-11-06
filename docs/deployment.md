@@ -34,3 +34,23 @@ GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
 Do not reuse the Beth Rudden site measurement id (`G-FL8JCB0PXZ`);
 `scripts/check.mjs` fails the build if it appears.
+
+## BastCare public metrics
+
+`src/assets/data/bastcare-metrics.json` is served at
+`https://www.bast.ai/assets/data/bastcare-metrics.json`.
+`.github/workflows/bastcare-metrics.yml` refreshes it four times a day
+(`0 */6 * * *`) from production CareLoop and commits the file when the totals
+change. The API key is the repository secret `BASTCARE_METRICS_API_KEY`. It is
+not stored in this repo.
+
+A push made with `GITHUB_TOKEN` does not start other workflows. After a
+metrics commit, this workflow dispatches Deploy (`workflow_dispatch` on
+`main`) and waits for it. That dispatch is how a metrics-only commit reaches
+www.bast.ai. Push and dispatch together are intentional, not a second cascade.
+`deploy.yml` also runs on a push to `main` from any other token, and on a
+manual run. There is no scheduled Deploy.
+
+Turn off the old laptop/Duplo cron that ran `scripts/run-bastcare-metrics.sh`.
+That script remains for a manual run. See
+[decisions/2026-11-05-actions-cadence.md](./decisions/2026-11-05-actions-cadence.md).

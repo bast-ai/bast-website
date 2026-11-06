@@ -70,7 +70,7 @@ def page_base(c, page_no, section):
     c.line(38, 28, PAGE_W - 38, 28)
     c.setFont("Helvetica", 7.5)
     c.setFillColor(MUTED)
-    c.drawString(38, 16, "Public solution architecture  |  Version 1.2  |  September 2026")
+    c.drawString(38, 16, "Public solution architecture  |  Version 1.3  |  November 2026")
     c.drawCentredString(PAGE_W / 2, 16, "BastCare is not a medical device.")
     c.drawRightString(PAGE_W - 38, 16, str(page_no))
 
@@ -189,7 +189,7 @@ def build():
     # 2 - Context
     page_base(c, 2, "System context")
     title(c, "System context", "Who participates - and where data crosses a boundary", "Arrows show purposeful exchanges. They do not imply that every component stores the data it handles.")
-    node(c, 45, 302, 136, 95, "Patient", "Records with permission, reviews the summary, and controls sharing.", fill=PALE_GREEN, accent=GREEN)
+    node(c, 45, 302, 136, 95, "Patient", "BastCare asks for consent before recording. Reviews the summary and controls sharing.", fill=PALE_GREEN, accent=GREEN)
     node(c, 45, 158, 136, 95, "CareTeam member", "Accepts an invitation and sees only summaries the patient shares.", fill=PALE_VIOLET, accent=SECONDARY)
     node(c, 278, 230, 154, 105, "BastCare on iPhone", "Capture, consent, review, local data, sharing choices, and deletion controls.", fill=PALE_BLUE)
     node(c, 518, 230, 154, 105, "Bast services", "Authentication, summary orchestration, encrypted sharing relay, and audit evidence.", fill=PANEL)
@@ -211,9 +211,9 @@ def build():
 
     # 3 - Visit lifecycle
     page_base(c, 3, "Visit lifecycle")
-    title(c, "Visit lifecycle", "From permission to a useful summary", "Audio is temporary. The original recognized transcript remains protected on the iPhone with the visit.")
+    title(c, "Visit lifecycle", "Ask for consent, then summarize", "BastCare asks for consent before recording. Audio is temporary. The transcript stays protected on the iPhone.")
     xs = [38, 286, 534]
-    step(c, 1, xs[0], 330, 220, "Ask permission", "Everyone present agrees before recording begins.", fill=PALE_GREEN)
+    step(c, 1, xs[0], 330, 220, "Ask for consent", "BastCare asks for consent before recording.", fill=PALE_GREEN)
     step(c, 2, xs[1], 330, 220, "Record on iPhone", "Audio remains local while the visit is captured.", fill=PALE_BLUE)
     step(c, 3, xs[2], 330, 220, "Mask transcript text", "Direct identifiers are reduced before temporary processing.", fill=PALE_BLUE)
     step(c, 4, xs[2], 222, 220, "Create the summary", "The selected Anthropic or OpenAI model returns a plain-language draft.", fill=WARM)
@@ -288,7 +288,7 @@ def build():
     page_base(c, 6, "Design commitments")
     title(c, "Design commitments", "What the architecture is designed to protect", "A release-ready summary for users, reviewers, partners, and future contributors.")
     commitments = [
-        ("Consent", "Recording begins only after permission from everyone present."),
+        ("Consent", "BastCare asks for consent before recording."),
         ("Provenance", "The summary identifies what came from the visit and what the patient added."),
         ("Data minimization", "Bast keeps no server audio or transcript archive; the transcript remains on the patient's iPhone."),
         ("Patient control", "Each CareTeam share is explicit, scoped, visible, and revocable."),
@@ -304,7 +304,7 @@ def build():
     c.setFont("Helvetica-Bold", 12)
     c.setFillColor(white)
     c.drawString(56, 145, "Plain-language architecture")
-    text_block(c, "BastCare records only with permission. Audio is deleted after the summary is saved. The original transcript stays protected on the iPhone, where the patient can view or download it and use it to regenerate a summary. Bast does not save or log transcript text. Sharing remains explicit. Deleting a visit removes its transcript and summary.", 56, 123, 675, 10.2, 14, color=white)
+    text_block(c, "BastCare asks for consent before recording. Audio is deleted after the summary is saved. The original transcript stays protected on the iPhone, where the patient can view or download it and use it to regenerate a summary. Bast does not save or log transcript text. Sharing remains explicit. Deleting a visit removes its transcript and summary.", 56, 123, 675, 10.2, 14, color=white)
     c.save()
     print(OUTPUT)
 

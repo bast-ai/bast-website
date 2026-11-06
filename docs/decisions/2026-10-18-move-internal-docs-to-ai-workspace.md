@@ -37,3 +37,11 @@ public file is needed.
 
 Keep internal material out of this repo (see `CLAUDE.md`). Check the claims
 ledger in ai-workspace before adding or changing a public claim.
+
+## Update (2026-11-02)
+
+The scheduled refresh of `src/assets/data/bastcare-metrics.json` moved to
+`.github/workflows/bastcare-metrics.yml`. Turn off the old laptop/Duplo cron.
+`scripts/run-bastcare-metrics.sh` remains for a manual run and is still
+syntax-checked in PR CI. See
+[2026-11-02-bastcare-metrics-github-actions.md](./2026-11-02-bastcare-metrics-github-actions.md).

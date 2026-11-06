@@ -1,0 +1,198 @@
+name: BastCare public metrics
+
+# Refresh the public aggregate four times a day, served at
+# https://www.bast.ai/assets/data/bastcare-metrics.json
+# (src/assets/data/bastcare-metrics.json, schemaVersion 1).
+#
+# When the totals change, this workflow commits and pushes that file to main
+# as github-actions[bot], then dispatches Deploy and waits for it. A push made
+# with GITHUB_TOKEN does not start other workflows, so that push alone does
+# not publish Pages. The explicit dispatch is the live-site path for a
+# metrics-only commit. Push and dispatch together are intentional, not a
+# second cascade. If a later rule rejects the bot push, do not weaken it. See
+# docs/decisions/2026-11-05-actions-cadence.md.
+#
+# Turn off the old laptop/Duplo cron. This workflow replaces it.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+# Read-only default. Each job replaces this with only the scope it needs.
+permissions:
+  contents: read
+
+concurrency:
+  group: bastcare-metrics
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Run BastCare metrics unit tests
+        run: python3 -m unittest scripts/test_collect_bastcare_metrics.py
+
+      - name: Require the metrics API key
+        env:
+          BASTCARE_METRICS_API_KEY: ${{ secrets.BASTCARE_METRICS_API_KEY }}
+        run: |
+          if [ -z "$BASTCARE_METRICS_API_KEY" ]; then
+            echo "ERROR: repository secret BASTCARE_METRICS_API_KEY is not set."
+            echo "Add it under Settings → Secrets and variables → Actions → Repository secrets."
+            echo "The value is the production CareLoop X-API-Key. This workflow never prints it."
+            exit 1
+          fi
+
+      - name: Collect production BastCare metrics
+        env:
+          BASTCARE_METRICS_API_URL: https://careloop.aws.bast.ai/v1/internal/bastcare-metrics
+          BASTCARE_METRICS_API_KEY: ${{ secrets.BASTCARE_METRICS_API_KEY }}
+        run: |
+          python3 scripts/collect-bastcare-metrics.py \
+            --minimum-successful-summaries 1 \
+            --output src/assets/data/bastcare-metrics.json
+
+      - name: Validate the public metrics snapshot
+        run: |
+          python3 - <<'PY'
+          import importlib.util
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          spec = importlib.util.spec_from_file_location(
+              "collect_bastcare_metrics", "scripts/collect-bastcare-metrics.py"
+          )
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          path = Path("src/assets/data/bastcare-metrics.json")
+          document = json.loads(path.read_text(encoding="utf-8"))
+          committed = json.loads(
+              subprocess.check_output(
+                  ["git", "show", "HEAD:src/assets/data/bastcare-metrics.json"],
+                  text=True,
+              )
+          )
+          previous = committed.get("metrics", {}).get("successfulSummaries")
+          try:
+              validated = module.require_publishable_snapshot(document, previous)
+          except ValueError as exc:
+              print(f"ERROR: refusing to publish BastCare metrics ({exc})", file=sys.stderr)
+              sys.exit(1)
+          canonical = json.dumps(validated, indent=2, sort_keys=True) + "\n"
+          if path.read_text(encoding="utf-8") != canonical:
+              print(
+                  "ERROR: metrics file is not the canonical public document",
+                  file=sys.stderr,
+              )
+              sys.exit(1)
+          current = validated["metrics"]["successfulSummaries"]
+          print(
+              "Validated schemaVersion 1 metrics; "
+              f"successfulSummaries {current} (committed {previous})."
+          )
+          PY
+
+      - name: Commit and push the metrics file
+        id: commit
+        run: |
+          set -eu
+          if git diff --quiet -- src/assets/data/bastcare-metrics.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Metrics file matches main. No commit."
+            exit 0
+          fi
+          status=$(git status --porcelain=v1 --untracked-files=all)
+          expected=" M src/assets/data/bastcare-metrics.json"
+          if [ "$status" != "$expected" ]; then
+            echo "ERROR: refusing to commit unexpected files."
+            printf '%s\n' "$status"
+            exit 1
+          fi
+          git fetch origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            echo "ERROR: main moved during collection. Refusing to push; the next run will retry."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- src/assets/data/bastcare-metrics.json
+          staged=$(git diff --cached --name-only)
+          if [ "$staged" != "src/assets/data/bastcare-metrics.json" ]; then
+            echo "ERROR: refusing to commit unexpected files."
+            printf '%s\n' "$staged"
+            exit 1
+          fi
+          git commit -m "chore: refresh BastCare public metrics"
+          if ! git push origin HEAD:main; then
+            echo "ERROR: push to main was rejected."
+            echo "If branch protection blocks github-actions[bot], do not weaken it."
+            echo "Publish by running the collector during deploy and writing the file into dist only, keeping the committed file when the API fails."
+            exit 1
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "Pushed $(git rev-parse --short HEAD) to main."
+
+  redeploy:
+    needs: refresh
+    if: ${{ success() && needs.refresh.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch the Pages deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -eu
+          cat > "$RUNNER_TEMP/find_dispatch.py" <<'PY'
+          import json, os, sys
+          before = {
+              str(run["databaseId"])
+              for run in json.loads(os.environ["BEFORE_JSON"])
+          }
+          for run in json.loads(sys.stdin.read()):
+              ident = str(run["databaseId"])
+              if ident not in before:
+                  print(ident)
+                  break
+          PY
+          before_json=$(gh run list --workflow deploy.yml --event workflow_dispatch --limit 20 --json databaseId)
+          gh workflow run deploy.yml --ref main
+          echo "Dispatched Deploy to GitHub Pages on main."
+          run_id=""
+          i=0
+          while [ "$i" -lt 24 ]; do
+            i=$((i + 1))
+            sleep 5
+            current_json=$(gh run list --workflow deploy.yml --event workflow_dispatch --limit 5 --json databaseId)
+            run_id=$(printf '%s' "$current_json" | BEFORE_JSON="$before_json" python3 "$RUNNER_TEMP/find_dispatch.py")
+            if [ -n "$run_id" ]; then
+              break
+            fi
+          done
+          if [ -z "$run_id" ]; then
+            echo "ERROR: Deploy to GitHub Pages did not start after the metrics commit."
+            echo "The metrics file is on main. www.bast.ai keeps the previous deploy until a deploy succeeds."
+            exit 1
+          fi
+          echo "Pages deploy: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${run_id}"
+          gh run watch "$run_id" --exit-status

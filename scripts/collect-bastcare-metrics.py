@@ -4,6 +4,12 @@
 The CareLoop API performs the aggregate against its existing request ledger.
 This website-side job receives only six approved totals and never has MongoDB
 credentials or access to individual documents.
+
+Scheduled publishing is `.github/workflows/bastcare-metrics.yml` (four times
+a day, `0 */6 * * *`). It writes `src/assets/data/bastcare-metrics.json`, served at
+https://www.bast.ai/assets/data/bastcare-metrics.json. Turn off the old
+laptop/Duplo cron that ran `scripts/run-bastcare-metrics.sh`. That wrapper
+remains for a manual run with an env file kept outside this repository.
 """
 
 from __future__ import annotations
@@ -203,6 +209,49 @@ def validated_public_document(payload: Any) -> dict[str, Any]:
         },
         "metrics": metrics,
     }
+
+
+def require_publishable_snapshot(
+    document: Any, previous_successful_summaries: int
+) -> dict[str, Any]:
+    """Return the allowlisted snapshot, or reject it before it is committed.
+
+    ``successfulSummaries`` may stay the same or rise. A lower count is a bad
+    aggregate and must not replace the public file.
+    """
+    if (
+        isinstance(previous_successful_summaries, bool)
+        or not isinstance(previous_successful_summaries, int)
+        or previous_successful_summaries < 0
+    ):
+        raise ValueError("committed successfulSummaries must be an integer >= 0")
+    if not isinstance(document, dict) or set(document) != {
+        "schemaVersion",
+        "generatedAt",
+        "period",
+        "metrics",
+    }:
+        raise ValueError(
+            "document must contain only schemaVersion, generatedAt, period, and metrics"
+        )
+    if type(document.get("schemaVersion")) is not int or document.get("schemaVersion") != 1:
+        raise ValueError("schemaVersion must be 1")
+    metrics = document.get("metrics")
+    if not isinstance(metrics, dict) or set(metrics) != set(METRIC_NAMES):
+        raise ValueError("metrics must contain exactly the six approved totals")
+    for name in METRIC_NAMES:
+        value = metrics[name]
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ValueError(f"{name} must be an integer >= 0")
+    validated = validated_public_document(document)
+    current = validated["metrics"]["successfulSummaries"]
+    if current < previous_successful_summaries:
+        raise ValueError(
+            "successfulSummaries "
+            f"{current} is lower than the committed value "
+            f"{previous_successful_summaries}"
+        )
+    return validated
 
 
 def _metrics_url() -> str:
