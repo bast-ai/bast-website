@@ -1464,7 +1464,7 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
   assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
   assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
-  assertIncludes(evidenceHtml, '<time datetime="2026-11-04">November 4, 2026</time>', "evidence last-updated date");
+  assertIncludes(evidenceHtml, '<time datetime="2026-11-06">November 6, 2026</time>', "evidence last-updated date");
   assertIncludes(evidenceHtml, "Updated when we add studies", "evidence updates when studies are added");
   assertExcludes(evidenceHtml, "weekly", "evidence page does not claim a weekly refresh");
   assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
