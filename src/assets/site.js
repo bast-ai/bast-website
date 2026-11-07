@@ -395,16 +395,42 @@
       });
   }
 
+  function floorDiv(value, divisor) {
+    const quotient = Math.trunc(value / divisor);
+    const remainder = value - quotient * divisor;
+    if (remainder < 0) return quotient - 1;
+    if (remainder >= divisor) return quotient + 1;
+    return quotient;
+  }
+
+  // Shared by the input and output token cards. Totals at or above one million
+  // render as millions with one or two decimal places (4.48M). Smaller totals
+  // stay in whole thousands (744k), without a thousands separator.
+  function formatTokenCount(value) {
+    if (value >= 1000000) {
+      const quotient = floorDiv(value, 10000);
+      const remainder = value - quotient * 10000;
+      const hundredths = remainder >= 5000 ? quotient + 1 : quotient;
+      const whole = floorDiv(hundredths, 100);
+      const fraction = hundredths - whole * 100;
+      if (fraction === 0) return `${whole}.0M`;
+      if (fraction % 10 === 0) return `${whole}.${fraction / 10}M`;
+      return `${whole}.${String(fraction).padStart(2, "0")}M`;
+    }
+    return `${floorDiv(value, 1000)}k`;
+  }
+
   function formatBastCareMetric(name, value) {
+    if (!Number.isSafeInteger(value) || value < 0) return null;
     if (name === "successfulSummaries") return value.toLocaleString("en-US");
-    return Math.floor(value / 1000).toLocaleString("en-US") + "k";
+    return formatTokenCount(value);
   }
 
   function initBastCareMetrics() {
     const panels = Array.from(document.querySelectorAll("[data-bastcare-metrics]"));
     if (!panels.length) return;
 
-    fetch("/assets/data/bastcare-metrics.json", { cache: "no-store" })
+    return fetch("/assets/data/bastcare-metrics.json", { cache: "no-store" })
       .then((response) => {
         if (!response.ok) throw new Error("Metrics unavailable");
         return response.json();
@@ -419,6 +445,9 @@
 
         if (!valid || metrics.successfulSummaries < 1) return;
 
+        const labels = displayed.map((name) => formatBastCareMetric(name, metrics[name]));
+        if (labels.some((label) => typeof label !== "string" || label.length === 0)) return;
+
         const coverage = metrics.summariesWithTokenUsage;
         const updated = new Date(document.generatedAt);
         const updatedDate = Number.isNaN(updated.valueOf())
@@ -426,9 +455,9 @@
           : updated.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
         panels.forEach((panel) => {
-          displayed.forEach((name) => {
+          displayed.forEach((name, index) => {
             const output = panel.querySelector(`[data-bastcare-metric="${name}"]`);
-            if (output) output.textContent = formatBastCareMetric(name, metrics[name]);
+            if (output) output.textContent = labels[index];
           });
 
           const note = panel.querySelector("[data-bastcare-metrics-note]");
@@ -449,6 +478,11 @@
       .catch(() => {
         // Keep the proof block hidden until a validated aggregate is available.
       });
+  }
+
+  if (typeof globalThis !== "undefined" && globalThis.__BAST_TEST_HOOKS__) {
+    globalThis.__BAST_TEST_HOOKS__.formatBastCareMetric = formatBastCareMetric;
+    globalThis.__BAST_TEST_HOOKS__.initBastCareMetrics = initBastCareMetrics;
   }
 
   document.addEventListener("DOMContentLoaded", function() {
