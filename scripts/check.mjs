@@ -848,8 +848,10 @@ const bastcareAppStoreLink = `href="${bastcareEventUrl}"`;
 if (bastcareHome.split(bastcareAppStoreLink).length - 1 < 3) {
   throw new Error("BastCare event install link must appear in the download actions");
 }
-assertIncludes(siteJs, "Math.floor(value / 1000)", "token counters use integer thousands");
-assertIncludes(siteJs, '+ "k"', "token counters use a k suffix");
+assertIncludes(siteJs, "value >= 1000000", "token counters use millions at one million");
+assertIncludes(siteJs, "return `${whole}.0M`", "million token counters keep a decimal place");
+assertIncludes(siteJs, "return `${floorDiv(value, 1000)}k`", "smaller token counters stay in whole thousands");
+assertExcludes(siteJs, 'Math.floor(value / 1000).toLocaleString("en-US") + "k"', "token counters do not render thousands with a comma");
 assertExcludes(siteJs, "No transcript text is included", "metrics note drops the transcript disclaimer");
 assertIncludes(bastcarePrivacy, approvedVisitPrivacyCopy, "approved policy privacy copy");
 assertExcludes(bastcareHome, 'href="/bastcare/processors/"', "processing essay link stays off the BastCare marketing page");

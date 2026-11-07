@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
-    "verify": "pnpm build && pnpm check",
+    "test": "node --test scripts/test-bastcare-metric-format.mjs",
+    "verify": "pnpm build && pnpm check && pnpm test",
     "preview": "python3 -m http.server 8080 --directory dist"
   },
   "engines": {
