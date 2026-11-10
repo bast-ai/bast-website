@@ -1,14 +1,19 @@
 // Evidence library.
 // The five preview findings are in the page. The full library is requested
 // from the Bast sign-up service after a reader opens the confirmation link.
-// That link's code is read once, removed from the address bar, and never
-// written to cookies or browser storage.
+// The link's code is removed from the address bar. After the library loads,
+// this browser keeps the token in localStorage for 30 days, or until the
+// token's own expiry if that is sooner. A shorter expiry from the server
+// is kept instead. The token is not written to a cookie.
 (function () {
   const GATE_ORIGIN = "https://forms.aws.bast.ai";
   const CONFIRM_MESSAGE = "Check your email for a confirmation link.";
   const EXPIRED_MESSAGE = "This link expired. Sign up again and we'll email you a new one.";
   const WAIT_MESSAGE = "Please wait a little while, then try again.";
   const LOAD_MESSAGE = "The library didn't load. Please wait a moment and open the link from your email again.";
+  const PASS_KEY = "bast_evidence_pass";
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const PASS_LIMIT_MS = 30 * DAY_MS;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const gate = document.querySelector("[data-evidence-gate]");
@@ -25,6 +30,7 @@
   let libraryData = null;
   let studies = [];
   let linkToken = "";
+  let passUntil = 0;
 
   const params = new URLSearchParams(window.location.search);
   const fromLink = (params.get("t") || "").trim();
@@ -255,6 +261,121 @@
       : `Showing 0 of ${studies.length} studies.`;
   }
 
+  function decodeSegment(segment) {
+    try {
+      const pad = segment.length % 4 === 0 ? "" : "=".repeat(4 - (segment.length % 4));
+      return JSON.parse(atob(segment.replace(/-/g, "+").replace(/_/g, "/") + pad));
+    } catch {
+      return null;
+    }
+  }
+
+  function timeMs(value) {
+    if (typeof value === "number" && Number.isFinite(value)) {
+      if (value > 1e12) return value;
+      if (value > 1e9) return value * 1000;
+    }
+    if (typeof value === "string" && value.trim()) {
+      const parsed = Date.parse(value);
+      if (Number.isFinite(parsed)) return parsed;
+    }
+    return null;
+  }
+
+  function tokenExpiryMs(token) {
+    const segment = String(token || "").split(".")[0];
+    if (!segment) return null;
+    const payload = decodeSegment(segment);
+    return timeMs(payload && payload.exp);
+  }
+
+  function serverExpiryMs(response, data) {
+    const header = response.headers.get("x-token-expires") || response.headers.get("x-expires-at");
+    const fromHeader = timeMs(header);
+    if (fromHeader) return fromHeader;
+    if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+    for (const key of ["expires", "expiresAt", "tokenExpires", "exp"]) {
+      const parsed = timeMs(data[key]);
+      if (parsed) return parsed;
+    }
+    return null;
+  }
+
+  function passExpiryMs(token, response, data) {
+    let until = Date.now() + PASS_LIMIT_MS;
+    const server = serverExpiryMs(response, data);
+    if (server) until = Math.min(until, server);
+    const own = tokenExpiryMs(token);
+    if (own) until = Math.min(until, own);
+    return until;
+  }
+
+  function readPass() {
+    try {
+      const raw = localStorage.getItem(PASS_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      const token = parsed && typeof parsed.token === "string" ? parsed.token : "";
+      const stored = parsed && typeof parsed.expires === "number" ? parsed.expires : 0;
+      if (!token || !stored) {
+        localStorage.removeItem(PASS_KEY);
+        return null;
+      }
+      const own = tokenExpiryMs(token);
+      const until = own ? Math.min(stored, own) : stored;
+      if (until <= Date.now()) {
+        localStorage.removeItem(PASS_KEY);
+        return "expired";
+      }
+      return { token, expires: until };
+    } catch {
+      return null;
+    }
+  }
+
+  function writePass(token, expires) {
+    if (!token || !(expires > Date.now())) return false;
+    try {
+      localStorage.setItem(PASS_KEY, JSON.stringify({ token, expires }));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function clearPass(token) {
+    try {
+      if (!token) {
+        localStorage.removeItem(PASS_KEY);
+        return;
+      }
+      const raw = localStorage.getItem(PASS_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (!parsed || parsed.token === token) localStorage.removeItem(PASS_KEY);
+    } catch {
+      /* Storage can be blocked. The in-memory token is still dropped by the caller. */
+    }
+  }
+
+  function signedInLine(until) {
+    const days = Math.max(1, Math.round((until - Date.now()) / DAY_MS));
+    return `This browser stays signed in for ${days} ${days === 1 ? "day" : "days"}.`;
+  }
+
+  function forgetBrowser() {
+    clearPass();
+    linkToken = "";
+    passUntil = 0;
+    libraryData = null;
+    studies = [];
+    library.hidden = true;
+    gate.hidden = false;
+    setStatus("", "");
+    showRetry(false);
+    const email = form.elements.namedItem("email");
+    if (email) email.focus();
+  }
+
   function renderMeta() {
     if (!meta) return;
     meta.replaceChildren();
@@ -263,11 +384,12 @@
     if (updated) {
       meta.append(el("p", { class: "evlib-updated", text: `Updated ${updated}` }));
     }
-    const note = el("p", {
-      class: "evlib-keep",
-      text: "This page does not save the confirmation link. To open the library again later, use the email, or sign up for a new link.",
-    });
-    meta.append(note);
+    if (passUntil > Date.now()) {
+      meta.append(el("p", { class: "evlib-keep", text: signedInLine(passUntil) }));
+    }
+    const forget = el("button", { type: "button", class: "text-link evlib-forget", text: "Forget this browser" });
+    forget.addEventListener("click", forgetBrowser);
+    meta.append(forget);
   }
 
   function updateCount() {
@@ -308,8 +430,12 @@
       showRetry(true);
       return;
     }
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
+      clearPass(linkToken);
       linkToken = "";
+      passUntil = 0;
+      gate.hidden = false;
+      library.hidden = true;
       setStatus(EXPIRED_MESSAGE, "error");
       showRetry(false);
       const email = form.elements.namedItem("email");
@@ -333,6 +459,8 @@
       showRetry(true);
       return;
     }
+    const until = passExpiryMs(linkToken, response, data);
+    passUntil = writePass(linkToken, until) ? until : 0;
     libraryData = data;
     studies = parsed;
     showLibrary();
@@ -397,5 +525,20 @@
     });
   }
 
+  let storedExpired = false;
+  if (!linkToken) {
+    const saved = readPass();
+    if (saved === "expired") storedExpired = true;
+    else if (saved) {
+      linkToken = saved.token;
+      passUntil = saved.expires;
+    }
+  }
+
   if (linkToken) openLibrary();
+  else if (storedExpired) {
+    setStatus(EXPIRED_MESSAGE, "error");
+    const email = form.elements.namedItem("email");
+    if (email) email.focus();
+  }
 })();
