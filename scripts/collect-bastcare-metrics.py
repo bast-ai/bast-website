@@ -2,8 +2,9 @@
 """Fetch and publish privacy-safe BastCare processing metrics.
 
 The CareLoop API performs the aggregate against its existing request ledger.
-This website-side job receives only six approved totals and never has MongoDB
-credentials or access to individual documents.
+This website-side job copies six approved totals and, when the response
+includes a valid series, feedbackCounts. It never has MongoDB credentials
+or access to individual documents.
 
 Scheduled publishing is `.github/workflows/bastcare-metrics.yml` (four times
 a day, `0 */6 * * *`). It writes `src/assets/data/bastcare-metrics.json`, served at
@@ -44,6 +45,8 @@ METRIC_NAMES = (
     "summariesWithTokenUsage",
     "summariesWithoutTokenUsage",
 )
+# careloop-summarizer (bast-ai PR #43) returns at most this many UTC days.
+FEEDBACK_DAYS_MAX = 30
 
 
 def _to_long(path: str) -> dict[str, Any]:
@@ -161,6 +164,53 @@ def build_pipeline(since: datetime | None = None) -> list[dict[str, Any]]:
     ]
 
 
+def _nonnegative_int(value: Any) -> bool:
+    return not isinstance(value, bool) and isinstance(value, int) and value >= 0
+
+
+def _iso_date(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        return None
+    rendered = parsed.strftime("%Y-%m-%d")
+    if rendered != value:
+        return None
+    return rendered
+
+
+def _feedback_counts(value: Any) -> dict[str, Any] | None:
+    """Return the allowlisted series, or None so the caller omits it.
+
+    Shape from bast-ai PR #43: ``{"total": <int >= 0>, "days": [{"date":
+    "YYYY-MM-DD", "count": <int >= 0>}, ...]}`` with at most 30 days.
+    Missing, null, and invalid values are omitted. Unknown keys are dropped.
+    ``total`` is copied as sent and is not recomputed from ``days``.
+    """
+    if not isinstance(value, dict):
+        return None
+    total = value.get("total")
+    days = value.get("days")
+    if (
+        not _nonnegative_int(total)
+        or not isinstance(days, list)
+        or len(days) > FEEDBACK_DAYS_MAX
+    ):
+        return None
+    series: list[dict[str, Any]] = []
+    for entry in days:
+        if not isinstance(entry, dict):
+            return None
+        day = _iso_date(entry.get("date"))
+        count = entry.get("count")
+        if day is None or not _nonnegative_int(count):
+            return None
+        series.append({"date": day, "count": count})
+    return {"total": total, "days": series}
+
+
 def _parse_api_timestamp(value: Any) -> str:
     if not isinstance(value, str) or not value.endswith("Z"):
         raise ValueError("API timestamp must be UTC")
@@ -199,7 +249,7 @@ def validated_public_document(payload: Any) -> dict[str, Any]:
     ):
         raise ValueError("invalid metrics period")
 
-    return {
+    document: dict[str, Any] = {
         "schemaVersion": 1,
         "generatedAt": generated,
         "period": {
@@ -209,6 +259,10 @@ def validated_public_document(payload: Any) -> dict[str, Any]:
         },
         "metrics": metrics,
     }
+    feedback = _feedback_counts(payload.get("feedbackCounts"))
+    if feedback is not None:
+        document["feedbackCounts"] = feedback
+    return document
 
 
 def require_publishable_snapshot(
@@ -225,12 +279,14 @@ def require_publishable_snapshot(
         or previous_successful_summaries < 0
     ):
         raise ValueError("committed successfulSummaries must be an integer >= 0")
-    if not isinstance(document, dict) or set(document) != {
-        "schemaVersion",
-        "generatedAt",
-        "period",
-        "metrics",
-    }:
+    if not isinstance(document, dict):
+        raise ValueError(
+            "document must contain only schemaVersion, generatedAt, period, and metrics"
+        )
+    allowed = {"schemaVersion", "generatedAt", "period", "metrics"}
+    if "feedbackCounts" in document:
+        allowed.add("feedbackCounts")
+    if set(document) != allowed:
         raise ValueError(
             "document must contain only schemaVersion, generatedAt, period, and metrics"
         )

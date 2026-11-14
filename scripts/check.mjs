@@ -649,6 +649,26 @@ if (bastcareMetrics.schemaVersion !== 1 ||
     bastcareMetrics.metrics.successfulSummaries < 1) {
   throw new Error("Invalid BastCare public metrics snapshot");
 }
+function isIsoDate(value) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
+}
+if (Object.prototype.hasOwnProperty.call(bastcareMetrics, "feedbackCounts")) {
+  const feedback = bastcareMetrics.feedbackCounts;
+  const days = feedback && feedback.days;
+  const totalOk = Number.isSafeInteger(feedback?.total) && feedback.total >= 0;
+  const daysOk = Array.isArray(days) && days.length <= 30 && days.every((entry) =>
+    entry && typeof entry === "object" && !Array.isArray(entry) &&
+    isIsoDate(entry.date) && Number.isSafeInteger(entry.count) && entry.count >= 0 &&
+    Object.keys(entry).every((key) => key === "date" || key === "count")
+  );
+  const keysOk = feedback && typeof feedback === "object" && !Array.isArray(feedback) &&
+    Object.keys(feedback).every((key) => key === "total" || key === "days");
+  if (!keysOk || !totalOk || !daysOk) {
+    throw new Error("Invalid BastCare feedbackCounts");
+  }
+}
 assertExcludes(siteJs, 'function handlePdfDownloads()', "duplicate PDF click handler");
 assertIncludes(analyticsConsentJs, 'resource: link.getAttribute("data-resource") || undefined', "PDF resource tracking");
 assertIncludes(analyticsConsentJs, 'window.bastTrack("app_store_click"', "App Store conversion tracking");
