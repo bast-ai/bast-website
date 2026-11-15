@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { access, readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
@@ -84,6 +85,7 @@ const requiredFiles = [
   "evidence/index.html",
   "assets/evidence.css",
   "assets/evidence.js",
+  "assets/data/library.json",
 ];
 
 const forbidden = [
@@ -1450,8 +1452,9 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
 }
 
-// /evidence/ (Beth, 2026-10-31): public preview, confirmed-token library,
-// no published library file, one sign-up origin, no Brevo API host or key.
+// /evidence/ (Beth, 2026-11-15): public preview plus the published library
+// file on this site. The optional updates form posts to the forms API and
+// does not hide the studies. No Brevo API host or key.
 {
   const evidenceSiteUrl = process.env.SITE_URL || "https://www.bast.ai";
   const evidenceSiteEnv = process.env.SITE_ENV || "local";
@@ -1464,45 +1467,87 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
   assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
   assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
-  assertIncludes(evidenceHtml, '<time datetime="2026-11-10">November 10, 2026</time>', "evidence last-updated date");
-  assertIncludes(evidenceHtml, '<span data-evidence-count>60</span> studies', "evidence header study count");
-  assertIncludes(evidenceHtml, 'All <span data-evidence-count>60</span> studies', "evidence library study count");
+  assertIncludes(evidenceHtml, '<time datetime="2026-11-15">November 15, 2026</time>', "evidence last-updated date");
+  assertIncludes(evidenceHtml, '<span data-evidence-count>70</span> studies', "evidence header study count");
+  assertIncludes(evidenceHtml, 'All <span data-evidence-count>70</span> studies', "evidence library study count");
   assertIncludes(evidenceHtml, "Updated when we add studies", "evidence updates when studies are added");
   assertExcludes(evidenceHtml, "weekly", "evidence page does not claim a weekly refresh");
   assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
   assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
+  assertIncludes(evidenceHtml, "National Caregiving Month: the strongest evidence", "caregiving month featured heading");
+  assertIncludes(evidenceHtml, "data-evidence-featured", "featured section hook");
+  assertIncludes(evidenceHtml, "data-evidence-highlights", "five findings stay available when featured is empty");
+  assertIncludes(evidenceJs, "whyItMatters", "optional why-it-matters field");
+  assertIncludes(evidenceJs, "Why this matters:", "why-it-matters label");
+  assertIncludes(evidenceJs, "study.published", "optional published date");
+  assertIncludes(evidenceJs, "libraryData.featured", "featured ids come from the library file");
   assertIncludes(evidenceHtml, "Send me Bast updates", "updates checkbox label");
   assertIncludes(evidenceHtml, 'name="website"', "honeypot field");
   assertIncludes(evidenceHtml, 'class="evlib-hp"', "honeypot hidden from people");
   assertIncludes(evidenceJs, "updates", "updates flag in the sign-up body");
-  assertIncludes(evidenceJs, "history.replaceState", "confirmation code removed from the address bar");
+  assertIncludes(evidenceHtml, "The library on this page is open either way.", "updates form does not gate the library");
+  assertIncludes(evidenceHtml, 'data-evidence-library', "library markup is on the page");
+  assertExcludes(evidenceHtml, "data-evidence-library\" hidden", "library is not hidden behind the email form");
+  assertExcludes(evidenceHtml, "data-evidence-gate", "email gate markup is gone");
+  assertExcludes(evidenceHtml, "Email me the confirmation link", "confirmation link is not the way in");
+  assertIncludes(evidenceJs, "history.replaceState", "leftover confirmation code removed from the address bar");
   assertIncludes(evidenceJs, 'referrerPolicy: "no-referrer"', "sign-up fetch sends no referrer");
-  assertIncludes(evidenceJs, "Authorization", "library request sends the confirmation code");
-  assertIncludes(evidenceJs, "This link expired", "expired-link message");
-  assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
+  assertIncludes(evidenceJs, 'fetch("/assets/data/library.json"', "library loads from the static file");
+  assertExcludes(evidenceJs, 'apiFetch("/library"', "page does not call the forms library route");
+  assertExcludes(evidenceJs, "Authorization", "library request does not send a confirmation code");
+  assertExcludes(evidenceJs, "Bearer", "library request does not send a bearer token");
+  assertExcludes(evidenceJs, "This link expired", "expired-link message is gone");
+  assertExcludes(evidenceJs, "Sign up again", "page does not ask the reader to sign up again for access");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
+  assertIncludes(evidenceJs, "The full library didn't load.", "failed library load does not ask for email");
   assertIncludes(privacyHtml, 'Contact form messages go from Bast\'s own server to Bast\'s inbox by email, sent through Brevo (Sendinblue SAS) under <a href="https://www.brevo.com/legal/privacypolicy/">Brevo\'s privacy policy</a>.', "contact form privacy sentence");
   assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
   assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
   assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
   assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
-assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
   if (!updatesInput) throw new Error("Missing updates checkbox");
   if (/\bchecked\b/.test(updatesInput[0])) throw new Error("updates checkbox must be unticked by default");
   assertExcludes(evidenceHtml, "fetch(", "fetch in evidence HTML");
-  assertExcludes(evidenceHtml, "library.json", "public library file on the evidence page");
-  assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
+  assertExcludes(evidenceHtml, "library.json", "library filename stays out of the evidence page");
+  assertIncludes(evidenceJs, "/assets/data/library.json", "evidence script names the static library file");
   assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
   assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
-  assertIncludes(evidenceJs, "This page does not save the confirmation link.", "confirmation-link note stays on the unlocked library");
+  assertExcludes(evidenceJs, "This page does not save the confirmation link.", "page does not tell readers to keep a confirmation link");
+  assertExcludes(evidenceJs, "localStorage", "evidence script does not store a browser pass");
+  assertIncludes(bastcareHome, "the full library is open to everyone.", "BastCare page no longer asks for an email to open the library");
+  assertExcludes(bastcareHome, "Confirm your email and the full library opens.", "BastCare page drops the email gate");
+  assertIncludes(llmsTxt, "each with its source and caveat, open to everyone.", "llms.txt describes an open library");
+  assertExcludes(llmsTxt, "email confirmation", "llms.txt does not describe an email gate");
   assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
   assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
   assertExcludes(evidenceJs, "libraryData.schemaVersion", "library schema is not shown");
-  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 1) {
-    throw new Error("evidence script must call fetch exactly once");
+  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 2) {
+    throw new Error("evidence script must call fetch twice: the static library, then the updates form");
+  }
+  {
+    const libraryFile = path.join(distDir, "assets/data/library.json");
+    const libraryBytes = await readFile(libraryFile);
+    if (libraryBytes.length !== 74274) {
+      throw new Error(`library.json must be 74274 bytes, found ${libraryBytes.length}`);
+    }
+    const librarySha = createHash("sha256").update(libraryBytes).digest("hex");
+    if (librarySha !== "02f28a5dd639aaae1c225ac6d20de8bd90fd0c3f60c88d634c5cd565ecfd896d") {
+      throw new Error(`library.json sha256 mismatch: ${librarySha}`);
+    }
+    const libraryJson = JSON.parse(libraryBytes.toString("utf8"));
+    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 70) {
+      throw new Error("library.json must contain 70 studies");
+    }
+    if (libraryJson.studies.some((study) => study && study.id === "B12")) {
+      throw new Error("retracted study B12 is still in the library");
+    }
+    if (libraryJson.lastUpdated !== "2026-11-15") {
+      throw new Error(`library.json lastUpdated must be 2026-11-15, found ${libraryJson.lastUpdated}`);
+    }
   }
   const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];
   const evidenceOrigins = new Set(evidenceUrls.map((url) => {
@@ -1557,9 +1602,6 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
     }
   }
   for (const file of files) {
-    if (path.basename(file) === "library.json") {
-      throw new Error(`dist must not contain library.json (${path.relative(distDir, file)})`);
-    }
     if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }

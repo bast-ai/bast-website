@@ -13,7 +13,7 @@ body.evlib-page [hidden] {
 }
 
 body.evlib-page .evlib-article {
-  max-width: 1040px;
+  max-width: 1120px;
 }
 
 body.evlib-page .site-nav,
@@ -130,20 +130,14 @@ body.evlib-page .button-primary {
 }
 
 body.evlib-page .evlib-preview,
-body.evlib-page .evlib-list {
+body.evlib-page .evlib-list,
+body.evlib-page .evlib-grid {
   list-style: none;
   margin: 1.6rem 0 0;
   padding: 0;
   display: grid;
   gap: 16px;
-}
-
-body.evlib-page .evlib-preview {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-body.evlib-page .evlib-preview .evlib-card:first-child {
-  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 body.evlib-page .frame-article .evlib-card p {
@@ -154,9 +148,30 @@ body.evlib-page .frame-article .evlib-card .evlib-caveat {
   margin-bottom: 0;
 }
 
-body.evlib-page .evlib-card .card-kicker {
+body.evlib-page .evlib-card .card-kicker,
+body.evlib-page .evlib-why-label {
+  font-family: var(--font-mono);
   line-height: 1.45;
   letter-spacing: 0.04em;
+}
+
+body.evlib-page .evlib-card h3 a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
+body.evlib-page .evlib-date {
+  margin: 0 0 0.7rem;
+}
+
+body.evlib-page .frame-article .evlib-card .evlib-caveat {
+  color: #24485a;
+  font-weight: 400;
 }
 
 body.evlib-page .evlib-badge {
@@ -199,11 +214,11 @@ body.evlib-page .evlib-keep {
   margin: 0.2rem 0 0;
 }
 
-body.evlib-page .evlib-gate {
+body.evlib-page .evlib-updates {
   margin-top: 1.6rem;
 }
 
-body.evlib-page .evlib-gate .contact-form {
+body.evlib-page .evlib-updates .contact-form {
   margin-top: 0;
 }
 
@@ -300,10 +315,15 @@ body.evlib-page .frame-article .evlib-count {
   margin: 1.2rem 0 0;
 }
 
-@media (max-width: 860px) {
-  body.evlib-page .evlib-preview {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 1100px) {
+  body.evlib-page .evlib-preview,
+  body.evlib-page .evlib-list,
+  body.evlib-page .evlib-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+@media (max-width: 860px) {
 
   body.evlib-page .evlib-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -314,9 +334,17 @@ body.evlib-page .frame-article .evlib-count {
   }
 }
 
+@media (max-width: 700px) {
+  body.evlib-page .evlib-preview,
+  body.evlib-page .evlib-list,
+  body.evlib-page .evlib-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 560px) {
   body.evlib-page .evlib-filters,
-  body.evlib-page .evlib-gate .contact-form {
+  body.evlib-page .evlib-updates .contact-form {
     grid-template-columns: minmax(0, 1fr);
   }
 
