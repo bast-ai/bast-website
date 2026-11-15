@@ -37,13 +37,18 @@
     <h1>The research behind how we build.</h1>
     <p class="lede">If we ask AI to show its work, we should show ours. This library collects published research on three questions: whether AI that shows its work keeps people thinking instead of handing their judgment over, whether easing the load on caregivers and care workers helps patients, and who pays for caregiver support.</p>
     <p class="lede">Every entry links to its source and says how strong the evidence is and what it can&rsquo;t tell you. We kept the studies that cut against us. The point of AI is to augment the people in the room, and that starts with being honest about what the evidence does and doesn&rsquo;t show.</p>
-    <p class="frame-meta">Last updated <time datetime="2026-11-10">November 10, 2026</time> &middot; Updated when we add studies &middot; <span data-evidence-count>60</span> studies</p>
+    <p class="frame-meta">Last updated <time datetime="2026-11-15">November 15, 2026</time> &middot; Updated when we add studies &middot; <span data-evidence-count>70</span> studies</p>
   </header>
 
-  <section aria-labelledby="preview-title">
+  <section class="evlib-featured" data-evidence-featured hidden aria-labelledby="featured-title">
+    <h2 id="featured-title">National Caregiving Month: the strongest evidence</h2>
+    <ul class="evlib-grid" data-evidence-featured-list></ul>
+  </section>
+
+  <section aria-labelledby="preview-title" data-evidence-highlights>
     <h2 id="preview-title">Five of the strongest findings</h2>
     <p>Each of these comes from a randomized study or a meta-analysis. Read the caveat before you quote the number.</p>
-    <ol class="evlib-preview">
+    <ol class="evlib-preview evlib-grid">
       <li class="card evlib-card" id="A1">
         <p class="card-kicker">Explainability &middot; Strong evidence &middot; Supports</p>
         <h3>LLMs alone vs people using LLMs</h3>
@@ -84,7 +89,7 @@
 
   <section aria-labelledby="library-title" class="evlib-library-section">
     <h2 id="library-title">The full library</h2>
-    <p>All <span data-evidence-count>60</span> studies, including the ones that complicate our view, with filters by question, direction, strength, and study type.</p>
+    <p>All <span data-evidence-count>70</span> studies, including the ones that complicate our view, with filters by question, direction, strength, and study type.</p>
 
     <div class="evlib-library" data-evidence-library>
       <div data-evidence-meta></div>
@@ -111,7 +116,7 @@
         </div>
       </div>
       <p class="evlib-count" data-evidence-results role="status" aria-live="polite"></p>
-      <ul class="evlib-list" data-evidence-list></ul>
+      <ul class="evlib-list evlib-grid" data-evidence-list></ul>
       <p class="form-note" data-evidence-status role="status" aria-live="polite"></p>
       <button class="button button-secondary" type="button" data-evidence-retry hidden>Try again</button>
     </div>

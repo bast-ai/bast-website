@@ -1467,13 +1467,20 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
   assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
   assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
-  assertIncludes(evidenceHtml, '<time datetime="2026-11-10">November 10, 2026</time>', "evidence last-updated date");
-  assertIncludes(evidenceHtml, '<span data-evidence-count>60</span> studies', "evidence header study count");
-  assertIncludes(evidenceHtml, 'All <span data-evidence-count>60</span> studies', "evidence library study count");
+  assertIncludes(evidenceHtml, '<time datetime="2026-11-15">November 15, 2026</time>', "evidence last-updated date");
+  assertIncludes(evidenceHtml, '<span data-evidence-count>70</span> studies', "evidence header study count");
+  assertIncludes(evidenceHtml, 'All <span data-evidence-count>70</span> studies', "evidence library study count");
   assertIncludes(evidenceHtml, "Updated when we add studies", "evidence updates when studies are added");
   assertExcludes(evidenceHtml, "weekly", "evidence page does not claim a weekly refresh");
   assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
   assertIncludes(evidenceJs, "Preliminary vendor report", "vendor-report badge in library");
+  assertIncludes(evidenceHtml, "National Caregiving Month: the strongest evidence", "caregiving month featured heading");
+  assertIncludes(evidenceHtml, "data-evidence-featured", "featured section hook");
+  assertIncludes(evidenceHtml, "data-evidence-highlights", "five findings stay available when featured is empty");
+  assertIncludes(evidenceJs, "whyItMatters", "optional why-it-matters field");
+  assertIncludes(evidenceJs, "Why this matters:", "why-it-matters label");
+  assertIncludes(evidenceJs, "study.published", "optional published date");
+  assertIncludes(evidenceJs, "libraryData.featured", "featured ids come from the library file");
   assertIncludes(evidenceHtml, "Send me Bast updates", "updates checkbox label");
   assertIncludes(evidenceHtml, 'name="website"', "honeypot field");
   assertIncludes(evidenceHtml, 'class="evlib-hp"', "honeypot hidden from people");
@@ -1524,19 +1531,22 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   {
     const libraryFile = path.join(distDir, "assets/data/library.json");
     const libraryBytes = await readFile(libraryFile);
-    if (libraryBytes.length !== 52092) {
-      throw new Error(`library.json must be 52092 bytes, found ${libraryBytes.length}`);
+    if (libraryBytes.length !== 74274) {
+      throw new Error(`library.json must be 74274 bytes, found ${libraryBytes.length}`);
     }
     const librarySha = createHash("sha256").update(libraryBytes).digest("hex");
-    if (librarySha !== "eb6492aff5c8912bcc5cc7849be0f79eb4d59266d8e43405c21bf691d450d39d") {
+    if (librarySha !== "02f28a5dd639aaae1c225ac6d20de8bd90fd0c3f60c88d634c5cd565ecfd896d") {
       throw new Error(`library.json sha256 mismatch: ${librarySha}`);
     }
     const libraryJson = JSON.parse(libraryBytes.toString("utf8"));
-    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 60) {
-      throw new Error("library.json must contain 60 studies");
+    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 70) {
+      throw new Error("library.json must contain 70 studies");
     }
-    if (libraryJson.lastUpdated !== "2026-11-10") {
-      throw new Error(`library.json lastUpdated must be 2026-11-10, found ${libraryJson.lastUpdated}`);
+    if (libraryJson.studies.some((study) => study && study.id === "B12")) {
+      throw new Error("retracted study B12 is still in the library");
+    }
+    if (libraryJson.lastUpdated !== "2026-11-15") {
+      throw new Error(`library.json lastUpdated must be 2026-11-15, found ${libraryJson.lastUpdated}`);
     }
   }
   const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "title": "Bast AI evidence library",
   "status": "draft",
-  "lastUpdated": "2026-11-10",
+  "lastUpdated": "2026-11-15",
   "refresh": "weekly",
-  "source": "Copied verbatim from the Bast research canvas 'Bast AI evidence library: explainability, caregiving, who pays' (checked and updated October 28, 2026), including its study type and sample size fields. Internal usage notes and internal planning sections are intentionally not in this public repo. Five entries added November 3, 2026 with Beth Rudden's approval: A23, A24, A25, A26 and C9. Two entries added November 4, 2026 with Beth Rudden's approval: A27 and A28. Four entries added November 6, 2026 with Beth Rudden's approval: A29, A30, A31 and B14. Six entries added November 10, 2026 with Beth Rudden's approval: A32, A33, A34, A35, A36 and B15.",
+  "source": "Copied verbatim from the Bast research canvas 'Bast AI evidence library: explainability, caregiving, who pays' (checked and updated October 28, 2026), including its study type and sample size fields. Internal usage notes and internal planning sections are intentionally not in this public repo. Five entries added November 3, 2026 with Beth Rudden's approval: A23, A24, A25, A26 and C9. Two entries added November 4, 2026 with Beth Rudden's approval: A27 and A28. Four entries added November 6, 2026 with Beth Rudden's approval: A29, A30, A31 and B14. Six entries added November 10, 2026 with Beth Rudden's approval: A32, A33, A34, A35, A36 and B15. Eleven entries added November 15, 2026 with Beth Rudden's approval: A37, A38, A39, A40, A41, A42, B16, B17, B18, B19 and B20. B12 removed November 15, 2026 with Beth Rudden's approval because the paper was retracted.",
   "theses": {
     "A": {
       "short": "Explainability",
@@ -33,6 +33,14 @@
     "Mixed": "Has both.",
     "Context": "Gives background numbers."
   },
+  "featured": [
+    "B8",
+    "A37",
+    "B2",
+    "A39",
+    "A1",
+    "B20"
+  ],
   "studies": [
     {
       "id": "A1",
@@ -47,7 +55,9 @@
       "strength": "Strong",
       "direction": "Supports",
       "caveats": "Written scenarios, not real patients. Lay public, not clinicians. It tests the human-AI handoff, not explainability directly. 'Field' here means a person using the tool, not a hospital rollout.",
-      "url": "https://doi.org/10.1038/s41591-025-04074-y"
+      "url": "https://doi.org/10.1038/s41591-025-04074-y",
+      "published": "2026-02-09",
+      "whyItMatters": "A capable model is not enough – care tools must help people reason through the answer, which is why AI should show its work."
     },
     {
       "id": "A2",
@@ -62,7 +72,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Only 3 neonatologists took part, and the authors call the 91.7% result hypothesis-generating. Retrospective, web-based, one diagnosis. The 91.7% (neonatologists overriding a deliberately flawed AI) and the 52.0% (radiology residents accepting wrong calls from a reliable-looking AI) come from different study arms and measure different things, so they are not a head-to-head comparison. Per-group figures come from the authors' public code repository.",
-      "url": "https://doi.org/10.1038/s41746-026-03399-3"
+      "url": "https://doi.org/10.1038/s41746-026-03399-3",
+      "published": "2026-10-20",
+      "whyItMatters": "Trainees trust confident AI the most, so tools for care teams must expose their reasoning and make errors easy to catch."
     },
     {
       "id": "A3",
@@ -77,7 +89,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Observational before/after, so it cannot prove AI caused the drop; other things changed over time. An erratum was published.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/40816301/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40816301/",
+      "published": "2025-08-12",
+      "whyItMatters": "Clinicians who lean on AI can lose their own skill, so AI should keep people thinking instead of doing the thinking for them."
     },
     {
       "id": "A4",
@@ -92,7 +106,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Small sample. The 'AI' was simulated (researchers set its suggestions). Lab reading, not live screening.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/37129490/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37129490/",
+      "published": "2023-05-02",
+      "whyItMatters": "Wrong AI advice pulls even experienced readers off course; showing the evidence behind a suggestion gives clinicians a way to push back."
     },
     {
       "id": "A5",
@@ -107,7 +123,9 @@
       "strength": "Strong",
       "direction": "Supports",
       "caveats": "Consulting tasks, GPT-4 in 2023, one firm. Quality was graded by people. Only one task outside the frontier.",
-      "url": "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf"
+      "url": "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf",
+      "published": "2026-03",
+      "whyItMatters": "AI lifts work inside its strengths and misleads people outside them, so users need to see where its reasoning holds."
     },
     {
       "id": "A6",
@@ -122,7 +140,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "One health system; sepsis definitions vary between studies.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/34152373/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34152373/",
+      "published": "2021-08-01",
+      "whyItMatters": "A widely deployed model missed most sepsis cases; care teams need tools that show how they reach an alert."
     },
     {
       "id": "A7",
@@ -137,7 +157,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "One health system; retrospective.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42932739/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42932739/",
+      "published": "2024-02-07",
+      "whyItMatters": "Much of a sepsis model's apparent skill came after clinicians had acted, so teams should check what an alert adds before trusting it."
     },
     {
       "id": "A8",
@@ -152,7 +174,9 @@
       "strength": "Limited",
       "direction": "Supports",
       "caveats": "Qualitative field study, not an accuracy trial. Lab accuracy figures are not reported in the same study.",
-      "url": "https://research.google/pubs/a-human-centered-evaluation-of-a-deep-learning-system-deployed-in-clinics-for-the-detection-of-diabetic-retinopathy/"
+      "url": "https://research.google/pubs/a-human-centered-evaluation-of-a-deep-learning-system-deployed-in-clinics-for-the-detection-of-diabetic-retinopathy/",
+      "published": "2020-04-23",
+      "whyItMatters": "Real clinics break lab-perfect AI; tools for care teams must fit the workflow and explain their failures."
     },
     {
       "id": "A9",
@@ -167,7 +191,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Older models; retrospective.",
-      "url": "https://doi.org/10.1371/journal.pmed.1002683"
+      "url": "https://doi.org/10.1371/journal.pmed.1002683",
+      "published": "2018-11-06",
+      "whyItMatters": "Models can learn shortcuts, like which hospital took an image, so explanations help teams spot reasoning that will not travel."
     },
     {
       "id": "A10",
@@ -182,7 +208,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Image test set, not a clinical deployment. Fine-tuning on diverse images closed the skin-tone gap.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/35960806/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35960806/",
+      "published": "2022-08-12",
+      "whyItMatters": "AI that fails on dark skin shows why care teams must see how a model reasons and where it was tested."
     },
     {
       "id": "A11",
@@ -197,7 +225,9 @@
       "strength": "Moderate",
       "direction": "Context",
       "caveats": "Based on public FDA summaries; devices through 2020.",
-      "url": "https://doi.org/10.1038/s41591-021-01312-x"
+      "url": "https://doi.org/10.1038/s41591-021-01312-x",
+      "published": "2021-04-05",
+      "whyItMatters": "Most cleared AI devices were never tested prospectively, so care teams should demand evidence and transparency before relying on them."
     },
     {
       "id": "A12",
@@ -212,7 +242,9 @@
       "strength": "Strong",
       "direction": "Complicates",
       "caveats": "Vignettes, not live care. Tested heat-map style image explanations only.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/38112814/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38112814/",
+      "published": "2023-12-19",
+      "whyItMatters": "Explanations did not protect clinicians from a biased model – showing work helps when the underlying model is sound."
     },
     {
       "id": "A13",
@@ -227,7 +259,9 @@
       "strength": "Moderate",
       "direction": "Complicates",
       "caveats": "Lay tasks (review sentiment, LSAT questions), not clinical.",
-      "url": "https://arxiv.org/abs/2006.14779"
+      "url": "https://arxiv.org/abs/2006.14779",
+      "published": "2021-05-07",
+      "whyItMatters": "Explanations can make people accept AI answers blindly; showing work must be designed to invite checking, not deference."
     },
     {
       "id": "A14",
@@ -242,7 +276,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Lay task, simulated AI. Forcing reduced but did not remove over-reliance. Helped people high in 'need for cognition' most.",
-      "url": "https://arxiv.org/abs/2102.09692"
+      "url": "https://arxiv.org/abs/2102.09692",
+      "published": "2021-04-22",
+      "whyItMatters": "Built-in friction, like deciding before seeing the AI, keep people thinking and cut over-reliance."
     },
     {
       "id": "A15",
@@ -257,7 +293,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Lab task with a simulated AI.",
-      "url": "https://arxiv.org/abs/2212.06823"
+      "url": "https://arxiv.org/abs/2212.06823",
+      "published": "2023-04-16",
+      "whyItMatters": "Explanations help when they make checking the AI easier than trusting it – the design target for AI that shows its work."
     },
     {
       "id": "A16",
@@ -272,7 +310,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "All advice was correct, so it does not test whether annotations help people catch AI errors.",
-      "url": "https://doi.org/10.1038/s41598-023-28633-w"
+      "url": "https://doi.org/10.1038/s41598-023-28633-w",
+      "published": "2023-01-25",
+      "whyItMatters": "Annotated advice helped non-specialists most, a direct case for AI that shows care teams what it sees."
     },
     {
       "id": "A17",
@@ -287,7 +327,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "Reader studies on images, not live care.",
-      "url": "https://doi.org/10.1038/s41591-020-0942-0"
+      "url": "https://doi.org/10.1038/s41591-020-0942-0",
+      "published": "2020-06-22",
+      "whyItMatters": "Good AI support made clinicians better and faulty AI misled them all, so care teams need ways to see when the AI is wrong."
     },
     {
       "id": "A18",
@@ -302,7 +344,9 @@
       "strength": "Moderate",
       "direction": "Complicates",
       "caveats": "Reader study, not live care.",
-      "url": "https://doi.org/10.1038/s41591-024-02850-w"
+      "url": "https://doi.org/10.1038/s41591-024-02850-w",
+      "published": "2024-03-19",
+      "whyItMatters": "Experience does not tell you who benefits from AI, so every user needs tools that make the AI's reasoning visible."
     },
     {
       "id": "A19",
@@ -317,7 +361,9 @@
       "strength": "Strong",
       "direction": "Supports",
       "caveats": "Education, not healthcare; one country and subject. The guardrailed tutor avoided measurable harm but did not improve exam scores, and its students thought they had learned more than they had.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/40560616/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40560616/",
+      "published": "2025-06-25",
+      "whyItMatters": "Unguarded AI raised practice scores and lowered real learning; guardrails that keep people thinking preserved skill."
     },
     {
       "id": "A20",
@@ -332,7 +378,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "Productivity, not accuracy or learning. Numbers are from the NBER working paper; the 2025 journal version's figures may differ slightly.",
-      "url": "https://www.nber.org/papers/w31161"
+      "url": "https://www.nber.org/papers/w31161",
+      "published": "2023-04",
+      "whyItMatters": "AI helped novices most and experts little, so care tools should teach as they assist rather than replace judgment."
     },
     {
       "id": "A21",
@@ -347,7 +395,9 @@
       "strength": "Limited",
       "direction": "Supports",
       "caveats": "Self-report, cross-sectional. Correlation only.",
-      "url": "https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/"
+      "url": "https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/",
+      "published": "2025-04-25",
+      "whyItMatters": "More trust in AI meant less critical thinking, so care tools should keep users engaged with the reasoning."
     },
     {
       "id": "A22",
@@ -362,7 +412,9 @@
       "strength": "Strong",
       "direction": "Complicates",
       "caveats": "Interim safety analysis; the interval-cancer endpoint came later.",
-      "url": "https://doi.org/10.1016/S1470-2045(23)00298-X"
+      "url": "https://doi.org/10.1016/S1470-2045(23)00298-X",
+      "published": "2023-08",
+      "whyItMatters": "Well-tested AI can lift cancer detection and cut workload – a reminder that strong evidence, not explainability alone, earns adoption."
     },
     {
       "id": "A23",
@@ -377,7 +429,9 @@
       "strength": "Strong",
       "direction": "Mixed",
       "caveats": "Scans were read in 2023, not in live care.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42919730/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42919730/",
+      "published": "2026-10-23",
+      "whyItMatters": "Explained advice helped novices most, and clinicians also followed wrong advice – showing work needs safeguards against both over- and under-reliance."
     },
     {
       "id": "A24",
@@ -392,7 +446,9 @@
       "strength": "Strong",
       "direction": "Complicates",
       "caveats": "A general LLM helper in one clinic network, not a tool built to show its work.",
-      "url": "https://www.nature.com/articles/s41591-026-04503-6"
+      "url": "https://www.nature.com/articles/s41591-026-04503-6",
+      "published": "2026-06-26",
+      "whyItMatters": "Better AI-assisted notes did not change treatment failure, so care teams should measure patient outcomes, not documentation polish."
     },
     {
       "id": "A25",
@@ -407,7 +463,9 @@
       "strength": "Strong",
       "direction": "Complicates",
       "caveats": "Simulated vignettes, not live care.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42872605/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42872605/",
+      "published": "2026-10-14",
+      "whyItMatters": "Narrative explanations raised confidence without changing trust, so transparency features need testing against real decisions."
     },
     {
       "id": "A26",
@@ -422,7 +480,9 @@
       "strength": "Preprint",
       "direction": "Context",
       "caveats": "Tested on synthetic conversations and agent benchmarks.",
-      "url": "https://arxiv.org/abs/2610.06064"
+      "url": "https://arxiv.org/abs/2610.06064",
+      "published": "2026-10-05",
+      "whyItMatters": "How much an AI agent trusts its user shapes what it will do, a design question for any assistant in care settings."
     },
     {
       "id": "A27",
@@ -437,7 +497,9 @@
       "strength": "Moderate",
       "direction": "Context",
       "caveats": "Measures training-crawler blocking through April 2024.",
-      "url": "https://arxiv.org/abs/2407.14933"
+      "url": "https://arxiv.org/abs/2407.14933",
+      "published": "2024-07-20",
+      "whyItMatters": "Sources are closing to AI training, so care tools that cite open, traceable evidence become more valuable."
     },
     {
       "id": "A28",
@@ -452,7 +514,9 @@
       "strength": "Vendor / unreviewed",
       "direction": "Context",
       "caveats": "Cloudflare sells the blocking product, and its figures come from its own network.",
-      "url": "https://blog.cloudflare.com/content-independence-day-no-ai-crawl-without-compensation/"
+      "url": "https://blog.cloudflare.com/content-independence-day-no-ai-crawl-without-compensation/",
+      "published": "2025-07-01",
+      "whyItMatters": "Content owners are blocking AI crawlers, raising the value of AI that cites and pays for the sources it uses."
     },
     {
       "id": "A29",
@@ -467,7 +531,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Better calibration is the model grading its own confidence more accurately – not independent verification of the answer. Independent checking requires different thinking patterns and external evidence.",
-      "url": "https://www.nature.com/articles/s44488-026-00030-y"
+      "url": "https://www.nature.com/articles/s44488-026-00030-y",
+      "published": "2026-11-05",
+      "whyItMatters": "Models can learn to report confidence more honestly, a building block for AI that tells care teams when to double-check."
     },
     {
       "id": "A30",
@@ -482,7 +548,9 @@
       "strength": "Moderate",
       "direction": "Context",
       "caveats": "Context on clinical translation and independent validation – not a direct test of explainability. Selected journal set (31 titles).",
-      "url": "https://doi.org/10.1016/j.xcrm.2026.103135"
+      "url": "https://doi.org/10.1016/j.xcrm.2026.103135",
+      "published": "2026-11-05",
+      "whyItMatters": "Many medical AI studies lack independent validation, so care teams should ask for external evidence before adopting a tool."
     },
     {
       "id": "A31",
@@ -497,7 +565,9 @@
       "strength": "Moderate",
       "direction": "Complicates",
       "caveats": "Online information tasks, not clinical decisions. The useful line is persuasive generated reasoning versus independently checkable evidence.",
-      "url": "https://doi.org/10.1016/j.tele.2026.102464"
+      "url": "https://doi.org/10.1016/j.tele.2026.102464",
+      "published": "2026-10",
+      "whyItMatters": "Showing reasoning raised over-reliance by making the AI look competent, so explanations must invite scrutiny, not signal authority."
     },
     {
       "id": "A32",
@@ -512,7 +582,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Mock AI on static video frames, not a live operation.",
-      "url": "https://doi.org/10.1007/s00464-026-13440-x"
+      "url": "https://doi.org/10.1007/s00464-026-13440-x",
+      "published": "2026-11-06",
+      "whyItMatters": "Surgeons followed wrong AI suggestions and grew more confident, so oversight and visible reasoning must be built into the tool."
     },
     {
       "id": "A33",
@@ -527,7 +599,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Most studies lacked external validation and were at high risk of bias.",
-      "url": "https://doi.org/10.1007/s00345-026-06885-1"
+      "url": "https://doi.org/10.1007/s00345-026-06885-1",
+      "published": "2026-11-05",
+      "whyItMatters": "Lab results overstate how AI performs in real workflows, so care teams should judge tools on deployment evidence."
     },
     {
       "id": "A34",
@@ -542,7 +616,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "A clinician reviews the note before it goes in the record.",
-      "url": "https://doi.org/10.1161/CIRCOUTCOMES.126.014472"
+      "url": "https://doi.org/10.1161/CIRCOUTCOMES.126.014472",
+      "published": "2026-11-06",
+      "whyItMatters": "An AI agent matched clinicians on overall quality and left gaps in completeness, so reviewers must see what it omitted."
     },
     {
       "id": "A35",
@@ -557,7 +633,9 @@
       "strength": "Limited",
       "direction": "Complicates",
       "caveats": "Showing real sources is not the same as showing sound reasoning.",
-      "url": "https://doi.org/10.2147/JMDH.S640102"
+      "url": "https://doi.org/10.2147/JMDH.S640102",
+      "published": "2026-11-01",
+      "whyItMatters": "Real citations did not guarantee safe answers, so showing sources must come with reasoning clinicians can check."
     },
     {
       "id": "A36",
@@ -572,7 +650,111 @@
       "strength": "Strong",
       "direction": "Complicates",
       "caveats": "One trial of a maternal-health chatbot versus an active control.",
-      "url": "https://doi.org/10.1001/jamanetworkopen.2026.41062"
+      "url": "https://doi.org/10.1001/jamanetworkopen.2026.41062",
+      "published": "2026-11-02",
+      "whyItMatters": "A chatbot without a proven clinical pathway did not move maternal outcomes, so AI in care needs outcome evidence."
+    },
+    {
+      "id": "A37",
+      "thesis": "A",
+      "title": "Explained risk scores sharpened foot-ulcer care plans",
+      "finding": "In a randomized evaluation of 202 patients, physicians using an explainable AI platform that showed the drivers behind each risk score for cure, recurrence, amputation and death wrote higher-quality care recommendations than under usual care: 7.77 vs 6.47 (mean difference 1.30, 95% CI 1.08–1.52). Completeness gained the most.",
+      "source": "Zhang et al., eClinicalMedicine",
+      "year": 2026,
+      "designAndSize": "Multicentre derivation and validation (763 + 100 patients, three hospitals in China) with a prospective randomized evaluation; 202 patients randomized 1:1, 200 analysed",
+      "studyType": "RCT",
+      "sampleSize": "202 patients randomized",
+      "strength": "Strong",
+      "direction": "Supports",
+      "caveats": "Outcome is recommendation quality, not patient health outcomes.",
+      "url": "https://doi.org/10.1016/j.eclinm.2026.104284",
+      "published": "2026-10-31",
+      "whyItMatters": "Showing care teams why a patient is at risk produced more complete care plans – AI that shows its work sharpens clinical judgment."
+    },
+    {
+      "id": "A38",
+      "thesis": "A",
+      "title": "Decide, then consult: juniors closed the gap",
+      "finding": "Junior anesthesiologists who made an independent decision before consulting DeepSeek-R1 scored 86.0 vs 61.7 on accuracy and 84.3 vs 53.7 on comprehensiveness compared with juniors working alone, with no significant difference from senior experts. They adopted 65% of the AI's suggestions and modified 35%.",
+      "source": "Yang, Zhang & Wang, BMC Anesthesiology",
+      "year": 2026,
+      "designAndSize": "Simulation-based multi-arm study; 32 junior residents randomized to AI-assisted or unaided; 16 senior experts as a non-randomized comparator; 20 clinical scenarios",
+      "studyType": "Randomized experiment",
+      "sampleSize": "48 anesthesiologists (32 juniors randomized, 16 seniors)",
+      "strength": "Moderate",
+      "direction": "Supports",
+      "caveats": "Simulated scenarios; the authors flag automation-bias risk in critical cases.",
+      "url": "https://doi.org/10.1186/s12871-026-04173-4",
+      "published": "2026-08-14",
+      "whyItMatters": "Deciding before consulting a reasoning model helped junior clinicians close the gap with seniors, keeping them in the thinking."
+    },
+    {
+      "id": "A39",
+      "thesis": "A",
+      "title": "An interpretable triage model cut time to diagnosis",
+      "finding": "In a 2-year randomized pragmatic study of 2,385 people with a positive ANA test, inviting the patients an interpretable EHR model flagged as high risk to an expedited rheumatology visit cut median time to autoimmune diagnosis from 138 to 43 days (HR 1.9, 95% CI 1.3–2.7).",
+      "source": "Barnado et al., NEJM AI",
+      "year": 2026,
+      "designAndSize": "Randomized pragmatic study in one academic health system (Vanderbilt); 2,385 randomized, 1,960 analysed; 2 years",
+      "studyType": "RCT",
+      "sampleSize": "2,385 randomized",
+      "strength": "Strong",
+      "direction": "Supports",
+      "caveats": "One health system; it tests faster triage, not how clinicians reason with the model.",
+      "url": "https://doi.org/10.1056/AIoa2600112",
+      "published": "2026-11-06",
+      "whyItMatters": "An interpretable model used for triage cut months off diagnosis, showing transparent AI can speed care in practice."
+    },
+    {
+      "id": "A40",
+      "thesis": "A",
+      "title": "LLM answers shifted with the prompt",
+      "finding": "Across five LLMs and four prompting strategies on 1,455 aortic stenosis patients, GPT-o1 with chain-of-thought reached 97.5% severity accuracy and Grok-2 with chain-of-thought matched 88.3% of real treatment decisions. Performance varied by model, task and prompt, and after adjustment the AI recommendations were not associated with mortality (HR 1.41, 95% CI 0.58–3.45).",
+      "source": "Huang et al., BMJ Health & Care Informatics",
+      "year": 2026,
+      "designAndSize": "Retrospective evaluation; 5 LLMs × 4 prompting strategies; 1,455 patients with aortic stenosis",
+      "studyType": "Diagnostic evaluation",
+      "sampleSize": "1,455 patients",
+      "strength": "Moderate",
+      "direction": "Mixed",
+      "caveats": "Retrospective, with no clinicians in the loop.",
+      "url": "https://doi.org/10.1136/bmjhci-2026-102235",
+      "published": "2026-11-11",
+      "whyItMatters": "LLM recommendations shifted with prompt wording, so care tools need standardized, visible reasoning before clinical use."
+    },
+    {
+      "id": "A41",
+      "thesis": "A",
+      "title": "Physicians missed a failing AI",
+      "finding": "As a heart-sound AI's reliability fell from 90% to 0%, AI-assisted accuracy among 48 physicians fell from 81.45% to 58.33%, below their own unassisted performance. 12.5% noticed the decline unprompted, and having physicians commit to their own answer before seeing the AI did not improve performance.",
+      "source": "Schlicker et al., npj Digital Medicine",
+      "year": 2026,
+      "designAndSize": "Randomized 2 × 4 mixed-factorial experiment; 48 physicians; 40 heart-sound trials; AI advice before vs after the physician's own call",
+      "studyType": "Randomized experiment",
+      "sampleSize": "48 physicians",
+      "strength": "Moderate",
+      "direction": "Complicates",
+      "caveats": "Simulated malfunction on recorded heart sounds, not live care.",
+      "url": "https://doi.org/10.1038/s41746-026-03410-x",
+      "published": "2026-11-13",
+      "whyItMatters": "Physicians rarely noticed a failing AI and forcing an upfront decision did not fix it – oversight needs tools that surface failure."
+    },
+    {
+      "id": "A42",
+      "thesis": "A",
+      "title": "Physicians would act on false AI abstracts",
+      "finding": "Twenty emergency and trauma physicians said they would act on 23 of 40 GPT-5 abstracts containing false claims (specificity 43%), and rated true and false abstracts alike for perceived accuracy (3.15 vs 2.88, P = .21).",
+      "source": "Hakam et al., Journal of Medical Internet Research",
+      "year": 2026,
+      "designAndSize": "Cross-sectional vignette survey; 20 physicians at 4 German hospitals; 80 ratings of 4 GPT-5 abstracts (2 false, 2 accurate)",
+      "studyType": "Survey",
+      "sampleSize": "20 physicians; 80 ratings",
+      "strength": "Limited",
+      "direction": "Supports",
+      "caveats": "Reported intent from 20 physicians, not observed practice.",
+      "url": "https://doi.org/10.2196/91095",
+      "published": "2026-11-13",
+      "whyItMatters": "Physicians could not tell false AI abstracts from true ones, so AI-generated evidence must show traceable sources."
     },
     {
       "id": "B1",
@@ -587,7 +769,9 @@
       "strength": "Vendor / unreviewed",
       "direction": "Supports",
       "caveats": "Preliminary, vendor-published, not peer-reviewed, no control group. Bundles sensors, vitals monitoring, devices and in-home services, so results can't be pinned on the AI.",
-      "url": "https://www.einpresswire.com/article/952253242/kansas-pilot-study-shows-ai-reduces-nursing-facility-days-for-older-adults"
+      "url": "https://www.einpresswire.com/article/952253242/kansas-pilot-study-shows-ai-reduces-nursing-facility-days-for-older-adults",
+      "published": "2026-10-27",
+      "whyItMatters": "A vendor pilot links remote support at home with fewer nursing-facility days, a signal for caregiver-centered care at home."
     },
     {
       "id": "B2",
@@ -602,7 +786,9 @@
       "strength": "Strong",
       "direction": "Supports",
       "caveats": "Volunteer sample of spouse caregivers in one New York program; 557 days is a model-predicted median.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/17101889/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17101889/",
+      "published": "2006-11-14",
+      "whyItMatters": "Supporting the caregiver kept people with dementia at home longer – supporting the caregiver supports the patient."
     },
     {
       "id": "B3",
@@ -617,7 +803,9 @@
       "strength": "Strong",
       "direction": "Mixed",
       "caveats": "Only 6-month follow-up; too short to show placement effects.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/17116917/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17116917/",
+      "published": "2006-11-21",
+      "whyItMatters": "Caregiver support improved caregiver quality of life and depression, with no change in placement at six months."
     },
     {
       "id": "B4",
@@ -632,7 +820,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Small, one center. Association, not proof of cause.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/28655841/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28655841/",
+      "published": "2017-06-27",
+      "whyItMatters": "Caregiver mental health predicted patient survival, tying caregiver support directly to patient outcomes."
     },
     {
       "id": "B5",
@@ -647,7 +837,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Observational; confidence interval touches 1.00.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/10605972/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10605972/",
+      "published": "1999-12-15",
+      "whyItMatters": "Strained caregivers face higher mortality, so caregiver support protects the people doing the caring."
     },
     {
       "id": "B6",
@@ -662,7 +854,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Review of observational studies; predictors, not causes.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/19169120/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19169120/",
+      "published": "2009-02",
+      "whyItMatters": "Caregiver stress predicts nursing-home admission, so easing it is a lever for keeping people home."
     },
     {
       "id": "B7",
@@ -677,7 +871,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "Small effect with a confidence interval starting at 1.00; COVID-era data.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/40924417/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40924417/",
+      "published": "2025-09-02",
+      "whyItMatters": "Caregiver burden showed a modest link to 30-day ED returns and no link at shorter windows."
     },
     {
       "id": "B8",
@@ -692,7 +888,9 @@
       "strength": "Strong",
       "direction": "Supports",
       "caveats": "Interventions varied a lot between studies.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/28369687/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28369687/",
+      "published": "2017-04-03",
+      "whyItMatters": "Including caregivers in discharge planning cut readmissions by a quarter – supporting the caregiver supports the patient."
     },
     {
       "id": "B9",
@@ -707,7 +905,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "Use effects showed up only in subgroups; no difference in the chance of any admission or ED visit.",
-      "url": "https://acl.gov/sites/default/files/programs/2017-03/BRICare-Consultation-Summary-2015.pdf"
+      "url": "https://acl.gov/sites/default/files/programs/2017-03/BRICare-Consultation-Summary-2015.pdf",
+      "published": "2015-08",
+      "whyItMatters": "Care consultation eased caregiver depression and cut some hospital use, with results that varied across settings."
     },
     {
       "id": "B10",
@@ -722,7 +922,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Cross-sectional; association, not cause.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/12387650/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12387650/",
+      "published": "2002-10-23",
+      "whyItMatters": "Nurse workload tracks with patient deaths and burnout, so easing care-worker burden protects patients."
     },
     {
       "id": "B11",
@@ -737,22 +939,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Observational.",
-      "url": "https://doi.org/10.1016/S0140-6736(13)62631-8"
-    },
-    {
-      "id": "B12",
-      "thesis": "B",
-      "title": "Physician burnout and patient safety",
-      "finding": "Burned-out physicians had about twice the odds of patient safety incidents (OR 1.96), lower professionalism (OR 2.31) and lower patient satisfaction (OR 2.28).",
-      "source": "Panagioti et al., JAMA Internal Medicine",
-      "year": 2018,
-      "designAndSize": "Meta-analysis; 47 studies, 42,473 physicians",
-      "studyType": "Meta-analysis",
-      "sampleSize": "47 studies; 42,473 physicians",
-      "strength": "Moderate",
-      "direction": "Supports",
-      "caveats": "High heterogeneity; low-to-moderate study quality; much is self-reported.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/30193239/"
+      "url": "https://doi.org/10.1016/S0140-6736(13)62631-8",
+      "published": "2014-02-26",
+      "whyItMatters": "Lighter nurse workloads and more trained nurses meant fewer deaths, linking care-worker support to patient survival."
     },
     {
       "id": "B13",
@@ -767,7 +956,9 @@
       "strength": "Limited",
       "direction": "Context",
       "caveats": "Figures come from older underlying studies, not new data.",
-      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC539473/"
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC539473/",
+      "published": "2003-05",
+      "whyItMatters": "Patients forget most of what clinicians tell them, so caregivers and clear, reviewable explanations carry the care plan home."
     },
     {
       "id": "B14",
@@ -782,7 +973,9 @@
       "strength": "Moderate",
       "direction": "Context",
       "caveats": "Observational association – caregiving wasn’t measured. Family health consequence, not proof that cutting caregiver burden lowers mortality.",
-      "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2856229"
+      "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2856229",
+      "published": "2026-11-02",
+      "whyItMatters": "A spouse's injury was linked to higher partner mortality, showing how health events ripple through the family."
     },
     {
       "id": "B15",
@@ -797,7 +990,94 @@
       "strength": "Limited",
       "direction": "Supports",
       "caveats": "30 caregivers in the burden comparison.",
-      "url": "https://doi.org/10.1093/ageing/afag318"
+      "url": "https://doi.org/10.1093/ageing/afag318",
+      "published": "2026-10-31",
+      "whyItMatters": "Caring for a loved one at home did not add burden when the care team communicated well and shared decisions."
+    },
+    {
+      "id": "B16",
+      "thesis": "B",
+      "title": "Digital palliative care at home: active help worked",
+      "finding": "Across six RCTs (589 patients, 367 caregivers), active digital education improved patients' quality of life and symptoms. Passive quality-of-life monitoring showed no benefit, largely because clinicians seldom used it, and the one trial measuring caregiver quality of life found no effect.",
+      "source": "Xin et al., BMC Palliative Care",
+      "year": 2026,
+      "designAndSize": "Systematic review and narrative synthesis of 6 RCTs; 589 patients, 367 caregivers",
+      "studyType": "Systematic review",
+      "sampleSize": "6 RCTs; 589 patients, 367 caregivers",
+      "strength": "Moderate",
+      "direction": "Mixed",
+      "caveats": "Six varied trials with no pooled estimate.",
+      "url": "https://doi.org/10.1186/s12904-026-02386-5",
+      "published": "2026-10-19",
+      "whyItMatters": "Active digital support improved patients' lives at home while passive monitoring did not – tools must engage people."
+    },
+    {
+      "id": "B17",
+      "thesis": "B",
+      "title": "Daily support messages kept dementia caregivers engaged",
+      "finding": "In a 12-month NIH trial of 966 African American and Hispanic dementia caregivers receiving daily social-support messages, 82.3% stayed 9 months or more although 86.7% had low digital literacy. Emotional tone improved (Cohen's d = 0.756) and the number of isolated caregivers fell 46.2%.",
+      "source": "Yoon et al., npj Mental Health Research",
+      "year": 2026,
+      "designAndSize": "NIH Stage II/III two-arm trial, non-randomized (NCT03865498); 966 caregivers; 12 months; AI-scored emotional tone",
+      "studyType": "Quasi-experiment",
+      "sampleSize": "966 caregivers",
+      "strength": "Moderate",
+      "direction": "Supports",
+      "caveats": "Both arms received support, so there is no untreated control.",
+      "url": "https://doi.org/10.1038/s44184-026-00258-7",
+      "published": "2026-11-12",
+      "whyItMatters": "Daily digital support kept underserved dementia caregivers engaged for a year and reduced isolation."
+    },
+    {
+      "id": "B18",
+      "thesis": "B",
+      "title": "For-profit hospitals: thinner staffing, more deaths",
+      "finding": "Across 941 hospitals in 10 states and more than 1.17 million Medicare admissions, for-profit ownership was associated with higher 30-day mortality (0.48 points for surgical and 1.13 points for medical patients). Nurse staffing accounted for 45% and 40% of those gaps, and nurse burnout ran 9 points higher, 67% of it through staffing.",
+      "source": "McHugh et al., Medical Care",
+      "year": 2026,
+      "designAndSize": "Cross-sectional; 143 for-profit and 798 nonprofit hospitals; >1.17 million Medicare admissions; 17,368 bedside nurses; 2024 data",
+      "studyType": "Cross-sectional",
+      "sampleSize": ">1.17 million admissions; 941 hospitals",
+      "strength": "Moderate",
+      "direction": "Supports",
+      "caveats": "Cross-sectional association, not a staffing intervention.",
+      "url": "https://doi.org/10.1097/MLR.0000000000002376",
+      "published": "2026-09-03",
+      "whyItMatters": "Understaffing explained a large share of excess deaths at for-profit hospitals – supporting care workers supports patients."
+    },
+    {
+      "id": "B19",
+      "thesis": "B",
+      "title": "Rural caregiver navigation eased burden",
+      "finding": "In Boise State's free, telephonic Family Caregiver Navigator program for a rural state, caregivers with follow-up scores saw burden fall (Zarit-4 9.56 to 6.88) and depression ease (PHQ-9 7.54 to 4.90). 58% (29 caregivers) reported reduced intent to place their care recipient in a facility.",
+      "source": "Toevs et al., International Journal of Environmental Research and Public Health",
+      "year": 2026,
+      "designAndSize": "Pre/post program evaluation; 289 caregivers engaged; 48–50 with paired pre/post scores at 30–90 days",
+      "studyType": "Pre/post evaluation",
+      "sampleSize": "289 engaged; 48–50 with paired scores",
+      "strength": "Limited",
+      "direction": "Supports",
+      "caveats": "No control group, and about 50 of 289 caregivers completed follow-up.",
+      "url": "https://doi.org/10.3390/ijerph23101333",
+      "published": "2026-10-20",
+      "whyItMatters": "Low-cost navigation eased caregiver burden and reduced intent to move loved ones into facilities."
+    },
+    {
+      "id": "B20",
+      "thesis": "B",
+      "title": "Care Ecosystem at scale improved caregiver well-being",
+      "finding": "Across 1,186 dementia caregiver–patient pairs at six US health systems, caregivers in the navigator-led Care Ecosystem had lower depression at 12 months (PHQ-9 −0.48, 95% CI −0.71 to −0.25), along with lower anxiety (−0.23), distress (−0.82) and strain (−0.45) and higher self-efficacy (+2.01). Gains were larger for caregivers of people with moderate-to-severe dementia.",
+      "source": "Guterman et al., Alzheimer's & Dementia",
+      "year": 2026,
+      "designAndSize": "Pragmatic multisite implementation study; 1,186 dyads; six US health systems; 12 months",
+      "studyType": "Cohort",
+      "sampleSize": "1,186 caregiver–patient pairs",
+      "strength": "Moderate",
+      "direction": "Supports",
+      "caveats": "Single-arm implementation with no control group.",
+      "url": "https://doi.org/10.1002/alz.72005",
+      "published": "2026-11-13",
+      "whyItMatters": "Navigator-led dementia care improved caregiver well-being at scale across six health systems – supporting the caregiver supports the patient."
     },
     {
       "id": "C1",
@@ -812,7 +1092,9 @@
       "strength": "Policy fact",
       "direction": "Context",
       "caveats": "Dementia only; available only through participating programs. Shows a payer pays, not what it pays for an app.",
-      "url": "https://www.cms.gov/priorities/innovation/innovation-models/guide"
+      "url": "https://www.cms.gov/priorities/innovation/innovation-models/guide",
+      "published": "2024",
+      "whyItMatters": "Medicare now pays for dementia caregiver support and respite, a direct answer to who pays."
     },
     {
       "id": "C2",
@@ -827,7 +1109,9 @@
       "strength": "Policy fact",
       "direction": "Context",
       "caveats": "Paid to clinicians, not to apps or caregivers.",
-      "url": "https://www.cms.gov/newsroom/fact-sheets/calendar-year-cy-2024-medicare-physician-fee-schedule-final-rule"
+      "url": "https://www.cms.gov/newsroom/fact-sheets/calendar-year-cy-2024-medicare-physician-fee-schedule-final-rule",
+      "published": "2023-11-02",
+      "whyItMatters": "Medicare pays clinicians to train caregivers, putting caregiver support inside reimbursed care."
     },
     {
       "id": "C3",
@@ -842,7 +1126,9 @@
       "strength": "Policy fact",
       "direction": "Context",
       "caveats": "Benefits are optional and may shrink after 2025 federal Medicaid cuts.",
-      "url": "https://www.kff.org/medicaid/medicaids-home-care-support-for-family-caregivers-in-2025/"
+      "url": "https://www.kff.org/medicaid/medicaids-home-care-support-for-family-caregivers-in-2025/",
+      "published": "2026-01-05",
+      "whyItMatters": "Every responding state pays family caregivers through Medicaid, making public payers a real funding path."
     },
     {
       "id": "C4",
@@ -857,7 +1143,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Stated, not actual, payment; 32% said $0 and 11% refused to answer.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/30877638/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30877638/",
+      "published": "2019-03-15",
+      "whyItMatters": "Most dementia caregivers would pay something for in-home help, showing direct demand for caregiver support."
     },
     {
       "id": "C5",
@@ -872,7 +1160,9 @@
       "strength": "Moderate",
       "direction": "Mixed",
       "caveats": "Savings not significant; stated willingness.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41140794/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41140794/",
+      "published": "2025-09-15",
+      "whyItMatters": "Caregivers valued day services above what they could afford, so payers need to cover the gap."
     },
     {
       "id": "C6",
@@ -887,7 +1177,9 @@
       "strength": "Limited",
       "direction": "Supports",
       "caveats": "2008 data; French setting; cross-sectional.",
-      "url": "https://doi.org/10.1186/s13561-014-0034-2"
+      "url": "https://doi.org/10.1186/s13561-014-0034-2",
+      "published": "2014-12-13",
+      "whyItMatters": "Caregivers put a clear price on an hour of care, and training needs raised it."
     },
     {
       "id": "C7",
@@ -902,7 +1194,9 @@
       "strength": "Limited",
       "direction": "Context",
       "caveats": "Survey; most spending is housing and medical.",
-      "url": "https://www.aarp.org/press/releases/2021-6-29-aarp-research-shows-family-caregivers-face-significant-financial-strain,-spend-on-average-7,242-each-year.html"
+      "url": "https://www.aarp.org/press/releases/2021-6-29-aarp-research-shows-family-caregivers-face-significant-financial-strain,-spend-on-average-7,242-each-year.html",
+      "published": "2021-06-29",
+      "whyItMatters": "Caregivers spend about a quarter of their income on care, so they cannot be the main payer."
     },
     {
       "id": "C8",
@@ -917,7 +1211,9 @@
       "strength": "Limited",
       "direction": "Supports",
       "caveats": "Survey; self-reported.",
-      "url": "https://www.hbs.edu/ris/Publication%20Files/The_Caring_Company_08e19f30-66d9-4eb4-83d7-c7b56934ed48.pdf"
+      "url": "https://www.hbs.edu/ris/Publication%20Files/The_Caring_Company_08e19f30-66d9-4eb4-83d7-c7b56934ed48.pdf",
+      "published": "2019",
+      "whyItMatters": "Employers lose workers to caregiving, giving them a business reason to pay for caregiver support."
     },
     {
       "id": "C9",
@@ -932,7 +1228,9 @@
       "strength": "Moderate",
       "direction": "Supports",
       "caveats": "Shows the cost of unpaid care, not that anyone will pay for support.",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42842857/"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42842857/",
+      "published": "2026-10-07",
+      "whyItMatters": "Unpaid care cuts work hours and productivity, a cost employers and payers share."
     }
   ]
 }

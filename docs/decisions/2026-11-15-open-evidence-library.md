@@ -19,9 +19,15 @@ change does not.
 - `/evidence/` loads the published library from `/assets/data/library.json`
   on this site, with no token. The optional "Send me Bast updates" form
   stays on the page and does not hide the studies. It posts to `POST /signup`.
-- That file is the published library from ai-workspace commit
-  `93d0e7bf3c98af1cf001efb57278e30286d13377`: 60 studies, last updated
-  2026-11-10. `POST /contact` is unchanged.
+- That file is the published library approved on November 15, 2026:
+  70 studies, last updated 2026-11-15. The retracted B12 entry is gone.
+  `POST /contact` is unchanged.
 
 The page reads the studies from this site. It does not call
 `GET /library` on the forms service.
+
+Study cards share one grid: three columns on a wide screen, two on a
+tablet, and one on a phone. When `library.json` lists `featured` study
+ids, a National Caregiving Month section uses those cards and the five
+findings section is hidden. An empty `featured` list leaves the five
+findings in place. `whyItMatters` and `published` are optional.

@@ -191,48 +191,94 @@
     return study.strength === "Vendor / unreviewed" || study.studyType === "Vendor report";
   }
 
-  function card(study) {
+  function formatPublished(study) {
+    const published = asText(study.published);
+    const full = published.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (full) {
+      const date = new Date(Date.UTC(Number(full[1]), Number(full[2]) - 1, Number(full[3])));
+      if (!Number.isNaN(date.getTime())) {
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: "UTC",
+        }).format(date);
+      }
+    }
+    const month = published.match(/^(\d{4})-(\d{2})$/);
+    if (month) {
+      const date = new Date(Date.UTC(Number(month[1]), Number(month[2]) - 1, 1));
+      if (!Number.isNaN(date.getTime())) {
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          year: "numeric",
+          timeZone: "UTC",
+        }).format(date);
+      }
+    }
+    if (/^\d{4}$/.test(published)) return published;
+    return asText(study.year);
+  }
+
+  function citation(study) {
+    const authors = asText(study.authors);
+    const journal = asText(study.journal);
+    if (authors && journal) return `${authors}, ${journal}`;
+    if (authors) return authors;
+    if (journal) return journal;
+    return asText(study.source);
+  }
+
+  function sourceLink(text, href) {
+    if (!text) return null;
+    if (!href) return text;
+    return el("a", { class: "text-link", href, rel: "noopener", text });
+  }
+
+  function card(study, idPrefix) {
     const thesis = thesisLabel(asText(study.thesis));
     const parts = [thesis, asText(study.strength), asText(study.direction)].filter(Boolean);
-    const kicker = el("p", { class: "card-kicker", text: parts.join(" · ") });
-    const children = [kicker];
+    const children = [el("p", { class: "card-kicker", text: parts.join(" · ") })];
     if (isVendor(study)) {
       children.push(el("p", { class: "evlib-badge", text: "Preliminary vendor report" }));
     }
-    const title = asText(study.title);
-    if (title) children.push(el("h3", { text: title }));
-    const finding = readable(study.finding);
-    if (finding) children.push(el("p", { class: "evlib-finding", text: finding }));
-
-    const rows = [
-      ["Study", readable(study.designAndSize)],
-      ["Type", asText(study.studyType)],
-      ["Size", asText(study.sampleSize)],
-    ].filter(([, value]) => value);
-    if (rows.length) {
-      const details = el("dl");
-      for (const [label, value] of rows) {
-        details.append(el("dt", { text: label }), el("dd", { text: value }));
-      }
-      children.push(details);
-    }
 
     const href = httpsUrl(study.url);
-    const sourceBits = [asText(study.source), asText(study.year)].filter(Boolean).join(", ");
-    if (href || sourceBits) {
+    const title = asText(study.title);
+    const cite = citation(study);
+    if (title) {
+      const heading = el("h3");
+      if (href) heading.append(el("a", { href, rel: "noopener", text: title }));
+      else heading.textContent = title;
+      children.push(heading);
+    }
+    if (cite || (!title && href)) {
       const source = el("p", { class: "evlib-source" });
-      if (href) source.append(el("a", { class: "text-link", href, rel: "noopener", text: sourceBits || "Source" }));
-      else source.textContent = sourceBits;
+      const linked = sourceLink(cite || "Source", !title ? href : "");
+      if (linked && typeof linked !== "string") source.append(linked);
+      else source.textContent = cite;
       children.push(source);
     }
 
-    const caveats = readable(study.caveats);
-    if (caveats) {
-      children.push(el("p", { class: "evlib-caveat" }, [el("strong", { text: "Caveats: " }), caveats]));
+    const when = formatPublished(study);
+    if (when) children.push(el("p", { class: "evlib-date", text: when }));
+
+    const finding = readable(study.finding);
+    if (finding) children.push(el("p", { class: "evlib-finding", text: finding }));
+
+    const why = readable(study.whyItMatters);
+    if (why) {
+      children.push(el("p", { class: "evlib-why" }, [
+        el("span", { class: "evlib-why-label", text: "Why this matters: " }),
+        why,
+      ]));
     }
 
+    const caveats = readable(study.caveats);
+    if (caveats) children.push(el("p", { class: "evlib-caveat", text: caveats }));
+
     const id = asText(study.id);
-    const safeId = /^[A-Za-z0-9_-]+$/.test(id) ? `library-${id}` : "";
+    const safeId = idPrefix && /^[A-Za-z0-9_-]+$/.test(id) ? `${idPrefix}-${id}` : "";
     return el("li", { class: "card evlib-card", id: safeId }, children);
   }
 
@@ -246,14 +292,15 @@
       if (want.studyType && asText(study.studyType) !== want.studyType) return false;
       if (!q) return true;
       const haystack = [
-        study.title, study.finding, study.source, study.designAndSize,
-        study.caveats, study.studyType, study.sampleSize, study.year,
+        study.title, study.finding, study.source, study.authors, study.journal,
+        study.whyItMatters, study.designAndSize, study.caveats, study.studyType,
+        study.sampleSize, study.year, study.published,
       ].map(readable).join(" ").toLowerCase();
       return haystack.includes(q);
     });
     const limit = 300;
     const shown = matched.slice(0, limit);
-    list.replaceChildren(...shown.map(card));
+    list.replaceChildren(...shown.map((study) => card(study, "library")));
     const extra = matched.length > shown.length ? ` Showing ${shown.length} on this page.` : "";
     results.textContent = matched.length
       ? `Showing ${shown.length} of ${studies.length} studies.${extra}`
@@ -276,12 +323,44 @@
     }
   }
 
+  function featuredStudies() {
+    const ids = libraryData && libraryData.featured;
+    if (!Array.isArray(ids) || !ids.length) return [];
+    const byId = new Map();
+    for (const study of studies) {
+      const id = asText(study.id);
+      if (id && !byId.has(id)) byId.set(id, study);
+    }
+    const picked = [];
+    for (const id of ids) {
+      const study = byId.get(asText(id));
+      if (study) picked.push(study);
+    }
+    return picked;
+  }
+
+  function renderFeatured() {
+    const section = document.querySelector("[data-evidence-featured]");
+    const highlights = document.querySelector("[data-evidence-highlights]");
+    const slot = section && section.querySelector("[data-evidence-featured-list]");
+    const picked = featuredStudies();
+    if (!section || !slot || !picked.length) {
+      if (section) section.hidden = true;
+      if (highlights) highlights.hidden = false;
+      return;
+    }
+    slot.replaceChildren(...picked.map((study) => card(study, "featured")));
+    section.hidden = false;
+    if (highlights) highlights.hidden = true;
+  }
+
   function showLibrary() {
     renderMeta();
     if (!filtersReady) {
       setupFilters();
       filtersReady = true;
     }
+    renderFeatured();
     render();
     updateCount();
     library.hidden = false;
