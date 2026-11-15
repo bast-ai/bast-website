@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { access, readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
@@ -84,6 +85,7 @@ const requiredFiles = [
   "evidence/index.html",
   "assets/evidence.css",
   "assets/evidence.js",
+  "assets/data/library.json",
   "field-notes/index.html",
   "field-notes/support-the-caregiver-keep-people-home/index.html",
   "field-notes/show-the-work-sharpen-the-people/index.html",
@@ -1453,9 +1455,9 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
 }
 
-// /evidence/ (Beth, 2026-11-15): public preview and an open library request,
-// no published library file, one sign-up origin, no Brevo API host or key.
-// The optional updates form does not hide the studies.
+// /evidence/ (Beth, 2026-11-15): public preview plus the published library
+// file on this site. The optional updates form posts to the forms API and
+// does not hide the studies. No Brevo API host or key.
 {
   const evidenceSiteUrl = process.env.SITE_URL || "https://www.bast.ai";
   const evidenceSiteEnv = process.env.SITE_ENV || "local";
@@ -1486,7 +1488,8 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertExcludes(evidenceHtml, "Email me the confirmation link", "confirmation link is not the way in");
   assertIncludes(evidenceJs, "history.replaceState", "leftover confirmation code removed from the address bar");
   assertIncludes(evidenceJs, 'referrerPolicy: "no-referrer"', "sign-up fetch sends no referrer");
-  assertIncludes(evidenceJs, 'apiFetch("/library"', "library request hits /library");
+  assertIncludes(evidenceJs, 'fetch("/assets/data/library.json"', "library loads from the static file");
+  assertExcludes(evidenceJs, 'apiFetch("/library"', "page does not call the forms library route");
   assertExcludes(evidenceJs, "Authorization", "library request does not send a confirmation code");
   assertExcludes(evidenceJs, "Bearer", "library request does not send a bearer token");
   assertExcludes(evidenceJs, "This link expired", "expired-link message is gone");
@@ -1504,8 +1507,8 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   if (!updatesInput) throw new Error("Missing updates checkbox");
   if (/\bchecked\b/.test(updatesInput[0])) throw new Error("updates checkbox must be unticked by default");
   assertExcludes(evidenceHtml, "fetch(", "fetch in evidence HTML");
-  assertExcludes(evidenceHtml, "library.json", "public library file on the evidence page");
-  assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
+  assertExcludes(evidenceHtml, "library.json", "library filename stays out of the evidence page");
+  assertIncludes(evidenceJs, "/assets/data/library.json", "evidence script names the static library file");
   assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
   assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
   assertExcludes(evidenceJs, "This page does not save the confirmation link.", "page does not tell readers to keep a confirmation link");
@@ -1522,8 +1525,26 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
   assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
   assertExcludes(evidenceJs, "libraryData.schemaVersion", "library schema is not shown");
-  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 1) {
-    throw new Error("evidence script must call fetch exactly once");
+  if ((evidenceJs.match(/fetch\s*\(/g) || []).length !== 2) {
+    throw new Error("evidence script must call fetch twice: the static library, then the updates form");
+  }
+  {
+    const libraryFile = path.join(distDir, "assets/data/library.json");
+    const libraryBytes = await readFile(libraryFile);
+    if (libraryBytes.length !== 52092) {
+      throw new Error(`library.json must be 52092 bytes, found ${libraryBytes.length}`);
+    }
+    const librarySha = createHash("sha256").update(libraryBytes).digest("hex");
+    if (librarySha !== "eb6492aff5c8912bcc5cc7849be0f79eb4d59266d8e43405c21bf691d450d39d") {
+      throw new Error(`library.json sha256 mismatch: ${librarySha}`);
+    }
+    const libraryJson = JSON.parse(libraryBytes.toString("utf8"));
+    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 60) {
+      throw new Error("library.json must contain 60 studies");
+    }
+    if (libraryJson.lastUpdated !== "2026-11-10") {
+      throw new Error(`library.json lastUpdated must be 2026-11-10, found ${libraryJson.lastUpdated}`);
+    }
   }
   const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];
   const evidenceOrigins = new Set(evidenceUrls.map((url) => {
@@ -1578,9 +1599,6 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
     }
   }
   for (const file of files) {
-    if (path.basename(file) === "library.json") {
-      throw new Error(`dist must not contain library.json (${path.relative(distDir, file)})`);
-    }
     if (![".html", ".js", ".css", ".xml", ".txt", ".json", ".md"].includes(path.extname(file))) continue;
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }

@@ -1,7 +1,7 @@
 // Evidence library.
-// The five preview findings are in the page. The full library is requested
-// from the Bast forms service with no sign-in and no saved token.
-// An optional updates form posts to the same service and never hides the studies.
+// The five preview findings are in the page. The full library is the static
+// file /assets/data/library.json, loaded same-origin with no token.
+// An optional updates form posts to the Bast forms service and never hides the studies.
 // A leftover ?t= on the address bar is removed and is not sent.
 (function () {
   const FORMS_ORIGIN = "https://forms.aws.bast.ai";
@@ -300,16 +300,13 @@
     showRetry(false);
     let response;
     try {
-      response = await apiFetch("/library", {
+      response = await fetch("/assets/data/library.json", {
         headers: { Accept: "application/json" },
+        credentials: "omit",
+        referrerPolicy: "no-referrer",
       });
     } catch {
       setLibraryStatus(LOAD_MESSAGE, "error");
-      showRetry(true);
-      return;
-    }
-    if (response.status === 429) {
-      setLibraryStatus(WAIT_MESSAGE, "error");
       showRetry(true);
       return;
     }
