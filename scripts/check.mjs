@@ -1519,7 +1519,7 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertExcludes(evidenceJs, "localStorage", "evidence script does not store a browser pass");
   assertIncludes(bastcareHome, "the full library is open to everyone.", "BastCare page no longer asks for an email to open the library");
   assertExcludes(bastcareHome, "Confirm your email and the full library opens.", "BastCare page drops the email gate");
-  assertIncludes(llmsTxt, "The full library is on the same page.", "llms.txt describes an open library");
+  assertIncludes(llmsTxt, "each with its source and caveat, open to everyone.", "llms.txt describes an open library");
   assertExcludes(llmsTxt, "email confirmation", "llms.txt does not describe an email gate");
   assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
