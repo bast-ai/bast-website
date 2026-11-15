@@ -16,7 +16,6 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [Bast Agent OS](__SITE_URL__/platform/delivery/): How people retain outcome and release judgment while agents accelerate define, build, test, deploy, observe, and explain.
 - [Claims and proof](__SITE_URL__/platform/evidence/): Claim maturity, publication status, evidence strength, and current review boundaries. The research library is a different page: /evidence/.
 - [Evidence library](__SITE_URL__/evidence/): Published research on explainable AI, caregiving, and who pays for caregiver support. Five findings are on the page, each with its source and caveat. The full library is on the same page.
-- [Field notes](__SITE_URL__/field-notes/): Notes from November 13, 2026 on caregiver support and AI that shows its work, with links to the evidence library.
 - [Demos](__SITE_URL__/demos/): Demo videos (admin console, knowledge manager, end-user view, healthcare ontology), the BastCare captioned walkthrough, and the ten-minute demo guide. The Lucid Therapeutics demo is a pilot of Bast applied to Lucid Therapeutics' patient information.
 - [Bast Demo Guide](__SITE_URL__/platform/demo/): Ten-minute path from CFO outcomes through BastCare to architecture and evidence.
 - [Claim-Level Source Grounding](__SITE_URL__/frames/claim-level-source-grounding/): Definition, internal structure, architectural invariants, and evaluation tests for claim-level AI output verification.

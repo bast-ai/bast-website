@@ -86,9 +86,6 @@ const requiredFiles = [
   "assets/evidence.css",
   "assets/evidence.js",
   "assets/data/library.json",
-  "field-notes/index.html",
-  "field-notes/support-the-caregiver-keep-people-home/index.html",
-  "field-notes/show-the-work-sharpen-the-people/index.html",
 ];
 
 const forbidden = [
@@ -1500,8 +1497,8 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
   assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
   assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
-  assertIncludes(privacyHtml, "Last updated November 15, 2026.", "privacy page updated date");
-  assertIncludes(privacyHtml, "The evidence library is open on this page. An optional email sign-up is handled by Brevo (Sendinblue SAS, EU) to send a confirmation email and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
+  assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
   if (!updatesInput) throw new Error("Missing updates checkbox");
@@ -1517,10 +1514,6 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertExcludes(bastcareHome, "Confirm your email and the full library opens.", "BastCare page drops the email gate");
   assertIncludes(llmsTxt, "The full library is on the same page.", "llms.txt describes an open library");
   assertExcludes(llmsTxt, "email confirmation", "llms.txt does not describe an email gate");
-  assertIncludes(llmsTxt, "/field-notes/", "field notes in llms.txt");
-  assertIncludes(sitemapXml, "/field-notes/</loc>", "field notes sitemap route");
-  assertIncludes(sitemapXml, "/field-notes/support-the-caregiver-keep-people-home/</loc>", "caregiver field note sitemap route");
-  assertIncludes(sitemapXml, "/field-notes/show-the-work-sharpen-the-people/</loc>", "show-the-work field note sitemap route");
   assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
   assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
@@ -1717,7 +1710,7 @@ for (const file of files) {
   }
   const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
   if (!footerNav) continue;
-  for (const needle of ['href="/platform/">Overview</a>', 'href="/platform/architecture/"', 'href="/demos/"', 'href="/field-notes/"']) {
+  for (const needle of ['href="/platform/">Overview</a>', 'href="/platform/architecture/"', 'href="/demos/"']) {
     if (!footerNav[0].includes(needle)) throw new Error(`Missing ${needle} in the footer of ${rel}`);
   }
   for (const [needle, label] of retiredFooterNeedles) {
