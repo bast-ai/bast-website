@@ -39,6 +39,7 @@ body.evlib-page .evlib-card dd,
 body.evlib-page .evlib-badge,
 body.evlib-page .evlib-updated,
 body.evlib-page .evlib-meta,
+body.evlib-page .evlib-forget,
 body.evlib-page .text-link,
 body.evlib-page input,
 body.evlib-page select {
@@ -197,6 +198,19 @@ body.evlib-page .evlib-updated {
 
 body.evlib-page .evlib-keep {
   margin: 0.2rem 0 0;
+}
+
+body.evlib-page .evlib-forget {
+  display: inline-block;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 body.evlib-page .evlib-gate {

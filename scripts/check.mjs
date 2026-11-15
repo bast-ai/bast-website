@@ -1485,7 +1485,9 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
   assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
   assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
-  assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
+  assertIncludes(privacyHtml, "Last updated November 10, 2026.", "privacy page updated date");
+  assertIncludes(privacyHtml, "<code>bast_evidence_pass</code> keeps an evidence-library confirmation token for 30 days, or until the token's own expiry if that is sooner.", "evidence pass in the local-storage privacy sentence");
+  assertIncludes(privacyHtml, "After that link opens the library, this browser keeps the confirmation token for 30 days, or until the token's own expiry if that is sooner.", "evidence library browser-pass privacy sentence");
 assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
@@ -1496,7 +1498,15 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
   assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
   assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
   assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
-  assertIncludes(evidenceJs, "This page does not save the confirmation link.", "confirmation-link note stays on the unlocked library");
+  assertIncludes(evidenceJs, "This browser stays signed in for ", "browser pass note");
+  assertIncludes(evidenceJs, "Forget this browser", "forget-this-browser control");
+  assertIncludes(evidenceJs, "bast_evidence_pass", "evidence pass localStorage key");
+  assertIncludes(evidenceJs, "localStorage", "confirmed token is kept in localStorage");
+  assertIncludes(evidenceJs, "PASS_LIMIT_MS = 30 * DAY_MS", "browser pass is capped at 30 days");
+  assertIncludes(evidenceJs, "tokenExpiryMs", "pass falls back to the token's own expiry");
+  assertIncludes(evidenceJs, "serverExpiryMs", "pass honors an expiry the server returns");
+  assertIncludes(evidenceJs, "response.status === 401 || response.status === 403", "401 or 403 clears the pass");
+  assertExcludes(evidenceJs, "This page does not save the confirmation link.", "old do-not-save note is gone");
   assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
   assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
@@ -1537,10 +1547,11 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
     for (const link of links) assertIncludes(evidenceHtml, `href="${link}"`, `${id} preview source link`);
   }
   for (const [contents, label] of [[evidenceHtml, "evidence page"], [evidenceJs, "evidence script"]]) {
-    for (const banned of ["analytics-consent", "googletagmanager", "gtag(", "bastTrack", "document.cookie", "localStorage", "sessionStorage", "sendBeacon", "formspree", "hubspot", "mailchimp", "XMLHttpRequest"]) {
+    for (const banned of ["analytics-consent", "googletagmanager", "gtag(", "bastTrack", "document.cookie", "sessionStorage", "sendBeacon", "formspree", "hubspot", "mailchimp", "XMLHttpRequest"]) {
       assertExcludes(contents, banned, `tracking or storage on ${label}: ${banned}`);
     }
   }
+  assertExcludes(evidenceHtml, "localStorage", "evidence page HTML does not touch localStorage");
   const evidenceCopy = `${evidenceHtml}\n${evidenceJs}\n${evidenceCss}`;
   for (const banned of [/\bfree (iPhone )?app\b/i, /Craig/i, /acquir/i, /Van Westendorp/i, /Gabor-Granger/i, /How Beth can use/i, /40% higher quality/i, /43% vs 17%/]) {
     if (banned.test(evidenceCopy)) throw new Error(`evidence library contains banned wording: ${banned}`);
