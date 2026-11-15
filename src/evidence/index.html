@@ -86,39 +86,7 @@
     <h2 id="library-title">The full library</h2>
     <p>All <span data-evidence-count>60</span> studies, including the ones that complicate our view, with filters by question, direction, strength, and study type.</p>
 
-    <div class="evlib-gate" data-evidence-gate>
-      <p class="form-lead">Enter your email and we&rsquo;ll send a confirmation link. No login and no password.</p>
-      <form class="contact-form evlib-gate-form" data-evidence-gate-form novalidate>
-        <div class="evlib-hp" aria-hidden="true">
-          <label for="evidence-website">Website</label>
-          <input id="evidence-website" name="website" type="text" tabindex="-1" autocomplete="off" autocapitalize="off" spellcheck="false" value="">
-        </div>
-        <div class="field">
-          <label for="evidence-name">Name <span class="evlib-optional">(optional)</span></label>
-          <input id="evidence-name" name="name" type="text" autocomplete="name">
-        </div>
-        <div class="field">
-          <label for="evidence-email">Email</label>
-          <input id="evidence-email" name="email" type="email" autocomplete="email" inputmode="email" required>
-        </div>
-        <div class="field field-full evlib-choice">
-          <label for="evidence-updates">
-            <input id="evidence-updates" name="updates" type="checkbox">
-            Send me Bast updates
-          </label>
-          <p class="form-note" id="evidence-updates-hint">Optional. Leave this unticked and we only email the confirmation link.</p>
-        </div>
-        <div class="field-full form-footer">
-          <button class="button button-primary" type="submit">Email me the confirmation link</button>
-          <button class="button button-primary" type="button" data-evidence-retry hidden>Try again</button>
-          <p class="form-note" data-evidence-gate-status role="status" aria-live="polite"></p>
-        </div>
-        <p class="field-full form-note">We&rsquo;ll email you a confirmation link. <a class="text-link" href="/privacy.html#evidence-library">How sign-ups are handled</a>.</p>
-      </form>
-      <noscript><p>The five findings above stay on this page. Opening the full library needs JavaScript so we can send your confirmation link.</p></noscript>
-    </div>
-
-    <div class="evlib-library" data-evidence-library hidden>
+    <div class="evlib-library" data-evidence-library>
       <div data-evidence-meta></div>
       <div class="evlib-filters" role="search" aria-label="Filter the evidence library">
         <div class="evlib-filter evlib-filter-search">
@@ -144,7 +112,41 @@
       </div>
       <p class="evlib-count" data-evidence-results role="status" aria-live="polite"></p>
       <ul class="evlib-list" data-evidence-list></ul>
+      <p class="form-note" data-evidence-status role="status" aria-live="polite"></p>
+      <button class="button button-secondary" type="button" data-evidence-retry hidden>Try again</button>
     </div>
+    <noscript><p>The five findings above stay on this page. The full library needs JavaScript.</p></noscript>
+  </section>
+
+  <section class="evlib-updates" aria-labelledby="updates-title">
+    <h2 id="updates-title">Get updates</h2>
+    <p>Leave an email for Bast updates. The library on this page is open either way.</p>
+    <form class="contact-form" data-evidence-updates-form novalidate>
+      <div class="evlib-hp" aria-hidden="true">
+        <label for="evidence-website">Website</label>
+        <input id="evidence-website" name="website" type="text" tabindex="-1" autocomplete="off" autocapitalize="off" spellcheck="false" value="">
+      </div>
+      <div class="field">
+        <label for="evidence-name">Name <span class="evlib-optional">(optional)</span></label>
+        <input id="evidence-name" name="name" type="text" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="evidence-email">Email</label>
+        <input id="evidence-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+      </div>
+      <div class="field field-full evlib-choice">
+        <label for="evidence-updates">
+          <input id="evidence-updates" name="updates" type="checkbox">
+          Send me Bast updates
+        </label>
+        <p class="form-note" id="evidence-updates-hint">Tick this to receive Bast updates. Leave it unticked and the confirmation email does not add you to updates.</p>
+      </div>
+      <div class="field-full form-footer">
+        <button class="button button-primary" type="submit">Email me</button>
+        <p class="form-note" data-evidence-updates-status role="status" aria-live="polite"></p>
+      </div>
+      <p class="field-full form-note">A confirmation email follows. <a class="text-link" href="/privacy.html#evidence-library">How sign-ups are handled</a>.</p>
+    </form>
   </section>
 
   <section aria-labelledby="read-title">
@@ -190,6 +192,7 @@
         <a href="/manifesto/">Manifesto</a>
         <a href="/principles.html">Principles from nature</a>
         <a href="/faq/">FAQ</a>
+        <a href="/field-notes/">Field notes</a>
       </div>
       <div class="footer-col">
         <p class="footer-head">Stay in touch</p>

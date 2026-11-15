@@ -1,35 +1,32 @@
 // Evidence library.
 // The five preview findings are in the page. The full library is requested
-// from the Bast sign-up service after a reader opens the confirmation link.
-// That link's code is read once, removed from the address bar, and never
-// written to cookies or browser storage.
+// from the Bast forms service with no sign-in and no saved token.
+// An optional updates form posts to the same service and never hides the studies.
+// A leftover ?t= on the address bar is removed and is not sent.
 (function () {
-  const GATE_ORIGIN = "https://forms.aws.bast.ai";
+  const FORMS_ORIGIN = "https://forms.aws.bast.ai";
   const CONFIRM_MESSAGE = "Check your email for a confirmation link.";
-  const EXPIRED_MESSAGE = "This link expired. Sign up again and we'll email you a new one.";
+  const LOAD_MESSAGE = "The full library didn't load. The five findings above stay on this page.";
   const WAIT_MESSAGE = "Please wait a little while, then try again.";
-  const LOAD_MESSAGE = "The library didn't load. Please wait a moment and open the link from your email again.";
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const gate = document.querySelector("[data-evidence-gate]");
-  const form = document.querySelector("[data-evidence-gate-form]");
+  const form = document.querySelector("[data-evidence-updates-form]");
   const library = document.querySelector("[data-evidence-library]");
-  if (!gate || !form || !library) return;
+  if (!library) return;
 
-  const status = form.querySelector("[data-evidence-gate-status]");
-  const retry = form.querySelector("[data-evidence-retry]");
+  const formStatus = form ? form.querySelector("[data-evidence-updates-status]") : null;
+  const retry = library.querySelector("[data-evidence-retry]");
+  const libraryStatus = library.querySelector("[data-evidence-status]");
   const list = library.querySelector("[data-evidence-list]");
   const results = library.querySelector("[data-evidence-results]");
   const meta = library.querySelector("[data-evidence-meta]");
   const filters = Array.from(library.querySelectorAll("[data-filter]"));
   let libraryData = null;
   let studies = [];
-  let linkToken = "";
+  let filtersReady = false;
 
   const params = new URLSearchParams(window.location.search);
-  const fromLink = (params.get("t") || "").trim();
-  if (fromLink) {
-    linkToken = fromLink;
+  if (params.has("t")) {
     params.delete("t");
     const search = params.toString();
     const next = window.location.pathname + (search ? `?${search}` : "") + window.location.hash;
@@ -82,9 +79,16 @@
     return node;
   }
 
-  function setStatus(message, kind) {
-    status.textContent = message || "";
-    status.className = kind ? `form-note is-${kind}` : "form-note";
+  function setFormStatus(message, kind) {
+    if (!formStatus) return;
+    formStatus.textContent = message || "";
+    formStatus.className = kind ? `form-note is-${kind}` : "form-note";
+  }
+
+  function setLibraryStatus(message, kind) {
+    if (!libraryStatus) return;
+    libraryStatus.textContent = message || "";
+    libraryStatus.className = kind ? `form-note is-${kind}` : "form-note";
   }
 
   function showRetry(show) {
@@ -93,13 +97,14 @@
   }
 
   function fieldValue(name) {
+    if (!form) return "";
     const field = form.elements.namedItem(name);
     return field && "value" in field ? field.value : "";
   }
 
-  async function gateFetch(path, options) {
+  async function apiFetch(path, options) {
     const headers = new Headers(options && options.headers);
-    return fetch(`${GATE_ORIGIN}${path}`, {
+    return fetch(`${FORMS_ORIGIN}${path}`, {
       method: (options && options.method) || "GET",
       headers,
       body: options && options.body,
@@ -258,16 +263,11 @@
   function renderMeta() {
     if (!meta) return;
     meta.replaceChildren();
-    // The file's title, status, source, and schema are internal. Show the date only.
+    // The file's title, status, source, and schema are internal. Show the date.
     const updated = formatUpdated(libraryData.lastUpdated);
     if (updated) {
       meta.append(el("p", { class: "evlib-updated", text: `Updated ${updated}` }));
     }
-    const note = el("p", {
-      class: "evlib-keep",
-      text: "This page does not save the confirmation link. To open the library again later, use the email, or sign up for a new link.",
-    });
-    meta.append(note);
   }
 
   function updateCount() {
@@ -278,14 +278,15 @@
 
   function showLibrary() {
     renderMeta();
-    setupFilters();
+    if (!filtersReady) {
+      setupFilters();
+      filtersReady = true;
+    }
     render();
     updateCount();
-    gate.hidden = true;
     library.hidden = false;
+    setLibraryStatus("", "");
     showRetry(false);
-    const search = library.querySelector("[data-filter='q']");
-    if (search) search.focus();
   }
 
   function studiesFrom(data) {
@@ -295,41 +296,32 @@
   }
 
   async function openLibrary() {
-    if (!linkToken) return;
-    setStatus("Opening the library…", "");
+    setLibraryStatus("Opening the library…", "");
     showRetry(false);
     let response;
     try {
-      response = await gateFetch("/library", {
-        headers: { Authorization: `Bearer ${linkToken}`, Accept: "application/json" },
+      response = await apiFetch("/library", {
+        headers: { Accept: "application/json" },
       });
     } catch {
-      setStatus(LOAD_MESSAGE, "error");
+      setLibraryStatus(LOAD_MESSAGE, "error");
       showRetry(true);
       return;
     }
-    if (response.status === 401) {
-      linkToken = "";
-      setStatus(EXPIRED_MESSAGE, "error");
-      showRetry(false);
-      const email = form.elements.namedItem("email");
-      if (email) email.focus();
-      return;
-    }
     if (response.status === 429) {
-      setStatus(WAIT_MESSAGE, "error");
+      setLibraryStatus(WAIT_MESSAGE, "error");
       showRetry(true);
       return;
     }
     if (!response.ok) {
-      setStatus(LOAD_MESSAGE, "error");
+      setLibraryStatus(LOAD_MESSAGE, "error");
       showRetry(true);
       return;
     }
     const data = await readBody(response);
     const parsed = studiesFrom(data);
     if (!data || parsed === null) {
-      setStatus("The library opened, but it wasn't in a form this page can read. Please email community@bast.ai.", "error");
+      setLibraryStatus("The library opened, but it wasn't in a form this page can read. Please email community@bast.ai.", "error");
       showRetry(true);
       return;
     }
@@ -338,58 +330,58 @@
     showLibrary();
   }
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const emailField = form.elements.namedItem("email");
-    const email = fieldValue("email").trim();
-    const emailOk = emailPattern.test(email);
-    if (emailField) emailField.setAttribute("aria-invalid", String(!emailOk));
-    if (!emailOk) {
-      setStatus("Please add a valid email address.", "error");
-      showRetry(false);
-      if (emailField) emailField.focus();
-      return;
-    }
+  if (form) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const emailField = form.elements.namedItem("email");
+      const email = fieldValue("email").trim();
+      const emailOk = emailPattern.test(email);
+      if (emailField) emailField.setAttribute("aria-invalid", String(!emailOk));
+      if (!emailOk) {
+        setFormStatus("Please add a valid email address.", "error");
+        if (emailField) emailField.focus();
+        return;
+      }
 
-    const updates = form.elements.namedItem("updates");
-    const name = fieldValue("name").trim();
-    const body = {
-      email,
-      website: fieldValue("website"),
-      updates: Boolean(updates && updates.checked),
-    };
-    if (name) body.name = name;
+      const updates = form.elements.namedItem("updates");
+      const name = fieldValue("name").trim();
+      const body = {
+        email,
+        website: fieldValue("website"),
+        updates: Boolean(updates && updates.checked),
+      };
+      if (name) body.name = name;
 
-    const submit = form.querySelector("[type='submit']");
-    if (submit) submit.disabled = true;
-    setStatus("Sending the confirmation link…", "");
-    showRetry(false);
-    try {
-      const response = await gateFetch("/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (response.status === 429) {
-        setStatus(WAIT_MESSAGE, "error");
-        return;
+      const submit = form.querySelector("[type='submit']");
+      if (submit) submit.disabled = true;
+      setFormStatus("Sending the confirmation link…", "");
+      try {
+        const response = await apiFetch("/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 429) {
+          setFormStatus(WAIT_MESSAGE, "error");
+          return;
+        }
+        if (response.status === 403) {
+          setFormStatus("Please open this page on www.bast.ai and try again.", "error");
+          return;
+        }
+        if (!response.ok) {
+          setFormStatus("We couldn't send that. Please wait a moment and try again.", "error");
+          return;
+        }
+        const payload = await readBody(response);
+        setFormStatus(safeMessage(payload, CONFIRM_MESSAGE), "success");
+      } catch {
+        setFormStatus("We couldn't send that. Please wait a moment and try again.", "error");
+      } finally {
+        if (submit) submit.disabled = false;
       }
-      if (response.status === 403) {
-        setStatus("Please open this page on www.bast.ai and try again.", "error");
-        return;
-      }
-      if (!response.ok) {
-        setStatus("We couldn't send that. Please wait a moment and try again.", "error");
-        return;
-      }
-      const payload = await readBody(response);
-      setStatus(safeMessage(payload, CONFIRM_MESSAGE), "success");
-    } catch {
-      setStatus("We couldn't send that. Please wait a moment and try again.", "error");
-    } finally {
-      if (submit) submit.disabled = false;
-    }
-  });
+    });
+  }
 
   if (retry) {
     retry.addEventListener("click", () => {
@@ -397,5 +389,5 @@
     });
   }
 
-  if (linkToken) openLibrary();
+  openLibrary();
 })();

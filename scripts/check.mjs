@@ -84,6 +84,9 @@ const requiredFiles = [
   "evidence/index.html",
   "assets/evidence.css",
   "assets/evidence.js",
+  "field-notes/index.html",
+  "field-notes/support-the-caregiver-keep-people-home/index.html",
+  "field-notes/show-the-work-sharpen-the-people/index.html",
 ];
 
 const forbidden = [
@@ -1450,8 +1453,9 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
 }
 
-// /evidence/ (Beth, 2026-10-31): public preview, confirmed-token library,
+// /evidence/ (Beth, 2026-11-15): public preview and an open library request,
 // no published library file, one sign-up origin, no Brevo API host or key.
+// The optional updates form does not hide the studies.
 {
   const evidenceSiteUrl = process.env.SITE_URL || "https://www.bast.ai";
   const evidenceSiteEnv = process.env.SITE_ENV || "local";
@@ -1475,18 +1479,26 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   assertIncludes(evidenceHtml, 'name="website"', "honeypot field");
   assertIncludes(evidenceHtml, 'class="evlib-hp"', "honeypot hidden from people");
   assertIncludes(evidenceJs, "updates", "updates flag in the sign-up body");
-  assertIncludes(evidenceJs, "history.replaceState", "confirmation code removed from the address bar");
+  assertIncludes(evidenceHtml, "The library on this page is open either way.", "updates form does not gate the library");
+  assertIncludes(evidenceHtml, 'data-evidence-library', "library markup is on the page");
+  assertExcludes(evidenceHtml, "data-evidence-library\" hidden", "library is not hidden behind the email form");
+  assertExcludes(evidenceHtml, "data-evidence-gate", "email gate markup is gone");
+  assertExcludes(evidenceHtml, "Email me the confirmation link", "confirmation link is not the way in");
+  assertIncludes(evidenceJs, "history.replaceState", "leftover confirmation code removed from the address bar");
   assertIncludes(evidenceJs, 'referrerPolicy: "no-referrer"', "sign-up fetch sends no referrer");
-  assertIncludes(evidenceJs, "Authorization", "library request sends the confirmation code");
-  assertIncludes(evidenceJs, "This link expired", "expired-link message");
-  assertIncludes(evidenceJs, "Sign up again", "expired link asks the reader to sign up again");
+  assertIncludes(evidenceJs, 'apiFetch("/library"', "library request hits /library");
+  assertExcludes(evidenceJs, "Authorization", "library request does not send a confirmation code");
+  assertExcludes(evidenceJs, "Bearer", "library request does not send a bearer token");
+  assertExcludes(evidenceJs, "This link expired", "expired-link message is gone");
+  assertExcludes(evidenceJs, "Sign up again", "page does not ask the reader to sign up again for access");
   assertIncludes(evidenceJs, "Please wait", "kind rate-limit message");
+  assertIncludes(evidenceJs, "The full library didn't load.", "failed library load does not ask for email");
   assertIncludes(privacyHtml, 'Contact form messages go from Bast\'s own server to Bast\'s inbox by email, sent through Brevo (Sendinblue SAS) under <a href="https://www.brevo.com/legal/privacypolicy/">Brevo\'s privacy policy</a>.', "contact form privacy sentence");
   assertIncludes(privacyHtml, 'If the visitor ticks the "Send me Bast updates" box, their name and email are kept in Brevo so Bast can send updates, and they can unsubscribe at any time.', "contact updates privacy sentence");
   assertExcludes(privacyHtml, "The visitor's email app opens if that send fails.", "contact form email-app fallback");
   assertIncludes(bastcarePrivacy, "Asked every time, before recording starts", "privacy comparison consent cell");
-  assertIncludes(privacyHtml, "Last updated November 1, 2026.", "privacy page updated date");
-assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sendinblue SAS, EU) to send the confirmation link and any updates the person opted into.", "evidence library privacy sentence");
+  assertIncludes(privacyHtml, "Last updated November 15, 2026.", "privacy page updated date");
+  assertIncludes(privacyHtml, "The evidence library is open on this page. An optional email sign-up is handled by Brevo (Sendinblue SAS, EU) to send a confirmation email and any updates the person opted into.", "evidence library privacy sentence");
   assertIncludes(privacyHtml, "Every email has an unsubscribe link.", "evidence library unsubscribe sentence");
   const updatesInput = evidenceHtml.match(/<input\b[^>]*name="updates"[^>]*>/);
   if (!updatesInput) throw new Error("Missing updates checkbox");
@@ -1496,7 +1508,16 @@ assertIncludes(privacyHtml, "Evidence-library sign-ups are handled by Brevo (Sen
   assertExcludes(evidenceJs, "library.json", "public library file in the evidence script");
   assertIncludes(evidenceJs, "Updated ${updated}", "unlocked library prints a plain updated date");
   assertIncludes(evidenceJs, "formatUpdated(libraryData.lastUpdated)", "updated line uses the file date");
-  assertIncludes(evidenceJs, "This page does not save the confirmation link.", "confirmation-link note stays on the unlocked library");
+  assertExcludes(evidenceJs, "This page does not save the confirmation link.", "page does not tell readers to keep a confirmation link");
+  assertExcludes(evidenceJs, "localStorage", "evidence script does not store a browser pass");
+  assertIncludes(bastcareHome, "The full library is open on the page.", "BastCare page no longer asks for an email to open the library");
+  assertExcludes(bastcareHome, "Confirm your email and the full library opens.", "BastCare page drops the email gate");
+  assertIncludes(llmsTxt, "The full library is on the same page.", "llms.txt describes an open library");
+  assertExcludes(llmsTxt, "email confirmation", "llms.txt does not describe an email gate");
+  assertIncludes(llmsTxt, "/field-notes/", "field notes in llms.txt");
+  assertIncludes(sitemapXml, "/field-notes/</loc>", "field notes sitemap route");
+  assertIncludes(sitemapXml, "/field-notes/support-the-caregiver-keep-people-home/</loc>", "caregiver field note sitemap route");
+  assertIncludes(sitemapXml, "/field-notes/show-the-work-sharpen-the-people/</loc>", "show-the-work field note sitemap route");
   assertExcludes(evidenceJs, "libraryData.title", "library title is not shown");
   assertExcludes(evidenceJs, "libraryData.status", "library status is not shown");
   assertExcludes(evidenceJs, "libraryData.source", "library source note is not shown");
@@ -1678,7 +1699,7 @@ for (const file of files) {
   }
   const footerNav = contents.match(/<nav class="footer-nav"[\s\S]*?<\/nav>/);
   if (!footerNav) continue;
-  for (const needle of ['href="/platform/">Overview</a>', 'href="/platform/architecture/"', 'href="/demos/"']) {
+  for (const needle of ['href="/platform/">Overview</a>', 'href="/platform/architecture/"', 'href="/demos/"', 'href="/field-notes/"']) {
     if (!footerNav[0].includes(needle)) throw new Error(`Missing ${needle} in the footer of ${rel}`);
   }
   for (const [needle, label] of retiredFooterNeedles) {
