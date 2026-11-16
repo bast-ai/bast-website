@@ -6335,6 +6335,13 @@ h1 span {
   line-height: 1.15;
 }
 
+.kmworld-devices {
+  margin: 0.45rem 0 0;
+  color: var(--accent-text);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+}
+
 .kmworld-page .hero-actions {
   margin-top: 0.75rem;
 }
@@ -6428,8 +6435,8 @@ h1 span {
 
 @media (max-width: 560px) {
   .kmworld-page .site-header {
-    padding-top: 10px;
-    padding-bottom: 6px;
+    padding-top: 8px;
+    padding-bottom: 4px;
   }
 
   .kmworld-hero {
@@ -6437,17 +6444,28 @@ h1 span {
   }
 
   .kmworld-hero h1 {
-    font-size: clamp(2rem, 9vw, 2.5rem);
-    margin-bottom: 0.35rem;
+    font-size: clamp(2rem, 8.2vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .kmworld-hero .lede {
+    line-height: 1.25;
   }
 
   .kmworld-offer {
-    margin-top: 0.4rem;
-    font-size: 1.35rem;
+    margin-top: 0.3rem;
+    font-size: 1.25rem;
+  }
+
+  .kmworld-devices {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    line-height: 1.25;
   }
 
   .kmworld-page .hero-actions {
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
   }
 
   .kmworld-download {

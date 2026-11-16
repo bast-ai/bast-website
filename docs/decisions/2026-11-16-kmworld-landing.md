@@ -32,3 +32,10 @@ A QR on stickers and slides should open a short BastCare page.
   sends `utm_source`, `utm_medium`, and `utm_campaign`, and an App Store click
   sends `app_store_click` with the same campaign fields.
 - This repo has no Google Play URL, so the page links to the App Store.
+- BastCare runs on iPhone, Mac (M1 and later), and Apple Vision. The line
+  replaces "Built for iPhone" on `/bastcare/` and `/kmworld/`.
+- The public price line is "Free to try right now."
+- Saved summaries are in seven languages: English, Korean, Simplified
+  Chinese, Vietnamese, Spanish, Albanian, and German.
+- The homepage Maryville card uses the fall case-study result: attrition
+  down 26% across 764 students, graduating nurses up 38%.

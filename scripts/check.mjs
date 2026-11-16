@@ -338,7 +338,7 @@ const requiredHomepageSnippets = [
   },
   {
     label: "homepage download wording",
-    needle: "free to download on iPhone",
+    needle: "free to try right now",
   },
   {
     label: "homepage consent wording",
@@ -752,7 +752,9 @@ for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]
   assertExcludes(contents, `${bastcareReviews.rating.count} ratings`, `visible rating count on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
-assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
+assertIncludes(bastcareHome, "<strong>Free to try right now.</strong>", "BastCare download line");
+assertIncludes(bastcareHome, "iPhone, Mac (M1 and later), and Apple Vision", "BastCare device line");
+assertExcludes(bastcareHome, "Built for iPhone", "retired iPhone-only device line");
 assertExcludes(bastcareHome, "recorded hours", "BastCare hour limit");
 assertExcludes(bastcareHome, "No card required", "BastCare payment prompt");
 assertExcludes(bastcareHome, "BastCare Plus", "BastCare Plus on the product page");
@@ -797,10 +799,12 @@ for (const media of ["bastcare-promo.mp4", "bastcare-promo-square.mp4"]) {
   const { size } = await stat(path.join(distDir, "assets/bastcare/media", media));
   if (size > 8 * 1024 * 1024) throw new Error(`Autoplaying ${media} is ${(size / 1048576).toFixed(1)} MB; compress it below 8 MB`);
 }
-assertIncludes(bastcareHome, "nine-language translation", "carousel translation handoff");
-assertIncludes(bastcareHome, "Filipino", "BastCare Filipino support");
-assertIncludes(bastcareHome, "Japanese", "BastCare Japanese support");
-assertIncludes(bastcareHome, "nine languages", "BastCare nine-language claim");
+assertIncludes(bastcareHome, "seven-language translation", "carousel translation handoff");
+assertIncludes(bastcareHome, "Spanish", "BastCare Spanish support");
+assertExcludes(bastcareHome, "Filipino", "retired Filipino summary language");
+assertExcludes(bastcareHome, "Japanese", "retired Japanese summary language");
+assertExcludes(bastcareHome, "Colombian Spanish", "retired Colombian Spanish label");
+assertIncludes(bastcareHome, "seven languages", "BastCare seven-language claim");
 assertIncludes(bastcareHome, "explainable AI", "BastCare explainable AI line");
 assertIncludes(bastcareHome, "Sharing nothing is always valid.", "BastCare private-by-choice section");
 for (const banned of [
@@ -810,9 +814,9 @@ for (const banned of [
   "not medical advice",
   "asks for consent",
   "consent before recording",
-  "seven languages",
-  "seven-language",
-  "Seven summary languages",
+  "nine languages",
+  "nine-language",
+  "Nine summary languages",
   "No transcript text is included",
   "may contain errors",
   "refreshed home screen",
@@ -889,10 +893,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
 }
 assertIncludes(bastcarePrivacy, "Libraries and processors are different lists", "library boundary");
 assertIncludes(bastcarePrivacy, "<h2>7. Availability</h2>", "BastCare availability heading");
-assertIncludes(bastcarePrivacy, "BastCare is free to download.", "BastCare terms download line");
+assertIncludes(bastcarePrivacy, "BastCare is free to try right now.", "BastCare terms download line");
+assertIncludes(bastcarePrivacy, "English, Korean, Simplified Chinese, Vietnamese, Spanish, Albanian, and German", "BastCare seven-language privacy list");
 assertExcludes(bastcarePrivacy, "BastCare Plus", "BastCare Plus in the terms");
 assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
-assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
+assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to try right now on iPhone, Mac (M1 and later), and Apple Vision from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -986,7 +991,7 @@ assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
 assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");
-assertIncludes(llmsTxt, "nine languages", "llms.txt BastCare languages");
+assertIncludes(llmsTxt, "seven languages", "llms.txt BastCare languages");
 assertIncludes(llmsTxt, "eventid=6830210433", "llms.txt event install URL");
 assertExcludes(llmsTxt, "Not a medical device", "llms.txt medical-device marketing line");
 assertIncludes(llmsTxt, "/demos/", "llms.txt Demos entry");
@@ -1274,8 +1279,8 @@ for (const file of files) {
     }
   }
   if ([".html", ".txt"].includes(path.extname(file))) {
-    if (/seven[- ]languages|seven-language|Seven summary languages/i.test(contents)) {
-      throw new Error(`old seven-languages claim in ${rel}`);
+    if (/nine[- ]languages|nine-language|Nine summary languages/i.test(contents)) {
+      throw new Error(`old nine-languages claim in ${rel}`);
     }
     const kmworldInstallUrl = "https://apps.apple.com/us/app/bastcare/id6789669565?ct=kmworld";
     const relPosix = rel.split(path.sep).join("/");
@@ -1618,6 +1623,9 @@ assertIncludes(kmworldHtml, 'class="kmworld-page"', "KMWorld page");
 assertIncludes(kmworldHtml, "Retain more of the conversation, so you can be present in the room.", "KMWorld tagline");
 assertIncludes(kmworldHtml, "Caregivers lose what the doctor said once the visit ends. BastCare keeps the conversation.", "KMWorld visit story");
 assertIncludes(kmworldHtml, "<strong>Free to try right now.</strong>", "KMWorld offer line");
+assertIncludes(kmworldHtml, "iPhone, Mac (M1 and later), and Apple Vision.", "KMWorld device line");
+assertIncludes(indexHtml, "Nursing attrition down 26% across 764 students. Graduating nurses up 38%.", "homepage Maryville fall result");
+assertExcludes(indexHtml, "$1.2M", "retired homepage Maryville summer savings figure");
 assertIncludes(kmworldHtml, "Bast is at Enterprise AI World, part of KMWorld, in Washington, DC.", "KMWorld event line");
 assertIncludes(kmworldHtml, 'href="/evidence/">Read the evidence library</a>', "KMWorld evidence library link");
 assertIncludes(kmworldHtml, 'href="/#contact">Talk with Bast</a>', "KMWorld contact form link");

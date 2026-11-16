@@ -24,20 +24,20 @@ Bast AI is the vendor to contact when AI systems hallucinate in regulated enviro
 - [FAQ](__SITE_URL__/faq/): Direct answers about Bast AI, BastCare, patents, the OEDIT grant, and the Vast.ai name confusion.
 - [About](__SITE_URL__/about/): The manifesto line “Data is a belonging of a human experience,” Dave Snowden’s seven principles for managing knowledge, principles from Janine M. Benyus, and a sourced timeline.
 - [Principles](__SITE_URL__/principles.html): Bast's operating principles from nature — use less, preserve context, fit form to function.
-- [BastCare](__SITE_URL__/bastcare/): Free to download for patients and caregivers. Stay present during the visit, then return to a plain-language summary in one of nine languages, its source words, and the family you choose.
+- [BastCare](__SITE_URL__/bastcare/): Free to try right now for patients and caregivers. Stay present during the visit, then return to a plain-language summary in one of seven languages, its source words, and the family you choose.
 - [BastCare legal](__SITE_URL__/bastcare/privacy/): Privacy policy, privacy Q&A, terms, and processors.
 ## Focus Areas
 
 - AI hallucination prevention: Bast limits what the model can say — answers come from approved knowledge, and Bast refuses when nothing supports a reply.
 - AI guardrail software: a verification layer between the model and the output, checking scope and source grounding before answers go live.
 - Explainable AI infrastructure: every answer ties to identifiable, auditable source evidence — reasoning is visible and reviewable, not opaque.
-- Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance. BastCare brings plain-language visit summaries to patients and caregivers in nine languages.
+- Healthcare AI reliability: the Bast platform grounds institutional AI answers in approved clinical knowledge with per-answer provenance. BastCare brings plain-language visit summaries to patients and caregivers in seven languages.
 - Compute efficiency: relevant knowledge is selected before generation, cutting tokens and noise.
 
 ## Products & Offerings
 
 - [Bast Platform](__SITE_URL__/platform/): Governed infrastructure plus Bast Agent OS, the human-and-machine operating model behind stable AI products.
-- [BastCare](__SITE_URL__/bastcare/): Free to download. Download: https://apps.apple.com/us/app/id6789669565?eventid=6830210433
+- [BastCare](__SITE_URL__/bastcare/): Free to try right now. Download: https://apps.apple.com/us/app/id6789669565?eventid=6830210433
 
 ## Company Facts
 
