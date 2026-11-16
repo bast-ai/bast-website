@@ -86,6 +86,9 @@ const requiredFiles = [
   "kmworld/index.html",
   "assets/kmworld/kmworld-qr.svg",
   "assets/kmworld/kmworld-qr.png",
+  "assets/kmworld/northwestern-medicine.svg",
+  "assets/kmworld/maryville-university.svg",
+  "assets/kmworld/vanderbilt-university.svg",
   "assets/evidence.css",
   "assets/evidence.js",
   "assets/data/library.json",
@@ -1639,7 +1642,15 @@ assertIncludes(kmworldHtml, "Workshop W5.</strong> Mon Nov 16, 9 AM\u201312 PM, 
 assertIncludes(kmworldHtml, "Explainability Is Infrastructure.</strong> Wed Nov 18, 10:45\u201311:30 AM, Grand Ballroom Salon 1.", "KMWorld Wednesday talk");
 assertIncludes(kmworldHtml, "Closing panel.</strong> Thu Nov 19, 4\u20135 PM.", "KMWorld closing panel");
 assertIncludes(kmworldHtml, "Lurie Cancer Center at Northwestern runs Bast in production.", "KMWorld Lurie wording");
-assertIncludes(kmworldHtml, "Since 2024.", "KMWorld Lurie year");
+assertExcludes(kmworldHtml, "Since 2024.", "KMWorld Lurie card drops the repeated year line");
+assertIncludes(kmworldHtml, "/assets/kmworld/northwestern-medicine.svg", "KMWorld Northwestern Medicine logo");
+assertIncludes(kmworldHtml, "/assets/kmworld/maryville-university.svg", "KMWorld Maryville logo");
+assertIncludes(kmworldHtml, "/assets/kmworld/vanderbilt-university.svg", "KMWorld Vanderbilt logo");
+assertIncludes(kmworldHtml, "/assets/bastcare/screens/summary-1-0-9.jpg", "KMWorld BastCare summary screenshot");
+assertIncludes(kmworldHtml, "Chief Innovation Officer, Maryville University", "KMWorld Maryville quote attribution");
+assertIncludes(siteCss, ".kmworld-page .button-primary", "KMWorld download button override");
+assertIncludes(siteCss, "background: var(--accent);", "KMWorld primary button uses the accent token");
+assertIncludes(siteCss, "color: var(--ink);", "KMWorld lede uses the ink token");
 assertIncludes(kmworldHtml, 'href="/#client-stories"', "KMWorld Lurie source link");
 assertIncludes(kmworldHtml, "Nursing attrition down 26% across 764 students. Graduating nurses up 38%.", "KMWorld Maryville result");
 assertIncludes(kmworldHtml, 'href="/assets/bast-maryville-case-study.pdf"', "KMWorld Maryville case study");
