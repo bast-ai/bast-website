@@ -83,6 +83,9 @@ const requiredFiles = [
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
   "evidence/index.html",
+  "kmworld/index.html",
+  "assets/kmworld/kmworld-qr.svg",
+  "assets/kmworld/kmworld-qr.png",
   "assets/evidence.css",
   "assets/evidence.js",
   "assets/data/library.json",
@@ -1274,9 +1277,12 @@ for (const file of files) {
     if (/seven[- ]languages|seven-language|Seven summary languages/i.test(contents)) {
       throw new Error(`old seven-languages claim in ${rel}`);
     }
+    const kmworldInstallUrl = "https://apps.apple.com/us/app/bastcare/id6789669565?ct=kmworld";
+    const relPosix = rel.split(path.sep).join("/");
     for (const match of contents.matchAll(/https:\/\/apps\.apple\.com\/[^"'\s)<]+/g)) {
       const url = match[0].replace(/&amp;/g, "&");
-      if (url !== "https://apps.apple.com/us/app/id6789669565?eventid=6830210433") {
+      const expected = relPosix === "kmworld/index.html" ? kmworldInstallUrl : bastcareEventUrl;
+      if (url !== expected) {
         throw new Error(`App Store URL must be the event install link in ${rel}: ${match[0]}`);
       }
     }
@@ -1606,6 +1612,39 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }
 }
+
+const kmworldHtml = await readFile(path.join(distDir, "kmworld/index.html"), "utf8");
+assertIncludes(kmworldHtml, 'class="kmworld-page"', "KMWorld page");
+assertIncludes(kmworldHtml, "Retain more of the conversation, so you can be present in the room.", "KMWorld tagline");
+assertIncludes(kmworldHtml, "Caregivers lose what the doctor said once the visit ends. BastCare keeps the conversation.", "KMWorld visit story");
+assertIncludes(kmworldHtml, "<strong>Free to try right now.</strong>", "KMWorld offer line");
+assertIncludes(kmworldHtml, "Bast is at Enterprise AI World, part of KMWorld, in Washington, DC.", "KMWorld event line");
+assertIncludes(kmworldHtml, 'href="/evidence/">Read the evidence library</a>', "KMWorld evidence library link");
+assertIncludes(kmworldHtml, 'href="/#contact">Talk with Bast</a>', "KMWorld contact form link");
+assertIncludes(kmworldHtml, "https://apps.apple.com/us/app/bastcare/id6789669565?ct=kmworld", "KMWorld App Store link");
+assertIncludes(kmworldHtml, 'data-app-store-placement="kmworld"', "KMWorld download click event");
+assertIncludes(kmworldHtml, "/assets/analytics-consent.js", "KMWorld analytics");
+assertIncludes(kmworldHtml, 'href="/#contact"', "KMWorld contact link");
+assertIncludes(kmworldHtml, "Find Beth at Enterprise AI World", "KMWorld session heading");
+assertIncludes(kmworldHtml, "Beth Rudden is Conference Co-Chair, Enterprise AI World.", "KMWorld co-chair line");
+assertIncludes(kmworldHtml, "Workshop W5.</strong> Mon Nov 16, 9 AM\u201312 PM, Salon C, with The Cynefin Co.", "KMWorld workshop");
+assertIncludes(kmworldHtml, "Explainability Is Infrastructure.</strong> Wed Nov 18, 10:45\u201311:30 AM, Grand Ballroom Salon 1.", "KMWorld Wednesday talk");
+assertIncludes(kmworldHtml, "Closing panel.</strong> Thu Nov 19, 4\u20135 PM.", "KMWorld closing panel");
+assertIncludes(kmworldHtml, "Lurie Cancer Center at Northwestern runs Bast in production.", "KMWorld Lurie wording");
+assertIncludes(kmworldHtml, "Since 2024.", "KMWorld Lurie year");
+assertIncludes(kmworldHtml, 'href="/#client-stories"', "KMWorld Lurie source link");
+assertIncludes(kmworldHtml, "Nursing attrition down 26% across 764 students. Graduating nurses up 38%.", "KMWorld Maryville result");
+assertIncludes(kmworldHtml, 'href="/assets/bast-maryville-case-study.pdf"', "KMWorld Maryville case study");
+assertIncludes(kmworldHtml, "Median time to diagnosis fell from 138 days to 43 among diagnosed patients.", "KMWorld Vanderbilt result");
+assertIncludes(kmworldHtml, "Barnado et al., NEJM AI", "KMWorld Vanderbilt source");
+assertIncludes(kmworldHtml, "How This Summary Was Made places the summary wording beside the source words.", "KMWorld summary lineage line");
+assertIncludes(kmworldHtml, 'href="/evidence/#library-A39"', "KMWorld Vanderbilt evidence link");
+assertExcludes(kmworldHtml, "\u2014", "em dash on the KMWorld page");
+assertExcludes(kmworldHtml, "play.google.com", "Google Play link on the KMWorld page");
+assertExcludes(kmworldHtml, "Anna", "other speaker names on the KMWorld page");
+assertIncludes(analyticsConsentJs, "campaign_source", "GA4 campaign source from utm_source");
+assertIncludes(analyticsConsentJs, "utm_campaign", "GA4 reads utm_campaign from the page URL");
+assertIncludes(analyticsConsentJs, "page_location: window.location.href", "analytics keeps the landing query string");
 
 // Marketing confidence: visible rating counts and hedge words in built HTML
 // text (including titles, descriptions, alt text, and labels) and llms.txt.
