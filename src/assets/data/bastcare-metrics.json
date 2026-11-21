@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T12:04:09Z",
+  "generatedAt": "2026-11-21T18:03:24Z",
   "metrics": {
     "inputTokens": 5597355,
     "outputTokens": 841206,
@@ -9,7 +9,7 @@
     "totalTokens": 6438561
   },
   "period": {
-    "endsAt": "2026-11-21T12:04:09Z",
+    "endsAt": "2026-11-21T18:03:24Z",
     "kind": "all-time",
     "startsAt": null
   },
