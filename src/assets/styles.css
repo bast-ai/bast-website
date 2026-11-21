@@ -6297,3 +6297,286 @@ h1 span {
     min-height: 48px;
   }
 }
+
+/* KMWorld landing: white field, one column, existing tokens. */
+.kmworld-page {
+  --bast-space-1: 4px;
+  --bast-space-2: 8px;
+  --bast-space-4: 16px;
+  --bast-space-6: 24px;
+  --bast-space-8: 32px;
+  --bast-space-12: 48px;
+  --bast-radius-small: 8px;
+  --bast-radius-default: 16px;
+  --bast-radius-large: 24px;
+  background: #ffffff;
+}
+
+.kmworld-hero,
+.kmworld-section {
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.kmworld-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.72fr);
+  grid-template-areas:
+    "copy phone"
+    "follow phone";
+  column-gap: var(--bast-space-8);
+  row-gap: var(--bast-space-4);
+  align-items: center;
+  padding: var(--bast-space-4) 0 var(--bast-space-6);
+}
+
+.kmworld-hero-copy {
+  grid-area: copy;
+}
+
+.kmworld-phone {
+  grid-area: phone;
+  margin: 0;
+  justify-self: end;
+  width: min(100%, 280px);
+}
+
+.kmworld-phone-frame {
+  overflow: hidden;
+  border-radius: var(--bast-radius-large);
+  padding: var(--bast-space-2);
+  background: var(--ink);
+  box-shadow: var(--neu-raise);
+}
+
+.kmworld-phone-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--bast-radius-default);
+  background: #ffffff;
+}
+
+.kmworld-follow {
+  grid-area: follow;
+}
+
+.kmworld-hero h1 {
+  max-width: 16ch;
+  margin: 0.35rem 0 0.7rem;
+  font-size: var(--fs-display);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.kmworld-hero .lede {
+  max-width: 36rem;
+  margin-bottom: 0;
+  color: var(--ink);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-light);
+  line-height: 1.35;
+}
+
+.kmworld-offer {
+  margin: 0.85rem 0 0;
+  color: var(--ink);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  line-height: 1.15;
+}
+
+.kmworld-devices {
+  margin: 0.45rem 0 0;
+  color: var(--ink);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+}
+
+.kmworld-page .hero-actions {
+  margin-top: 0.75rem;
+}
+
+.kmworld-page .button-primary {
+  background: var(--accent);
+}
+
+.kmworld-download {
+  width: 100%;
+  max-width: 28rem;
+  min-height: 4rem;
+  padding: 0.95rem 1.5rem;
+  font-size: 1.25rem;
+}
+
+.kmworld-follow {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0;
+}
+
+.kmworld-follow p {
+  margin: 0;
+  max-width: 40rem;
+}
+
+.kmworld-contact {
+  white-space: nowrap;
+}
+
+.kmworld-section {
+  padding: var(--bast-space-12) 0;
+}
+
+.kmworld-section h2 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.kmworld-sessions p {
+  max-width: 40rem;
+  margin-bottom: 0;
+}
+
+.kmworld-session-list {
+  list-style: none;
+  margin: var(--bast-space-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bast-space-4);
+}
+
+.kmworld-session-list li {
+  margin: 0;
+  padding: var(--bast-space-4);
+  border-radius: var(--bast-radius-default);
+  background: #ffffff;
+  box-shadow: var(--neu-raise);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+}
+
+.kmworld-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bast-space-4);
+  margin-top: var(--bast-space-4);
+}
+
+.kmworld-proof-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--bast-space-4);
+  padding: var(--bast-space-6) var(--bast-space-6) var(--bast-space-2);
+  background: #ffffff;
+}
+
+.kmworld-logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 100%;
+}
+
+.kmworld-page .kmworld-proof-card .story-card-stat,
+.kmworld-page .kmworld-proof-card .story-card-stat span {
+  color: var(--ink);
+}
+
+.kmworld-quote {
+  margin: var(--bast-space-6) 0 0;
+  padding: var(--bast-space-6);
+  border: none;
+  border-radius: var(--bast-radius-default);
+  background: #ffffff;
+  box-shadow: var(--neu-raise);
+}
+
+.kmworld-quote p {
+  margin: 0;
+  max-width: 28em;
+  color: var(--ink);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.kmworld-quote footer {
+  margin-top: var(--bast-space-4);
+  color: var(--ink);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+}
+
+@media (min-width: 901px) {
+  .kmworld-follow {
+    display: grid;
+  }
+}
+
+@media (max-width: 900px) {
+  .kmworld-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "phone"
+      "follow";
+  }
+
+  .kmworld-phone {
+    justify-self: start;
+  }
+
+  .kmworld-proof,
+  .kmworld-session-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .kmworld-page .site-header {
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+
+  .kmworld-hero {
+    padding-top: 0;
+  }
+
+  .kmworld-hero h1 {
+    font-size: clamp(2rem, 8.2vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .kmworld-hero .lede {
+    line-height: 1.25;
+  }
+
+  .kmworld-offer {
+    margin-top: 0.3rem;
+    font-size: 1.25rem;
+  }
+
+  .kmworld-devices {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .kmworld-page .hero-actions {
+    margin-top: 0.3rem;
+  }
+
+  .kmworld-download {
+    min-height: 3.25rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+}

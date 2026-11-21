@@ -366,6 +366,11 @@
     library.hidden = false;
     setLibraryStatus("", "");
     showRetry(false);
+    const hashId = window.location.hash.replace(/^#/, "");
+    if (hashId) {
+      const target = document.getElementById(hashId);
+      if (target) target.scrollIntoView();
+    }
   }
 
   function studiesFrom(data) {
