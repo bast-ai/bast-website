@@ -7,6 +7,7 @@ import importlib.util
 import json
 import os
 import unittest
+from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
 
@@ -34,6 +35,17 @@ VERIFIED_RESPONSE = {
         "summariesWithoutTokenUsage": 0,
     },
 }
+
+
+def _feedback_days(count: int) -> list[dict]:
+    start = datetime(2026, 10, 7)
+    return [
+        {
+            "date": (start + timedelta(days=offset)).date().isoformat(),
+            "count": 0,
+        }
+        for offset in range(count)
+    ]
 
 
 class MetricsCollectorTests(unittest.TestCase):
@@ -222,6 +234,89 @@ class MetricsCollectorTests(unittest.TestCase):
             path.read_text(encoding="utf-8"),
             json.dumps(validated, indent=2, sort_keys=True) + "\n",
         )
+
+    def test_feedback_counts_pass_through_unchanged(self):
+        feedback = {
+            "total": 4,
+            "days": [
+                {"date": "2026-11-05", "count": 2},
+                {"date": "2026-10-07", "count": 1},
+                {"date": "2024-02-29", "count": 1},
+            ],
+        }
+        full_window = {
+            "total": 0,
+            "days": _feedback_days(MODULE.FEEDBACK_DAYS_MAX),
+        }
+        for series in (feedback, full_window, {"total": 0, "days": []}):
+            payload = json.loads(json.dumps(VERIFIED_RESPONSE))
+            payload["feedbackCounts"] = json.loads(json.dumps(series))
+            payload["feedbackCounts"]["note"] = "must-not-appear"
+            if series["days"]:
+                payload["feedbackCounts"]["days"][0]["message"] = "must-not-appear"
+            payload["authSubject"] = "must-not-appear"
+            document = MODULE.validated_public_document(payload)
+            self.assertEqual(document["feedbackCounts"], series)
+            self.assertEqual(document["metrics"], VERIFIED_RESPONSE["metrics"])
+            self.assertNotIn("must-not-appear", repr(document))
+            published = MODULE.require_publishable_snapshot(document, 29)
+            self.assertEqual(published["feedbackCounts"], series)
+            self.assertEqual(published["metrics"], VERIFIED_RESPONSE["metrics"])
+
+    def test_feedback_counts_omitted_when_missing(self):
+        payload = json.loads(json.dumps(VERIFIED_RESPONSE))
+        document = MODULE.validated_public_document(payload)
+        self.assertNotIn("feedbackCounts", document)
+        self.assertEqual(document["metrics"], VERIFIED_RESPONSE["metrics"])
+
+        payload["feedbackCounts"] = None
+        document = MODULE.validated_public_document(payload)
+        self.assertNotIn("feedbackCounts", document)
+        self.assertEqual(document["metrics"], VERIFIED_RESPONSE["metrics"])
+
+        published = MODULE.require_publishable_snapshot(
+            json.loads(json.dumps(VERIFIED_RESPONSE)), 29
+        )
+        self.assertNotIn("feedbackCounts", published)
+        self.assertEqual(published["metrics"], VERIFIED_RESPONSE["metrics"])
+
+    def test_feedback_counts_omitted_when_invalid(self):
+        invalid = [
+            {"total": -1, "days": []},
+            {"total": True, "days": []},
+            {"total": 1.2, "days": []},
+            {"total": "1", "days": []},
+            {"days": []},
+            {"total": 0},
+            {"total": 1, "days": [1, 0, 1]},
+            {"total": 1, "days": [{"date": "2026-11-05", "count": -1}]},
+            {"total": 1, "days": [{"date": "2026-11-05", "count": True}]},
+            {"total": 1, "days": [{"date": "2026-02-31", "count": 0}]},
+            {"total": 1, "days": [{"date": "2026-11-5", "count": 0}]},
+            {"total": 1, "days": [{"date": "11/05/2026", "count": 0}]},
+            {"total": 0, "days": [{"date": "2026-11-05"}]},
+            {
+                "total": 1,
+                "days": [
+                    {"date": "2026-11-05", "count": 1},
+                    {"date": "nope", "count": 0},
+                ],
+            },
+            {"total": 0, "days": _feedback_days(MODULE.FEEDBACK_DAYS_MAX + 1)},
+            [],
+            4,
+            "none",
+            {},
+        ]
+        for value in invalid:
+            payload = json.loads(json.dumps(VERIFIED_RESPONSE))
+            payload["feedbackCounts"] = value
+            document = MODULE.validated_public_document(payload)
+            self.assertNotIn("feedbackCounts", document, value)
+            self.assertEqual(document["metrics"], VERIFIED_RESPONSE["metrics"])
+            published = MODULE.require_publishable_snapshot(payload, 29)
+            self.assertNotIn("feedbackCounts", published, value)
+            self.assertEqual(published["metrics"], VERIFIED_RESPONSE["metrics"])
 
     def test_written_snapshot_matches_canonical_json(self):
         import tempfile
