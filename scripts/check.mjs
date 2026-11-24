@@ -83,6 +83,12 @@ const requiredFiles = [
   "frames/claim-level-source-grounding/index.html",
   "frames/zero-tolerance-ai-output-architecture/index.html",
   "evidence/index.html",
+  "kmworld/index.html",
+  "assets/kmworld/kmworld-qr.svg",
+  "assets/kmworld/kmworld-qr.png",
+  "assets/kmworld/northwestern-medicine.svg",
+  "assets/kmworld/maryville-university.svg",
+  "assets/kmworld/vanderbilt-university.svg",
   "assets/evidence.css",
   "assets/evidence.js",
   "assets/data/library.json",
@@ -335,7 +341,7 @@ const requiredHomepageSnippets = [
   },
   {
     label: "homepage download wording",
-    needle: "free to download on iPhone",
+    needle: "free to try right now",
   },
   {
     label: "homepage consent wording",
@@ -749,7 +755,9 @@ for (const [contents, label] of [[bastcareHome, "BastCare"], [indexHtml, "home"]
   assertExcludes(contents, `${bastcareReviews.rating.count} ratings`, `visible rating count on ${label} page`);
 }
 assertIncludes(bastcareHome, "Be in the room.", "BastCare outcome headline");
-assertIncludes(bastcareHome, "<strong>Free to download.</strong>", "BastCare download line");
+assertIncludes(bastcareHome, "<strong>Free to try right now.</strong>", "BastCare download line");
+assertIncludes(bastcareHome, "iPhone, Mac (M1 and later), and Apple Vision", "BastCare device line");
+assertExcludes(bastcareHome, "Built for iPhone", "retired iPhone-only device line");
 assertExcludes(bastcareHome, "recorded hours", "BastCare hour limit");
 assertExcludes(bastcareHome, "No card required", "BastCare payment prompt");
 assertExcludes(bastcareHome, "BastCare Plus", "BastCare Plus on the product page");
@@ -794,10 +802,12 @@ for (const media of ["bastcare-promo.mp4", "bastcare-promo-square.mp4"]) {
   const { size } = await stat(path.join(distDir, "assets/bastcare/media", media));
   if (size > 8 * 1024 * 1024) throw new Error(`Autoplaying ${media} is ${(size / 1048576).toFixed(1)} MB; compress it below 8 MB`);
 }
-assertIncludes(bastcareHome, "nine-language translation", "carousel translation handoff");
-assertIncludes(bastcareHome, "Filipino", "BastCare Filipino support");
-assertIncludes(bastcareHome, "Japanese", "BastCare Japanese support");
-assertIncludes(bastcareHome, "nine languages", "BastCare nine-language claim");
+assertIncludes(bastcareHome, "seven-language translation", "carousel translation handoff");
+assertIncludes(bastcareHome, "Spanish", "BastCare Spanish support");
+assertExcludes(bastcareHome, "Filipino", "retired Filipino summary language");
+assertExcludes(bastcareHome, "Japanese", "retired Japanese summary language");
+assertExcludes(bastcareHome, "Colombian Spanish", "retired Colombian Spanish label");
+assertIncludes(bastcareHome, "seven languages", "BastCare seven-language claim");
 assertIncludes(bastcareHome, "explainable AI", "BastCare explainable AI line");
 assertIncludes(bastcareHome, "Sharing nothing is always valid.", "BastCare private-by-choice section");
 for (const banned of [
@@ -807,9 +817,9 @@ for (const banned of [
   "not medical advice",
   "asks for consent",
   "consent before recording",
-  "seven languages",
-  "seven-language",
-  "Seven summary languages",
+  "nine languages",
+  "nine-language",
+  "Nine summary languages",
   "No transcript text is included",
   "may contain errors",
   "refreshed home screen",
@@ -886,10 +896,11 @@ for (const provider of ["OpenAI", "Amazon Web Services", "MongoDB", "Apple", "Go
 }
 assertIncludes(bastcarePrivacy, "Libraries and processors are different lists", "library boundary");
 assertIncludes(bastcarePrivacy, "<h2>7. Availability</h2>", "BastCare availability heading");
-assertIncludes(bastcarePrivacy, "BastCare is free to download.", "BastCare terms download line");
+assertIncludes(bastcarePrivacy, "BastCare is free to try right now.", "BastCare terms download line");
+assertIncludes(bastcarePrivacy, "English, Korean, Simplified Chinese, Vietnamese, Spanish, Albanian, and German", "BastCare seven-language privacy list");
 assertExcludes(bastcarePrivacy, "BastCare Plus", "BastCare Plus in the terms");
 assertExcludes(faqHtmlForPlus, "BastCare Plus", "BastCare Plus in the FAQ");
-assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to download on iPhone from the App Store.", "FAQ download answer");
+assertIncludes(faqHtmlForPlus, "Yes. BastCare is free to try right now on iPhone, Mac (M1 and later), and Apple Vision from the App Store.", "FAQ download answer");
 assertExcludes(faqHtmlForPlus, "A paid tier is not part of the current release", "stale FAQ paid-tier claim");
 assertExcludes(bastcareSupport, "Purchase, restore", "current paid support claim");
 assertExcludes(bastcarePrivacy, "verify Apple subscription", "current paid privacy claim");
@@ -983,7 +994,7 @@ assertIncludes(indexHtml, '"award"', "Organization OEDIT award");
 assertIncludes(principlesHtml, 'href="/frames/claim-level-source-grounding/"', "principles frame crosslink");
 assertIncludes(llmsTxt, "Bast, Inc.", "llms.txt legal entity");
 assertIncludes(llmsTxt, "/platform/", "llms.txt Platform entry");
-assertIncludes(llmsTxt, "nine languages", "llms.txt BastCare languages");
+assertIncludes(llmsTxt, "seven languages", "llms.txt BastCare languages");
 assertIncludes(llmsTxt, "eventid=6830210433", "llms.txt event install URL");
 assertExcludes(llmsTxt, "Not a medical device", "llms.txt medical-device marketing line");
 assertIncludes(llmsTxt, "/demos/", "llms.txt Demos entry");
@@ -1271,12 +1282,15 @@ for (const file of files) {
     }
   }
   if ([".html", ".txt"].includes(path.extname(file))) {
-    if (/seven[- ]languages|seven-language|Seven summary languages/i.test(contents)) {
-      throw new Error(`old seven-languages claim in ${rel}`);
+    if (/nine[- ]languages|nine-language|Nine summary languages/i.test(contents)) {
+      throw new Error(`old nine-languages claim in ${rel}`);
     }
+    const kmworldInstallUrl = "https://apps.apple.com/us/app/bastcare/id6789669565?ct=kmworld";
+    const relPosix = rel.split(path.sep).join("/");
     for (const match of contents.matchAll(/https:\/\/apps\.apple\.com\/[^"'\s)<]+/g)) {
       const url = match[0].replace(/&amp;/g, "&");
-      if (url !== "https://apps.apple.com/us/app/id6789669565?eventid=6830210433") {
+      const expected = relPosix === "kmworld/index.html" ? kmworldInstallUrl : bastcareEventUrl;
+      if (url !== expected) {
         throw new Error(`App Store URL must be the event install link in ${rel}: ${match[0]}`);
       }
     }
@@ -1606,6 +1620,50 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
     assertNoSecrets(await readFile(file, "utf8"), path.relative(distDir, file));
   }
 }
+
+const kmworldHtml = await readFile(path.join(distDir, "kmworld/index.html"), "utf8");
+assertIncludes(kmworldHtml, 'class="kmworld-page"', "KMWorld page");
+assertIncludes(kmworldHtml, "Retain more of the conversation, so you can be present in the room.", "KMWorld tagline");
+assertIncludes(kmworldHtml, "Caregivers lose what the doctor said once the visit ends. BastCare keeps the conversation.", "KMWorld visit story");
+assertIncludes(kmworldHtml, "<strong>Free to try right now.</strong>", "KMWorld offer line");
+assertIncludes(kmworldHtml, "iPhone, Mac (M1 and later), and Apple Vision.", "KMWorld device line");
+assertIncludes(indexHtml, "Nursing attrition down 26% across 764 students. Graduating nurses up 38%.", "homepage Maryville fall result");
+assertExcludes(indexHtml, "$1.2M", "retired homepage Maryville summer savings figure");
+assertIncludes(kmworldHtml, "Bast is at Enterprise AI World, part of KMWorld, in Washington, DC.", "KMWorld event line");
+assertIncludes(kmworldHtml, 'href="/evidence/">Read the evidence library</a>', "KMWorld evidence library link");
+assertIncludes(kmworldHtml, 'href="/#contact">Talk with Bast</a>', "KMWorld contact form link");
+assertIncludes(kmworldHtml, "https://apps.apple.com/us/app/bastcare/id6789669565?ct=kmworld", "KMWorld App Store link");
+assertIncludes(kmworldHtml, 'data-app-store-placement="kmworld"', "KMWorld download click event");
+assertIncludes(kmworldHtml, "/assets/analytics-consent.js", "KMWorld analytics");
+assertIncludes(kmworldHtml, 'href="/#contact"', "KMWorld contact link");
+assertIncludes(kmworldHtml, "Find Beth at Enterprise AI World", "KMWorld session heading");
+assertIncludes(kmworldHtml, "Beth Rudden is Conference Co-Chair, Enterprise AI World.", "KMWorld co-chair line");
+assertIncludes(kmworldHtml, "Workshop W5.</strong> Mon Nov 16, 9 AM\u201312 PM, Salon C, with The Cynefin Co.", "KMWorld workshop");
+assertIncludes(kmworldHtml, "Explainability Is Infrastructure.</strong> Wed Nov 18, 10:45\u201311:30 AM, Grand Ballroom Salon 1.", "KMWorld Wednesday talk");
+assertIncludes(kmworldHtml, "Closing panel.</strong> Thu Nov 19, 4\u20135 PM.", "KMWorld closing panel");
+assertIncludes(kmworldHtml, "Lurie Cancer Center at Northwestern runs Bast in production.", "KMWorld Lurie wording");
+assertExcludes(kmworldHtml, "Since 2024.", "KMWorld Lurie card drops the repeated year line");
+assertIncludes(kmworldHtml, "/assets/kmworld/northwestern-medicine.svg", "KMWorld Northwestern Medicine logo");
+assertIncludes(kmworldHtml, "/assets/kmworld/maryville-university.svg", "KMWorld Maryville logo");
+assertIncludes(kmworldHtml, "/assets/kmworld/vanderbilt-university.svg", "KMWorld Vanderbilt logo");
+assertIncludes(kmworldHtml, "/assets/bastcare/screens/summary-1-0-9.jpg", "KMWorld BastCare summary screenshot");
+assertIncludes(kmworldHtml, "Chief Innovation Officer, Maryville University", "KMWorld Maryville quote attribution");
+assertIncludes(siteCss, ".kmworld-page .button-primary", "KMWorld download button override");
+assertIncludes(siteCss, "background: var(--accent);", "KMWorld primary button uses the accent token");
+assertIncludes(siteCss, "color: var(--ink);", "KMWorld lede uses the ink token");
+assertIncludes(kmworldHtml, 'href="/#client-stories"', "KMWorld Lurie source link");
+assertIncludes(kmworldHtml, "Nursing attrition down 26% across 764 students. Graduating nurses up 38%.", "KMWorld Maryville result");
+assertIncludes(kmworldHtml, 'href="/assets/bast-maryville-case-study.pdf"', "KMWorld Maryville case study");
+assertIncludes(kmworldHtml, "Median time to diagnosis fell from 138 days to 43 among diagnosed patients.", "KMWorld Vanderbilt result");
+assertIncludes(kmworldHtml, "Barnado et al., NEJM AI", "KMWorld Vanderbilt source");
+assertIncludes(kmworldHtml, "How This Summary Was Made places the summary wording beside the source words.", "KMWorld summary lineage line");
+assertIncludes(kmworldHtml, 'href="/evidence/#library-A39"', "KMWorld Vanderbilt evidence link");
+assertExcludes(kmworldHtml, "\u2014", "em dash on the KMWorld page");
+assertExcludes(kmworldHtml, "play.google.com", "Google Play link on the KMWorld page");
+assertExcludes(kmworldHtml, "Anna", "other speaker names on the KMWorld page");
+assertIncludes(analyticsConsentJs, "campaign_source", "GA4 campaign source from utm_source");
+assertIncludes(analyticsConsentJs, "utm_campaign", "GA4 reads utm_campaign from the page URL");
+assertIncludes(analyticsConsentJs, "page_location: window.location.href", "analytics keeps the landing query string");
 
 // Marketing confidence: visible rating counts and hedge words in built HTML
 // text (including titles, descriptions, alt text, and labels) and llms.txt.

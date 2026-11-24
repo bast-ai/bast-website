@@ -35,6 +35,23 @@
     return getConsent() === "analytics";
   }
 
+  function campaignFromLocation() {
+    const params = new URLSearchParams(window.location.search);
+    const campaign = {};
+    const fields = [
+      ["utm_source", "campaign_source"],
+      ["utm_medium", "campaign_medium"],
+      ["utm_campaign", "campaign_name"],
+      ["utm_term", "campaign_term"],
+      ["utm_content", "campaign_content"]
+    ];
+    for (const [queryName, fieldName] of fields) {
+      const value = params.get(queryName);
+      if (value) campaign[fieldName] = value;
+    }
+    return campaign;
+  }
+
   function loadAnalytics() {
     if (!analyticsConfigured() || !hasAnalyticsConsent() || window.bastAnalyticsLoaded) return;
 
@@ -46,9 +63,10 @@
       ad_personalization: "denied"
     });
     window.gtag("js", new Date());
-    window.gtag("config", MEASUREMENT_ID, {
-      send_page_view: true
-    });
+    window.gtag("config", MEASUREMENT_ID, Object.assign({
+      send_page_view: true,
+      page_location: window.location.href
+    }, campaignFromLocation()));
 
     const script = document.createElement("script");
     script.async = true;
@@ -78,7 +96,9 @@
         link_text: (link.innerText || link.getAttribute("aria-label") || "").trim(),
         link_url: link.href,
         page_path: window.location.pathname,
-        transport_type: "beacon"
+        page_location: window.location.href,
+        transport_type: "beacon",
+        ...campaignFromLocation()
       };
 
       if (link.classList.contains("button")) {
