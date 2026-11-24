@@ -1467,9 +1467,9 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   }
   assertIncludes(evidenceHtml, '<meta name="referrer" content="no-referrer">', "evidence referrer policy");
   assertIncludes(evidenceHtml, `<link rel="canonical" href="${evidenceSiteUrl}/evidence/">`, "evidence canonical URL");
-  assertIncludes(evidenceHtml, '<time datetime="2026-11-15">November 15, 2026</time>', "evidence last-updated date");
-  assertIncludes(evidenceHtml, '<span data-evidence-count>70</span> studies', "evidence header study count");
-  assertIncludes(evidenceHtml, 'All <span data-evidence-count>70</span> studies', "evidence library study count");
+  assertIncludes(evidenceHtml, '<time datetime="2026-11-24">November 24, 2026</time>', "evidence last-updated date");
+  assertIncludes(evidenceHtml, '<span data-evidence-count>75</span> studies', "evidence header study count");
+  assertIncludes(evidenceHtml, 'All <span data-evidence-count>75</span> studies', "evidence library study count");
   assertIncludes(evidenceHtml, "Updated when we add studies", "evidence updates when studies are added");
   assertExcludes(evidenceHtml, "weekly", "evidence page does not claim a weekly refresh");
   assertIncludes(evidenceHtml, "preliminary vendor report", "Kansas pilot vendor-report label");
@@ -1531,22 +1531,22 @@ for (const [contents, label] of [[bastcarePrivacy, "BastCare legal page"]]) {
   {
     const libraryFile = path.join(distDir, "assets/data/library.json");
     const libraryBytes = await readFile(libraryFile);
-    if (libraryBytes.length !== 74274) {
-      throw new Error(`library.json must be 74274 bytes, found ${libraryBytes.length}`);
+    if (libraryBytes.length !== 80210) {
+      throw new Error(`library.json must be 80210 bytes, found ${libraryBytes.length}`);
     }
     const librarySha = createHash("sha256").update(libraryBytes).digest("hex");
-    if (librarySha !== "02f28a5dd639aaae1c225ac6d20de8bd90fd0c3f60c88d634c5cd565ecfd896d") {
+    if (librarySha !== "6b67bdde425921590c46736daf02f43d0e5d50612cf23adb8271d9050b27c64d") {
       throw new Error(`library.json sha256 mismatch: ${librarySha}`);
     }
     const libraryJson = JSON.parse(libraryBytes.toString("utf8"));
-    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 70) {
-      throw new Error("library.json must contain 70 studies");
+    if (!Array.isArray(libraryJson.studies) || libraryJson.studies.length !== 75) {
+      throw new Error("library.json must contain 75 studies");
     }
     if (libraryJson.studies.some((study) => study && study.id === "B12")) {
       throw new Error("retracted study B12 is still in the library");
     }
-    if (libraryJson.lastUpdated !== "2026-11-15") {
-      throw new Error(`library.json lastUpdated must be 2026-11-15, found ${libraryJson.lastUpdated}`);
+    if (libraryJson.lastUpdated !== "2026-11-24") {
+      throw new Error(`library.json lastUpdated must be 2026-11-24, found ${libraryJson.lastUpdated}`);
     }
   }
   const evidenceUrls = evidenceJs.match(/https?:\/\/[^\s"'`)]+/g) || [];
