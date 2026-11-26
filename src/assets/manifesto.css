@@ -62,3 +62,12 @@
 @media print {
   .manifesto-art-toggle { display: none; }
 }
+
+/* Part II: in-text figures, citations, and sources. */
+.manifesto-text .manifesto-figure { margin: 2.5rem 0; }
+.manifesto-figure-portrait img { max-width: 520px; margin-inline: auto; }
+.manifesto-art figcaption a { color: var(--accent-text); }
+.manifesto-cite { white-space: nowrap; }
+.manifesto-sources { font-size: var(--fs-body-sm); line-height: 1.7; }
+.manifesto-sources p { margin: 0 0 1rem; overflow-wrap: anywhere; scroll-margin-top: 2rem; }
+.manifesto-sources p:target { background: var(--line); }

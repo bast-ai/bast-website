@@ -64,6 +64,7 @@
     <loc>__SITE_URL__/bastcare/delete-account/</loc>
     <lastmod>2026-11-01</lastmod>
   </url>
-  <url><loc>__SITE_URL__/manifesto/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>__SITE_URL__/manifesto/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>__SITE_URL__/manifesto/part-ii/</loc><lastmod>2026-11-26</lastmod></url>
   <url><loc>__SITE_URL__/evidence/</loc><lastmod>2026-11-24</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>

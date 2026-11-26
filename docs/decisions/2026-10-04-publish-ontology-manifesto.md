@@ -73,3 +73,15 @@ impact, five source links, and the basis of the Craig Hospital material.
 Mark the revision date while retaining the original publication timestamp and
 fourth-anniversary context. A collapsed editorial-lineage note credits Bob and
 links to his unchanged, author-supplied PDF. The site keeps one current manifesto.
+
+## Part II – 26 November 2026
+
+At Beth’s direction, publish **The Ontological Rosetta Stone, Part II** at
+`https://www.bast.ai/manifesto/part-ii/`, reusing the opening's template. The
+text is Beth's final manuscript of 26 November 2026, converted without
+rewriting; her numbered sources stay as written and each citation links to its
+source. Six Wikimedia Commons images carry their credits and licences in their
+captions. The opening keeps one current text, gains a dated publication-history
+entry linking Part II, and updates its modified dates and sitemap `lastmod`.
+Her manuscript wording is allowlisted in the marketing-confidence check as
+author prose, not marketing copy.
