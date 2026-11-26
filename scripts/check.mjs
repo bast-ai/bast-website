@@ -13,6 +13,14 @@ const requiredFiles = [
   "assets/manifesto/data-belonging-periwinkle-organic.png",
   "assets/manifesto/data-belonging-periwinkle-organic.gif",
   "assets/manifesto/robert-w-beth-manifesto-retold.pdf",
+  "manifesto/part-ii/index.html",
+  "assets/manifesto/part-ii/rosetta-stone.jpg",
+  "assets/manifesto/part-ii/rosetta-stone-share.jpg",
+  "assets/manifesto/part-ii/gripsholm-lion.jpg",
+  "assets/manifesto/part-ii/leibniz-unicorn.png",
+  "assets/manifesto/part-ii/grace-hopper.jpg",
+  "assets/manifesto/part-ii/eniac-jennings-bilas.jpg",
+  "assets/manifesto/part-ii/san-clemente-mithraeum.jpg",
   "404.html",
   "privacy.html",
   "robots.txt",
@@ -1117,6 +1125,24 @@ assertIncludes(aboutHtml, "https://cynefin.io/wiki/Principles_for_managing_knowl
 assertIncludes(aboutHtml, "Dave Snowden", "about page Cynefin attribution");
 assertIncludes(aboutHtml, 'href="/manifesto/"', "about page manifesto link");
 assertIncludes(aboutHtml, "/assets/manifesto/data-belonging-periwinkle-organic.png", "about page manifesto artwork");
+
+// Manifesto Part II (Beth Rudden, 2026-11-26): linked from the opening's
+// publication history, in the sitemap, sources anchored, images credited.
+{
+  const openingHtml = await readFile(path.join(distDir, "manifesto/index.html"), "utf8");
+  const partTwoHtml = await readFile(path.join(distDir, "manifesto/part-ii/index.html"), "utf8");
+  assertIncludes(openingHtml, 'href="/manifesto/part-ii/"', "opening manifesto link to Part II");
+  assertIncludes(sitemapXml, "/manifesto/part-ii/</loc>", "manifesto Part II sitemap route");
+  assertIncludes(partTwoHtml, 'href="/manifesto/"', "Part II link to the opening");
+  for (let n = 1; n <= 39; n += 1) assertIncludes(partTwoHtml, `id="source-${n}"`, `Part II source ${n}`);
+  for (const [, n] of partTwoHtml.matchAll(/href="#source-(\d+)"/g)) {
+    assertIncludes(partTwoHtml, `id="source-${n}"`, `Part II citation target ${n}`);
+  }
+  if ((partTwoHtml.match(/via <a href="https:\/\/commons\.wikimedia\.org\//g) || []).length !== 6) {
+    throw new Error("Part II must credit all six Wikimedia Commons images");
+  }
+  assertExcludes(partTwoHtml, "\u2014", "em dash in manifesto Part II");
+}
 assertIncludes(aboutHtml, 'href="/principles.html"', "about page principles from nature link");
 assertExcludes(aboutHtml, 'id="team"', "about page has no team section");
 assertExcludes(aboutHtml, "Thanh Lam", "about page does not feature the team");
@@ -1238,7 +1264,10 @@ for (const file of files) {
   // BastCare carousel position, not a patent claim.
   const patentExt = path.extname(file).toLowerCase();
   if ([".html", ".js", ".css", ".xml", ".txt", ".json", ".pdf", ".md"].includes(patentExt)) {
-    const patentText = (await readFile(file)).toString("latin1").replaceAll("Review 2 of 5", "Review");
+    // Manifesto Part II quotes Beth's own sentence about the earlier IBM and
+    // Kyndryl patents; the Bast count rule applies to Bast, Inc. patents.
+    const patentText = (await readFile(file)).toString("latin1").replaceAll("Review 2 of 5", "Review")
+      .replaceAll("more than a dozen patents granted at IBM and Kyndryl", "");
     if (patentText.includes("2 of 5")) {
       throw new Error(`Unexpected "2 of 5" in ${path.relative(root, file)}`);
     }
